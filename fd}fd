@@ -1,0 +1,54 @@
+[33mcommit 828706e308dea84cac950f9b80d2aeb63e43947a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Juan Romero Lorenzo <juanromerolorenzo@MacBook-Air-de-Juan.local>
+Date:   Thu Jan 14 23:12:06 2021 -0600
+
+    To Upper Case Update Data
+
+[33mcommit cc2a7b5899fc2d2f45d42be8b697225cd2d888b6[m
+Merge: 3ca0c70 015d390
+Author: Jesus Martin <jesus.martinsamano@gmail.com>
+Date:   Thu Jan 14 17:22:56 2021 -0600
+
+    Merge branch 'master' of https://github.com/JohnDan72/planeacion
+
+[33mcommit 3ca0c702635d3e027a1b24aae44a9eb316a3da67[m
+Author: Jesus Martin <jesus.martinsamano@gmail.com>
+Date:   Thu Jan 14 17:22:49 2021 -0600
+
+    cambios en mapas
+
+[33mcommit 015d390febc4f99046a13d8195f475d2970eaa83[m
+Author: Francisco Garces <pacogarcesgo@gmail.com>
+Date:   Tue Jan 12 12:03:38 2021 -0600
+
+    modificaciones
+
+[33mcommit 0f7ffe3374945f00f042bedcc46c8a56c4b99285[m
+Author: Jesus Martin <jesus.martinsamano@gmail.com>
+Date:   Mon Jan 11 09:36:28 2021 -0600
+
+    ---
+
+[33mcommit e3932eacca04dd20b5d701ba85a9738477d3313d[m
+Author: Jesus Martin <jesus.martinsamano@gmail.com>
+Date:   Mon Jan 11 09:34:54 2021 -0600
+
+    Correciones en maps
+
+[33mcommit cd6f728ccce2192b0a39d15b7bf09c3dd1cb2ad2[m
+Author: Francisco Garces <pacogarcesgo@gmail.com>
+Date:   Fri Jan 8 15:46:51 2021 -0600
+
+    Feedback cuando no se encuentra una camara
+
+[33mcommit f87005e048f1389e46fdc526bf82b345eb4cb4c5[m
+Author: Francisco Garces <pacogarcesgo@gmail.com>
+Date:   Fri Jan 8 15:42:23 2021 -0600
+
+    Consumo API elementos participantes
+
+[33mcommit c4d611c066fe1dc9b1e8333f66f66871150da964[m
+Author: Juan Daniel Garcia <jgarcialopez837@gmail.com>
+Date:   Fri Jan 8 10:25:32 2021 -0600
+
+    primer commit del repositorio planeacion (v 1.0)
