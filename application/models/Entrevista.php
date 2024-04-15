@@ -211,128 +211,73 @@ class Entrevista{
     public function insertNuevaPersonaEntrevistada($post){
         //Valores iniciales de retorno
         $data['status'] = true;
-        $date = date("Ymdhis");
+
         $data['Id_Persona_Entrevista'] = -1;
         $data['sqlEjecutados'] = "";
         $sqlEjecutados="";
         try{
             $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
-            if($post['Id_Seguimiento']=='SD'){
-                $sql = "INSERT
-                INTO  persona_entrevista(
-                    FechaHora_Creacion,
-                    Nombre,
-                    Ap_Paterno,
-                    Ap_Materno,
-                    Alias,
-                    Fecha_Nacimiento,
-                    CURP,
-                    Telefono,
-                    Edad,
-                    Colonia_Domicilio,
-                    Calle_Domicilio,
-                    Calle2_Domicilio,
-                    No_Exterior_Domicilio,
-                    No_Interior_Domicilio,
-                    Colonia_Detencion,
-                    Calle_Detencion,
-                    Calle2_Detencion,
-                    No_Exterior_Detencion,
-                    No_Interior_Detencion,
-                    Detenido_por,
-                    Asociado_A,
-                    Banda,
-                    Remisiones,
-                    Capturo
-                )
-                VALUES(
-                    '".$post['fechahora_captura_principales']."',
-                    '".strtoupper($post['nombre'])."',
-                    '".strtoupper($post['ap_paterno'])."',
-                    '".strtoupper($post['ap_materno'])."',
-                    '".strtoupper($post['alias'])."',
-                    '".$post['FechaNacimiento_principales']."',
-                    '".strtoupper($post['curp'])."',
-                    '".$post['num_tel']."',
-                    '".$post['edad_principales']."',
-                    '".strtoupper($post['colonia_dom'])."',
-                    '".strtoupper($post['calle_dom'])."',
-                    '".strtoupper($post['calle2_dom'])."',
-                    '".$post['numExt_dom']."',
-                    '".$post['numInt_dom']."',
-                    '".strtoupper($post['colonia_detencion'])."',
-                    '".strtoupper($post['calle_detencion'])."',
-                    '".strtoupper($post['calle2_detencion'])."',
-                    '".$post['numExt_detencion']."',
-                    '".$post['numInt_detencion']."',
-                    '".strtoupper($post['detenido_por'])."',
-                    '".strtoupper($post['asociado_a'])."',
-                    '".strtoupper($post['banda'])."',
-                    '".$post['remisiones']."',
-                    '".$post['captura_dato_entrevista']."'
-                )";
-
-            }else{
-                $sql = "INSERT
-                INTO  persona_entrevista(
-                    Id_Seguimiento,
-                    Capturado_Seguimiento,
-                    FechaHora_Creacion,
-                    Nombre,
-                    Ap_Paterno,
-                    Ap_Materno,
-                    Alias,
-                    Fecha_Nacimiento,
-                    CURP,
-                    Telefono,
-                    Edad,
-                    Colonia_Domicilio,
-                    Calle_Domicilio,
-                    Calle2_Domicilio,
-                    No_Exterior_Domicilio,
-                    No_Interior_Domicilio,
-                    Colonia_Detencion,
-                    Calle_Detencion,
-                    Calle2_Detencion,
-                    No_Exterior_Detencion,
-                    No_Interior_Detencion,
-                    Detenido_por,
-                    Asociado_A,
-                    Banda,
-                    Zona,
-                    Remisiones,
-                    Capturo
-                )
-                VALUES(
-                    ".$post['Id_Seguimiento'].",
-                    '".$post['Capturado_Seguimiento']."',
-                    '".$post['fechahora_captura_principales']."',
-                    '".strtoupper($post['nombre'])."',
-                    '".strtoupper($post['ap_paterno'])."',
-                    '".strtoupper($post['ap_materno'])."',
-                    '".strtoupper($post['alias'])."',
-                    '".$post['FechaNacimiento_principales']."',
-                    '".strtoupper($post['curp'])."',
-                    '".$post['num_tel']."',
-                    '".$post['edad_principales']."',
-                    '".strtoupper($post['colonia_dom'])."',
-                    '".strtoupper($post['calle_dom'])."',
-                    '".strtoupper($post['calle2_dom'])."',
-                    '".$post['numExt_dom']."',
-                    '".$post['numInt_dom']."',
-                    '".strtoupper($post['colonia_detencion'])."',
-                    '".strtoupper($post['calle_detencion'])."',
-                    '".strtoupper($post['calle2_detencion'])."',
-                    '".$post['numExt_detencion']."',
-                    '".$post['numInt_detencion']."',
-                    '".strtoupper($post['detenido_por'])."',
-                    '".strtoupper($post['asociado_a'])."',
-                    '".strtoupper($post['banda'])."',
-                    '".$post['zona']."',
-                    '".$post['remisiones']."',
-                    '".$post['captura_dato_entrevista']."'
-                )";
-            }
+           
+            $Red = ($post['Id_Seguimiento']=='SD')? 'NULL' : $post['Id_Seguimiento'];
+            $sql = "INSERT
+            INTO  persona_entrevista(
+                Id_Seguimiento,
+                Capturado_Seguimiento,
+                FechaHora_Creacion,
+                Nombre,
+                Ap_Paterno,
+                Ap_Materno,
+                Alias,
+                Fecha_Nacimiento,
+                CURP,
+                Telefono,
+                Edad,
+                Colonia_Domicilio,
+                Calle_Domicilio,
+                Calle2_Domicilio,
+                No_Exterior_Domicilio,
+                No_Interior_Domicilio,
+                Colonia_Detencion,
+                Calle_Detencion,
+                Calle2_Detencion,
+                No_Exterior_Detencion,
+                No_Interior_Detencion,
+                Detenido_por,
+                Asociado_A,
+                Banda,
+                Zona,
+                Remisiones,
+                Capturo
+            )
+            VALUES(
+                ".$Red.",
+                '".$post['Capturado_Seguimiento']."',
+                '".$post['fechahora_captura_principales']."',
+                '".strtoupper($post['nombre'])."',
+                '".strtoupper($post['ap_paterno'])."',
+                '".strtoupper($post['ap_materno'])."',
+                '".strtoupper($post['alias'])."',
+                '".$post['FechaNacimiento_principales']."',
+                '".strtoupper($post['curp'])."',
+                '".$post['num_tel']."',
+                '".$post['edad_principales']."',
+                '".strtoupper($post['colonia_dom'])."',
+                '".strtoupper($post['calle_dom'])."',
+                '".strtoupper($post['calle2_dom'])."',
+                '".$post['numExt_dom']."',
+                '".$post['numInt_dom']."',
+                '".strtoupper($post['colonia_detencion'])."',
+                '".strtoupper($post['calle_detencion'])."',
+                '".strtoupper($post['calle2_detencion'])."',
+                '".$post['numExt_detencion']."',
+                '".$post['numInt_detencion']."',
+                '".strtoupper($post['detenido_por'])."',
+                '".strtoupper($post['asociado_a'])."',
+                '".strtoupper($post['banda'])."',
+                '".$post['zona']."',
+                '".$post['remisiones']."',
+                '".$post['captura_dato_entrevista']."'
+            )";
             $this->db->query($sql);
             $this->db->execute();
             $this->db->query("SELECT LAST_INSERT_ID() as Id_Persona_Entrevista"); //Se recupera el Id_Persona_Entrevista que se a creado recientemente
@@ -457,8 +402,9 @@ class Entrevista{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlrecortado[0];
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Entrevista"); 
+                        $Id_Entrevista = $this->db->register()->Id_Entrevista;
+                        $sqlEjecutados.=" SE INSERTO LA ENTREVISTA ".$Id_Entrevista;
                        
                     }else{
                         //logica de update 
@@ -483,11 +429,24 @@ class Entrevista{
                             Hora_Entrevista ='". $Entrevista->row->Hora_Entrevista . "',
                             Foto ='". $Nombre_Foto . "',
                             Img_64 ='". $imagebase64 . "'
-                            WHERE Id_Entrevista  = " . $Entrevista->row->Id_Entrevista. "
-                        ";
+                            WHERE Id_Entrevista  = " . $Entrevista->row->Id_Entrevista. " AND
+                            ( 
+                                Indicativo_Entrevistador <> '" . $Entrevista->row->Indicativo_Entrevistador . "' OR
+                                Relevancia <> '" . $Entrevista->row->Relevancia . "' OR
+                                Alias_Referidos <> '" . $Entrevista->row->Alias_Referidos . "' OR
+                                Entrevista <> '" . $Descripcion . "' OR
+                                Fecha_Entrevista <> '" . $Entrevista->row->Fecha_Entrevista . "' OR
+                                Hora_Entrevista <> '" . $Entrevista->row->Hora_Entrevista . "' OR
+                                Foto <> '" . $Nombre_Foto . "' OR
+                                Img_64 <> '" . $imagebase64 . "'
+                            )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlEjecutados.=$sql;
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO LA ENTREVISTA ".$Entrevista->row->Id_Entrevista;
+                        }
+                        
                     }
                 }
              $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios           
@@ -548,9 +507,10 @@ class Entrevista{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Forensia_Entrevista"); 
+                        $Id_Forensia_Entrevista = $this->db->register()->Id_Forensia_Entrevista;
+                        $sqlEjecutados.=" SE INSERTO DATO DE ENTREVISTA ".$Id_Forensia_Entrevista;
 
                     }else{
                         //logica de update
@@ -575,11 +535,22 @@ class Entrevista{
                                     Dato_Relevante = '" .strtoupper($Dato_Relevante)."',
                                     Foto = '" .$Nombre_Foto."',
                                     Img_64 = '" .$imagebase64."'
-                                    WHERE Id_Forensia_Entrevista =".$Forensia->row->Id_Forensia_Entrevista."
-                                ";
-                     
+                                    WHERE Id_Forensia_Entrevista =".$Forensia->row->Id_Forensia_Entrevista."  AND (
+                                        Id_Dato != " . $Forensia->row->Id_Dato . " OR
+                                        Tipo_Relacion != '" . $Forensia->row->Tipo_Relacion . "' OR
+                                        Descripcion_Forensia != '" . strtoupper($Descripcion) . "' OR
+                                        Tipo_Dato != '" . $Forensia->row->Tipo_Dato . "' OR
+                                        Dato_Relevante != '" . strtoupper($Dato_Relevante) . "' OR
+                                        Foto != '" . $Nombre_Foto . "' OR
+                                        Img_64 != '" . $imagebase64 . "'
+                                    )";
+                        
                         $this->db->query($sql);
                         $this->db->execute();
+
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE ENTREVISTA  ".$Forensia->row->Id_Forensia_Entrevista;
+                        }
                     }
                 }
             }
@@ -659,8 +630,10 @@ class Entrevista{
                             )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Ubicaciones_Entrevista"); 
+                        $Id_Ubicaciones_Entrevista = $this->db->register()->Id_Ubicaciones_Entrevista;
+                        $sqlEjecutados.=" SE INSERTO UBICACION DE ENTREVISTA ".$Id_Ubicaciones_Entrevista;
                     }else{
                         //logica de update
                         if($Ubicacion->row->nameImage!='null'){
@@ -693,11 +666,31 @@ class Entrevista{
                                     Foraneo = '" .$Ubicacion->row->Foraneo."',
                                     Foto = '" .$Nombre_Foto."',
                                     Img_64 = '" .$imagebase64."'
-                                    WHERE Id_Ubicaciones_Entrevista  =".$Ubicacion->row->Id_Ubicaciones_Entrevista ;
+                                    WHERE Id_Ubicaciones_Entrevista  =".$Ubicacion->row->Id_Ubicaciones_Entrevista." AND (
+                                        Id_Dato != '" . $Ubicacion->row->Id_Dato . "' OR
+                                        Tipo_Relacion != '" . $Ubicacion->row->Tipo_Relacion . "' OR
+                                        Colonia != '" . $Ubicacion->row->Colonia . "' OR
+                                        Calle != '" . $Ubicacion->row->Calle . "' OR
+                                        Calle2 != '" . $Ubicacion->row->Calle2 . "' OR
+                                        NumExt != '" . $Ubicacion->row->NumExt . "' OR
+                                        NumInt != '" . $Ubicacion->row->NumInt . "' OR
+                                        CP != '" . $Ubicacion->row->CP . "' OR
+                                        CoordX != '" . $Ubicacion->row->CoordX . "' OR
+                                        CoordY != '" . $Ubicacion->row->CoordY . "' OR
+                                        Observaciones_Ubicacion != '" . $Observaciones_Ubicacion . "' OR
+                                        Link_Ubicacion != '" . $Ubicacion->row->Link_Ubicacion . "' OR
+                                        Estado != '" . $Ubicacion->row->Estado . "' OR
+                                        Municipio != '" . $Ubicacion->row->Municipio . "' OR
+                                        Foraneo != '" . $Ubicacion->row->Foraneo . "' OR
+                                        Foto != '" . $Nombre_Foto . "' OR
+                                        Img_64 != '" . $imagebase64 . "'
+                                    )" ;
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO UBICACION DE ENTREVISTA ".$Ubicacion->row->Id_Ubicaciones_Entrevista;
+                        }
                         
                     }
                 }
@@ -763,8 +756,9 @@ class Entrevista{
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE RED SOCIAL DE ENTREVISTA ".$Id_Registro;
 
                     }else{
                         if($RedSocial->row->nameImage!='null'){
@@ -796,10 +790,9 @@ class Entrevista{
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
-                        
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE RED SOCIAL DE ENTREVISTA ".$RedSocial->row->Id_Registro;
+                        }
                     }
                 }
             }
