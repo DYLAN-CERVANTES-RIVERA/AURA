@@ -1,6 +1,6 @@
 <?php
 class GestorCaso{
-    public $db; //Variable para instanciar el objeto PDO
+    public $db; //Variable para instanciar el objeto PDO comentario de prueba aura
     public function __construct(){
         $this->db = new Base(); //Se instancia el objeto con los métodos de PDO
     }
