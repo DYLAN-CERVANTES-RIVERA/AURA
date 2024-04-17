@@ -170,8 +170,8 @@
                         <table class="table table-bordered" id="UbicacionTable" style="text-align:center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Id Ubicacion</th>
-                                    <th scope="col">Id Relacionado</th>
+                                    <th scope="col">Id al que esta Relacionado</th>
+                                    <th scope="col">Tipo de Relacion</th>
                                     <th scope="col">Colonia</th>
                                     <th scope="col">Calle</th>
                                     <th scope="col">Calle2</th>
@@ -186,9 +186,10 @@
                                     <th scope="col">Observaciones de Ubicacion</th>
                                     <th scope="col">Link</th>
                                     <th scope="col">Foto Ubicacion</th>
+                                    <th scope="col">Id Ubicacion</th>
                                     <th scope="col">Capturo</th>
                                     <th scope="col">Editar/Eliminar</th>
-                                    <th scope="col">Tipo</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody id="contarUbicacion">

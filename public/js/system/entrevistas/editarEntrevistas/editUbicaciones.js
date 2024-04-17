@@ -114,8 +114,16 @@ const ValidatableUbicacion = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
 const InsertUbicacion= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE DOMICILIO
     let table = document.getElementById('UbicacionTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length);
-    newRow.insertCell(0).innerHTML = document.getElementById('Id_Ubicacion').value;
-    newRow.insertCell(1).innerHTML = document.getElementById('UbicacionSelect').value;
+    if(radioTipo[0].checked && document.getElementById('UbicacionSelect').value!= -1){
+        tipo = 'ENTREVISTA';
+    }else if(radioTipo[1].checked && document.getElementById('UbicacionSelect').value!= -1){
+        tipo = 'DATO';
+    }else{
+        tipo = 'SD';
+    }
+   
+    newRow.insertCell(0).innerHTML = document.getElementById('UbicacionSelect').value;
+    newRow.insertCell(1).innerHTML = tipo;
     //newRow.insertCell(2).innerHTML = document.getElementById('PersonaSelectUbicaciones').value;
 
     newRow.insertCell(2).innerHTML = document.getElementById('Colonia').value.toUpperCase();
@@ -145,22 +153,17 @@ const InsertUbicacion= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE 
                                         </div>
                                     </div>
                                     <div id="imageContentUbicacion_row${newRow.rowIndex}"></div>`;
-    newRow.insertCell(16).innerHTML =document.getElementById('captura_dato_ubicaciones').value.toUpperCase();
-    newRow.insertCell(17).innerHTML =`<button type="button" class="btn btn-add" onclick="editUbicacion(this)"> 
+    newRow.insertCell(16).innerHTML = document.getElementById('Id_Ubicacion').value;
+    newRow.insertCell(17).innerHTML = document.getElementById('captura_dato_ubicaciones').value.toUpperCase();
+    newRow.insertCell(18).innerHTML =`<button type="button" class="btn btn-add" onclick="editUbicacion(this)"> 
                                         <i class="material-icons">edit</i>
                                     </button>
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowDomicilio(this,UbicacionTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
     
-    if(radioTipo[0].checked && document.getElementById('UbicacionSelect').value!= -1){
-        tipo = 'ENTREVISTA';
-    }else if(radioTipo[1].checked && document.getElementById('UbicacionSelect').value!= -1){
-        tipo = 'DATO';
-    }else{
-        tipo = 'SD';
-    }
-    newRow.insertCell(18).innerHTML = tipo;
+
+    
     //newRow.cells[0].style.display = "none";
     //newRow.cells[1].style.display = "none";
 }
@@ -181,28 +184,38 @@ const ResetFormUbicacion = async ()=>{//FUNCION QUE LIMPIA LA VISTA
     document.getElementById('Link_Ubicacion').value='';
     radioTipo[2].checked = true;
     await changeTipoUbicacion();
+    map.flyTo({
+        center: [-98.20868494860592, 19.040296987811555],
+        zoom: 11,
+        essential: true
+        });
+        marker.setLngLat([-98.20868494860592, 19.040296987811555])
 }
 const editUbicacion = async (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
     document.getElementById('alertaEditUbicacion').style.display = 'block';
     selectedRowUbicaciones = obj.parentElement.parentElement;
-    if(selectedRowUbicaciones.cells[18].innerHTML =='ENTREVISTA' ){
+    if(selectedRowUbicaciones.cells[1].innerHTML =='ENTREVISTA' ){
         radioTipo[0].checked = true;
-    }else if(selectedRowUbicaciones.cells[18].innerHTML =='DATO'){
+    }else if(selectedRowUbicaciones.cells[1].innerHTML =='DATO'){
         radioTipo[1].checked = true;
     }else{
         radioTipo[2].checked = true;
     }
     await changeTipoUbicacion();
-    document.getElementById('Id_Ubicacion').value = selectedRowUbicaciones.cells[0].innerHTML;
-    document.getElementById('UbicacionSelect').value = selectedRowUbicaciones.cells[1].innerHTML;
+
+    document.getElementById('cordY').value=selectedRowUbicaciones.cells[8].innerHTML
+    document.getElementById('cordX').value=selectedRowUbicaciones.cells[9].innerHTML
+    await getColoniasCalles();
+
+    document.getElementById('Id_Ubicacion').value = selectedRowUbicaciones.cells[16].innerHTML;
+    document.getElementById('UbicacionSelect').value = selectedRowUbicaciones.cells[0].innerHTML;
     document.getElementById('Colonia').value=selectedRowUbicaciones.cells[2].innerHTML
     document.getElementById('Calle').value=selectedRowUbicaciones.cells[3].innerHTML
     document.getElementById('Calle2').value=(selectedRowUbicaciones.cells[4].innerHTML!='SD')?selectedRowUbicaciones.cells[4].innerHTML:'';
     document.getElementById('no_Ext').value=(selectedRowUbicaciones.cells[5].innerHTML!='SD')?selectedRowUbicaciones.cells[5].innerHTML:'';
     document.getElementById('no_Int').value=(selectedRowUbicaciones.cells[6].innerHTML!='SD')?selectedRowUbicaciones.cells[6].innerHTML:'';
     document.getElementById('CP').value=(selectedRowUbicaciones.cells[7].innerHTML!='SD')?selectedRowUbicaciones.cells[7].innerHTML:'';
-    document.getElementById('cordY').value=selectedRowUbicaciones.cells[8].innerHTML
-    document.getElementById('cordX').value=selectedRowUbicaciones.cells[9].innerHTML
+  
     radio = document.getElementsByName('ubicacion_puebla')
     if(selectedRowUbicaciones.cells[12].innerHTML=='NO'){
         radio[0].checked=true;
@@ -224,8 +237,17 @@ const editUbicacion = async (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS
     });
 }
 const UpdateRowUbicacion=()=>{
-    selectedRowUbicaciones.cells[0].innerHTML = document.getElementById('Id_Ubicacion').value;
-    selectedRowUbicaciones.cells[1].innerHTML = document.getElementById('UbicacionSelect').value; 
+    if(radioTipo[0].checked  && document.getElementById('UbicacionSelect').value!= -1){
+        tipo = 'ENTREVISTA';
+    }else if(radioTipo[1].checked  && document.getElementById('UbicacionSelect').value!= -1){
+        tipo = 'DATO';
+    }else{
+        tipo = 'SD';
+    }
+    
+    
+    selectedRowUbicaciones.cells[0].innerHTML = document.getElementById('UbicacionSelect').value; 
+    selectedRowUbicaciones.cells[1].innerHTML = tipo;
     selectedRowUbicaciones.cells[2].innerHTML = document.getElementById('Colonia').value.toUpperCase();
     selectedRowUbicaciones.cells[3].innerHTML = document.getElementById('Calle').value.toUpperCase();
     selectedRowUbicaciones.cells[4].innerHTML = (document.getElementById('Calle2').value!='')?document.getElementById('Calle2').value.toUpperCase():'SD';
@@ -247,14 +269,7 @@ const UpdateRowUbicacion=()=>{
     }
     selectedRowUbicaciones.cells[13].innerHTML =(document.getElementById('Observacion_Ubicacion_descripcion').value!='')?document.getElementById('Observacion_Ubicacion_descripcion').value.toUpperCase():'SD';
     selectedRowUbicaciones.cells[14].innerHTML =(document.getElementById('Link_Ubicacion').value.trim()!='')?document.getElementById('Link_Ubicacion').value:'SD';
-    if(radioTipo[0].checked  && document.getElementById('UbicacionSelect').value!= -1){
-        tipo = 'ENTREVISTA';
-    }else if(radioTipo[1].checked  && document.getElementById('UbicacionSelect').value!= -1){
-        tipo = 'DATO';
-    }else{
-        tipo = 'SD';
-    }
-    selectedRowUbicaciones.cells[18].innerHTML = tipo;
+    selectedRowUbicaciones.cells[16].innerHTML = document.getElementById('Id_Ubicacion').value;
     document.getElementById('alertaEditUbicacion').style.display = 'none';
     selectedRowUbicaciones= null;
 }
@@ -354,7 +369,7 @@ function createElementFotoUbicacion(src, index, type, view) {//FUNCION PARA LA V
         div.innerHTML = `<div class="d-flex justify-content-end">
                             <span onclick="deleteImageFotoUbicacion(${index})" class="deleteFile">X</span>
                         </div>
-                        <img name="nor" src="${src}" id="imagesUbicacion_row_${index}" width="400px" data-toggle="modal" data-target="#ModalCenterUbicacion${index}">
+                        <img name="nor" src="${src}" id="imagesUbicacion_row_${index}" width="250px" data-toggle="modal" data-target="#ModalCenterUbicacion${index}">
                         <input type="hidden" class="${index} ${type}"/>
                         <div class="modal fade " id="ModalCenterUbicacion${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -464,9 +479,10 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                         .then(myBase64 => {
                             objetos.push({
                                 ['row']: {
-                                    Id_Ubicaciones_Entrevista : table.rows[i].cells[0].innerHTML,
+                                    
                                     Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                                    Id_Dato: table.rows[i].cells[1].innerHTML,
+                                    Id_Dato: table.rows[i].cells[0].innerHTML,
+                                    Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                                     Colonia: table.rows[i].cells[2].innerHTML,
                                     Calle: table.rows[i].cells[3].innerHTML,
                                     Calle2: table.rows[i].cells[4].innerHTML,
@@ -480,21 +496,21 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                                     Foraneo: table.rows[i].cells[12].innerHTML,
                                     Observaciones_Ubicacion: table.rows[i].cells[13].innerHTML,
                                     Link_Ubicacion: table.rows[i].cells[14].innerHTML,
-                                    Capturo: table.rows[i].cells[16].innerHTML,
+                                    Id_Ubicaciones_Entrevista : table.rows[i].cells[16].innerHTML,
+                                    Capturo: table.rows[i].cells[17].innerHTML,
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64,
-                                    Tipo_Relacion: table.rows[i].cells[18].innerHTML
+                                    imagebase64:myBase64
                                 }
                             });
                         })
                 } else {//esto es para tipo photo osea que ya se encuentran en el servidor un archivo fisico con extension png
                     objetos.push({
                         ['row']: {
-                            Id_Ubicaciones_Entrevista : table.rows[i].cells[0].innerHTML,
                             Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                            Id_Dato: table.rows[i].cells[1].innerHTML,
+                            Id_Dato: table.rows[i].cells[0].innerHTML,
+                            Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                             Colonia: table.rows[i].cells[2].innerHTML,
                             Calle: table.rows[i].cells[3].innerHTML,
                             Calle2: table.rows[i].cells[4].innerHTML,
@@ -508,12 +524,12 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                             Foraneo: table.rows[i].cells[12].innerHTML,
                             Observaciones_Ubicacion: table.rows[i].cells[13].innerHTML,
                             Link_Ubicacion: table.rows[i].cells[14].innerHTML,
-                            Capturo: table.rows[i].cells[16].innerHTML,
+                            Id_Ubicaciones_Entrevista : table.rows[i].cells[16].innerHTML,
+                            Capturo: table.rows[i].cells[17].innerHTML,
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src,
-                            Tipo_Relacion: table.rows[i].cells[18].innerHTML
+                            imagebase64:base64.src
                         }
                     });
                 }
@@ -522,9 +538,9 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                 let base64URL = await encodeFileAsBase64URL(aux.files[0]);
                 objetos.push({
                     ['row']: {
-                        Id_Ubicaciones_Entrevista : table.rows[i].cells[0].innerHTML,
                         Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                        Id_Dato: table.rows[i].cells[1].innerHTML,
+                        Id_Dato: table.rows[i].cells[0].innerHTML,
+                        Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                         Colonia: table.rows[i].cells[2].innerHTML,
                         Calle: table.rows[i].cells[3].innerHTML,
                         Calle2: table.rows[i].cells[4].innerHTML,
@@ -538,21 +554,21 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                         Foraneo: table.rows[i].cells[12].innerHTML,
                         Observaciones_Ubicacion: table.rows[i].cells[13].innerHTML,
                         Link_Ubicacion: table.rows[i].cells[14].innerHTML,
-                        Capturo: table.rows[i].cells[16].innerHTML,
+                        Id_Ubicaciones_Entrevista : table.rows[i].cells[16].innerHTML,
+                        Capturo: table.rows[i].cells[17].innerHTML,
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL,
-                        Tipo_Relacion: table.rows[i].cells[18].innerHTML
+                        imagebase64:base64URL
                     }
                 });
             }
         } else {//si no hay imagen solo almacena los datos el texto 
             objetos.push({
                 ['row']: {
-                    Id_Ubicaciones_Entrevista : table.rows[i].cells[0].innerHTML,
                     Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                    Id_Dato: table.rows[i].cells[1].innerHTML,
+                    Id_Dato: table.rows[i].cells[0].innerHTML,
+                    Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                     Colonia: table.rows[i].cells[2].innerHTML,
                     Calle: table.rows[i].cells[3].innerHTML,
                     Calle2: table.rows[i].cells[4].innerHTML,
@@ -566,12 +582,12 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
                     Foraneo: table.rows[i].cells[12].innerHTML,
                     Observaciones_Ubicacion: table.rows[i].cells[13].innerHTML,
                     Link_Ubicacion: table.rows[i].cells[14].innerHTML,
-                    Capturo: table.rows[i].cells[16].innerHTML,
+                    Id_Ubicaciones_Entrevista : table.rows[i].cells[16].innerHTML,
+                    Capturo: table.rows[i].cells[17].innerHTML,
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null",
-                    Tipo_Relacion: table.rows[i].cells[18].innerHTML
+                    imagebase64:"null"
                 }
             });
         }

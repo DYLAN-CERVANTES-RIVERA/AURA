@@ -97,6 +97,12 @@ const editForencia = (obj) => {//FUNCION QUE EDITA LA TABLA DE FORENSIA TOMANDO 
     document.getElementById('Id_Forencia').value=selectedRowForencias.cells[1].innerHTML;
     document.getElementById('PersonaSelectForencias').value=selectedRowForencias.cells[2].innerHTML;
     document.getElementById('forencia_descripcion').value=selectedRowForencias.cells[3].innerHTML;
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const UpdateRowForencias=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE FORENSIA
     selectedRowForencias.cells[0].innerHTML=document.getElementById("PersonaSelectForencias").options[document.getElementById("PersonaSelectForencias").selectedIndex].text;

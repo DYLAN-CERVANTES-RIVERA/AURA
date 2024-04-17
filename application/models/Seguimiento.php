@@ -354,8 +354,9 @@ class Seguimiento{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Persona"); 
+                        $Id_Persona = $this->db->register()->Id_Persona;
+                        $sqlEjecutados.=" SE INSERTO PERSONA A RED DE VINCULO ".$Id_Persona.' '.$Persona->row->Nombre.' '.$Persona->row->Ap_Paterno;
 
                     }else{
                         $Alias=$this->remplazoCadena($Persona->row->Alias);
@@ -387,13 +388,28 @@ class Seguimiento{
                                     Foto = '" . $Nombre_Foto."',
                                     Img_64 = '" . $imagebase64 ."'
                                     WHERE Id_Persona=".$Persona->row->Id_Persona."
-                                ";
+                                    AND (
+                                        Nombre != '" . $Persona->row->Nombre . "'
+                                        OR Ap_Paterno != '" . $Persona->row->Ap_Paterno . "'
+                                        OR Ap_Materno != '" . $Persona->row->Ap_Materno . "'
+                                        OR Genero != '" . $Persona->row->Genero . "'
+                                        OR Edad != '" . $Persona->row->Edad . "'
+                                        OR Fecha_Nacimiento != '" . $Persona->row->Fecha_Nacimiento . "'
+                                        OR Telefono != '" . $Persona->row->Telefono . "'
+                                        OR Alias != '" . $Alias . "'
+                                        OR Curp != '" . $Persona->row->Curp . "'
+                                        OR Remisiones != '" . $Persona->row->Remisiones . "'
+                                        OR Rol != '" . $Persona->row->Rol . "'
+                                        OR Capturo != '" . $Persona->row->Capturo . "'
+                                        OR Foto != '" . $Nombre_Foto . "'
+                                        OR Img_64 != '" . $imagebase64 . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
 
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO PERSONA DE RED DE VINCULO ".$Persona->row->Id_Persona.' '.$Persona->row->Nombre.' '.$Persona->row->Ap_Paterno;
+                        }
                     }
 
                 }
@@ -468,8 +484,10 @@ class Seguimiento{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Vehiculo"); 
+                        $Id_Vehiculo = $this->db->register()->Id_Vehiculo;
+                        $sqlEjecutados.=" SE INSERTO UN VEHICULO A LA RED DE VINCULO ".$Id_Vehiculo.' '.$Vehiculo->row->Placas;
 
                     }else{
                         if($Vehiculo->row->nameImage!='null'){
@@ -496,13 +514,23 @@ class Seguimiento{
                                     Foto = '" . $Nombre_Foto."',
                                     Img_64 = '" . $imagebase64 ."'
                                     WHERE Id_Vehiculo=".$Vehiculo->row->Id_Vehiculo."
-                                ";
+                                    AND (
+                                        Placas != '" . $Vehiculo->row->Placas . "'
+                                        OR Nivs != '" . $Vehiculo->row->Nivs . "'
+                                        OR Marca != '" . $Vehiculo->row->Marca . "'
+                                        OR Submarca != '" . $Vehiculo->row->Submarca . "'
+                                        OR Modelo != '" . $Vehiculo->row->Modelo . "'
+                                        OR Color != '" . $Vehiculo->row->Color . "'
+                                        OR Nombre_Propietario != '" . $Vehiculo->row->Nombre_Propietario . "'
+                                        OR InfoPlaca != '" . $Vehiculo->row->InfoPlaca . "'
+                                        OR Foto != '" . $Nombre_Foto . "'
+                                        OR Img_64 != '" . $imagebase64 . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        ///$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
-
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO VEHICULO A LA RED DE VINCULO ".$Vehiculo->row->Id_Vehiculo.' '.$Vehiculo->row->Placas;
+                        }
                     }
 
                 }
@@ -570,7 +598,11 @@ class Seguimiento{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sql;
+
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Domicilio"); 
+                        $Id_Domicilio = $this->db->register()->Id_Domicilio;
+                        $sqlEjecutados.=" SE INSERTO UN DOMICILIO A LA RED DE VINCULO ".$Id_Domicilio;
+
                     }else{     
                         $sql=" UPDATE domicilios
                                 SET Id_Dato = " .$Domicilio->row->Id_Dato  .",
@@ -589,12 +621,28 @@ class Seguimiento{
                                     Municipio = '" . $Domicilio->row->Municipio."',
                                     Foraneo = '" . $Domicilio->row->Foraneo."'
                                     WHERE Id_Domicilio =".$Domicilio->row->Id_Domicilio."
-                                ";
+                                    AND (
+                                        Id_Dato != " . $Domicilio->row->Id_Dato . "
+                                        OR Tipo_Entidad != '" . $Domicilio->row->Tipo_Entidad . "'
+                                        OR Estatus != '" . $Domicilio->row->Estatus . "'
+                                        OR Colonia != '" . $Domicilio->row->Colonia . "'
+                                        OR Calle != '" . $Domicilio->row->Calle . "'
+                                        OR Calle2 != '" . $Domicilio->row->Calle2 . "'
+                                        OR NumExt != '" . $Domicilio->row->NumExt . "'
+                                        OR NumInt != '" . $Domicilio->row->NumInt . "'
+                                        OR CP != '" . $Domicilio->row->CP . "'
+                                        OR CoordX != '" . $Domicilio->row->CoordX . "'
+                                        OR CoordY != '" . $Domicilio->row->CoordY . "'
+                                        OR Observaciones_Ubicacion != '" . $Domicilio->row->Observaciones_Ubicacion . "'
+                                        OR Estado != '" . $Domicilio->row->Estado . "'
+                                        OR Municipio != '" . $Domicilio->row->Municipio . "'
+                                        OR Foraneo != '" . $Domicilio->row->Foraneo . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sql;
-
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO UN DOMICILIO DE LA RED DE VINCULO ".$Domicilio->row->Id_Domicilio;
+                        }
                     }
 
                 }
@@ -638,7 +686,9 @@ class Seguimiento{
                         )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sql;
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Antecedente"); 
+                        $Id_Antecedente = $this->db->register()->Id_Antecedente;
+                        $sqlEjecutados.=" SE INSERTO UN ANTECEDENTE A LA RED DE VINCULO ".$Id_Antecedente." RELACIONADO A ".$Antecendente->row->Tipo_Entidad." ".$Antecendente->row->Id_Dato;
 
                     }else{
                         $Descripcion=$this->remplazoCadena($Antecendente->row->Descripcion_Antecedente);
@@ -648,11 +698,17 @@ class Seguimiento{
                                     Descripcion_Antecedente = '" .$Descripcion."',
                                     Fecha_Antecedente = '" .$Antecendente->row->Fecha_Antecedente."'
                                     WHERE Id_Antecedente =".$Antecendente->row->Id_Antecedente."
-                                ";
+                                    AND (
+                                        Id_Dato != " . $Antecendente->row->Id_Dato . "
+                                        OR Tipo_Entidad != '" . $Antecendente->row->Tipo_Entidad . "'
+                                        OR Descripcion_Antecedente != '" . $Descripcion . "'
+                                        OR Fecha_Antecedente != '" . $Antecendente->row->Fecha_Antecedente . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sql;
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO UN ANTECEDENTE DE LA RED DE VINCULO ".$Antecendente->row->Id_Antecedente." RELACIONADO A ".$Antecendente->row->Tipo_Entidad." ".$Antecendente->row->Id_Dato;
+                        }
                     }
                 }
             }
@@ -705,8 +761,10 @@ class Seguimiento{
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Forencia"); 
+                        $Id_Forencia = $this->db->register()->Id_Forencia;
+                        $sqlEjecutados.=" SE INSERTO UN DATO A LA RED DE VINCULO ".$Id_Forencia." RELACIONADO A LA PERSONA ".$Forencia->row->Id_Persona;
+                 
 
                     }else{
                         if($Forencia->row->nameImage!='null'){
@@ -726,14 +784,18 @@ class Seguimiento{
                                     Foto_Nombre = '" .$Nombre_Foto."',
                                     Img_64 = '" .$imagebase64."'
                                     WHERE Id_Forencia =".$Forencia->row->Id_Forencia."
-                                ";
+                                    AND (
+                                        Id_Persona != " . $Forencia->row->Id_Persona . "
+                                        OR Descripcion_Forencia != '" . $Descripcion . "'
+                                        OR Foto_Nombre != '" . $Nombre_Foto . "'
+                                        OR Img_64 != '" . $imagebase64 . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
-                        
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO UN DATO DE LA RED DE VINCULO ".$Forencia->row->Id_Forencia." RELACIONADO A LA PERSONA ".$Forencia->row->Id_Persona;
+                        }
                     }
                 }
             }
@@ -794,8 +856,9 @@ class Seguimiento{
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        $sqlrecortado=explode(";base64", strtolower($sql));
-                        $sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO UN DATO DE REDES SOCIALES A LA RED DE VINCULO ".$Id_Registro." RELACIONADO A LA PERSONA ".$RedSocial->row->Id_Persona;
 
                     }else{
                         if($RedSocial->row->nameImage!='null'){
@@ -821,14 +884,22 @@ class Seguimiento{
                                     Foto_Nombre = '" .$Nombre_Foto."',
                                     Img_64 = '" .$imagebase64."'
                                     WHERE Id_Registro  =".$RedSocial->row->Id_Registro ."
-                                ";
+                                    AND (
+                                        Id_Persona != " . $RedSocial->row->Id_Persona . "
+                                        OR Usuario != '" . $Usuario . "'
+                                        OR Tipo_Enlace != '" . $RedSocial->row->Tipo_Enlace . "'
+                                        OR Enlace != '" . $Enlace . "'
+                                        OR Observacion_Enlace != '" . $Observacion_Enlace . "'
+                                        OR Capturo != '" . $RedSocial->row->Capturo . "'
+                                        OR Foto_Nombre != '" . $Nombre_Foto . "'
+                                        OR Img_64 != '" . $imagebase64 . "'
+                                    )";
                         $this->db->query($sql);
                         $this->db->execute();
                         
-                        //$sqlrecortado=explode(";base64", strtolower($sql));
-                        //$sqlEjecutados.=$sqlEjecutados.' '.$sqlrecortado[0];
-                        
-                        //logica de update
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO UN DATO DE REDES SOCIALES A LA RED DE VINCULO ".$RedSocial->row->Id_Registro." RELACIONADO A LA PERSONA ".$RedSocial->row->Id_Persona;
+                        }
                     }
                 }
             }

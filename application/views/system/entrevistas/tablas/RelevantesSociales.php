@@ -84,16 +84,18 @@
                         <table class="table table-bordered" id="RedsocialTable" style="text-align:center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Id Registro</th>
-                                    <th scope="col">Id  Relacionad</th>
+                                    
+                                    <th scope="col">Id al que esta Relacionado</th>
+                                    <th scope="col">Tipo de Relacion</th>
                                     <th scope="col">Nombre Usuario</th>
                                     <th scope="col">Enlace(url)</th>
                                     <th scope="col">Tipo de Enlace</th>
                                     <th scope="col">Observacion</th>
                                     <th scope="col">Foto</th>
+                                    <th scope="col">Id Registro</th>
                                     <th scope="col">Capturo</th>
                                     <th scope="col">Editar/Eliminar</th>
-                                    <th scope="col">Tipo</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody id="contarRedsocial">

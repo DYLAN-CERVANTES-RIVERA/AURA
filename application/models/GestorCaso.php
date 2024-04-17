@@ -81,6 +81,7 @@ class GestorCaso{
 
             if (isset($post['delitos_table'])) {// Si existen datos de los delitos los escribe en la tabla delitos_asociados_evento
                 $delitosArray = json_decode($post['delitos_table']);
+                $sqlEjecutados.=" DELITOS DEL EVENTO: ";
                 foreach ($delitosArray as $delito) {
                     $sql = "INSERT
                     INTO delitos_asociados_evento(
@@ -96,12 +97,13 @@ class GestorCaso{
                     ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados=$sqlEjecutados.' '.$sql;
+                    $sqlEjecutados.=$delito->row->descripcion.' ';
                 }    
             }
 
             if (isset($post['hechos_table'])) {// Si existen datos de los hechos los escribe en la tabla historico_descripcion_hecho
                 $hechosArray = json_decode($post['hechos_table']);
+                $sqlEjecutados.=" HECHOS REPORTADOS DEL EVENTO: ";
                 foreach ($hechosArray as $hecho) {
                     $descripcion=$this->remplazoCadena($hecho->row->descripcion);
                     $sql = "INSERT
@@ -118,7 +120,7 @@ class GestorCaso{
                     ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados=$sqlEjecutados.' '.$sql;
+                    $sqlEjecutados.=$descripcion.' ';
                 }
             }
             
@@ -171,8 +173,9 @@ class GestorCaso{
                     )";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlrecortado = explode(";base64", strtolower($sql));
-                    $sqlEjecutados = $sqlEjecutados.' '.$sqlrecortado[0];
+                    $this->db->query("SELECT LAST_INSERT_ID() as Id_Veh"); 
+                    $Id_Veh = $this->db->register()->Id_Veh;
+                    $sqlEjecutados.=" SE INSERTO UN VEHICULO ".$Id_Veh;               
                     if($vehiculo->row->tipo_vehiculo_involucrado == 'RESPONSABLE'){
                         $ContVehiculos++;
                     }
@@ -188,13 +191,11 @@ class GestorCaso{
                 }
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; 
 
             }else{
                 $sql = "UPDATE evento SET Conteo_Vehiculos = 'SIN VEHICULOS' WHERE Folio_infra = ".$Folio_infra;
                 $this->db->query($sql);
                 $this->db->execute(); 
-                $sqlEjecutados=$sqlEjecutados.' '.$sql;
             }
 
             if (isset($post['responsables_table'])) {//Si existen datos de los probables responsables los escribe en la tabla de personasp
@@ -242,8 +243,11 @@ class GestorCaso{
                     ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlrecortado=explode(";base64", strtolower($sql));
-                    $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];
+
+                    $this->db->query("SELECT LAST_INSERT_ID() as Id_Per"); 
+                    $Id_Per = $this->db->register()->Id_Per;
+                    $sqlEjecutados.=" SE INSERTO UN INVOLUCRADO ".$Id_Per;
+
                     if($responsable->row->sexo=="MASCULINO"){
                         $ContMasculinos++;
                     }
@@ -262,7 +266,6 @@ class GestorCaso{
                 }
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; 
                 if($ContFemeninas==0){
                     $sql = "UPDATE evento SET Conteo_Femeninas= 'SIN FEMENINAS' WHERE Folio_infra= ".$Folio_infra;
                 }else{
@@ -274,13 +277,11 @@ class GestorCaso{
                 }
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql;
 
             }else{
                 $sql = "UPDATE evento SET Conteo_Masculinos= 'SIN MASCULINOS',Conteo_Femeninas = 'SIN FEMENINAS' WHERE Folio_infra = ".$Folio_infra;
                 $this->db->query($sql);
-                $this->db->execute();
-                $sqlEjecutados = $sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
+                $this->db->execute(); 
             }
 
             $data['Folio_infra'] = $Folio_infra; 
@@ -648,10 +649,40 @@ class GestorCaso{
                     Path_Pdf = '" . $post['nombre_pdf'] . "',
                     ClaveSeguimiento ='". trim($post['ClaveSeguimiento']) . "'
                     WHERE Folio_infra = " . trim($post['Folio_infra']) . "
-                ";
+                    AND (
+                        Folio_911 != '" . trim($post['911_principales']) . "'
+                        OR FechaHora_Recepcion != '" . $post['fecha_evento_principales'] . ' ' . $post['hora_evento_principales'] . "'
+                        OR Zona != '" . trim($post['zona']) . "'
+                        OR Vector != '" . trim($post['vector']) . "'
+                        OR Colonia != '" . $this->remplazoCadena($post['Colonia']) . "'
+                        OR Calle != '" . $this->remplazoCadena($post['Calle']) . "'
+                        OR Calle2 != '" . $this->remplazoCadena($post['Calle2']) . "'
+                        OR NoExt != '" . trim($post['no_Ext']) . "'
+                        OR CP != '" . trim($post['CP']) . "'
+                        OR CoordX != '" . trim($post['cordX']) . "'
+                        OR CoordY != '" . trim($post['cordY']) . "'
+                        OR CSviolencia != '" . trim($post['CSviolencia']) . "'
+                        OR Tipo_Violencia != '" . trim($post['violencia_principales']) . "'
+                        OR FechaHora_Activacion != '" . trim($post['FechaHora_Activacion']) . "'
+                        OR Fuente != '" . trim($post['fuente_principales']) . "'
+                        OR Status_Seguimiento != '" . $post['Habilitado'] . "'
+                        OR Quien_Habilito != '" . trim($post['Quien_Habilito']) . "'
+                        OR Status_Evento != '" . trim($post['Estatus_Evento']) . "'
+                        OR Unidad_Primer_R != '" . $this->remplazoCadena($post['Unidad_Primer_R']) . "'
+                        OR Informacion_Primer_R != '" . $this->remplazoCadena($post['Informacion_Primer_R']) . "'
+                        OR Acciones != '" . $this->remplazoCadena($post['Acciones']) . "'
+                        OR Turno != '" . $this->remplazoCadena($post['Turno']) . "'
+                        OR Responsable_Turno != '" . $this->remplazoCadena($post['Responsable_Turno']) . "'
+                        OR Semana != " . $post['Semana'] . "
+                        OR Ubo_Detencion != " . $post['Ubo_Detencion'] . "
+                        OR Path_Pdf != '" . $post['nombre_pdf'] . "'
+                        OR ClaveSeguimiento != '". trim($post['ClaveSeguimiento']) . "'
+                    )";
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados = $sqlEjecutados.' '.$sql;
+                if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                    $sqlEjecutados.=" SE ACTUALIZO LA EVENTO EN DATOS PRINCIPALES ".$sql;
+                }
 
             }else{
                 $response['folio'] = "No hay folio infra";
@@ -664,6 +695,7 @@ class GestorCaso{
                 $this->db->query($sql);
                 $this->db->execute();
                 $delitosArray = json_decode($post['delitos_table']);
+                $sqlEjecutados.=" DELITOS DEL EVENTO: ";
                 $cad=" ";
                 foreach ($delitosArray as $delito) {
                     //se inserta delito asociado al evento
@@ -681,7 +713,7 @@ class GestorCaso{
                     ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados=$sqlEjecutados.' '.$sql;
+                    $sqlEjecutados.=$delito->row->descripcion.' ';
                 }
            
             }
@@ -691,6 +723,7 @@ class GestorCaso{
                 $this->db->query($sql);
                 $this->db->execute();
                 $hechosArray = json_decode($post['hechos_table']);
+                $sqlEjecutados.=" HECHOS REPORTADOS DEL EVENTO: ";
                 foreach ($hechosArray as $hecho) {
                      //se inserta el hecho asociado al evento
                      $descripcionH=$this->remplazoCadena($hecho->row->descripcion);
@@ -708,14 +741,13 @@ class GestorCaso{
                     ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados=$sqlEjecutados.' '.$sql;
+                    $sqlEjecutados.=$descripcionH.' ';
                 }
             }
             if (isset($post['vehiculos_table'])) {// Si existen datos de la tabla vehiculos
                 $vehiculosArray = json_decode($post['vehiculos_table']);
                 $ContVehiculos = 0;
                 foreach ($vehiculosArray as $vehiculo) {
-                    
                     $name = '';
                     if($vehiculo->row->typeImage!='null'){//Se genera el nombre de la foto en caso de exista
                         if ($vehiculo->row->typeImage == 'File') {
@@ -761,6 +793,11 @@ class GestorCaso{
                             '" . $vehiculo->row->Ultima_Actualizacion. "'
                         )
                         ";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Veh"); 
+                        $Id_Veh = $this->db->register()->Id_Veh;
+                        $sqlEjecutados.=" SE INSERTO UN VEHICULO ".$Id_Veh;
                     }else{
                         $sql ="UPDATE vehiculo_p SET
                             Tipo_Vehiculo = '" . $vehiculo->row->tipo_vehiculo."',
@@ -775,12 +812,27 @@ class GestorCaso{
                             Path_Imagen = '" . $name."',
                             img_64 = '" . $vehiculo->row->imagebase64."',
                             Estado_Veh = '" . $vehiculo->row->estado_veh."'
-                            WHERE Id_Vehiculo = ".$vehiculo->row->Id_Vehiculo;
+                            WHERE Id_Vehiculo = ".$vehiculo->row->Id_Vehiculo. " 
+                            AND (
+                                Tipo_Vehiculo != '" . $vehiculo->row->tipo_vehiculo . "'
+                                OR Marca != '" . $vehiculo->row->marca . "'
+                                OR Submarca != '" . $vehiculo->row->submarca . "'
+                                OR Modelo != '" . $vehiculo->row->modelo . "'
+                                OR Placas_Vehiculo != '" . $vehiculo->row->placas . "'
+                                OR Color != '" . $this->remplazoCadena($vehiculo->row->color) . "'
+                                OR Descripcion_gral != '" . $this->remplazoCadena($vehiculo->row->descripcionV) . "'
+                                OR Tipo_veh_invo != '" . $vehiculo->row->tipo_vehiculo_involucrado . "'
+                                OR Ultima_Actualizacion != '" . $vehiculo->row->Ultima_Actualizacion . "'
+                                OR img_64 != '" . $vehiculo->row->imagebase64 . "'
+                                OR Estado_Veh != '" . $vehiculo->row->estado_veh . "'
+                            )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO VEHICULO ".$vehiculo->row->Id_Vehiculo;
+                        }
                     }
-                    $this->db->query($sql);
-                    $this->db->execute();
-                    $sqlrecortado=explode(";base64", strtolower($sql));
-                    $sqlEjecutados = $sqlEjecutados.' '.$sqlrecortado[0];
+                    
                     if($vehiculo->row->tipo_vehiculo_involucrado == 'RESPONSABLE'){
                         $ContVehiculos++;
                     }
@@ -797,15 +849,11 @@ class GestorCaso{
                 }
                 $this->db->query($sql);
                 $this->db->execute(); 
-                $sqlEjecutados = $sqlEjecutados.' '.$sql;
                 
             }else{//en caso de que no exista ningun vehiculo actualiza sin vehiculos
                 $sql = "UPDATE evento SET Conteo_Vehiculos = 'SIN VEHICULOS' WHERE Folio_infra= ".$post['Folio_infra'];
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; 
-                //$sql = "DELETE FROM vehiculo_p WHERE Folio_infra = " . trim($post['Folio_infra']) . "";
-           
             }
 
             if (isset($post['responsables_table'])) {// pregunta si existen datos de la tabla de involucrados
@@ -852,8 +900,12 @@ class GestorCaso{
                             '" . $responsable->row->estado_res . "',
                             '" . $responsable->row->capturo . "',
                             '" . $responsable->row->Ultima_Actualizacion . "'
-                        )
-                        ";
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Per"); 
+                        $Id_Per = $this->db->register()->Id_Per;
+                        $sqlEjecutados.=" SE INSERTO UN INVOLUCRADO ".$Id_Per;
                     }else{
                         $sql=" UPDATE persona_p
                         SET Sexo = '" . $responsable->row->sexo  ."',
@@ -866,25 +918,32 @@ class GestorCaso{
                             Ultima_Actualizacion = '" . $responsable->row->Ultima_Actualizacion ."',
                             img_64 = '" . $responsable->row->imagebase64  ."'
                             WHERE Id_Responsable = ".$responsable->row->Id_Responsable."
-                        ";
+                            AND (
+                                Sexo != '" . $responsable->row->sexo . "'
+                                OR Rango_Edad != '" . $responsable->row->rango_edad . "'
+                                OR Complexion != '" . $responsable->row->complexion . "'
+                                OR Descripcion_Responsable != '" . $this->remplazoCadena($responsable->row->descripcionR) . "'
+                                OR Tipo_arma != '" . $responsable->row->tipo_arma . "'
+                                OR Estado_Res != '" . $responsable->row->estado_res . "'
+                                OR Ultima_Actualizacion != '" . $responsable->row->Ultima_Actualizacion . "'
+                                OR img_64 != '" . $responsable->row->imagebase64  . "'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO EL INVOLUCRADO ".$responsable->row->Id_Responsable;
+                        }
                     }
 
-                    $this->db->query($sql);
-                    $this->db->execute();
-                    $sqlrecortado=explode(";base64", strtolower($sql));
-                    $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];
                     if($responsable->row->sexo=="MASCULINO"){//hace un conteo de masculinos 
                         $ContMasculinos++;
-
                     }
                     if($responsable->row->sexo=="FEMENINO"){//hace un conteo de femeninas 
                         $ContFemeninas++;
-
                     }
                 }
                 if($ContMasculinos==0){// actualiza el conteo de los masculinos
                     $sql = "UPDATE evento SET Conteo_Masculinos= 'SIN MASCULINOS' WHERE Folio_infra= ".$post['Folio_infra'];
-
                 }else{
                     if($ContMasculinos==1){
                         $sql = "UPDATE evento SET Conteo_Masculinos= 'UN MASCULINO' WHERE Folio_infra= ".$post['Folio_infra'];
@@ -892,11 +951,10 @@ class GestorCaso{
                     }else{
                         $sql = "UPDATE evento SET Conteo_Masculinos='".$ContMasculinos." MASCULINOS' WHERE Folio_infra= ".$post['Folio_infra'];
                     }
-                  
                 }
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
+
                 if($ContFemeninas==0){// actualiza el conteo de los femeninas
                     $sql = "UPDATE evento SET Conteo_Femeninas= 'SIN FEMENINAS' WHERE Folio_infra= ".$post['Folio_infra'];
                 }else{
@@ -911,15 +969,11 @@ class GestorCaso{
                 
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
                 
             }else{
-
                 $sql = "UPDATE evento SET Conteo_Masculinos= 'SIN MASCULINOS',Conteo_Femeninas = 'SIN FEMENINAS' WHERE Folio_infra= ".$post['Folio_infra'];
                 $this->db->query($sql);
                 $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
-
             }
 
             if($post['Ubo_Detencion']==1){
@@ -967,45 +1021,66 @@ class GestorCaso{
                             '".$post['Foraneo']."',
                             '".$post['Link_Ubicacion_Det']."',
                             '" .$this->remplazoCadena($post['Observacion_Ubicacion_Det']). "'
-                        )
-                        ";
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Ubicacion_Detencion"); 
+                        $Id_Ubicacion_Detencion = $this->db->register()->Id_Ubicacion_Detencion;
+                        $sqlEjecutados.=" SE INSERTO LA UBICACION DE DETENCION  ".$Id_Ubicacion_Detencion;
                 }else{
                     //logica de update
                     $sql=" UPDATE ubicaciones_detencion_evento
-                    SET Detencion_Por_Info_Io = '" . $post['Detencion_Por_Info_Io']."',
-                        Fecha_Detencion = '" . $post['Fecha_Detencion'] ."',
-                        Compañia = '" . $this->remplazoCadena($post['Compañia']) ."',
-                        Elementos_Realizan_D = '" . $this->remplazoCadena($post['Elementos_Realizan_D'])."',
-                        Nombres_Detenidos = '" . $this->remplazoCadena($post['Nombres_Detenidos']) ."',
-                        Colonia = '" . $post['Colonia_Det'] ."',
-                        Calle = '" . $post['Calle_Det'] ."',
-                        Calle2 = '" . $post['Calle_Det2'] ."',
-                        NumExt = '" . $post['no_Ext_Det'] ."',
-                        NumInt = '" . $post['no_Int_Det'] ."',
-                        CP = '" . $post['CP_Det'] ."',
-                        CoordY = '" . $post['cordY_Det'] ."',
-                        CoordX = '" . $post['cordX_Det'] ."',
-                        Estado = '" . $post['Estado'] ."',
-                        Municipio = '" . $post['Municipio'] ."',
-                        Foraneo = '" . $post['Foraneo'] ."',
-                        Link_Ubicacion = '" . $post['Link_Ubicacion_Det'] ."',
-                        Observaciones_Detencion = '" . $this->remplazoCadena($post['Observacion_Ubicacion_Det']) ."'
-                        WHERE Id_Ubicacion_Detencion  = ".$post['Id_Ubicacion_Detencion']."
-                    ";
-
-
+                            SET Detencion_Por_Info_Io = '" . $post['Detencion_Por_Info_Io']."',
+                                Fecha_Detencion = '" . $post['Fecha_Detencion'] ."',
+                                Compañia = '" . $this->remplazoCadena($post['Compañia']) ."',
+                                Elementos_Realizan_D = '" . $this->remplazoCadena($post['Elementos_Realizan_D'])."',
+                                Nombres_Detenidos = '" . $this->remplazoCadena($post['Nombres_Detenidos']) ."',
+                                Colonia = '" . $post['Colonia_Det'] ."',
+                                Calle = '" . $post['Calle_Det'] ."',
+                                Calle2 = '" . $post['Calle_Det2'] ."',
+                                NumExt = '" . $post['no_Ext_Det'] ."',
+                                NumInt = '" . $post['no_Int_Det'] ."',
+                                CP = '" . $post['CP_Det'] ."',
+                                CoordY = '" . $post['cordY_Det'] ."',
+                                CoordX = '" . $post['cordX_Det'] ."',
+                                Estado = '" . $post['Estado'] ."',
+                                Municipio = '" . $post['Municipio'] ."',
+                                Foraneo = '" . $post['Foraneo'] ."',
+                                Link_Ubicacion = '" . $post['Link_Ubicacion_Det'] ."',
+                                Observaciones_Detencion = '" . $this->remplazoCadena($post['Observacion_Ubicacion_Det']) ."'
+                                WHERE Id_Ubicacion_Detencion  = ".$post['Id_Ubicacion_Detencion']."
+                                AND (
+                                    Detencion_Por_Info_Io != '" . $post['Detencion_Por_Info_Io'] . "'
+                                    OR Fecha_Detencion != '" . $post['Fecha_Detencion'] . "'
+                                    OR Compañia != '" . $this->remplazoCadena($post['Compañia']) . "'
+                                    OR Elementos_Realizan_D != '" . $this->remplazoCadena($post['Elementos_Realizan_D']) . "'
+                                    OR Nombres_Detenidos != '" . $this->remplazoCadena($post['Nombres_Detenidos']) . "'
+                                    OR Colonia != '" . $post['Colonia_Det'] . "'
+                                    OR Calle != '" . $post['Calle_Det'] . "'
+                                    OR Calle2 != '" . $post['Calle_Det2'] . "'
+                                    OR NumExt != '" . $post['no_Ext_Det'] . "'
+                                    OR NumInt != '" . $post['no_Int_Det'] . "'
+                                    OR CP != '" . $post['CP_Det'] . "'
+                                    OR CoordY != '" . $post['cordY_Det'] . "'
+                                    OR CoordX != '" . $post['cordX_Det'] . "'
+                                    OR Estado != '" . $post['Estado'] . "'
+                                    OR Municipio != '" . $post['Municipio'] . "'
+                                    OR Foraneo != '" . $post['Foraneo'] . "'
+                                    OR Link_Ubicacion != '" . $post['Link_Ubicacion_Det'] . "'
+                                    OR Observaciones_Detencion != '" . $this->remplazoCadena($post['Observacion_Ubicacion_Det']) . "'
+                                )";
+                    $this->db->query($sql);
+                    $this->db->execute();
+                    if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                        $sqlEjecutados.=" SE ACTUALIZO UBICACION DETENCION EVENTO ".$post['Id_Ubicacion_Detencion'];
+                    }
                 }
-                $this->db->query($sql);
-                $this->db->execute();
-                $sqlEjecutados = $sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
-
+                
             }else{
                 if($post['Id_Ubicacion_Detencion']!='SD'){
                     $sql=" UPDATE ubicaciones_detencion_evento SET Folio_infra = NULL WHERE Id_Ubicacion_Detencion  = ".$post['Id_Ubicacion_Detencion'];
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados = $sqlEjecutados.' '.$sql; //guarda los movimientos ejecutados de sql
-                    //delete o desasocion $post['Folio_infra']
                 }
             }
             $this->db->commit(); //si todo sale bien se realiza los commits
@@ -1444,13 +1519,6 @@ class GestorCaso{
         $sql ="SELECT gc_evento_filtro_1.Vector, COUNT(gc_evento_filtro_1.Vector) as VectorTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 ".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.Vector ORDER BY gc_evento_filtro_1.Vector ASC";
         $this->db->query($sql);
         $data['Vectores'] = $this->db->registers();
-        //SELECT gc_evento_filtro_1.Zona, COUNT(gc_evento_filtro_1.Zona) as ZonaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 GROUP BY gc_evento_filtro_1.Zona ORDER BY ZonaTotal DESC;
-        //SELECT gc_evento_filtro_1.delitos_concat as Delito, COUNT(gc_evento_filtro_1.delitos_concat) as DelitosTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0  GROUP BY gc_evento_filtro_1.delitos_concat ORDER BY DelitosTotal DESC;
-        //SELECT gc_evento_filtro_1.CSviolencia, COUNT(gc_evento_filtro_1.CSviolencia) as CSviolenciaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0  GROUP BY gc_evento_filtro_1.CSviolencia ORDER BY CSviolenciaTotal DESC;
-        //SELECT delitos_asociados_evento.Descripcion,COUNT(delitos_asociados_evento.Descripcion) as DelitoTotal FROM `delitos_asociados_evento` WHERE 1 GROUP BY delitos_asociados_evento.Descripcion ORDER BY DelitoTotal DESC;
-        //SELECT gc_evento_filtro_1.Dia_semana , COUNT(gc_evento_filtro_1.Dia_semana) as DiaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 GROUP BY gc_evento_filtro_1.Dia_semana ORDER by  FIELD(gc_evento_filtro_1.Dia_semana ,CONVERT('LUNES' USING utf8),CONVERT('MARTES' USING utf8),CONVERT('MIERCOLES' USING utf8),CONVERT('JUEVES' USING utf8),CONVERT('VIERNES' USING utf8),CONVERT('SABADO' USING utf8),CONVERT('DOMINGO' USING utf8))ASC
-        //SELECT gc_evento_filtro_1.Hora_trunca, COUNT(gc_evento_filtro_1.Hora_trunca) as HoraTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 GROUP BY gc_evento_filtro_1.Hora_trunca ORDER BY HoraTotal DESC;
-        //SELECT gc_evento_filtro_1.Vector, COUNT(gc_evento_filtro_1.Vector) as VectorTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 GROUP BY gc_evento_filtro_1.Vector ORDER BY gc_evento_filtro_1.Vector ASC;
         return $data;
     }
     public function getCondicionGraficas($cadena, $filtro){//conforme a los filtros y las busquedas realizadas generar la informacion para las graficas

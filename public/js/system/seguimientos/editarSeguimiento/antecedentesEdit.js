@@ -160,6 +160,12 @@ const editAntecedente = (obj) => {//FUNCION QUE EDITA LA TABLA DE ANTECEDENTES T
     }
     document.getElementById('Antecedente_descripcion').value=selectedRowAntecedentes.cells[4].innerHTML
     document.getElementById('fecha').value=(selectedRowAntecedentes.cells[5].innerHTML!='SD')?selectedRowAntecedentes.cells[5].innerHTML:'';
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const UpdateRowAntecedentes=()=>{
     if(document.getElementsByName('tipo_dato_antecendente')[0].checked){

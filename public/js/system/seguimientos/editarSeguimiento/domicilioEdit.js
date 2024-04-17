@@ -308,8 +308,14 @@ const ResetFormDomicilio = async ()=>{//FUNCION QUE LIMPIA LA VISTA
     document.getElementById('cordY').value='';
     document.getElementById('cordX').value='';
     document.getElementById('Observacion_Ubicacion_descripcion').value='';
+    map.flyTo({
+        center: [-98.20868494860592, 19.040296987811555],
+        zoom: 11,
+        essential: true
+        });
+        marker.setLngLat([-98.20868494860592, 19.040296987811555])
 }
-const editDomicilio = (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
+const editDomicilio = async(obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
     document.getElementById('alertaEditDomicilio').style.display = 'block';
     selectedRowDomicilios = obj.parentElement.parentElement;
     document.getElementById('Id_Domicilio').value=selectedRowDomicilios.cells[1].innerHTML;
@@ -328,6 +334,10 @@ const editDomicilio = (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMAN
         document.getElementById('Vehiculo_Select').classList.remove('mi_hide');
         document.getElementById('VehiculoSelect_error').innerHTML=''
     }
+    document.getElementById('cordY').value=selectedRowDomicilios.cells[11].innerHTML
+    document.getElementById('cordX').value=selectedRowDomicilios.cells[12].innerHTML
+    await getColoniasCalles();
+
     document.getElementById('Status_Domicilio').value=selectedRowDomicilios.cells[4].innerHTML
     document.getElementById('Colonia').value=selectedRowDomicilios.cells[5].innerHTML
     document.getElementById('Calle').value=selectedRowDomicilios.cells[6].innerHTML
@@ -335,8 +345,7 @@ const editDomicilio = (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMAN
     document.getElementById('no_Ext').value=(selectedRowDomicilios.cells[8].innerHTML!='SD')?selectedRowDomicilios.cells[8].innerHTML:'';
     document.getElementById('no_Int').value=(selectedRowDomicilios.cells[9].innerHTML!='SD')?selectedRowDomicilios.cells[9].innerHTML:'';
     document.getElementById('CP').value=(selectedRowDomicilios.cells[10].innerHTML!='SD')?selectedRowDomicilios.cells[10].innerHTML:'';
-    document.getElementById('cordY').value=selectedRowDomicilios.cells[11].innerHTML
-    document.getElementById('cordX').value=selectedRowDomicilios.cells[12].innerHTML
+    
     radio = document.getElementsByName('ubicacion_puebla_domicilio')
     
     if(selectedRowDomicilios.cells[15].innerHTML=='NO'){
@@ -352,6 +361,12 @@ const editDomicilio = (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS TOMAN
 
     }
     document.getElementById('Observacion_Ubicacion_descripcion').value=(selectedRowDomicilios.cells[16].innerHTML!='SD')?selectedRowDomicilios.cells[16].innerHTML:'';
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const UpdateRowDomicilio=()=>{
     if(document.getElementsByName('tipo_dato')[0].checked){

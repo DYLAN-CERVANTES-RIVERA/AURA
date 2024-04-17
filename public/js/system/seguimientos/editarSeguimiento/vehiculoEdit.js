@@ -312,6 +312,12 @@ const editVehiculo = (obj) => {//FUNCION QUE EDITA LA TABLA DE VEHICULOS TOMANDO
     document.getElementById('NombrePropietario').value=(selectedRowVehiculo.cells[6].innerHTML!='SD')?selectedRowVehiculo.cells[6].innerHTML:'';
     document.getElementById('NIVS').value=(selectedRowVehiculo.cells[7].innerHTML!='SD')?selectedRowVehiculo.cells[7].innerHTML:'';
     document.getElementById('remisiones_FoliosVeh').value=(selectedRowVehiculo.cells[8].innerHTML!='SD')?selectedRowVehiculo.cells[8].innerHTML:'';
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const updateRowVehiculo=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA TOMANDO EL FORMULARIO
     selectedRowVehiculo.cells[0].innerHTML=document.getElementById('Id_Vehiculo').value;

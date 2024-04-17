@@ -35,8 +35,19 @@ const ValidatableRedsocial = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
 const InsertRedsocial= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE RED SOCIAL
     let table = document.getElementById('RedsocialTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length);
-    newRow.insertCell(0).innerHTML =document.getElementById('Id_Registro').value;
-    newRow.insertCell(1).innerHTML =document.getElementById('RedSocialSelect').value;
+
+    if(radioTipoSocial[0].checked && document.getElementById('RedSocialSelect').value!= -1){
+        tipo = 'ENTREVISTA';
+    }else if(radioTipoSocial[1].checked && document.getElementById('RedSocialSelect').value!= -1){
+        tipo = 'DATO';
+    }else{
+        tipo = 'SD';
+    }
+    newRow.insertCell(0).innerHTML =document.getElementById('RedSocialSelect').value;
+    newRow.insertCell(1).innerHTML = tipo;
+
+   
+    
     newRow.insertCell(2).innerHTML =document.getElementById('nombre_perfil').value;
     newRow.insertCell(3).innerHTML =document.getElementById('enlace').value;
     newRow.insertCell(4).innerHTML =document.getElementById('Redsocial_tipo_url').value;
@@ -48,21 +59,15 @@ const InsertRedsocial= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE 
                                         </div>
                                     </div>
                                     <div id="imageContentRedsocial_row${newRow.rowIndex}"></div>`;
-    newRow.insertCell(7).innerHTML =document.getElementById('captura_dato_Redsocial').value.toUpperCase();
-    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add" onclick="editRedsocial(this)"> 
+    newRow.insertCell(7).innerHTML =document.getElementById('Id_Registro').value;
+    newRow.insertCell(8).innerHTML =document.getElementById('captura_dato_Redsocial').value.toUpperCase();
+    newRow.insertCell(9).innerHTML =`<button type="button" class="btn btn-add" onclick="editRedsocial(this)"> 
                                      <i class="material-icons">edit</i>
                                     </button>
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowRedsocial(this,RedsocialTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
-    if(radioTipoSocial[0].checked && document.getElementById('RedSocialSelect').value!= -1){
-        tipo = 'ENTREVISTA';
-    }else if(radioTipoSocial[1].checked && document.getElementById('RedSocialSelect').value!= -1){
-        tipo = 'DATO';
-    }else{
-        tipo = 'SD';
-    }
-    newRow.insertCell(9).innerHTML = tipo;
+
     //newRow.cells[0].style.display = "none";
     //newRow.cells[1].style.display = "none";
 }
@@ -79,20 +84,22 @@ const ResetFormRedsocial= async()=>{//FUNCION QUE LIMPIA LA VISTA DE RED SOCIAL
 const editRedsocial = async(obj) => {//FUNCION QUE EDITA LA TABLA DE RED SOCIAL TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
     document.getElementById('alertaEditRedsocial').style.display = 'block';
     selectedRowRedsocial = obj.parentElement.parentElement;
-    if(selectedRowRedsocial.cells[9].innerHTML =='ENTREVISTA' ){
+    if(selectedRowRedsocial.cells[1].innerHTML =='ENTREVISTA' ){
         radioTipoSocial[0].checked = true;
-    }else if(selectedRowRedsocial.cells[9].innerHTML =='DATO'){
+    }else if(selectedRowRedsocial.cells[1].innerHTML =='DATO'){
         radioTipoSocial[1].checked = true;
     }else{
         radioTipoSocial[2].checked = true;
     }
     await changeTipoRedSocial();
-    document.getElementById('Id_Registro').value=selectedRowRedsocial.cells[0].innerHTML;
-    document.getElementById('RedSocialSelect').value=selectedRowRedsocial.cells[1].innerHTML;
+    
+    document.getElementById('RedSocialSelect').value=selectedRowRedsocial.cells[0].innerHTML;
     document.getElementById('nombre_perfil').value=selectedRowRedsocial.cells[2].innerHTML;
     document.getElementById('enlace').value=selectedRowRedsocial.cells[3].innerHTML;
     document.getElementById('Redsocial_tipo_url').value=selectedRowRedsocial.cells[4].innerHTML;
     document.getElementById('Redsocial_Observacion').value=selectedRowRedsocial.cells[5].innerHTML;
+    document.getElementById('Id_Registro').value=selectedRowRedsocial.cells[7].innerHTML;
+
     window.scroll({
         top: 0,
         left: 100,
@@ -100,12 +107,7 @@ const editRedsocial = async(obj) => {//FUNCION QUE EDITA LA TABLA DE RED SOCIAL 
     });
 }
 const UpdateRowRedsocial=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE RED SOCIAL
-    selectedRowRedsocial.cells[0].innerHTML=document.getElementById('Id_Registro').value;
-    selectedRowRedsocial.cells[1].innerHTML=document.getElementById('RedSocialSelect').value;
-    selectedRowRedsocial.cells[2].innerHTML=document.getElementById('nombre_perfil').value;
-    selectedRowRedsocial.cells[3].innerHTML=document.getElementById('enlace').value;
-    selectedRowRedsocial.cells[4].innerHTML=document.getElementById('Redsocial_tipo_url').value;
-    selectedRowRedsocial.cells[5].innerHTML=document.getElementById('Redsocial_Observacion').value.toUpperCase();
+
     if(radioTipoSocial[0].checked && document.getElementById('RedSocialSelect').value!= -1){
         tipo = 'ENTREVISTA';
     }else if(radioTipoSocial[1].checked && document.getElementById('RedSocialSelect').value!= -1){
@@ -113,7 +115,16 @@ const UpdateRowRedsocial=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE R
     }else{
         tipo = 'SD';
     }
-    selectedRowRedsocial.cells[9].innerHTML = tipo;
+
+    
+    selectedRowRedsocial.cells[0].innerHTML=document.getElementById('RedSocialSelect').value;
+    selectedRowRedsocial.cells[1].innerHTML = tipo;
+    selectedRowRedsocial.cells[2].innerHTML=document.getElementById('nombre_perfil').value;
+    selectedRowRedsocial.cells[3].innerHTML=document.getElementById('enlace').value;
+    selectedRowRedsocial.cells[4].innerHTML=document.getElementById('Redsocial_tipo_url').value;
+    selectedRowRedsocial.cells[5].innerHTML=document.getElementById('Redsocial_Observacion').value.toUpperCase();
+    selectedRowRedsocial.cells[7].innerHTML=document.getElementById('Id_Registro').value;
+    
     document.getElementById('alertaEditRedsocial').style.display = 'none';
     selectedRowRedsocial= null;
 }
@@ -209,38 +220,39 @@ const readTableRedSocial = async() => {//lee los datos de la tabla redes sociale
                         .then(myBase64 => {
                             objetos.push({
                                 ['row']: {
-                                    Id_Registro: table.rows[i].cells[0].innerHTML,
                                     Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                                    Id_Dato: table.rows[i].cells[1].innerHTML,
+                                    Id_Dato: table.rows[i].cells[0].innerHTML,
+                                    Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                                     Usuario: table.rows[i].cells[2].innerHTML,
                                     Enlace: table.rows[i].cells[3].innerHTML,
                                     Tipo_Enlace: table.rows[i].cells[4].innerHTML,
                                     Observacion_Enlace: table.rows[i].cells[5].innerHTML,
-                                    Capturo: table.rows[i].cells[7].innerHTML,
+                                    Id_Registro: table.rows[i].cells[7].innerHTML,
+                                    Capturo: table.rows[i].cells[8].innerHTML,
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64,
-                                    Tipo_Relacion: table.rows[i].cells[9].innerHTML
+                                    imagebase64:myBase64
+                                    
                                 }
                             });
                         })
                 } else {//esto es para tipo photo osea que ya se encuentran en el servidor un archivo fisico con extension png
                     objetos.push({
                         ['row']: {
-                            Id_Registro: table.rows[i].cells[0].innerHTML,
                             Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                            Id_Dato: table.rows[i].cells[1].innerHTML,
+                            Id_Dato: table.rows[i].cells[0].innerHTML,
+                            Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                             Usuario: table.rows[i].cells[2].innerHTML,
                             Enlace: table.rows[i].cells[3].innerHTML,
                             Tipo_Enlace: table.rows[i].cells[4].innerHTML,
                             Observacion_Enlace: table.rows[i].cells[5].innerHTML,
-                            Capturo: table.rows[i].cells[7].innerHTML,
+                            Id_Registro: table.rows[i].cells[7].innerHTML,
+                            Capturo: table.rows[i].cells[8].innerHTML,
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src,
-                            Tipo_Relacion: table.rows[i].cells[9].innerHTML
+                            imagebase64:base64.src
                         }
                     });
                 }
@@ -249,38 +261,38 @@ const readTableRedSocial = async() => {//lee los datos de la tabla redes sociale
                 let base64URL = await encodeFileAsBase64URL(aux.files[0]);
                 objetos.push({
                     ['row']: {
-                        Id_Registro: table.rows[i].cells[0].innerHTML,
                         Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                        Id_Dato: table.rows[i].cells[1].innerHTML,
+                        Id_Dato: table.rows[i].cells[0].innerHTML,
+                        Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                         Usuario: table.rows[i].cells[2].innerHTML,
                         Enlace: table.rows[i].cells[3].innerHTML,
                         Tipo_Enlace: table.rows[i].cells[4].innerHTML,
                         Observacion_Enlace: table.rows[i].cells[5].innerHTML,
-                        Capturo: table.rows[i].cells[7].innerHTML,
+                        Id_Registro: table.rows[i].cells[7].innerHTML,
+                        Capturo: table.rows[i].cells[8].innerHTML,
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL,
-                        Tipo_Relacion: table.rows[i].cells[9].innerHTML
+                        imagebase64:base64URL
                     }
                 });
             }
         } else {//si no hay imagen solo almacena los datos el texto 
             objetos.push({
                 ['row']: {
-                    Id_Registro: table.rows[i].cells[0].innerHTML,
                     Id_Persona_Entrevista  : document.getElementById('id_persona_entrevista').value,
-                    Id_Dato: table.rows[i].cells[1].innerHTML,
+                    Id_Dato: table.rows[i].cells[0].innerHTML,
+                    Tipo_Relacion: table.rows[i].cells[1].innerHTML,
                     Usuario: table.rows[i].cells[2].innerHTML,
                     Enlace: table.rows[i].cells[3].innerHTML,
                     Tipo_Enlace: table.rows[i].cells[4].innerHTML,
                     Observacion_Enlace: table.rows[i].cells[5].innerHTML,
-                    Capturo: table.rows[i].cells[7].innerHTML,
+                    Id_Registro: table.rows[i].cells[7].innerHTML,
+                    Capturo: table.rows[i].cells[8].innerHTML,
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null",
-                    Tipo_Relacion: table.rows[i].cells[9].innerHTML
+                    imagebase64:"null"
                 }
             });
         }
@@ -368,7 +380,7 @@ function createElementFotoRedSocial(src, index, type, view) {//FUNCION PARA LA V
         div.innerHTML = `<div class="d-flex justify-content-end">
                             <span onclick="deleteImageFotoRedSocial(${index})" class="deleteFile">X</span>
                         </div>
-                        <img name="nor" src="${src}" id="imagesRedSocial_row_${index}" width="400px" data-toggle="modal" data-target="#ModalCenterRedSocial${index}">
+                        <img name="nor" src="${src}" id="imagesRedSocial_row_${index}" width="250px" data-toggle="modal" data-target="#ModalCenterRedSocial${index}">
                         <input type="hidden" class="${index} ${type}"/>
                         <div class="modal fade " id="ModalCenterRedSocial${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

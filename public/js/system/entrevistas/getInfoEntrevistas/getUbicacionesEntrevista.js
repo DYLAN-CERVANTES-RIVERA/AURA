@@ -143,8 +143,11 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
     let pathImagesUbicaciones =base_url_js+'public/files/Entrevistas/'+Id_Persona_Entrevista+'/UbicacionesRelevantes/';
     let table = document.getElementById('UbicacionTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length); 
-    newRow.insertCell(0).innerHTML =  Id_Ubicaciones_Entrevista
-    newRow.insertCell(1).innerHTML = Id_Dato;
+   // newRow.insertCell(0).innerHTML =  Id_Ubicaciones_Entrevista
+    newRow.insertCell(0).innerHTML = Id_Dato;
+    newRow.insertCell(1).innerHTML = Tipo_Relacion;
+    
+    
     newRow.insertCell(2).innerHTML = Colonia;
     newRow.insertCell(3).innerHTML = Calle;
     newRow.insertCell(4).innerHTML = Calle2;
@@ -173,7 +176,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                             <div class="d-flex justify-content-end">
                                                 <span onclick="deleteImageFotoUbicacion(${newRow.rowIndex})" class="deleteFile">X</span>
                                             </div>
-                                            <img name="nor" src="${ruta}" id="imagesUbicacion_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterUbicacion${newRow.rowIndex}">
+                                            <img name="nor" src="${ruta}" id="imagesUbicacion_row_${newRow.rowIndex}" width="250px" data-toggle="modal" data-target="#ModalCenterUbicacion${newRow.rowIndex}">
                                             <input type="hidden" class="${newRow.rowIndex} Photo"/>
                                             <div class="modal fade " id="ModalCenterUbicacion${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -194,7 +197,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                                     <div class="d-flex justify-content-end">
                                                         <span onclick="deleteImageFotoUbicacion(${newRow.rowIndex})" class="deleteFile">X</span>
                                                     </div>
-                                                    <img name="nor" src="${Img_64}" id="imagesUbicacion_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterUbicacion${newRow.rowIndex}">
+                                                    <img name="nor" src="${Img_64}" id="imagesUbicacion_row_${newRow.rowIndex}" width="250px" data-toggle="modal" data-target="#ModalCenterUbicacion${newRow.rowIndex}">
                                                     <input type="hidden" class="${newRow.rowIndex} Photo"/>
                                                     <div class="modal fade " id="ModalCenterUbicacion${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -225,14 +228,15 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                         <div id="imageContentUbicacion_row${newRow.rowIndex}"></div>`;
 
     }
-    newRow.insertCell(16).innerHTML =Capturo;
-    newRow.insertCell(17).innerHTML  =`<button type="button" class="btn btn-add" onclick="editUbicacion(this)"> 
+    newRow.insertCell(16).innerHTML = Id_Ubicaciones_Entrevista;
+    newRow.insertCell(17).innerHTML = Capturo;
+    newRow.insertCell(18).innerHTML  =`<button type="button" class="btn btn-add" onclick="editUbicacion(this)"> 
                                             <i class="material-icons">edit</i>
                                         </button>
                                         <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowDomicilio(this,UbicacionTable)">
                                             <i class="material-icons">delete</i>
                                         </button>`;
-    newRow.insertCell(18).innerHTML = Tipo_Relacion;
+    
     //newRow.cells[0].style.display = "none";
     //newRow.cells[1].style.display = "none";
 }

@@ -118,6 +118,12 @@ const editRedsocial = (obj) => {//FUNCION QUE EDITA LA TABLA DE RED SOCIAL TOMAN
     document.getElementById('enlace').value=selectedRowRedsocial.cells[4].innerHTML;
     document.getElementById('Redsocial_tipo_url').value=selectedRowRedsocial.cells[5].innerHTML;
     document.getElementById('Redsocial_Observacion').value=selectedRowRedsocial.cells[6].innerHTML;
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const UpdateRowRedsocial=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE RED SOCIAL
     selectedRowRedsocial.cells[0].innerHTML=document.getElementById("PersonaSelectRedsocial").options[document.getElementById("PersonaSelectRedsocial").selectedIndex].text;

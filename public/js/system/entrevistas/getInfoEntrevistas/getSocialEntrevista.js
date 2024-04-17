@@ -47,8 +47,8 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
     let pathImagesRedesSociales =base_url_js+'public/files/Entrevistas/'+Id_Persona_Entrevista+'/Redes_Sociales/';
     let table = document.getElementById('RedsocialTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length);
-    newRow.insertCell(0).innerHTML =Id_Registro;
-    newRow.insertCell(1).innerHTML =Id_Dato;
+    newRow.insertCell(0).innerHTML = Id_Dato;
+    newRow.insertCell(1).innerHTML = Tipo_Relacion;
     newRow.insertCell(2).innerHTML =Usuario;
     newRow.insertCell(3).innerHTML =Enlace;
     newRow.insertCell(4).innerHTML =Tipo_Enlace;
@@ -68,7 +68,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                             <div class="d-flex justify-content-end">
                                                 <span onclick="deleteImageFotoRedSocial(${newRow.rowIndex})" class="deleteFile">X</span>
                                             </div>
-                                            <img name="nor" src="${ruta}" id="imagesRedSocial_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterRedSocial${newRow.rowIndex}">
+                                            <img name="nor" src="${ruta}" id="imagesRedSocial_row_${newRow.rowIndex}" width="250px" data-toggle="modal" data-target="#ModalCenterRedSocial${newRow.rowIndex}">
                                             <input type="hidden" class="${newRow.rowIndex} Photo"/>
                                             <div class="modal fade " id="ModalCenterRedSocial${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -89,7 +89,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                                         <div class="d-flex justify-content-end">
                                                             <span onclick="deleteImageFotoRedSocial(${newRow.rowIndex})" class="deleteFile">X</span>
                                                         </div>
-                                                        <img name="nor" src="${Img_64}" id="imagesRedSocial_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterRedSocial${newRow.rowIndex}">
+                                                        <img name="nor" src="${Img_64}" id="imagesRedSocial_row_${newRow.rowIndex}" width="250px" data-toggle="modal" data-target="#ModalCenterRedSocial${newRow.rowIndex}">
                                                         <input type="hidden" class="${newRow.rowIndex} Photo"/>
                                                         <div class="modal fade " id="ModalCenterRedSocial${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -119,15 +119,15 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                         </div>
                                         <div id="imageContentRedsocial_row${newRow.rowIndex}"></div>`;
     }
-
-    newRow.insertCell(7).innerHTML =Capturo;
-    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add" onclick="editRedsocial(this)"> 
+    newRow.insertCell(7).innerHTML = Id_Registro
+    newRow.insertCell(8).innerHTML =Capturo;
+    newRow.insertCell(9).innerHTML =`<button type="button" class="btn btn-add" onclick="editRedsocial(this)"> 
                                         <i class="material-icons">edit</i>
                                     </button>
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowRedsocial(this,RedsocialTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
-    newRow.insertCell(9).innerHTML = Tipo_Relacion
+    
     //newRow.cells[0].style.display = "none";
     //newRow.cells[1].style.display = "none";
     

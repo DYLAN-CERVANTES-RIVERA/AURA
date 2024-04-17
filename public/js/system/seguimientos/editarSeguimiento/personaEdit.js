@@ -200,6 +200,12 @@ const editPersona = (obj) => {//FUNCION QUE EDITA LA TABLA DE PERSONAS TOMANDO L
     document.getElementById('alias').value=(selectedRowPersonas.cells[9].innerHTML!='SD')?selectedRowPersonas.cells[9].innerHTML:'';
     document.getElementById('remisiones').value=(selectedRowPersonas.cells[10].innerHTML!='SD')?selectedRowPersonas.cells[10].innerHTML:'';
     document.getElementById('Rol').value=selectedRowPersonas.cells[12].innerHTML;
+
+    window.scroll({
+        top: 0,
+        left: 100,
+        behavior: 'smooth'
+    });
 }
 const updateRowPersona= async()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE PERSONAS
     selectedRowPersonas.cells[0].innerHTML=document.getElementById('Id_Personas').value;
