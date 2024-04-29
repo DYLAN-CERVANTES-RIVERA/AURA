@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {//Funcion para el lle
     data = await getEventoP(evento)
     vectores = await getAllVectores();;
     llenarEvento(data);
-    if(data.Ubo_Detencion==1){
-        InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    
+    if(data.Ubo_Detencion==1 || InfoDetencion!= false){
         llenarUbicacion(InfoDetencion);
     }
     delito.addEventListener('keyup', esOtro)  
@@ -103,8 +104,9 @@ async function refrescarDOM() {
     data = await getEventoP(evento)
     vectores = await getAllVectores();;
     llenarEvento(data);
-    if(data.Ubo_Detencion==1){
-        InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    if(data.Ubo_Detencion==1 || InfoDetencion!= false){
+        
         llenarUbicacion(InfoDetencion);
     }
     delito.addEventListener('keyup', esOtro)  
@@ -799,7 +801,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     hora_evento.value = separadas[1];
     fechahora_captura.value = data.FechaHora_Captura;
     fechahora_captura.disabled = true;
-    EstatusEvento.value=data.Status_Evento;
+    EstatusEvento.value=(data.Status_Evento!='' && data.Status_Evento != null)?data.Status_Evento:'POR CONFIRMAR';
     if(data.Status_Evento!="FUERA DE JURISDICCION"){
         zona.value = data.Zona;
         zonaValue = zona.value.split(' ');
@@ -857,7 +859,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     }
     folio_911.value = data.Folio_911
     folio_911_oculto.value = data.Folio_911
-    fuente.value=data.Fuente
+    fuente.value=(data.Fuente != '' && data.Fuente != null)?data.Fuente:'NA';
 
     document.getElementById('cons').setAttribute('value', 'NA');
     if(data.CSviolencia=='SIN VIOLENCIA'){
@@ -902,7 +904,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     Unidad_Primer_R.value = data.Unidad_Primer_R
     Informacion_Primer_R.value = data.Informacion_Primer_R
     Acciones.value = data.Acciones
-    Turno.value = data.Turno
+    Turno.value = (data.Turno != ''&& data.Turno != null)?data.Turno:'SD';
     Responsable_Turno.value = data.Responsable_Turno
     Semana.value = data.Semana
 

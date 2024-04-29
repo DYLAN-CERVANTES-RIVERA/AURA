@@ -23,7 +23,7 @@
             <div class="row mt-3">
                 <div class="col-lg-5 col-sm-6">
                     <h5  class="subtitulo-rosa">Captura </h5>
-                    <input style="text-align:center;font-size: 15px;color: #0F2145;" type="text" name="captura_principales" id="captura_principales" value="<?php echo $_SESSION['userdataSIC']->Nombre." ".$_SESSION['userdataSIC']->Ap_Paterno." ".$_SESSION['userdataSIC']->Ap_Materno?>" class="form-control custom-input_dt">
+                    <input style="text-align:center;font-size: 15px;color: #0F2145;" type="text" name="captura_principales" id="captura_principales" value="<?php echo strtoupper($_SESSION['userdataSIC']->User_Name)?>" class="form-control custom-input_dt">
                 </div>
                 <div class="col-lg-2 col-sm-6"></div>
                 <div class="col-lg-5 col-sm-6">             
@@ -605,12 +605,12 @@
                     <div class="form-group col-lg-12" >
                         <input type="text" name="fechahora_activacion_principales" id="fechahora_activacion_principales" class="form-control custom-input_dt">
                         <br>
-                        <input type="text" name="quienhabilito" id="quienhabilito" class="form-control custom-input_dt" value="<?php echo $_SESSION['userdataSIC']->Nombre." ".$_SESSION['userdataSIC']->Ap_Paterno." ".$_SESSION['userdataSIC']->Ap_Materno?>" readOnly>
+                        <input type="text" name="quienhabilito" id="quienhabilito" class="form-control custom-input_dt" value="<?php echo strtoupper($_SESSION['userdataSIC']->User_Name)?>" readOnly>
                     </div>
                 </div>
             </div>
             <div class="row mi_hide" id="form_modifica">
-                <input type="text" name="actualizaVP" id="actualizaVP" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->User_Name?>" readOnly>
+                <input type="text" name="actualizaVP" id="actualizaVP" class="form-control custom-input_dt"  value="<?php echo strtoupper($_SESSION['userdataSIC']->User_Name)?>" readOnly>
             </div>
             <div class="modal fade" id="ModalCenterFoto" tabindex="-1" role="dialog" aria-labelledby="myModalExito" aria-hidden="true" >
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

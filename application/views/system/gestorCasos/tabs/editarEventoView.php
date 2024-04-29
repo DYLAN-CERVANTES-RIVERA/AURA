@@ -840,7 +840,7 @@
                 </div>
             </div>
             <div class="row mi_hide" id="form_contenedor">
-                <input type="text" name="actualizahabilito" id="actualizahabilito" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Nombre." ".$_SESSION['userdataSIC']->Ap_Paterno." ".$_SESSION['userdataSIC']->Ap_Materno?>" readOnly>
+                <input type="text" name="actualizahabilito" id="actualizahabilito" class="form-control custom-input_dt"  value="<?php echo strtoupper($_SESSION['userdataSIC']->User_Name)?>" readOnly>
                 <input type="text" name="actualizaVP" id="actualizaVP" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->User_Name?>" readOnly>
                 <input type="text" name="TipoUsuario" id="TipoUsuario" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Seguimientos[1]?>" readOnly>
             </div>

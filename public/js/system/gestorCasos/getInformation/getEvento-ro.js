@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {//Funcion de carga pa
     hechos = await getHechosP(evento);
     responsables = await getResponsablesP(evento);
     vehiculos = await getVehiculosP(evento);
-    if(data.Ubo_Detencion==1){
-        InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    InfoDetencion = await getInfoDetencion(data.Folio_infra);
+    if(data.Ubo_Detencion==1 || InfoDetencion!= false){
+        
         llenarUbicacion(InfoDetencion);
     }
     for (let i = 0; i < hechos.length; i++) {
@@ -363,8 +364,13 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
 }
 const llenarUbicacion = async(data)=>{
     document.getElementById('Ubodetencion').classList.remove('mi_hide')
-    fechaLimpia= await FormatoFecha(data.Fecha_Detencion);
-    document.getElementById('Fecha_Detencion').textContent =fechaLimpia;
+    if(data.Fecha_Detencion!= null && data.Fecha_Detencion!=''&& data.Fecha_Detencion!='SD'&& data.Fecha_Detencion!='NULL'){
+        fechaLimpia= await FormatoFecha(data.Fecha_Detencion);
+        document.getElementById('Fecha_Detencion').textContent =fechaLimpia;
+    }else{
+        document.getElementById('Fecha_Detencion').textContent ='SD';
+    }
+
 
 
     if(data.Detencion_Por_Info_Io==1){
