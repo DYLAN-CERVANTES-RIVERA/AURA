@@ -820,10 +820,11 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
             vector.innerHTML += `<option value="${vectorE.Id_vector_Interno}">${vectorE.Id_vector_Interno} - ${vectorE.Region}</option>`
         })
         vector.value = data.Vector
-
-        cordy.value = data.CoordY
-        cordx.value = data.CoordX
-        await getColoniasCalles();
+        if(data.CoordY!='' && data.CoordX!=''){
+            cordy.value = await ValidaCoordPositiva(data.CoordY)
+            cordx.value = await ValidaCoordNegativa(data.CoordX) 
+            await getColoniasCalles();
+        }     
         noext.value = data.NoExt
         cp.value = data.CP
         colonia.value = data.Colonia
@@ -848,9 +849,11 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
             })
             vector.value = data.Vector
         }
-        cordy.value = data.CoordY
-        cordx.value = data.CoordX
-        await getColoniasCalles();
+        if(data.CoordY!='' && data.CoordX!=''){
+            cordy.value = await ValidaCoordPositiva(data.CoordY)
+            cordx.value = await ValidaCoordNegativa(data.CoordX) 
+            await getColoniasCalles();
+        }
         noext.value = data.NoExt
         cp.value = data.CP
         colonia.value = data.Colonia
@@ -1013,4 +1016,26 @@ const imageExists= async(imgUrl)=> {//FUNCION QUE VALIDA SI EXISTE LA IMAGEN EN 
         image.src = imgUrl;
     });
 
+}
+async function ValidaCoordNegativa(valor) {/// Para el historico
+   
+    var nuevoValor = "";
+    for (var i = 0; i < valor.length; i++) {
+        var char = valor[i];       
+        if (/[0-9-.]/.test(char)) {
+            nuevoValor += char;
+        }
+    }
+    return nuevoValor;
+}
+
+async function ValidaCoordPositiva(valor) {/// Para el historico
+    var nuevoValor = "";
+    for (var i = 0; i < valor.length; i++) {
+        var char = valor[i];       
+        if (/[0-9.]/.test(char)) {
+            nuevoValor += char;
+        }
+    }
+    return nuevoValor;
 }

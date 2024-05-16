@@ -16,6 +16,8 @@
         <script src="<?php echo base_url ?>public/js/template/sidenav/principal.js"></script>
         <script src="<?php echo base_url ?>public/js/libraries/FormValidator.js"></script>
         <script src="<?php echo base_url ?>public/js/libraries/api_mapbox.js"></script>
+        <script src="<?php echo base_url ?>public/js/libraries/socket.io.min.js"></script>
+        <script src="<?php echo base_url ?>public/js/system/socket/socketClient.js"></script>
 
         <script>
             $(document).ready(function(){

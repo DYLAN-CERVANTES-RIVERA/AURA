@@ -367,7 +367,7 @@ class GestorCasos extends Controller
             exit();
         }
     }
-    public function getCamaras(){//FUNCION QUE OBTINE EL CATALOGO DE LAS REMISIONES
+    public function getCamaras(){//FUNCION QUE OBTINE EL CATALOGO DE LAS CAMARAS DE LA CIUDAD
         $data = $this->GestorCaso->getCamaras();
         echo json_encode($data);
     }
@@ -1159,6 +1159,14 @@ class GestorCasos extends Controller
                                 $banFotos='X';
                             }   
                         }
+                        if (isset($partes[1])==false){
+
+                            $partes[1]='00:00';
+                        }
+                        if (isset($partes2[1])==false){
+
+                            $partes2[1]='00:00';
+                        }
                         $auxHechos=$this->tratamiento($row->hechos_concat);
                         $auxEntrevistas=$this->tratamiento($row->entrevistas_seguimiento_concat);
 						$csv_data.= mb_strtoupper($row->Folio_infra).",\"".
@@ -1719,7 +1727,13 @@ class GestorCasos extends Controller
         }
 
     }
-
+    public function GetInfo_Evento(){
+        if (isset($_POST['Folio_infra'])) {
+            $Folio_infra = $_POST['Folio_infra'];
+            $data = $this->GestorCaso->GetInfo_Evento($Folio_infra);
+            echo json_encode($data);
+        } 
+    }
  
 
 /*--------------------------------------FUNCIONES UPDATE TABS -------------------------------------- */
@@ -1932,7 +1946,7 @@ class GestorCasos extends Controller
 
         }
     }
-    public function GeneraFichaInvolucradoPDF(){//GENERA PDF CON LA INFORMACION DE SOLO LAS PERSONAS CORROBORADAS
+    public function GeneraFichaInvolucradoPDF(){//GENERA PDF CON LA INFORMACION DE SOLO LAS PERSONAS
         if(!isset($_SESSION['userdataSIC'])){//SI NO EXISTE UNA SESION ACTIVA NO DEJA PASAR AL SISTEMA
             header("Location: " . base_url . "Login");
             exit();
@@ -1962,7 +1976,7 @@ class GestorCasos extends Controller
 
         }
     }
-    public function GeneraFichaVehInvolucradoPDF(){//GENERA PDF CON LA INFORMACION DE SOLO LOS VEHICULOS CORROBORADOS
+    public function GeneraFichaVehInvolucradoPDF(){//GENERA PDF CON LA INFORMACION DE SOLO LOS VEHICULOS 
         if(!isset($_SESSION['userdataSIC'])){//SI NO EXISTE UNA SESION ACTIVA NO DEJA PASAR AL SISTEMA
             header("Location: " . base_url . "Login");
             exit();
@@ -1992,17 +2006,7 @@ class GestorCasos extends Controller
 
         }
     }
-    /* ----- ----- ----- Funcion para generar las graficas  ----- ----- ----- */
-    public function getDatagraficas(){//Genera las graficas conforme la busqueda y los filtros
-        if(isset($_REQUEST['filtroActual'])){
-            echo json_encode($this->GestorCaso->getDatosGraficas($_REQUEST['cadena'], $_REQUEST['filtroActual']));
-        }else{
-
-            echo json_encode($this->GestorCaso->getDatosGraficas($_REQUEST['cadena'], 1));
-        }
-        
-    }
-    public function GeneraPDF(){//GENERA PDF CON LA INFORMACION DE TODO EL SEGUIMIENTO  VEHICULOS, PERSONAS ,DOMICILIOS, ANTECEDENTES, FORENSIAS Y REDES SOCIALES
+    public function GeneraPDF(){//GENERA PDF CON LA INFORMACION DE TODO EL SEGUIMIENTO  VEHICULOS, PERSONAS ,DOMICILIOS, ANTECEDENTES, DATOS Y REDES SOCIALES
         if(!isset($_SESSION['userdataSIC'])){//SI NO EXISTE UNA SESION ACTIVA NO DEJA PASAR AL SISTEMA
             header("Location: " . base_url . "Login");
             exit();
@@ -2010,7 +2014,7 @@ class GestorCasos extends Controller
             $data=$this->GestorCaso->permisoVisualizacion($_SESSION['userdataSIC']->User_Name);
             $_SESSION['userdataSIC']->Visualizacion = $data->Visualizacion;
         }
-        if ($_SESSION['userdataSIC']->Modo_Admin == '1' || $_SESSION['userdataSIC']->Seguimientos[2] == '1'){
+        if ($_SESSION['userdataSIC']->Modo_Admin == '1' || $_SESSION['userdataSIC']->Red[2] == '1'){
             if (isset($_GET['Id_seguimiento']) ){
                 $Id_seguimiento= $_GET['Id_seguimiento'];
                 $dataSeguimiento=$this->GestorCaso->getAllPrincipales($Id_seguimiento);

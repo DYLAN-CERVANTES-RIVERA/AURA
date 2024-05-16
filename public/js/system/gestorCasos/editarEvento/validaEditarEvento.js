@@ -86,7 +86,6 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         band[i++] = VectorError.innerText = FV.validate(myFormData.get('vector'), 'required ')
         band[i++] = ColoniaError.innerText = FV.validate(myFormData.get('Colonia'), 'required ')
         band[i++] = CalleError.innerText = FV.validate(myFormData.get('Calle'), 'required ')
-        band[i++] = CPError.innerText = FV.validate(myFormData.get('CP'), 'required | numeric')
         band[i++] = cordYError.innerText = FV.validate(myFormData.get('cordY'), 'required | numeric')
         band[i++] = cordXError.innerText = FV.validate(myFormData.get('cordX'), 'required | numeric')
     }

@@ -100,6 +100,7 @@ const insertNewRowTablaFotos = async({ Folio_infra,Descripcion,Path_Imagen,id_ub
             <div class="form-group">
                 <input type="file" name="Foto_row${newRow.rowIndex}" accept="image/*" id="fileFoto_row${newRow.rowIndex}" class="inputfile uploadFileFotos" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                 <label for="fileFoto_row${newRow.rowIndex}"></label>
+                <h3 class="uploadFileFotosCtrolV" style="border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
             </div>
         </div>
         <div id="imageContent_row${newRow.rowIndex}">
@@ -121,6 +122,7 @@ const insertNewRowTablaFotos = async({ Folio_infra,Descripcion,Path_Imagen,id_ub
                                                 <div class="form-group">
                                                     <input type="file" name="Foto_row${newRow.rowIndex}" accept="image/*" id="fileFoto_row${newRow.rowIndex}" class="inputfile uploadFileFotos" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                     <label for="fileFoto_row${newRow.rowIndex}"></label>
+                                                    <h3 class="uploadFileFotosCtrolV" style="border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                 </div>
                                             </div>
                                             <div id="imageContent_row${newRow.rowIndex}">
@@ -143,6 +145,7 @@ const insertNewRowTablaFotos = async({ Folio_infra,Descripcion,Path_Imagen,id_ub
                     <div class="form-group">
                         <input type="file" name="Foto_row${newRow.rowIndex}" accept="image/*" id="fileFoto_row${newRow.rowIndex}" class="inputfile uploadFileFotos" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                         <label for="fileFoto_row${newRow.rowIndex}"></label>
+                        <h3 class="uploadFileFotosCtrolV" style="border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                     </div>
                 </div>
                 <div id="imageContent_row${newRow.rowIndex}">

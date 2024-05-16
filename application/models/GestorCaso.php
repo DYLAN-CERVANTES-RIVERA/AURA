@@ -1434,6 +1434,7 @@ class GestorCaso{
         return $this->db->registers();
 
     }
+
     public function getEntrevistas($Folio_infra){
         $sql = "SELECT 	*
         FROM entrevistas_seguimiento
@@ -1443,7 +1444,13 @@ class GestorCaso{
         return $this->db->registers();
 
     }
-    
+
+    public function GetInfo_Evento($Folio_infra){
+        $sql = "SELECT Folio_infra, Folio_911, hechos_concat, delitos_concat  FROM gc_evento_filtro_1 WHERE Folio_infra = " . $Folio_infra;
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+
     public function getTodo911(){
         $sql = "SELECT Folio_911 FROM evento" ;
         $this->db->query($sql);
@@ -1484,244 +1491,6 @@ class GestorCaso{
         $text = mb_strtoupper($text);
         $text = trim($text);
         return $text;
-    }
-    public function getDatosGraficas($cadena, $filtroActual){//Obtener datos de graficas
-        $data['Zonas'] = [];
-        $data['Delitos'] = [];
-        $data['CSviolencias'] = [];
-        $data['Dias'] = [];
-        $data['Vectores'] = [];
-        $cadena=$this->eliminar_acentos($cadena);
-        $condicion=$this->getCondicionGraficas($cadena, $filtroActual);
-        $rango_fecha=$this->getFechaCondition();
-        $sql ="SELECT gc_evento_filtro_1.Zona, COUNT(gc_evento_filtro_1.Zona) as ZonaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 ".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.Zona ORDER BY ZonaTotal DESC";
-        $this->db->query($sql);
-        $data['Zonas'] = $this->db->registers();
-
-        $sql ="SELECT gc_evento_filtro_1.delitos_concat as Delito, COUNT(gc_evento_filtro_1.delitos_concat) as DelitosTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.delitos_concat ORDER BY DelitosTotal DESC";
-        $this->db->query($sql);
-        $data['Delitos'] = $this->db->registers();
-
-        $sql ="SELECT gc_evento_filtro_1.CSviolencia, COUNT(gc_evento_filtro_1.CSviolencia) as CSviolenciaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.CSviolencia ORDER BY CSviolenciaTotal DESC";
-        $this->db->query($sql);
-        $data['CSviolencias'] = $this->db->registers();
-
-
-        $sql ="SELECT gc_evento_filtro_1.Dia_semana , COUNT(gc_evento_filtro_1.Dia_semana) as DiaTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 ".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.Dia_semana ORDER by  FIELD(gc_evento_filtro_1.Dia_semana ,'LUNES','MARTES','MIERCOLES','JUEVES' ,'VIERNES','SABADO','DOMINGO') ASC ";
-
-        $this->db->query($sql);
-        $data['Dias'] = $this->db->registers();
-
-        $sql ="SELECT gc_evento_filtro_1.Hora_trunca, COUNT(gc_evento_filtro_1.Hora_trunca) as HoraTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.Hora_trunca ORDER BY gc_evento_filtro_1.Hora_trunca2 ASC";
-        $this->db->query($sql);
-        $data['Horas'] = $this->db->registers();
-
-        $sql ="SELECT gc_evento_filtro_1.Vector, COUNT(gc_evento_filtro_1.Vector) as VectorTotal FROM `gc_evento_filtro_1` WHERE gc_evento_filtro_1.Folio_infra>0 ".$rango_fecha." ".$condicion." GROUP BY gc_evento_filtro_1.Vector ORDER BY gc_evento_filtro_1.Vector ASC";
-        $this->db->query($sql);
-        $data['Vectores'] = $this->db->registers();
-        return $data;
-    }
-    public function getCondicionGraficas($cadena, $filtro){//conforme a los filtros y las busquedas realizadas generar la informacion para las graficas
-        $condicion='';
-        switch ($filtro) {
-            case '1': 
-                if($cadena!=''){
-                    $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
-                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
-                    $palabras = array_diff($palabras, $articulos);
-                    foreach($palabras as $palabra){
-                        $palabra=ltrim($palabra, " ");
-                        $palabra=rtrim($palabra, " ");
-                        $dias = array ('lunes', 'martes', 'miercoles','jueves','viernes','sabado','domingo');//Funcion para un dia en especifico
-                        if(in_array ($palabra,$dias)){
-                            $condicion.= "
-                            AND Dia_semana='". $palabra . "' ";
-                        }else{
-                            $condicion.= "
-                            AND  (       Folio_infra LIKE '%" . $palabra . "%' OR 
-                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
-                                        Folio_911 LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Captura LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
-                                        Zona LIKE '%" . $palabra . "%' OR 
-                                        Vector LIKE '%" . $palabra . "%' OR 
-                                        Colonia LIKE '%" . $palabra . "%' OR 
-                                        Calle LIKE '%" . $palabra . "%' OR 
-                                        Calle2 LIKE '%" . $palabra . "%' OR 
-                                        CSviolencia  LIKE '%" . $palabra . "%' OR 
-                                        Tipo_Violencia LIKE '%" . $palabra . "%' OR 
-                                        Tipoarma_concat LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Activacion LIKE '%" . $palabra . "%' OR 
-                                        Fuente LIKE '%" . $palabra . "%' OR 
-                                        Status LIKE '%" . $palabra . "%' OR 
-                                        Quien_Habilito LIKE '%" . $palabra . "%' OR 
-                                        Conteo_Masculinos LIKE '%" . $palabra . "%' OR
-                                        Conteo_Femeninas LIKE '%" . $palabra . "%' OR
-                                        Conteo_Vehiculos LIKE '%" . $palabra . "%' OR
-                                        ClaveSeguimiento LIKE '%" . $palabra . "%' OR
-                                        hechos_concat LIKE '%" . $palabra . "%' OR
-                                        delitos_concat LIKE '%" . $palabra . "%' OR
-                                        responsables_concat LIKE '%" . $palabra . "%' OR
-                                        vehiculos_concat LIKE '%" . $palabra . "%'OR
-                                        entrevistas_seguimiento_concat LIKE '%" . $palabra . "%' OR
-                                        fotos_seguimiento_concat LIKE '%" . $palabra . "%'OR
-                                        Hora_trunca LIKE '%" . $palabra . "%'OR
-                                        delito_giro LIKE '%" . $palabra . "%') 
-                                ";
-                        }               
-                    }
-                }
-            break;
-            case '2':
-                if($cadena!=''){
-                    $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
-                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
-                    $palabras = array_diff($palabras, $articulos);
-                    foreach($palabras as $palabra){
-                        $palabra=ltrim($palabra, " ");
-                        $palabra=rtrim($palabra, " ");
-                        $dias = array ('lunes', 'martes', 'miercoles','jueves','viernes','sabado','domingo');//Funcion para un dia en especifico
-                        if(in_array ($palabra,$dias)){
-                            $condicion.= "
-                            AND Dia_semana='". $palabra . "' ";
-                        }else{
-                            $condicion.= "
-                            AND  (       Folio_infra LIKE '%" . $palabra . "%' OR 
-                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
-                                        Folio_911 LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Captura LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
-                                        Zona LIKE '%" . $palabra . "%' OR 
-                                        Vector LIKE '%" . $palabra . "%' OR 
-                                        Colonia LIKE '%" . $palabra . "%' OR 
-                                        Calle LIKE '%" . $palabra . "%' OR 
-                                        Calle2 LIKE '%" . $palabra . "%' OR 
-                                        CSviolencia  LIKE '%" . $palabra . "%' OR 
-                                        Tipo_Violencia LIKE '%" . $palabra . "%' OR 
-                                        Tipoarma_concat LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Activacion LIKE '%" . $palabra . "%' OR 
-                                        Fuente LIKE '%" . $palabra . "%' OR 
-                                        Status LIKE '%" . $palabra . "%' OR 
-                                        Quien_Habilito LIKE '%" . $palabra . "%' OR 
-                                        Conteo_Masculinos LIKE '%" . $palabra . "%' OR
-                                        Conteo_Femeninas LIKE '%" . $palabra . "%' OR
-                                        Conteo_Vehiculos LIKE '%" . $palabra . "%' OR
-                                        ClaveSeguimiento LIKE '%" . $palabra . "%' OR
-                                        hechos_concat LIKE '%" . $palabra . "%' OR
-                                        delitos_concat LIKE '%" . $palabra . "%' OR
-                                        responsables_concat LIKE '%" . $palabra . "%' OR
-                                        vehiculos_concat LIKE '%" . $palabra . "%'OR
-                                        entrevistas_seguimiento_concat LIKE '%" . $palabra . "%' OR
-                                        fotos_seguimiento_concat LIKE '%" . $palabra . "%'OR
-                                        Hora_trunca LIKE '%" . $palabra . "%'OR
-                                        delito_giro LIKE '%" . $palabra . "%') 
-                                ";
-                        }               
-                    }
-                } 
-                $condicion.= "
-                            AND  Status ='HABILITADO'       
-                ";
-            break;
-            case '3':
-                if($cadena!=''){
-                    $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
-                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
-                    $palabras = array_diff($palabras, $articulos);
-                    foreach($palabras as $palabra){
-                        $palabra=ltrim($palabra, " ");
-                        $palabra=rtrim($palabra, " ");
-                        $dias = array ('lunes', 'martes', 'miercoles','jueves','viernes','sabado','domingo');//Funcion para un dia en especifico
-                        if(in_array ($palabra,$dias)){
-                            $condicion.= "
-                            AND Dia_semana='". $palabra . "' ";
-                        }else{
-                            $condicion.= "
-                            AND  (       Folio_infra LIKE '%" . $palabra . "%' OR 
-                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
-                                        Folio_911 LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Captura LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
-                                        Zona LIKE '%" . $palabra . "%' OR 
-                                        Vector LIKE '%" . $palabra . "%' OR 
-                                        Colonia LIKE '%" . $palabra . "%' OR 
-                                        Calle LIKE '%" . $palabra . "%' OR 
-                                        Calle2 LIKE '%" . $palabra . "%' OR 
-                                        CSviolencia  LIKE '%" . $palabra . "%' OR 
-                                        Tipo_Violencia LIKE '%" . $palabra . "%' OR 
-                                        Tipoarma_concat LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Activacion LIKE '%" . $palabra . "%' OR 
-                                        Fuente LIKE '%" . $palabra . "%' OR 
-                                        Status LIKE '%" . $palabra . "%' OR 
-                                        Quien_Habilito LIKE '%" . $palabra . "%' OR 
-                                        Conteo_Masculinos LIKE '%" . $palabra . "%' OR
-                                        Conteo_Femeninas LIKE '%" . $palabra . "%' OR
-                                        Conteo_Vehiculos LIKE '%" . $palabra . "%' OR
-                                        ClaveSeguimiento LIKE '%" . $palabra . "%' OR
-                                        hechos_concat LIKE '%" . $palabra . "%' OR
-                                        delitos_concat LIKE '%" . $palabra . "%' OR
-                                        responsables_concat LIKE '%" . $palabra . "%' OR
-                                        vehiculos_concat LIKE '%" . $palabra . "%'OR
-                                        entrevistas_seguimiento_concat LIKE '%" . $palabra . "%' OR
-                                        fotos_seguimiento_concat LIKE '%" . $palabra . "%'OR
-                                        Hora_trunca LIKE '%" . $palabra . "%'OR
-                                        delito_giro LIKE '%" . $palabra . "%') 
-                                ";
-                        }               
-                    }
-                } 
-                $condicion.= "
-                            AND  Status ='DESHABILITADO'       
-                 ";
-            break;
-            case '4':
-                if($cadena!=''){
-                    $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
-                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
-                    $palabras = array_diff($palabras, $articulos);
-                    foreach($palabras as $palabra){
-                        $palabra=ltrim($palabra, " ");
-                        $palabra=rtrim($palabra, " ");
-                        $condicion .= "
-                                        AND  (      Folio_infra LIKE '%" . $palabra . "%' OR 
-                                                    Elemento_Captura LIKE '%" . $palabra . "%' OR 
-                                                    Folio_911 LIKE '%" . $palabra . "%' OR 
-                                                    FechaHora_Captura LIKE '%" . $palabra . "%' OR 
-                                                    FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
-                                                    Zona LIKE '%" . $palabra . "%' OR 
-                                                    Vector LIKE '%" . $palabra . "%' OR
-                                                    Colonia LIKE '%" . $palabra . "%' OR 
-                                                    Calle LIKE '%" . $palabra . "%' OR 
-                                                    Fuente LIKE '%" . $palabra . "%' OR 
-                                                    Status LIKE '%" . $palabra . "%' OR 
-                                                    Calle2 LIKE '%" . $palabra . "%' OR 
-                                                    ClaveSeguimiento LIKE '%" . $palabra . "%') 
-                                            ";
-                                        
-                    }
-                } 
-                $condicion.= "
-                            AND  Status ='HABILITADO'       
-                ";
-            break;
-            case '5':
-                if($cadena!=''){
-                    $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
-                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
-                    $palabras = array_diff($palabras, $articulos);
-                    foreach($palabras as $palabra){
-                        $palabra=ltrim($palabra, " ");
-                        $palabra=rtrim($palabra, " ");
-                        $condicion .= "
-                                        AND  (  Folio_infra = '" . $palabra . "') 
-                                            ";
-                                        
-                    }
-                } 
-            break;
-
-        }
-        return $condicion;
     }
     function eliminar_acentos($cadena){//esta funcion es para la cadena de busqueda ya que el like no permite mezcla diferentes collations solo aplica en bases locales 
 		
@@ -1765,7 +1534,7 @@ class GestorCaso{
 		
 		return $cadena;
 	}
-    /*------------------METODOS PARA TRAER LA INFOMACION DEL SEGUIMIENTO----------------------*/
+    /*------------------METODOS PARA TRAER LA INFOMACION DE RED DE VINCULO----------------------*/
     public function getCamaras(){
         $sql = "SELECT * FROM catalogo_ubicaciones_camaras ORDER BY (Id_Dato)";
         $this->db->query($sql);

@@ -15,7 +15,7 @@
     <title><?php echo $data['titulo'] ?></title>
 </head>
 
-<body class="body2">
+<body class="body2" style="background-image:url('<?= base_url;?>public/media/images/BARRAS2.png');">
     <div class='row justify-content-center'>
 
 

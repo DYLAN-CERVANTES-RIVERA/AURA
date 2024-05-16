@@ -112,8 +112,11 @@ const readTableImagenes = async() => {//lee el contenido de la tabla fotos
                 } else {
                     //aqui solo en este caso va enviar  la funcion de file to base64
                     aux=document.getElementById('file'+nameImage)
-                    let base64URL = await encodeFileAsBase64URL(aux.files[0]);
-                    Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage,null,base64URL,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));     
+                    if(aux.files[0]!=undefined){
+                        let base64URL = await encodeFileAsBase64URL(aux.files[0]);
+                        Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage,null,base64URL,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));     
+                     
+                    }  
                 }
             } else {
                 Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, null, null, null,null,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));
@@ -247,6 +250,7 @@ const insertNewRowFotos = ({id_ubicacion,descripcionFoto,ColoniaF,CalleF,Calle2F
                                         <div class="form-group">
                                             <input type="file" name="Foto_row${newRow.rowIndex}" accept="image/*" id="fileFoto_row${newRow.rowIndex}" class="inputfile uploadFileFotos" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                             <label for="fileFoto_row${newRow.rowIndex}" ></label>
+                                            <h3 class="uploadFileFotosCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                         </div>
                                     </div>
                                     <div id="imageContent_row${newRow.rowIndex}"></div>`;
@@ -279,12 +283,13 @@ const editFotos = async(obj)=>{//Funcion para editar la informacion de la tabla 
     document.getElementById('alertEditFoto').style.display = 'block';
     selectedRowFotos = obj.parentElement.parentElement;
 
-    document.getElementById('cordYF').value = (selectedRowFotos.cells[9].innerHTML=='0')?'':selectedRowFotos.cells[9].innerHTML;
-    document.getElementById('cordXF').value = (selectedRowFotos.cells[10].innerHTML=='0')?'':selectedRowFotos.cells[10].innerHTML;
-    await getColoniasCalles2();
-    document.getElementById('CPF').value = "";
-    document.getElementById('no_ExtF').value = "";
-
+    if(selectedRowFotos.cells[9].innerHTML!='SD' && selectedRowFotos.cells[10].innerHTML!='SD'){
+        document.getElementById('cordYF').value = (selectedRowFotos.cells[9].innerHTML=='0')?'':selectedRowFotos.cells[9].innerHTML;
+        document.getElementById('cordXF').value = (selectedRowFotos.cells[10].innerHTML=='0')?'':selectedRowFotos.cells[10].innerHTML;
+        await getColoniasCalles2();
+        document.getElementById('CPF').value = "";
+        document.getElementById('no_ExtF').value = "";
+    }
     document.getElementById('id_ubicacion').value = selectedRowFotos.cells[0].innerHTML;
     document.getElementById('id_camara').value = selectedRowFotos.cells[1].innerHTML;
     document.getElementById('descripcionFoto').value = selectedRowFotos.cells[3].innerHTML;
