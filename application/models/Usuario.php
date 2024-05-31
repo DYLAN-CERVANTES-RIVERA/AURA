@@ -13,7 +13,7 @@ class Usuario
         $this->db = new Base(); //se instancia el objeto con los métodos de PDO
     }
 
-    public function getUserById($id_user = null){
+    public function getUserById($id_user = null){ //consulta datos sirve también para el inicio la asignación de permisos del usuario
         if ($id_user != null) {
             $sql = "
                     SELECT  usuario.*,
@@ -42,7 +42,7 @@ class Usuario
         return $this->db->registers();      //retorna todos los registros devueltos por la consulta
     }
 
-    public function loginUser($post){
+    public function loginUser($post){ //consulta datos para el login
         $sqlAux = " SELECT  usuario.*, 
                             EXPORT_SET(permisos.Seguimientos,'1','0','',4) AS Seguimientos,
                             EXPORT_SET(permisos.Evento_D,'1','0','',4) AS Evento_D,
@@ -57,7 +57,7 @@ class Usuario
         $this->db->query($sqlAux);
         return $this->db->register();
     }
-    public function visualizacion($valor){
+    public function visualizacion($valor){ //sirve para ocultar los datos de entrevistas y redes de vinculo
         $response['status'] = true;
         try {
             $this->db->beginTransaction();
@@ -73,7 +73,7 @@ class Usuario
         } 
         return $response;
     }
-    public function insertNewUser($post,$file_name = null){
+    public function insertNewUser($post,$file_name = null){ //inserta un nuevo usuario al sistema
         if ($file_name == null) {
             $file_name = "default.png";
         }
@@ -210,7 +210,7 @@ class Usuario
         return $dataReturn;
     }
 
-    public function updateUserInfo($post){
+    public function updateUserInfo($post){ //actualización de información de un usuario
         $dataReturn['success'] = '0';
         $dataReturn['errorForm'] = null;
 
@@ -468,7 +468,7 @@ class Usuario
         $this->db->execute();
     }
 
-    public function generateWhereSentence($cadena){
+    public function generateWhereSentence($cadena){ //consulta datos de usuarios
         $where_sentence = "";
         if ($cadena != "") {
             $where_sentence = "
@@ -493,7 +493,7 @@ class Usuario
             return $dataReturn;
     }
 
-    //función para actualizar la contraseña del usuario en módulo de Mi Cuenta
+    //función para actualizar la contraseña del usuario en módulo de Cuenta
     public function updateUserPassword($post){
 
         $dataReturn['success'] = '0';
@@ -572,7 +572,7 @@ class Usuario
     }
 
     //obtener los registros de la pagina actual
-    public function getDataCurrentPage($offset,$no_of_records_per_page,$from_where_sentence = ""){
+    public function getDataCurrentPage($offset,$no_of_records_per_page,$from_where_sentence = ""){//realiza la consulta de datos conforme a la generacion dinámica de la consulta de datos
 
         $sql = "
                 SELECT * "
@@ -639,7 +639,7 @@ class Usuario
     }
 
     public function getUsersByCadena($cadena,$filtro='1'){
-        //CONSULTA COINCIDENCIAS DE CADENA PARA EVENTOS DELICTIVOS
+        //CONSULTA COINCIDENCIAS DE CADENA PARA LOS USUARIOS
         if (!is_numeric($filtro) || !($filtro>=MIN_FILTRO_USER) || !($filtro<=MAX_FILTRO_USER))
             $filtro = 1;
         
@@ -690,7 +690,7 @@ class Usuario
 
     }
 
-    //Funcionn que inserta los movimientos de los usuarios en la tabla historial
+    //Funcion que inserta los movimientos de los usuarios en la tabla historial
     public function historical($idusuario,$descripcion)
     {
         $ip = $this->obtenerIp();
@@ -714,7 +714,7 @@ class Usuario
 
         return $cad_fechas; 
     }
-    public function getNumeros($Id_User, $FechaInicio = "", $FechaFin = ""){
+    public function getNumeros($Id_User, $FechaInicio = "", $FechaFin = ""){//consulta datos para la estadística del usuarios en el reporte pdf
         $data = [];
         try{
             $sql = "SELECT

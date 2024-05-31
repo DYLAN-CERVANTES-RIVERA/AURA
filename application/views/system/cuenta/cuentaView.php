@@ -91,7 +91,7 @@
 	</div>
 	<div class="row">
 		<div class="col-12 text-justify">
-			H. Ayuntamiento de Puebla 2018-2021 | Blvd. San Felipe No. 2821 Col. Rancho Colorado | Tel. (222) 303-85-00 Ext 77102
+			H. Ayuntamiento de Puebla 2021-2024 | Blvd. San Felipe No. 2821 Col. Rancho Colorado | Tel. (222) 303-85-00 Ext 77102
 			Secretaría de Seguridad Ciudadana del Municipio de Puebla.
 		</div>
 	</div>

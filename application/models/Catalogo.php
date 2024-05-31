@@ -58,7 +58,7 @@ class Catalogo
         return $data;
     }
 
-    public function getDataCurrentPage($offset,$no_of_records_per_page,$from_where_sentence = ""){
+    public function getDataCurrentPage($offset,$no_of_records_per_page,$from_where_sentence = ""){//realiza la consulta de datos conforme a la generacion dinámica de la consulta de datos
 
         $sql = "
                 SELECT * "
@@ -70,8 +70,8 @@ class Catalogo
         return $this->db->registers();
     }
 
-    public function generateFromWhereSentence($catalogo,$cadena=""){
-        $from_where_sentence = "";
+    public function generateFromWhereSentence($catalogo,$cadena=""){// Genera la consulta dinámica con forme a los filtros instanciados desde la vista y el panel de búsqueda 
+       $from_where_sentence = "";
         switch ($catalogo) {
         	case '1': $from_where_sentence.= "FROM catalogo_delictivo WHERE Descripcion LIKE '%".$cadena."%' OR Tipo_actividad LIKE '%".$cadena."%'"; break;
         	case '2': $from_where_sentence.= "FROM catalogo_tipos_armas WHERE Tipo_Arma LIKE '%".$cadena."%'"; break;
@@ -97,7 +97,7 @@ class Catalogo
         }
         return $from_where_sentence;
     }
-    public function getAllInfoCatalogoByCadena($from_where_sentence = ""){
+    public function getAllInfoCatalogoByCadena($from_where_sentence = ""){//realiza la consulta de datos conforme a la generacion dinámica de la consulta de datos conforme al catalogo que es
     	$sqlAux = "SELECT *"
     				.$from_where_sentence."
                     ";  //query a la DB
@@ -105,7 +105,7 @@ class Catalogo
         return $this->db->registers();      //retorna todos los registros devueltos por la consulta
     }
 
-    public function getModalidadDetencion($post)
+    public function getModalidadDetencion($post) //realiza la consulta de datos la modalidad de la detencion
     {
         $modalidad = $post['modalidad'];
         $sql = "SELECT * FROM catalogo_forma_detencion WHERE Forma_Detencion = '".$modalidad."'";
@@ -113,7 +113,7 @@ class Catalogo
         return $this->db->registers();
     }
 
-    public function InsertOrUpdateCatalogo($post){
+    public function InsertOrUpdateCatalogo($post){ //realiza la inserción o la actualización del registro conforme al catalogo
         $catalogo = $post['catalogo'];
         $action   = $post['action'];
         $response = "Error";
@@ -411,7 +411,7 @@ class Catalogo
         return $response;
     }
 
-    public function deleteCatalogoRow($post){
+    public function deleteCatalogoRow($post){ //realiza la eliminacion del registro deacuerdo al catalogo
         $catalogo = $post['catalogo'];
         $id_reg   = $post['Id_Reg'];
         $response = "Error";
@@ -454,15 +454,7 @@ class Catalogo
     }
 
 
-    public function getCatalogforDropdown($post){
-        //SELECT Valor_MF FROM catalogo_media_filiacion WHERE Tipo_MF = 'COMPLEXIÓN'
-        $sql = "SELECT Valor_MF FROM catalogo_media_filiacion WHERE Tipo_MF ="."'".$post."'"."ORDER BY Id_MF";
-        $this->db->query($sql);
-        $resultado = $this->db->registers();
-        return $resultado;
-    }
-
-    public function getSimpleCatalogo($campo, $tabla){
+    public function getSimpleCatalogo($campo, $tabla){ //realiza la consulta conforme al catalogo que es enviado
         $sql = "SELECT DISTINCT $campo FROM $tabla";
         $this->db->query($sql);
         $resultado = $this->db->registers();
@@ -471,7 +463,7 @@ class Catalogo
     }
 
     /* ----- ----- ----- Función zona o sector ----- ----- ----- */
-    public function getZonaSector($tipo){
+    public function getZonaSector($tipo){ //consulta datos de la zona
         $sql = "SELECT Zona_Sector FROM catalogo_zonas_sectores WHERE Tipo_Grupo = "."'".$tipo."'";
         $this->db->query($sql);
         $resultado = $this->db->registers();
@@ -480,138 +472,100 @@ class Catalogo
 
     /*---------------Función para obtener los vectores solicitados */
 
-    public function getVector($tipo){
+    public function getVector($tipo){ //consulta datos de vectores por zona
         $aux = (is_int($tipo) ? "WHERE Zona = " .  $tipo   : "WHERE Zona = " .  "'" . $tipo ."'" );
         $sql = "SELECT Id_vector_Interno, Region FROM catalogo_vectores " . $aux . " ORDER BY Zona ASC, Id_Vector_Interno ASC";
         $this->db->query($sql);
         return $this->db->registers();
     }
 
-    /*Funciones para Eventos delictivos*/
-    public function getCatalogoGruposPolicia(){
-        $sql = "SELECT CONCAT(Tipo_Grupo,' - ',Valor_Grupo) AS Grupo 
-                FROM catalogo_grupos
-                ORDER BY Tipo_Grupo,Valor_Grupo;    
-                ";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-    /*fin Eventos delictivos*/
-
-    /*Funciones inspecciones*/
-    public function getGruposZonasSectores(){
-        $sql = "SELECT DISTINCT Tipo_Grupo FROM catalogo_grupos_inspecciones";
-        $this->db->query($sql);
-        $grupos = $this->db->registers();
-        return $grupos;
-    }
-    /*fin inspecciones*/
 
     /*Obteniendo los Eventos para "Eventos delictivos"*/
-    public function getEventos( $termino ){
+    public function getEventos( $termino ){ //consulta datos de los eventos ingresados en el sistema
         $sql = "SELECT descripcion FROM catalogo_911 WHERE descripcion LIKE " ."'". $termino."%' OR descripcion LIKE " . "'%" .$termino . "%' OR descripcion LIKE " . "'" . $termino . "%'" ;
         $this->db->query($sql);
         return $this->db->registers();
     }
 
-    public function getColonia( $termino ){
+    public function getColonia( $termino ){ //consulta datos de colonia
         $sql = "SELECT Tipo_Colonia, Colonia  FROM catalogo_colonia WHERE Colonia LIKE " ."'". $termino."%' OR Colonia LIKE " . "'%" .$termino . "%' OR Colonia LIKE " . "'" . $termino . "%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
     /*Funciones añadidas para catalogo de colonias, calles, estados y municipios*/
-    public function getColoniaCatalogo( $termino ){
+    public function getColoniaCatalogo( $termino ){ //consulta datos de colonias y tipo
         $sql = "SELECT Tipo, Colonia  FROM catalogo_colonias WHERE Colonia LIKE " ."'". $termino."%' OR Colonia LIKE " . "'%" .$termino . "%' OR Colonia LIKE " . "'" . $termino . "%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function getCallesCatalogo( $termino ){
+    public function getCallesCatalogo( $termino ){ //consulta datos de calles
         $sql = "SELECT Calle  FROM catalogo_calle WHERE Calle LIKE " ."'". $termino."%' OR Calle LIKE " . "'%" .$termino . "%' OR Calle LIKE " . "'" . $termino . "%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function getCPCatalogo($termino ){
+    public function getCPCatalogo($termino ){ //consulta datos de códigos postales
         //$termino=str_replace([" DE "," de "," DEL "," del "]," ",$termino);
         $sql = "SELECT *  FROM catalogo_codigos_postales WHERE Nombre LIKE " ."'%". $termino."%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function getSimpleCatalogoOrder($campo, $tabla,$order){
+    public function getSimpleCatalogoOrder($campo, $tabla,$order){ //consulta datos por campo y por tabla
         $sql = "SELECT DISTINCT $campo FROM $tabla Order By $order";
         $this->db->query($sql);
         $resultado = $this->db->registers();
         return $resultado;
     }
-    public function getMunicipiosEstados( $termino,$estado ){
+    public function getMunicipiosEstados( $termino,$estado ){ //consulta datos de municpio
         $sql = "SELECT Municipio  FROM catalogo_estados_municipios WHERE (Municipio LIKE " ."'". $termino."%' OR Municipio LIKE " . "'%" .$termino . "%' OR Municipio LIKE " . "'" . $termino . "%') AND Estado = "."'".$estado."'";
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function existeMunicipio( $estado,$municipio ){
+    public function existeMunicipio( $estado,$municipio ){ //consulta si existe el municipio de un estado
         $sql = "SELECT COUNT(Municipio) AS CONTADOR from catalogo_estados_municipios where Estado=" ."'". $estado."' AND Municipio="."'".$municipio."'";
         $this->db->query( $sql );
         return $this->db->registers();
     }
     /*Funciones añadidad para colonias y calles de catalogo*/
-    public function getColonias()
+    public function getColonias()//consulta colonias y tipo todas
     {
         $sql = "SELECT Tipo, Colonia FROM catalogo_colonias";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getCalles()
+    public function getCalles()//consulta datos de calles todas
     {
         $sql = "SELECT Calle FROM catalogo_calle";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    /*Funciones añadidas para catalogo de cuervos*/
-    public function getIncidenciasCuervosPersonas(){
-        $sql = "SELECT * FROM registros_match_lista_negra";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getIncidenciasCuervosVehiculos(){
-        $sql = "SELECT * FROM registros_vehiculos_lista";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getCatalogoPersonas(){
-        $sql = "SELECT * FROM catalogo_lista_negra";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getCatalogoPlacaNip(){
+    public function getCatalogoPlacaNip(){//consulta datos de vehículos ingresados 
         $sql = "SELECT * FROM catalogo_lista_vehiculos";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getSubmarcaCatalogo($termino){
+    public function getSubmarcaCatalogo($termino){ //consulta datos de submarcas de vehículos un registro
         $sql = "SELECT Submarca  FROM catalogo_submarcas_vehiculos WHERE Submarca LIKE " ."'". $termino."%' OR Submarca LIKE " . "'%" .$termino . "%' OR Submarca LIKE " . "'" . $termino . "%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function getMarcaCatalogo($termino){
+    public function getMarcaCatalogo($termino){ //consulta datos de marcas de vehículos un registro
         $sql = "SELECT Marca  FROM catalogo_marca_vehiculos_io WHERE Marca LIKE " ."'". $termino."%' OR Marca LIKE " . "'%" .$termino . "%' OR Marca LIKE " . "'" . $termino . "%'" ;
         $this->db->query( $sql );
         return $this->db->registers();
     }
-    public function getAMarcas()
+    public function getAMarcas()//consulta datos de marcas todas
     {
         $sql = "SELECT Marca FROM catalogo_marca_vehiculos_io";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getSMarcas()
+    public function getSMarcas()//consulta datos de submarcas todas
     {
         $sql = "SELECT Submarca FROM catalogo_submarcas_vehiculos";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getTipoDatos()
+    public function getTipoDatos()//consulta datos tipo dato entrevistas todo
     {
         $sql = "SELECT Tipo FROM catalogo_tipo_dato_entrevista";
         $this->db->query($sql);
@@ -619,119 +573,81 @@ class Catalogo
     }
     /*---------------Función para obtener todos los vectores */
 
-    public function getAllVector(){
+    public function getAllVector(){//consulta datos todos los vectores
         $sql = "SELECT Id_vector_Interno, Zona, Region FROM catalogo_vectores ORDER BY Zona ASC, Id_Vector_Interno ASC";
         $this->db->query($sql);
         return $this->db->registers();
     }
 
-    public function getAllFormaDetencion(){
+    public function getAllFormaDetencion(){//consulta datos forma de detencion
         $sql = "SELECT * FROM catalogo_forma_detencion";
         $this->db->query($sql);
         return $this->db->registers();
     }
 
-    public function getAllArma(){
+    public function getAllArma(){//consulta datos tipo de armas
         $sql = "SELECT * FROM catalogo_tipos_armas";
         $this->db->query($sql);
         return $this->db->registers();
     }
 
-    public function getAllMedidasDroga(){
-        $sql = "SELECT * FROM catalogo_medidas_droga";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
 
-    public function getAllAdicciones(){
-        $sql = "SELECT * FROM catalogo_adicciones";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getAllTipoAnimal(){
-        $sql = "SELECT * FROM catalogo_animales_asegurados";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getTipoAseguramiento($id_forma){
-        $sql = "SELECT * FROM catalogo_forma_detencion WHERE Id_Forma_Detencion = $id_forma";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-    
-    public function getCargadores() {
-        $sql = "SELECT * FROM `catalogo_tipos_armas` WHERE `Id_Tipo_Arma` > 8";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-
-    public function getElementosLocales($termino){
-        $sql = "SELECT `Id_Empleado`,`No_ControlMunicipio`, CONCAT(`Paterno`,' ',`Materno`,' ',`Nombre`) AS 'NombreCompleto',`Paterno`,`Materno`,`Nombre`,`TipoEmpleado`,`No_PlacaPolicia`
-        FROM catalogo_elemento_participante 
-        WHERE `No_ControlMunicipio` = '". $termino ."'  OR
-        CONCAT(`Paterno`,' ',`Materno`,' ',`Nombre`) LIKE '%". $termino . "%' OR
-        `No_PlacaPolicia` = '". $termino . "'
-        ";
-        $this->db->query($sql);
-        return $this->db->registers();
-    }
-     /*---------------------FUNCIONES QUE SON NUEVAS PARA EL MODULO DE GESTOR DE CASOS--------------*/
-     public function getAllTipoViolencia(){
+     /*---------------------FUNCIONES QUE SON PARA EL MODULO DE GESTOR EVENTOS--------------*/
+//todas funciones con el prefijo get consultan catalogos del sistema
+     public function getAllTipoViolencia(){//consulta datos todos los tipos de violencia
         $sql = "SELECT * FROM catalogo_tipo_violencia";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getAllTipoSViolencia(){
+    public function getAllTipoSViolencia(){//consulta datos todos los tipos de sin violencia
         $sql = "SELECT * FROM catalogo_tipo_sinviolencia";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getIndicativo(){
+    public function getIndicativo(){//consulta datos indicativos
         $sql = "SELECT * FROM catalogo_indicativo_entrevistador";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getAllFaltaDelito(){
+    public function getAllFaltaDelito(){//consulta datos delitos
         $sql = "SELECT * FROM catalogo_delictivo";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getAllFuente(){
+    public function getAllFuente(){//consulta datos fuentes de información evento
         $sql = "SELECT fuente FROM catalogo_fuente_casos";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getTipoVehiculo(){
+    public function getTipoVehiculo(){//consulta datos tipo de vehiculo
         $sql = "SELECT Tipo FROM catalogo_tipos_vehiculos";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getMarca(){
+    public function getMarca(){//consulta datos de marcas de vehiculo
         $sql = "SELECT Marca FROM catalogo_marca_vehiculos_io";
         $this->db->query($sql);
         return $this->db->registers();
     }
     
-    public function getSubmarca(){
+    public function getSubmarca(){//consulta datos de submarcas de vehiculo
         $sql = "SELECT Submarca FROM catalogo_submarcas_vehiculos";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getRangoEdad(){
+    public function getRangoEdad(){//consulta datos rangos de edad
         $sql = "SELECT Rango FROM catalogo_rango_edades";
         $this->db->query($sql);
         return $this->db->registers();
     }
-    public function getNombresClave(){
+    public function getNombresClave(){//consulta datos nombres clave en las entrevistas de eventos
         $sql = "SELECT clave FROM catalogo_nombres_clave";
         $this->db->query($sql);
         $resultado = $this->db->registers();
         return $resultado;
     }
     
-    public function getArea(){
+    public function getArea(){//consulta datos las áreas de los usuarios
         $sql = "SELECT Area FROM catalogo_area";
         $this->db->query($sql);
         $resultado = $this->db->registers();
@@ -740,6 +656,4 @@ class Catalogo
 
 
 }
-
-
 ?>
