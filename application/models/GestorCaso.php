@@ -1301,7 +1301,7 @@ class GestorCaso{
     //obtener los registros de la pagina actual
     public function getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence = ""){
         $sql = "
-                SELECT * "
+                SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Activacion,FechaHora_Captura,Id_Seguimiento "
             . $from_where_sentence . "  
                 LIMIT $offset,$no_of_records_per_page
                 ";

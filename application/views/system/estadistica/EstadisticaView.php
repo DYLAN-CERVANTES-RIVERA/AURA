@@ -81,8 +81,11 @@
                 </div>
             </div>
             <div class="row col-lg-12 mt-3">
-                <div class="col-6">
+                <div class="col-4">
                     <h6>Total registros: <strong id="id_total_grafica"></strong></h6>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-opacity" onclick="return checarCadena(event)" ><img src="<?php echo base_url; ?>public/media/icons/eye.png" width="15%" >Generar graficas</button>
                 </div>
                 <div class="col-2">
                     <?php
@@ -142,6 +145,11 @@
             <br><br><br>
         </div>
     <br><br><br>
+    </div>
+    <div class="modal fade" id="ModalCenterFoto" tabindex="-1" role="dialog" aria-labelledby="myModalExito" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <img name="nor" src="<?= base_url; ?>/public/media/images/logo6.png"  style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block"data-toggle="modal" data-target="#exampleModalCenter">
+        </div>
     </div>
 </div>
     <!-- Modals content for date range-->

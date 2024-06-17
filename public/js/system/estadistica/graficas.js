@@ -414,6 +414,7 @@ const getDataGraficas = () => {
    }else{
         formAux.append('exacta', 0);
    }
+   $('#ModalCenterFoto').modal('show');//Mostramos una imagen completa en pantalla hasta que halla una respuesta del controlador
     fetch(base_url_js + 'Estadisticas/getDatagraficas', {//REALIZA UN FETCH PARA GENERAR LAS GRAFICAS CON LOS FILTROS PUESTOS EN LA INTERFAZ
             method: 'POST',
             body: formAux
@@ -426,7 +427,7 @@ const getDataGraficas = () => {
              mostrarGrafica3(data.Delitos);
              mostrarGrafica4(data.Dias);
              mostrarGrafica5(data.Horas);
-             
+             $('#ModalCenterFoto').modal('hide');//se quita la imagen 
         })
         .catch(err => console.log(err))
 
@@ -437,5 +438,5 @@ window.onload = function() {
         $('#myInput').trigger('focus')
     });
 
-    getDataGraficas();
+    //getDataGraficas();
 };
