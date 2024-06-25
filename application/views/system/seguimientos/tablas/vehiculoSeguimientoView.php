@@ -33,7 +33,7 @@
                 <div class="col-3">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="SaraioSic" id="id_dato_2"  value="0" onchange="return changeProcedenciaBusqueda(event)" >
-                        <label class="form-check-label" for="id_dato_2">SIC</label>
+                        <label class="form-check-label" for="id_dato_2">AURA</label>
                     </div>
                 </div>
                 <div class="col-12 text-center">
@@ -52,12 +52,11 @@
                 </div>
             </div>
             <div class="row mt-3 mi_hide" id="id_vehiculo_panel2">
-                <div class="col-5">   
+                <div class="col-4">   
                     <h5  class="subtitulo-rosa">Ingrese la placa y seleccione id del vehiculo :</h5>            
                 </div>
-                <div class="col-7">
-                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Buscar Placa en Sic"  id="id_vehiculo_sic" name="id_vehiculo_sic"  onkeypress="return validePlaca(event);" >
-                    
+                <div class="col-8">
+                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Buscar Placa en AURA"  id="id_vehiculo_sic" name="id_vehiculo_sic"  onkeypress="return validePlaca(event);" >
                 </div>
                 <div class="col-12 text-center">
                     <small id="error_vehiculo_sic" class="form-text text-danger"></small>

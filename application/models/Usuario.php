@@ -749,7 +749,7 @@ class Usuario
             $sql = "SELECT 
                         COUNT(*) AS `Conteo_Eventos_capturados` 
                     FROM `evento` 
-                    WHERE `evento`.`Elemento_Captura` = '" .$data['Nombre_Completo']."'";
+                    WHERE `evento`.`Elemento_Captura` = '" .$data['User_Name']."'";
             if($FechaInicio != "" && $FechaFin != ""){
                 $sql .= " AND 
                         ((`evento`.`FechaHora_Captura` >= '" . $FechaInicio . " 00:00:00'  AND 

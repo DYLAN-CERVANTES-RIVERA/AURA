@@ -1777,6 +1777,40 @@ class Seguimientos extends Controller
     
         }
     }
+    public function ConsultaPersonaFetch(){
+        if (isset($_POST['Nombre'])) {
+            $Nombre = $_POST['Nombre'];
+            $Ap_paterno = $_POST['Ap_paterno'];
+            $Ap_materno = $_POST['Ap_materno'];
+            $data = $this->Seguimiento->ConsultaPersona($Nombre, $Ap_paterno, $Ap_materno);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Seguimientos");
+            exit();
+        }
+    }
+
+    public function ConsultaVehiculoFetch(){
+        if (isset($_POST['Placa'])||isset($_POST['Niv'])) {
+            $Placa = $_POST['Placa'];
+            $Niv = $_POST['Niv'];
+            $data = $this->Seguimiento->ConsultaVehiculo($Placa, $Niv);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Seguimientos");
+            exit();
+        }
+    }
+    public function ConsultaVehiculoEFetch(){
+        if (isset($_POST['Placa'])) {
+            $Placa = $_POST['Placa'];
+            $data = $this->Seguimiento->ConsultaVehiculoEventos($Placa);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Seguimientos");
+            exit();
+        }
+    }
 }
 
 ?>

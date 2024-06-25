@@ -185,3 +185,14 @@ div.disabled {
     /* for "disabled" effect */
     opacity: 0.5;
 }
+
+/* Estilos personalizados para los botones */
+.custom-confirm-btn {
+    background-color: #0F2145; /* Verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}

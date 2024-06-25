@@ -254,11 +254,13 @@ const onFormVehiculoSubmit = async() => {
     if(await ValidatableVehiculo()){
         if (selectedRowVehiculo === null){
             InsertVehiculo();//INSERTA NUEVA FILA EN LA TABLA DE PersonaS
-            resetFormVehiculo();//LIMPIA LA VISTA 
+            await verificaInfoVehiculoRed();
+            await verificaInfoVehiculoEventos();
         }else{
             updateRowVehiculo();//ACTUALIZA LA FILA SELECCIONADA EN LA TABLA DE PersonaS
-            resetFormVehiculo();//LIMPIA LA VISTA
+        
         }
+        resetFormVehiculo();//LIMPIA LA VISTA 
     }
 }
 const ValidatableVehiculo = async() => {//VALIDA LOS DATOS PARA SER INGRESADOR A LA TABLA
@@ -669,3 +671,76 @@ document.getElementById('submarca').addEventListener('input', () => {
     })
     .catch(err => alert(`Ha ocurrido un error al obtener los Vehiculos.\nCódigo de error: ${ err }`))
 });
+
+const verificaInfoVehiculoRed = async() =>{
+    let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO 
+    let placa = document.getElementById('placas').value.toUpperCase();
+    let niv = document.getElementById('NIVS').value.toUpperCase();
+    
+    myFormDataConsulta.append('Placa',placa.trim());
+    myFormDataConsulta.append('Niv',niv.trim());
+
+    console.log(placa,niv)
+
+    fetch(base_url_js + 'Seguimientos/ConsultaVehiculoFetch', {//realiza el fetch para consultar
+        method: 'POST',
+        body: myFormDataConsulta
+    })
+
+    .then(res => res.json())
+
+    .then(data => {//obtiene respuesta del modelo
+        if(Object.keys(data).length>0){
+            cad = ""
+            data.forEach(element => {
+                let alto_impacto =(element.Alto_Impacto==1)?'UNA RED DE ALTO IMPACTO FOLIO: ':'UNA RED DE GABINETE FOLIO: ';
+                cad += alto_impacto+element.Id_Seguimiento+" "+element.Nombre_grupo_delictivo+" PLACAS: "+element.Placas+" NIVS: "+element.Nivs;  
+            });
+            
+            Swal.fire({
+                title: "El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
+                icon: 'info',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                },
+                buttonsStyling: false
+            });
+           
+        }
+    })
+}
+const verificaInfoVehiculoEventos = async() =>{
+    let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO 
+    let placa = document.getElementById('placas').value.toUpperCase();
+    
+    myFormDataConsulta.append('Placa',placa.trim());
+
+
+    fetch(base_url_js + 'Seguimientos/ConsultaVehiculoEFetch', {//realiza el fetch para consultar
+        method: 'POST',
+        body: myFormDataConsulta
+    })
+
+    .then(res => res.json())
+
+    .then(data => {//obtiene respuesta del modelo
+        if(Object.keys(data).length>0){
+            cad = ""
+            data.forEach(element => {
+                cad += "FOLIO DE EVENTO: "+element.Folio_infra+" FOLIO 911: "+element.Folio_911+" PLACA: "+element.Placas_Vehiculo+" MARCA: "+element.Marca+" SUBMARCA: "+element.Submarca+" COLOR: "+element.Color;  
+            });
+            
+            Swal.fire({
+                title: "El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
+                icon: 'info',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                },
+                buttonsStyling: false
+            });
+           
+        }
+    })
+}

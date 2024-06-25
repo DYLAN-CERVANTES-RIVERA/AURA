@@ -358,7 +358,7 @@ function alerta() {//FUNCION PARA AVISAR QUE TODO SALIO BIEN
         left: 100,
         behavior: 'smooth'
     });
-   setInterval(function() { window.location = base_url_js+"Seguimientos"; }, 4000);//FUNCION PARA REDIRIGIR A LA PAGINA PRINCIPAL DE SEGUIMIENTO
+    setTimeout(function() { window.location = base_url_js+"Seguimientos"; }, 4000);//FUNCION PARA REDIRIGIR A LA PAGINA PRINCIPAL DE SEGUIMIENTO
 }
 
 const validateDelito = async (delito_buscar)=> {//FUNCION QUE VALIDA SI EL DELITO INGRESADO ESTA EN EL CATALOGO

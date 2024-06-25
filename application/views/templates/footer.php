@@ -17,7 +17,7 @@
         <script src="<?php echo base_url ?>public/js/libraries/FormValidator.js"></script>
         <script src="<?php echo base_url ?>public/js/libraries/api_mapbox.js"></script>
         <script src="<?php echo base_url ?>public/js/libraries/socket.io.min.js"></script>
-        <script src="<?php echo base_url ?>public/js/system/socket/socketClient.js"></script>
+        <!--<script src="<?php echo base_url ?>public/js/system/socket/socketClient.js"></script>-->
 
         <script>
             $(document).ready(function(){
@@ -28,7 +28,7 @@
         <?php if (isset($data['extra_js']))  echo $data['extra_js'] ?>
 
         <footer class="d-flex justify-content-center align-items-center footer">
-            <span class="footer-copyright text-center py-3 gray-font ">©2024 Todos los derechos reservados. SSCMP</span>
+            <span class="footer-copyright text-center py-3 gray-font ">AURA</span>
         </footer>
     </body>
 </html>

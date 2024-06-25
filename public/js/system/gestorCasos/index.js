@@ -754,17 +754,17 @@ const showViolencia = () =>{//FUNCIONES PARA LOS SELECTS CON Y SIN VIOLENCIA
     }else if(cuestionViolencia=="SIN VIOLENCIA"){
         document.getElementById('form_sinviolencia').classList.remove('mi_hide')
         document.getElementById('form_violencia').classList.add('mi_hide')
-        document.getElementById('form_arma').classList.add('mi_hide')
+        
         document.getElementById('violencia_principales').value="NA"
-        document.getElementById('arma_principales').value="NA"
+        
         document.getElementById('violencia_principales_error').innerText = '';
         document.getElementById('violencia_principales1_error').innerText = '';
         document.getElementById('cons').setAttribute('value', 'NA');
     }else if(cuestionViolencia=="NA"){
         document.getElementById('form_violencia').classList.add('mi_hide')
-        document.getElementById('form_arma').classList.add('mi_hide')
+        
         document.getElementById('violencia_principales').value="NA"
-        document.getElementById('arma_principales').value="NA"
+        
         document.getElementById('form_sinviolencia').classList.add('mi_hide')
         document.getElementById('sviolencia_principales').value="NA"
         document.getElementById('cons').setAttribute('value', 'NA');

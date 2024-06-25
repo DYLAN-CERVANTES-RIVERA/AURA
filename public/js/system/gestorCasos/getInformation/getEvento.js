@@ -775,7 +775,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     stipo_violencia = document.getElementById('sviolencia_principales')
     tipo_violencia = document.getElementById('violencia_principales')
     tipo_violenciaCS= document.getElementById('violencia_principales1')
-    tipo_arma = document.getElementById('arma_principales')
+   
     fecha_activacion = document.getElementById('fecha_activacion_principales')
     hora_activacion = document.getElementById('hora_activacion_principales')
     habilitado = document.getElementById('Habilitado_question1')
@@ -974,16 +974,16 @@ const showViolencia = () =>{
     }else if(cuestionViolencia=="SIN VIOLENCIA"){
         document.getElementById('form_sinviolencia').classList.remove('mi_hide')
         document.getElementById('form_violencia').classList.add('mi_hide')
-        document.getElementById('form_arma').classList.add('mi_hide')
+        
         document.getElementById('violencia_principales').value="NA"
-        document.getElementById('arma_principales').value="NA"
+        
         document.getElementById('violencia_principales_error').innerText = '';
         document.getElementById('violencia_principales1_error').innerText = '';
     }else if(cuestionViolencia=="NA"){
         document.getElementById('form_violencia').classList.add('mi_hide')
-        document.getElementById('form_arma').classList.add('mi_hide')
+        
         document.getElementById('violencia_principales').value="NA"
-        document.getElementById('arma_principales').value="NA"
+        
         document.getElementById('form_sinviolencia').classList.add('mi_hide')
         document.getElementById('sviolencia_principales').value="NA"
     }

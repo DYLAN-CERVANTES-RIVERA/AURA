@@ -1542,6 +1542,45 @@ class Seguimiento{
         return $this->db->registers();
 
     }
+    public function ConsultaPersona($Nombre, $Ap_paterno, $Ap_materno){
+        $Alto='';
+        if($_SESSION['userdataSIC']->Red[0] == 0){
+            $Alto.= " AND ( seguimiento_gabinete.Alto_Impacto = 0) ";  
+        }
+        
+        $sql = "SELECT persona_gabinete.Id_Seguimiento,seguimiento_gabinete.Nombre_grupo_delictivo,seguimiento_gabinete.Alto_Impacto,persona_gabinete.Nombre, persona_gabinete.Ap_Paterno, persona_gabinete.Ap_Materno
+        FROM persona_gabinete INNER JOIN seguimiento_gabinete ON( persona_gabinete.Id_Seguimiento = seguimiento_gabinete.Id_Seguimiento)
+        WHERE (Ap_Paterno = '".$Ap_paterno."' AND Ap_Materno = '".$Ap_materno."' AND (Nombre LIKE '%".$Nombre."%')) AND persona_gabinete.Id_Seguimiento IS NOT NULL".$Alto;
+
+        $this->db->query($sql);
+        return $this->db->registers();
+
+    }
+
+    public function ConsultaVehiculo($Placa, $Niv){
+        $Alto='';
+        if($_SESSION['userdataSIC']->Red[0] == 0){
+            $Alto.= " AND ( seguimiento_gabinete.Alto_Impacto = 0) ";  
+        }
+        
+        $sql = "SELECT vehiculos_gabinete.Id_Seguimiento, seguimiento_gabinete.Nombre_grupo_delictivo, seguimiento_gabinete.Alto_Impacto, vehiculos_gabinete.Placas, vehiculos_gabinete.Nivs
+        FROM vehiculos_gabinete INNER JOIN seguimiento_gabinete ON( vehiculos_gabinete.Id_Seguimiento = seguimiento_gabinete.Id_Seguimiento)
+        WHERE (Placas = '".$Placa."' OR Nivs = '".$Niv."') AND vehiculos_gabinete.Id_Seguimiento IS NOT NULL".$Alto;
+
+        $this->db->query($sql);
+        return $this->db->registers();
+
+    }
+    public function ConsultaVehiculoEventos($Placa){
+       
+        $sql = "SELECT vehiculo_p.Folio_infra , evento.Folio_911 , vehiculo_p.Placas_Vehiculo, vehiculo_p.Marca, vehiculo_p.Submarca, vehiculo_p.Color
+        FROM vehiculo_p INNER JOIN evento ON( vehiculo_p.Folio_infra = evento.Folio_infra)
+        WHERE (vehiculo_p.Placas_Vehiculo = '".$Placa."') AND vehiculo_p.Folio_infra IS NOT NULL";
+
+        $this->db->query($sql);
+        return $this->db->registers();
+
+    }
 
 }
 ?>

@@ -23,7 +23,9 @@
 
     <script src= '<?php echo base_url ?>public/js/libraries/autocomplete.js'></script>
     <link rel="stylesheet" type="text/css" href='<?php echo base_url ?>public/css/libraries/autocomplete.js'>
-	 
+
+      <!-- Incluir SweetAlert desde la CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Font Awesome JS -->
     <script defer src="<?php echo base_url ?>public/js/template/header/solid.js"></script>

@@ -275,7 +275,8 @@ function alerta() {/// todo bien en la insercion
         left: 100,
         behavior: 'smooth'
     });
-   setInterval(function() { window.location = base_url_js+"GestorCasos"; }, 4000);//funcion para redirigir a la pagina principal del gestor de casos
+    //console.log(base_url_js);
+    setTimeout(function() { window.location = base_url_js+"GestorCasos"; }, 2000);//funcion para redirigir a la pagina principal del gestor de casos
 }
 /*-----------------------------------FUNCIONES PARA LEER LOS DATOS DE LAS TABLAS-----------------------------------*/
 const readTableDelitos = () => {//lee los datos de la tabla delitos y genera una estructura deacuerdo a los datos contenido es la tabla

@@ -1373,5 +1373,30 @@ class Entrevistas extends Controller
             echo json_encode($data);
         }
     }
+    public function ConsultaPersonaFetch(){
+        if (isset($_POST['Nombre'])) {
+            $Nombre = $_POST['Nombre'];
+            $Ap_paterno = $_POST['Ap_paterno'];
+            $Ap_materno = $_POST['Ap_materno'];
+            $data = $this->Entrevista->ConsultaPersona($Nombre, $Ap_paterno, $Ap_materno);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function ConsultaPersonaEFetch(){
+        if (isset($_POST['Nombre'])) {
+            $Nombre = $_POST['Nombre'];
+            $Ap_paterno = $_POST['Ap_paterno'];
+            $Ap_materno = $_POST['Ap_materno'];
+            $fecha = $_POST['fecha'];
+            $data = $this->Entrevista->ConsultaPersonaE($Nombre, $Ap_paterno, $Ap_materno,$fecha);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
 }
 ?>

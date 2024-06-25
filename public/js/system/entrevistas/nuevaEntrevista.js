@@ -546,7 +546,7 @@ document.getElementById('btn_detenido_entrevista_principal').addEventListener('c
                     left: 100,
                     behavior: 'smooth'
                 });//mueve la vista hasta arriba de la pagina
-                document.getElementById('datos_principales_Detenido_Entrevistado').reset()
+                
                 alerta()//Si todo se valido bien y se inserto correctamente se arroja un mensaje satisfactorio y redirige a la pestaña principal del gestor de casos
             }
         })
@@ -570,7 +570,11 @@ document.getElementById('btn_detenido_entrevista_principal').addEventListener('c
     }
 })
 
-function alerta() {//FUNCION PARA AVISAR QUE TODO SALIO BIEN 
+async function alerta() {//FUNCION PARA AVISAR QUE TODO SALIO BIEN 
+
+    await ConsultaPersonaRed();
+    
+    
     const BtGuardar =document.getElementById("btn_detenido_entrevista_principal");
     BtGuardar.setAttribute('disabled', '');
     msg_principalesError.innerHTML = `<div class="alert alert-success text-center" role="success">DATOS INSERTADOS CORRECTAMENTE. EN BREVE SERÁ REDIRIGIDO A LA PÁGINA PRINCIPAL
@@ -583,7 +587,7 @@ function alerta() {//FUNCION PARA AVISAR QUE TODO SALIO BIEN
         left: 100,
         behavior: 'smooth'
     });
-   setInterval(function() { window.location = base_url_js+"Entrevistas"; }, 4000);//FUNCION PARA REDIRIGIR A LA PAGINA PRINCIPAL DE SEGUIMIENTO
+   ///setInterval(function() { window.location = base_url_js+"Entrevistas"; }, 6000);//FUNCION PARA REDIRIGIR A LA PAGINA PRINCIPAL DE SEGUIMIENTO
 }
 const Id_Banda_Seguimiento = document.getElementById('Id_Banda_Seguimiento');
 Id_Banda_Seguimiento.addEventListener('input', () => {
@@ -596,3 +600,112 @@ Id_Banda_Seguimiento.addEventListener('input', () => {
         document.getElementById('id_sic_1').checked=false;
     }
 });
+
+const ConsultaPersonaRed = async() =>{
+    let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO DE LA TABLA DE PERSONAS 
+    let nombre = document.getElementById('nombre').value.toUpperCase();
+    let ap_paterno = document.getElementById('ap_paterno').value.toUpperCase();
+    let ap_materno = document.getElementById('ap_materno').value.toUpperCase();
+    
+    myFormDataConsulta.append('Nombre',nombre.trim());
+    myFormDataConsulta.append('Ap_paterno',ap_paterno.trim());
+    myFormDataConsulta.append('Ap_materno',ap_materno.trim());
+
+    fetch(base_url_js + 'Entrevistas/ConsultaPersonaFetch', {//realiza el fetch para consultar
+        method: 'POST',
+        body: myFormDataConsulta
+    })
+
+    .then(res => res.json())
+
+    .then(data => {//obtiene respuesta del modelo
+        if(Object.keys(data).length>0){
+            cad = ""
+            data.forEach(element => {
+                let alto_impacto =(element.Alto_Impacto==1)?'UNA RED DE ALTO IMPACTO FOLIO: ':'UNA RED DE GABINETE FOLIO: ';
+                cad += alto_impacto+element.Id_Seguimiento+", "+element.Nombre_grupo_delictivo+", "+element.Nombre+" "+element.Ap_Paterno+" "+element.Ap_Materno;  
+            });
+        
+            coincidencia = "LA PERSONA TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR ";
+            ConsultaPersonaEntrevista(coincidencia);
+        
+        }else{
+            ConsultaPersonaEntrevista("");
+        }
+    })
+}
+
+const ConsultaPersonaEntrevista = async(coincidencia) =>{
+    console.log(coincidencia)
+    let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO DE LA TABLA DE PERSONAS 
+    let nombre = document.getElementById('nombre').value.toUpperCase();
+    let ap_paterno = document.getElementById('ap_paterno').value.toUpperCase();
+    let ap_materno = document.getElementById('ap_materno').value.toUpperCase();
+    let fecha = document.getElementById('fechahora_captura_principales').value;
+    
+    myFormDataConsulta.append('Nombre',nombre.trim());
+    myFormDataConsulta.append('Ap_paterno',ap_paterno.trim());
+    myFormDataConsulta.append('Ap_materno',ap_materno.trim());
+    myFormDataConsulta.append('fecha',fecha);
+
+    fetch(base_url_js + 'Entrevistas/ConsultaPersonaEFetch', {//realiza el fetch para consultar
+        method: 'POST',
+        body: myFormDataConsulta
+    })
+
+    .then(res => res.json())
+
+    .then(data => {//obtiene respuesta del modelo
+        if(Object.keys(data).length>0){
+            cad = "";
+            data.forEach(element => {
+                cad += "UNA ENTREVISTA ANTERIOR CON EL FOLIO: "+element.Id_Persona_Entrevista+", "+element.Nombre+" "+element.Ap_Paterno+" "+element.Ap_Materno+" "+element.Alias;  
+            });
+            console.log(cad)
+            Swal.fire({
+                title: coincidencia + "LA PERSONA TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
+                icon: 'info',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed || result.isDismissed) {
+                    // Llamar a la función que quieres ejecutar después de que el usuario presione "OK"
+                    setTimeout(function() { window.location = base_url_js+"Entrevistas"; }, 2000);
+                }
+            }).catch(() => {
+                // Llamar a la función personalizada si el usuario cierra la alerta
+                setTimeout(function() { window.location = base_url_js+"Entrevistas"; }, 2000);
+            });
+        }else{
+            if(coincidencia!=""){
+                Swal.fire({
+                    title: coincidencia,
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        // Llamar a la función que quieres ejecutar después de que el usuario presione "OK"
+                    
+                        setTimeout(function() { window.location = base_url_js+"Entrevistas"; }, 2000);
+                    }
+                }).catch(() => {
+                    // Llamar a la función personalizada si el usuario cierra la alerta
+                    setTimeout(function() { window.location = base_url_js+"Entrevistas"; }, 2000);
+                });
+
+            }else{
+                setTimeout(function() { window.location = base_url_js+"Entrevistas"; }, 3000);
+
+            }
+
+        }
+    })
+    document.getElementById('datos_principales_Detenido_Entrevistado').reset()
+}

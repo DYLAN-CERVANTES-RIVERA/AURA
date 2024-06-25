@@ -87,11 +87,11 @@ const onFormPersonaSubmit = async() => {
     if(await ValidatablePersona()){
         if (selectedRowPersonas === null){
             InsertPersona();//INSERTA NUEVA FILA EN LA TABLA DE PersonaS
-            resetFormPersona();//LIMPIA LA VISTA 
+            await verificaInfo(); 
         }else{
             updateRowPersona();//ACTUALIZA LA FILA SELECCIONADA EN LA TABLA DE PersonaS
-            resetFormPersona();//LIMPIA LA VISTA
         }
+        resetFormPersona();//LIMPIA LA VISTA 
     }
 }
 const ValidatablePersona = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL FORMULARIO DE PERSONAS PARA QUE SE INGRESE EN LA TABLA
@@ -601,4 +601,43 @@ const alertaPersona = async()=>{/// todo bien en la edicion
         left: 100,
         behavior: 'smooth'
     });
+}
+const verificaInfo = async() =>{
+    let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO DE LA TABLA DE PERSONAS 
+    let nombre = document.getElementById('nombre').value.toUpperCase();
+    let ap_paterno = document.getElementById('ap_paterno').value.toUpperCase();
+    let ap_materno = document.getElementById('ap_materno').value.toUpperCase();
+    
+    myFormDataConsulta.append('Nombre',nombre.trim());
+    myFormDataConsulta.append('Ap_paterno',ap_paterno.trim());
+    myFormDataConsulta.append('Ap_materno',ap_materno.trim());
+
+    fetch(base_url_js + 'Seguimientos/ConsultaPersonaFetch', {//realiza el fetch para consultar
+        method: 'POST',
+        body: myFormDataConsulta
+    })
+
+    .then(res => res.json())
+
+    .then(data => {//obtiene respuesta del modelo
+        if(Object.keys(data).length>0){
+            cad = ""
+            console.log(Object.keys(data).length)
+            data.forEach(element => {
+                let alto_impacto =(element.Alto_Impacto==1)?'UNA RED DE ALTO IMPACTO FOLIO: ':'UNA RED DE GABINETE FOLIO: ';
+                cad += alto_impacto+element.Id_Seguimiento+", "+element.Nombre_grupo_delictivo+", "+element.Nombre+" "+element.Ap_Paterno+" "+element.Ap_Materno;  
+            });
+            
+            Swal.fire({
+                title: "LA PERSONA TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
+                icon: 'info',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                },
+                buttonsStyling: false
+            });
+            //alert("LA PERSONA TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR")
+        }
+    })
 }

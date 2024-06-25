@@ -1011,5 +1011,25 @@ class Entrevista{
         $this->db->query($sql);
         return $this->db->registers();
     }
+    public function ConsultaPersona($Nombre, $Ap_paterno, $Ap_materno){
+        
+        $sql = "SELECT persona_gabinete.Id_Seguimiento,seguimiento_gabinete.Nombre_grupo_delictivo,seguimiento_gabinete.Alto_Impacto,persona_gabinete.Nombre, persona_gabinete.Ap_Paterno, persona_gabinete.Ap_Materno
+        FROM persona_gabinete INNER JOIN seguimiento_gabinete ON( persona_gabinete.Id_Seguimiento = seguimiento_gabinete.Id_Seguimiento)
+        WHERE (Ap_Paterno = '".$Ap_paterno."' AND Ap_Materno = '".$Ap_materno."' AND (Nombre LIKE '%".$Nombre."%')) AND persona_gabinete.Id_Seguimiento IS NOT NULL";
+
+        $this->db->query($sql);
+        return $this->db->registers();
+
+    }
+    public function ConsultaPersonaE($Nombre, $Ap_paterno, $Ap_materno, $fecha){
+        
+        $sql = "SELECT Id_Persona_Entrevista, Nombre, Ap_Paterno, Ap_Materno , Alias
+        FROM persona_entrevista
+        WHERE (Ap_Paterno = '".$Ap_paterno."' AND Ap_Materno = '".$Ap_materno."' AND (Nombre LIKE '%".$Nombre."%')) AND FechaHora_Creacion!='".$fecha."'";
+
+        $this->db->query($sql);
+        return $this->db->registers();
+
+    }
 }
 ?>
