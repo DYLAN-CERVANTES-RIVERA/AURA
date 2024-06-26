@@ -372,15 +372,15 @@ class UsersAdmin extends Controller{
 	public function generarInfoPermisosForTable($numBin){
 		$dataReturn = '';
 
-		$dataReturn.= '<div><span class=\'v-a-middle\'>C: </span>';
+		$dataReturn.= '<div><span class=\'v-a-middle\'>CREAR REGISTROS: </span>';
 		if ($numBin[3] == '1') {$dataReturn.=' <i class=\'material-icons check v-a-middle\'>check</i></div>';}
 		else 	{$dataReturn.=' <i class=\'material-icons myClose v-a-middle\'>close</i></div>';}
 
-		$dataReturn.= '<div><span class=\'v-a-middle\'>R: </span>';
+		$dataReturn.= '<div><span class=\'v-a-middle\'>VISUALIZAR REGISTROS: </span>';
 		if ($numBin[2] == '1') {$dataReturn.=' <i class=\'material-icons check v-a-middle\'>check</i></div>';}
 		else 	{$dataReturn.=' <i class=\'material-icons myClose v-a-middle\'>close</i></div>';}
 
-		$dataReturn.= '<div><span class=\'v-a-middle\'>U: </span>';
+		$dataReturn.= '<div><span class=\'v-a-middle\'>ACTUALIZAR REGISTROS: </span>';
 		if ($numBin[1] == '1') {$dataReturn.=' <i class=\'material-icons check v-a-middle\'>check</i></div>';}
 		else 	{$dataReturn.=' <i class=\'material-icons myClose v-a-middle\'>close</i></div>';}
 
@@ -464,10 +464,10 @@ class UsersAdmin extends Controller{
 
 	public function permisosToCadenaExport($permisosArray){
 			//cadenas permisos para exportación
-			$aux_permisos = ($permisosArray[3])?"C ":"* ";
-			$aux_permisos.= ($permisosArray[2])?"R ":"* ";
-			$aux_permisos.= ($permisosArray[1])?"U ":"* ";
-			$aux_permisos.= ($permisosArray[0])?"D ":"* ";
+			$aux_permisos = ($permisosArray[3])?"C-":"*-";
+			$aux_permisos.= ($permisosArray[2])?"R-":"*-";
+			$aux_permisos.= ($permisosArray[1])?"U-":"*-";
+			$aux_permisos.= ($permisosArray[0])?"MOV.ESP":"*";
 			return $aux_permisos;
 	}
 
@@ -685,10 +685,10 @@ class UsersAdmin extends Controller{
 											<button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$eventos.'"><i class="material-icons v-a-middle">accessibility</i></button>
 										</td>
                                         <td class="column6">
-                                            <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$entrevistas.'"><i class="material-icons v-a-middle">accessibility</i></button>
+                                            <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$redes.'"><i class="material-icons v-a-middle">accessibility</i></button>
                                         </td>
                                         <td class="column7">
-                                            <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$redes.'"><i class="material-icons v-a-middle">accessibility</i></button>
+                                            <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$entrevistas.'"><i class="material-icons v-a-middle">accessibility</i></button>
                                         </td>
 									';
 								        
@@ -824,12 +824,14 @@ class UsersAdmin extends Controller{
                     $filename = "usuarios";
 					//se realiza exportacion de usuarios a EXCEL
 					$users = $this->Usuario->getAllInfoUsersByCadena($from_where_sentence);
-					$csv_data="#,User Name,Nombre completo,Correo,Area,Seguimientos,Eventos,Modo Admin,Estatus\n";
+					$csv_data="#,User Name,Nombre completo,Correo,Area,Eventos,Seguimientos Eventos,Redes de Vinculo,Entrevistas,Modo Admin,Estatus\n";
 					foreach ($users as $user) {
 						//cadenas permisos para exportación
 					
 						$aux_seguimientos = $this->permisosToCadenaExport($user->Seguimientos);
 						$aux_evento = $this->permisosToCadenaExport($user->Evento_D);
+                        $aux_redes_V = $this->permisosToCadenaExport($user->Redes_V);
+                        $aux_entrevistas = $this->permisosToCadenaExport($user->Entrevistas);
 
 						$aux_modo_admin = ($user->Modo_Admin)?"Activado":"Desactivado";
                         $aux_status = ($user->Estatus)?"Activo":"Inactivo";
@@ -838,9 +840,10 @@ class UsersAdmin extends Controller{
 									$user->Nombre." ".$user->Ap_Paterno." ".$user->Ap_Materno.",".
 									$user->Email.",".
 									$user->Area.",".
-
-									$aux_seguimientos.",".
 									$aux_evento.",".
+                                    $aux_seguimientos.",".
+                                    $aux_redes_V.",".
+                                    $aux_entrevistas.",".
                                     $aux_modo_admin.",".
 									$aux_status."\n";
 
@@ -898,23 +901,29 @@ class UsersAdmin extends Controller{
 			                            'Id',
 			                            'User name',
 			                            'Nombre completo',
-			                            'Seguimientos',
-			                            'Eventos',
+                                        'Eventos',
+			                            'Seguimientos de Eventos',
+			                            'Redes de Vinculo',
+                                        'Entrevistas',
 			                            'Admin'
 		                            ];  
 		        $data['field_names'] = [
 			                            'Id_Usuario',
 			                            'User_Name',
 			                            'Nombre_Completo',
+                                        'Evento_D',
 			                            'Seguimientos',
-			                            'Evento_D',
+			                            'Redes_V',
+                                        'Entrevistas',
 			                            'Modo_Admin'
 		                            ]; 
 
 		        foreach ($users as $key => $user) {
-		        	$users[$key]->Nombre_Completo	= $user->Nombre." ".$user->Ap_Paterno." ".$user->Ap_Materno;
-					$users[$key]->Seguimientos 			= $this->permisosToCadenaExport($user->Seguimientos);
-					$users[$key]->Evento_D 			= $this->permisosToCadenaExport($user->Evento_D);
+		        	$users[$key]->Nombre_Completo = $user->Nombre." ".$user->Ap_Paterno." ".$user->Ap_Materno;
+                    $users[$key]->Evento_D = $this->permisosToCadenaExport($user->Evento_D);
+					$users[$key]->Seguimientos = $this->permisosToCadenaExport($user->Seguimientos);
+                    $users[$key]->Redes_V = $this->permisosToCadenaExport($user->Redes_V);
+                    $users[$key]->Entrevistas = $this->permisosToCadenaExport($user->Entrevistas);
 					$users[$key]->Modo_Admin = ($user->Modo_Admin)?"Sí":"No";
 				}
             break;
