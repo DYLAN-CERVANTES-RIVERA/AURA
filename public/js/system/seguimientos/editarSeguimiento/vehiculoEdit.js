@@ -255,7 +255,6 @@ const onFormVehiculoSubmit = async() => {
         if (selectedRowVehiculo === null){
             InsertVehiculo();//INSERTA NUEVA FILA EN LA TABLA DE PersonaS
             await verificaInfoVehiculoRed();
-            await verificaInfoVehiculoEventos();
         }else{
             updateRowVehiculo();//ACTUALIZA LA FILA SELECCIONADA EN LA TABLA DE PersonaS
         
@@ -696,23 +695,17 @@ const verificaInfoVehiculoRed = async() =>{
                 let alto_impacto =(element.Alto_Impacto==1)?'UNA RED DE ALTO IMPACTO FOLIO: ':'UNA RED DE GABINETE FOLIO: ';
                 cad += alto_impacto+element.Id_Seguimiento+" "+element.Nombre_grupo_delictivo+" PLACAS: "+element.Placas+" NIVS: "+element.Nivs;  
             });
-            
-            Swal.fire({
-                title: "El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
-                icon: 'info',
-                confirmButtonText: 'OK',
-                customClass: {
-                    confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
-                },
-                buttonsStyling: false
-            });
+            coincidencia = "El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR ";
+            verificaInfoVehiculoEventos(coincidencia,placa);
            
+        }else{
+            verificaInfoVehiculoEventos("",placa);
         }
     })
 }
-const verificaInfoVehiculoEventos = async() =>{
+const verificaInfoVehiculoEventos = async(coincidencia,placa2) =>{
     let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO 
-    let placa = document.getElementById('placas').value.toUpperCase();
+    let placa = placa2
     
     myFormDataConsulta.append('Placa',placa.trim());
 
@@ -728,11 +721,10 @@ const verificaInfoVehiculoEventos = async() =>{
         if(Object.keys(data).length>0){
             cad = ""
             data.forEach(element => {
-                cad += "FOLIO DE EVENTO: "+element.Folio_infra+" FOLIO 911: "+element.Folio_911+" PLACA: "+element.Placas_Vehiculo+" MARCA: "+element.Marca+" SUBMARCA: "+element.Submarca+" COLOR: "+element.Color;  
+                cad += "FOLIO DE EVENTO: "+element.Folio_infra+" FOLIO 911: "+element.Folio_911+" PLACA: "+element.Placas_Vehiculo+" MARCA: "+element.Marca+" SUBMARCA: "+element.Submarca+" COLOR: "+element.Color+" ";  
             });
-            
             Swal.fire({
-                title: "El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
+                title: coincidencia +"El VEHICULO TIENE UNA COINCIDENCIA EN "+cad+" FAVOR DE REVISAR",
                 icon: 'info',
                 confirmButtonText: 'OK',
                 customClass: {
@@ -741,6 +733,18 @@ const verificaInfoVehiculoEventos = async() =>{
                 buttonsStyling: false
             });
            
+        }else{
+            if(coincidencia!=""){
+                Swal.fire({
+                    title: coincidencia,
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                    },
+                    buttonsStyling: false
+                });
+            }
         }
     })
 }
