@@ -12,6 +12,15 @@
             </div>
         <?php } ?>
     </div>
+    <?php
+        $miHide =  ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1)  ? '':'mi_hide';
+    ?>
+    <div class=" <?= "tareas_asignadas_status ".$miHide; ?>">
+        <a id="button-asignacion" class="btn btn-primary btn-asignadas" data-toggle="tooltip" title="REPORTE ZEN"></a>
+        <div class="asignacion-content" id="asignacion-content">
+            <h3 class="titulo-azul-grueso">REPORTE ZEN</h3>
+        </div>
+    </div>
 
     <div class="container-fluid" >
         <ul class="nav nav-tabs d-flex justify-content-center" id="tab_gestor" role="tablist">
@@ -25,18 +34,11 @@
                     Imagenes de Video - Fotos
                 </a>
             </li>
-            <?php
-            if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1) {
-            ?>
-            <li class="nav-item repetido" id="li-entrevistas" role="presentation">
+            <li class="<?= "nav-item repetido ".$miHide; ?>" id="li-entrevistas" role="presentation">
                 <a class="nav-link d-flex align-items-center" id="entrevistas" data-toggle="tab" href="#entrevistas0" role="tab" aria-controls="Entrevistas" aria-selected="">
                     Entrevistas - Culminacion de seguimiento del Evento
                 </a>
             </li>
-            <?php
-            }
-            ?>
-
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="principales0" role="tabpanel" aria-labelledby="datos_p">
@@ -45,15 +47,9 @@
             <div class="tab-pane fade show " id="fotos0" role="tabpanel" aria-labelledby="fotos0">
                 <?php include 'tabs/imagenes.php'; ?>
             </div>
-            <?php
-            if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1) {
-            ?>
-            <div class="tab-pane fade show" id="entrevistas0" role="tabpanel" aria-labelledby="entrevistas0">
+            <div class="<?= "tab-pane fade show ".$miHide; ?>" id="entrevistas0" role="tabpanel" aria-labelledby="entrevistas0">
                 <?php include 'tabs/entrevistas.php'; ?>
             </div>
-            <?php
-            }
-            ?>
         </div>
     </div>
 </div>

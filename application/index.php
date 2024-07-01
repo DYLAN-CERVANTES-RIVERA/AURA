@@ -3,6 +3,7 @@
     require_once 'libraries/FormValidator.php';
     require_once 'libraries/Base.php';
     require_once 'libraries/Base2.php';  
+    require_once 'libraries/BaseTareas.php'; 
     require_once 'libraries/Controller.php';
     require_once 'libraries/Core.php';
 

@@ -385,3 +385,12 @@ a.article:hover {
     justify-content: center;
     font-weight: bold;
 }
+
+.titulo-azul-grueso{
+    font-size: 30px;
+    color: #0F2145;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}

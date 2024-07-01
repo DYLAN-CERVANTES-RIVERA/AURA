@@ -11,6 +11,7 @@
     define ('DB_PASSWORD', '');
     define ('DB_NAME', 'casos');
     define ('DB_NAME2', 'planeacion');
+    define ('DB_TAREA', 'asignador_tareas');
 
     //key de encryptación de información
     define ('CRYPTO_KEY', 'planeacion_xdlol123');

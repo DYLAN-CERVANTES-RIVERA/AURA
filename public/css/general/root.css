@@ -465,33 +465,39 @@ fieldset .form-check label {
     border: 1px solid  #0F2145;
 }
 
-.btn-detenidos-juridico{
-    border-radius: 50%;
+.btn-asignadas{
+    border-radius: 100%;
     height: 50px;
     width: 50px;
     position: absolute;
-    right: 0;
+    color: white;
+    text-align: center;
+    background-color: #0F2145;
+    border-color: #0F2145;
 }
 
-.btn-detenidos-juridico:hover{
-    height: 54px;
-    width: 54px;
-    transition: all 0.5s;
+.btn-asignadas:hover{
+    height: 52px;
+    width: 52px;
+    transition: all 0.2s;
+    color: var(--primary_opacity) !important;
+    background-color: var(--primary_opacity);
 }
 
-.detenidos_juridoco_content{
+
+.tareas_asignadas_status{
     position: fixed;
-    right: 10px;
+    right: 5px;
     z-index: 1;
 }
 
-.detenidos-content{
+.asignacion-content{
     background-color: white;
     position: relative;
     padding: 5px 10px;
     width: 50px;
     overflow-y: scroll;
-    max-height: 500px;
+    max-height: 650px;
     border-radius: 8px;
     margin-top: 60px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16), 0px 2px 10px rgba(0, 0, 0, 0.12);
@@ -500,11 +506,11 @@ fieldset .form-check label {
     scroll-behavior: smooth;
 }
 
-.detenidos-content legend{
+.asignacion-content legend{
     font-size: 15px;
 }
 
-.detenidos-content fieldset{
+.asignacion-content fieldset{
     margin-bottom: 10px;
 }
 

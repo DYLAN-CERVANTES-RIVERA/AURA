@@ -3,6 +3,7 @@ class GestorCaso{
     public $db; //Variable para instanciar el objeto PDO comentario de prueba aura
     public function __construct(){
         $this->db = new Base(); //Se instancia el objeto con los métodos de PDO
+        $this->db2 = new BaseTareas();
     }
     /*----------- FUNCION INSERT NUEVO EVENTO -------------------*/ 
     public function insertNuevoEvento($post){
@@ -1457,6 +1458,37 @@ class GestorCaso{
         return $this->db->registers();
 
     }
+
+    public function getTareasPrincipal($Folio_infra){
+        $sql = "SELECT 	id_tarea,tipo_tarea
+        FROM tareas
+        WHERE tareas.folio_sic = " . $Folio_infra;
+
+        $this->db2->query($sql);
+        return $this->db2->registers();
+    }
+    public function getStatusTareaTipo($id_tarea, $tipo_tarea){
+        switch($tipo_tarea){
+            case 'BARRIDO':
+                $sql = "SELECT * FROM tareas_barrido WHERE tareas_barrido.id_tarea = " . $id_tarea;
+            break;
+            case 'BUSQUEDA':
+                $sql = "SELECT * FROM tareas_busqueda WHERE tareas_busqueda.id_tarea = " . $id_tarea;
+            break;
+            case 'ENTREVISTA':
+                $sql = "SELECT * FROM tareas_entrevista WHERE tareas_entrevista.id_tarea = " . $id_tarea;
+            break;
+            case 'OTRA':
+                $sql = "SELECT * FROM tareas_otra WHERE tareas_otra.id_tarea = " . $id_tarea;
+            break;
+            case 'VIGILANCIA':
+                $sql = "SELECT * FROM tareas_vigilancia WHERE tareas_vigilancia.id_tarea = " . $id_tarea;
+            break;
+        }
+        $this->db2->query($sql);
+        return $this->db2->registers();
+    }
+
     public function getAllInfoAlertaByCadena($from_where_sentence = ""){ 
     	$sqlAux = "SELECT * "
     				.$from_where_sentence."

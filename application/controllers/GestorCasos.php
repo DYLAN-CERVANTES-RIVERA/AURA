@@ -310,6 +310,7 @@ class GestorCasos extends Controller
                             '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getFotosVideos.js"></script>'.
                             '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getEntrevista.js"></script>'.
                             '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getEvento.js"></script>'.
+                            '<script src="'.base_url.'public/js/system/gestorCasos/editarEvento/asignacionTareas.js"></script>'.
                             '<script src="'.base_url.'public/js/system/gestorCasos/editarEvento/validaEditarEvento.js"></script>'.
                             '<script src="'.base_url.'public/js/system/gestorCasos/editarEvento/entrevistas.js"></script>'.
                             '<script src="'.base_url.'public/js/system/gestorCasos/editarEvento/fotostables.js"></script>'.
@@ -1733,6 +1734,30 @@ class GestorCasos extends Controller
             $data = $this->GestorCaso->GetInfo_Evento($Folio_infra);
             echo json_encode($data);
         } 
+    }
+    public function getTareas(){
+
+        if (isset($_POST['Folio_infra'])) {
+            $Folio_infra = $_POST['Folio_infra'];
+            $data = $this->GestorCaso->getTareasPrincipal($Folio_infra);
+            $dataTareas = [];
+            if($data != []){
+                $Tareas = $data;
+                $i=0;
+                foreach($Tareas as $Tarea){
+                    $dataTareas[$i]= [
+                        'Tipo' =>$Tarea->tipo_tarea,
+                        'Principales'   =>$this->GestorCaso->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                    ];
+                    $i++;
+                }
+            }
+            echo json_encode($dataTareas);
+        } else {
+            header("Location: " . base_url . "GestorCasos");
+            exit();
+        }
+
     }
  
 

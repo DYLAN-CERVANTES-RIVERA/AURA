@@ -1,6 +1,7 @@
 /*-----------------------------------------------ESTE ARCHIVO DE JAVASCRIPT ES PARA OBTENER LOS DATOS DE LAS ENTREVISTAS DEL EVENTO------------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', async () => {
     caso = getEventotoSearch();
+    await GetStatusTareas(caso)
     Entrevistas = await getEntrevistas(caso);
     if(Entrevistas!=undefined){
         Entrevistas.forEach(entrevista => insertNewRowTablaEntrevista(entrevista));
