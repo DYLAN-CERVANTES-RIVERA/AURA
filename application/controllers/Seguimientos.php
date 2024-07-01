@@ -1656,11 +1656,14 @@ class Seguimientos extends Controller
                 exit();
     
             }
-            $this->view('system/seguimientos/fichaseguimientoView', $info_Seguimiento);
-            $user = $_SESSION['userdataSIC']->Id_Usuario;
-            $ip = $this->obtenerIp();
-            $descripcion = 'EXPORTACION DE FICHA DE SEGUIMIENTO PDF: '.$_SESSION['userdataSIC']->User_Name.' SEGUIMIENTO: '.$Id_Seguimiento;
-            $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
+            if($_SESSION['userdataSIC']->Red[0] == $dataSeguimiento["principal"]->Alto_Impacto || $_SESSION['userdataSIC']->Modo_Admin == '1'){
+                $this->view('system/seguimientos/fichaseguimientoView', $info_Seguimiento);
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $descripcion = 'EXPORTACION DE FICHA DE SEGUIMIENTO PDF: '.$_SESSION['userdataSIC']->User_Name.' SEGUIMIENTO: '.$Id_Seguimiento;
+                $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
+            }
+
     
         }else{
             header("Location: " . base_url . "Estadisticas");
@@ -1726,17 +1729,20 @@ class Seguimientos extends Controller
                 'redes_sociales'=>$this->Seguimiento->getRedesSocialesOneRegister($Id_Persona),
                 'grupo_delictivo'=>$this->Seguimiento->getGrupoDelictivo($persona->Id_Seguimiento)
                 ];
-                
+                $alto=$this->Seguimiento->getALTOImpacto($persona->Id_Seguimiento);
             }else{
                 header("Location: " . base_url . "Seguimientos");
                 exit();
     
             }
-            $this->view('system/seguimientos/fichaPersonaView', $dataPersona);
-            $user = $_SESSION['userdataSIC']->Id_Usuario;
-            $ip = $this->obtenerIp();
-            $descripcion = 'EXPORTACION DE FICHA PERSONA PDF: '.$_SESSION['userdataSIC']->User_Name.' PERSONA: '.$Id_Persona;
-            $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
+            
+            if($_SESSION['userdataSIC']->Red[0] == $alto->Alto_Impacto || $_SESSION['userdataSIC']->Modo_Admin == '1'){
+                $this->view('system/seguimientos/fichaPersonaView', $dataPersona);
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $descripcion = 'EXPORTACION DE FICHA PERSONA PDF: '.$_SESSION['userdataSIC']->User_Name.' PERSONA: '.$Id_Persona;
+                $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
+            }
     
         }else{
             header("Location: " . base_url . "Estadisticas");
@@ -1759,18 +1765,19 @@ class Seguimientos extends Controller
                 'antecedentes' => $this->Seguimiento->getAntecedentesOneRegister($Id_Vehiculo,'VEHICULO'),
                 'grupo_delictivo'=>$this->Seguimiento->getGrupoDelictivo($Vehiculo->Id_Seguimiento)
                 ];
-                
+                $alto=$this->Seguimiento->getALTOImpacto($persona->Id_Seguimiento);
             }else{
                 header("Location: " . base_url . "Seguimientos");
                 exit();
     
             }
-            $this->view('system/seguimientos/fichaVehiculoView', $dataVehiculo);
-            $user = $_SESSION['userdataSIC']->Id_Usuario;
-            $ip = $this->obtenerIp();
-            $descripcion = 'EXPORTACION DE FICHA VEHICULO PDF: '.$_SESSION['userdataSIC']->User_Name.' VEHICULO: '.$Id_Vehiculo;
-            $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
-    
+            if($_SESSION['userdataSIC']->Red[0] == $alto->Alto_Impacto || $_SESSION['userdataSIC']->Modo_Admin == '1'){
+                $this->view('system/seguimientos/fichaVehiculoView', $dataVehiculo);
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $descripcion = 'EXPORTACION DE FICHA VEHICULO PDF: '.$_SESSION['userdataSIC']->User_Name.' VEHICULO: '.$Id_Vehiculo;
+                $this->Seguimiento->historial($user, $ip, 29, $descripcion);//GUARDA EL MOVIMIENTO EN EL HISTORIAL
+            }
         }else{
             header("Location: " . base_url . "Estadisticas");
             exit();

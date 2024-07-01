@@ -2,8 +2,13 @@
 const myFormData =  new FormData();
 var Seguimiento;
 document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLENADO DE ELEMENTOS DEL SEGUIMIENTO
+    await getInfoEventos()
     Seguimiento = getSeguimientotoSearch();
     data = await getSeguimiento(Seguimiento);
+    
+    if(data.Alto_Impacto!=document.getElementById("ALTO_IMPACTO").value && document.getElementById("ADMIN").value!= 1){
+        document.getElementById('contenedor_red').classList.add('mi_hide');
+    }
     let Eventos = await getEventosRelacionados(Seguimiento);
     let Delitos = await getDelitosRelacionados(Seguimiento);
     llenarSeguimiento(data);

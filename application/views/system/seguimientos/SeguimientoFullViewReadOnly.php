@@ -12,8 +12,9 @@
             </div>
         <?php } ?>
     </div>
-
-    <div class="container-fluid" >
+    <input class='mi_hide' id='ALTO_IMPACTO' value= <?php echo ($_SESSION['userdataSIC']->Red[0]);?>></input>
+    <input class='mi_hide' id='ADMIN' value= <?php echo ($_SESSION['userdataSIC']->Modo_Admin);?>></input>
+    <div class="container-fluid" id="contenedor_red">
         <ul class="nav nav-tabs d-flex justify-content-center" id="tab_gestor" role="tablist">
             <li class="nav-item repetido" id="li-principales" role="presentation">
                 <a class="nav-link d-flex align-items-center active" id="principales" data-toggle="tab" href="#principales0" role="tab" aria-controls="Principales" aria-selected="true" selected>

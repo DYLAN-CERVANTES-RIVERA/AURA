@@ -1048,6 +1048,13 @@ class Seguimiento{
         $this->db->query($sql);
         return $this->db->register();
     }
+    public function getALTOImpacto($Id_Seguimiento){
+        $sql = "SELECT 	Alto_Impacto
+        FROM seguimiento_gabinete
+        WHERE seguimiento_gabinete.Id_Seguimiento = " . $Id_Seguimiento;
+        $this->db->query($sql);
+        return $this->db->register();
+    }
 
     public function getAllPrincipales($Id_Seguimiento){
         $sql = "SELECT 	*
@@ -1083,7 +1090,7 @@ class Seguimiento{
         return $data;
     }
     public function getEventos(){
-        $sql = "SELECT * FROM gc_evento_filtro_2";
+        $sql = "SELECT Folio_infra,Folio_911,delitos_concat FROM gc_evento_filtro_2";
         $this->db->query($sql);
         return $this->db->registers();
     }

@@ -1,15 +1,9 @@
 /*------------- FUNCION AUTOCOMPLETE PARA EL CAMPO DE EVENTOS ----------------------- */
 const inputEventos = document.getElementById('id_evento');
 var BanderaRecuperacion = false;
+var datosEventos;
 inputEventos.addEventListener('input', () => { 
-    myFormData.append('termino', inputEventos.value)//REALIZA UN FETCH PARA TRAER EL CATALOGO DELITOS PARA QUE SERA COMPARADO CON LO QUE SE ESTA INGRESANDO ADEMAS DE SE OCUPARA PARA LA FUNCION DEL AUTOCOMPLETE
-    fetch(base_url_js + 'Seguimientos/getEventos', {
-            method: 'POST',
-            body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        const arr = data.map( r => ({ label: `FOLIO INFRA:${r.Folio_infra} FOLIO 911:${r.Folio_911} DELITOS:${r.delitos_concat}` , value: `${r.Folio_infra}`}))
+    const arr = datosEventos.map( r => ({ label: `FOLIO INFRA:${r.Folio_infra} FOLIO 911:${r.Folio_911} DELITOS:${r.delitos_concat}` , value: `${r.Folio_infra}`}))
         autocomplete({
             input: id_evento,
             fetch: function(text, update) {
@@ -22,8 +16,6 @@ inputEventos.addEventListener('input', () => {
                 document.getElementById('id_evento_value').value=item.value;
             }
         }); 
-    })
-    .catch(err => alert(`Ha ocurrido un error al obtener los Eventos.\nCódigo de error: ${ err }`))
 });
 function valideKey(evt) {//FUNCION QUE VALIDA LA INSERCION DE SOLO NUMEROS 
     var code = (evt.which) ? evt.which : evt.keyCode;
@@ -103,7 +95,7 @@ const insertEventoTabla = ({ Folio_infra, Folio_911,delitos_concat,Ubicacion}, t
 const ValidaEvento = async(BuscarEvento) => {//FUNCION QUE VALIDA ANTES DE INSERTAR QUE EL EVENTO SE ENCUENTRE EN EL CATALOGO DE EVENTOS SIN SEGUIMIENTO 
     var EventoValido = false;
     if(BuscarEvento.length > 0){
-        TodosFolios = await getEventos();
+        TodosFolios = datosEventos;
         const result = TodosFolios.find(element => element.Folio_infra == BuscarEvento);
         if (result){
             EventoValido=true;
@@ -113,17 +105,17 @@ const ValidaEvento = async(BuscarEvento) => {//FUNCION QUE VALIDA ANTES DE INSER
     }
     return EventoValido;
 }
-const getEventos = async () => {//FUNCION QUE OBTIENE EL CATALOGO LOS EVENTOS QUE NO TIENEN ASIGNADO UN SEGUIMIENTO
-    try {
-        const response = await fetch(base_url_js + 'Seguimientos/getEventos', {
-            method: 'POST'
-        });
-        const data = await response.json();
-        return data;
+const getInfoEventos = async()=>{
+    fetch(base_url_js + 'Seguimientos/getEventos', {
+        method: 'POST',
+        body: myFormData
+    })
+    .then(res => res.json())
+    .then(data => {
+        datosEventos = data;
         
-    } catch (error) {
-        console.log(error);
-    }
+    })
+    .catch(err => alert(`Ha ocurrido un error al obtener los Eventos.\nCódigo de error: ${ err }`))
 }
 
 const getInfoEvento = async (Folio) => {//FUNCION PARA OBTENER LA INFORMACION DEL EVENTO 
@@ -364,9 +356,9 @@ document.getElementById('btn_principal').addEventListener('click', async functio
             behavior: 'smooth'
         });
     }
-    for (var pair of myFormData.entries()) {
+    /*for (var pair of myFormData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
-    }
+    }*/
 })
 
 const alertaUpdate=async()=> {//FUNCION PARA AVISAR QUE TODO SALIO BIEN 
