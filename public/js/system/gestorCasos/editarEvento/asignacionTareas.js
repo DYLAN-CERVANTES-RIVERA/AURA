@@ -68,7 +68,6 @@ function createElement(el, options, listen = [], appendTo){
 }
 
 const insertaInfo = async(data,tipo)=>{
-    let  url_serv_img ="http://187.216.250.252:9090/api/images/"+tipo.toLowerCase()+"/";
 
     switch(tipo){
         case 'BARRIDO':
@@ -112,8 +111,7 @@ const insertaInfo = async(data,tipo)=>{
             if(data.img!= null){
                 
                 let BUSQUEDA =document.getElementById("BUSQUEDA"+data.id_tarea_busqueda+tipo)
-                let ruta = url_serv_img + data.img;
-                console.log(ruta)
+                let ruta = await obtenerIpImages(tipo,data.img);
                 createElement('div', {id:"imageContent"+tipo+data.id_tarea_busqueda , className: ''}, [],BUSQUEDA);
                 document.getElementById("imageContent"+tipo+data.id_tarea_busqueda ).innerHTML=`
                           <img name="nor" src="${ruta}" id="imagesBUSQUEDA_row_${data.id_tarea_busqueda }" width="350px"> <hr>`;
@@ -161,9 +159,8 @@ const insertaInfo = async(data,tipo)=>{
             <hr>
         `;
         if(data.img!= null){
-            console.log(data.img)
             let OTRA =document.getElementById("OTRA"+data.id_tarea_otra  +tipo)
-            let ruta = url_serv_img + data.img;
+            let ruta = await obtenerIpImages(tipo,data.img);
             createElement('div', {id:"imageContent"+tipo+data.id_tarea_otra , className: ''}, [],OTRA);
             document.getElementById("imageContent"+tipo+data.id_tarea_otra ).innerHTML=`
                       <img name="nor" src="${ruta}" id="imagesOTRA_row_${data.id_tarea_otra }" width="350px"> <hr>`;
@@ -184,9 +181,8 @@ const insertaInfo = async(data,tipo)=>{
                 </div>
             `;
             if(data.img!= null){
-                console.log(data.img)
                 let vigilancia =document.getElementById("VIGILANCIA"+data.id_tarea_vigilancia +tipo)
-                let ruta = url_serv_img + data.img;
+                let ruta = await obtenerIpImages(tipo,data.img);
                 createElement('div', {id:"imageContent"+tipo+data.id_tarea_vigilancia, className: ''}, [],vigilancia);
                 document.getElementById("imageContent"+tipo+data.id_tarea_vigilancia).innerHTML=`
                           <img name="nor" src="${ruta}" id="imagesVIGILANCIA_row_${data.id_tarea_vigilancia}" width="350px"> <hr>`;
@@ -195,4 +191,28 @@ const insertaInfo = async(data,tipo)=>{
             }       
         break;
     }
+}
+
+async function obtenerIpImages(tipo,imagen) {
+    const localUrl = 'http://172.18.110.90:9090/api/images/'+tipo.toLowerCase()+"/"+imagen;
+    const publicUrl = 'http://187.216.250.252:9090/api/images/'+tipo.toLowerCase()+"/"+imagen;
+    try {
+        // Intentar acceder a la URL local
+        const response = await fetch(localUrl);
+        console.log('Conectado a la URL local:');
+        return localUrl;
+    } catch (error) {
+       
+        
+        // Intentar acceder a la URL pública
+        try {
+            const response = await fetch(publicUrl);
+            console.log('Conectado a la URL pública:');
+            return publicUrl;
+        } catch (publicError) {
+           
+        }
+    }
+
+    return null;
 }

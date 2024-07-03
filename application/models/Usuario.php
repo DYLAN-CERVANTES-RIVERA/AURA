@@ -767,7 +767,7 @@ class Usuario
             $sql ="SELECT 
                     COUNT(*) AS `Conteo_Eventos_Asignados` 
                     FROM `evento` 
-                    WHERE `evento`.`ClaveSeguimiento` = '".$data['User_Name']."'";
+                    WHERE `evento`.`ClaveSeguimiento` = '".$data['User_Name']."' AND FechaHora_Captura >= '2024-01-01 00:00:00'";
             $this->db->query($sql);  
             $aux = $this->db->register();  
             $data[1]['Eventos Asignados'] = $aux->Conteo_Eventos_Asignados;
@@ -775,7 +775,7 @@ class Usuario
             $sql ="SELECT 
                     COUNT(*) AS `Conteo_Seguimiento_Terminado` 
                 FROM `evento` WHERE `evento`.`SeguimientoTerminado`= 1 
-                AND `evento`.`ClaveSeguimiento` = '".$data['User_Name']."'";
+                AND `evento`.`ClaveSeguimiento` = '".$data['User_Name']."' AND FechaHora_Captura >= '2024-01-01 00:00:00'";
             $this->db->query($sql);
             $aux = $this->db->register();  
             $data[1]['Eventos con Seguimiento Terminado'] = $aux->Conteo_Seguimiento_Terminado;

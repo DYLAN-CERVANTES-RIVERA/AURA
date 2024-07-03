@@ -15,7 +15,7 @@ class PDF extends FPDF{
     }
     function Estadistica($Usuario){
         $width = 80;
-        $height = 95;
+        $height = 90;
         $y=$this->GetY();
         if($Usuario['Path_Imagen_User']!=null && $Usuario['Path_Imagen_User']!='SD' && $Usuario['Path_Imagen_User']!=''){
             $filename = base_url."public/media/users_img/" .$GLOBALS['PDFId_Usuario']."/".$Usuario['Path_Imagen_User'];
@@ -94,10 +94,10 @@ class PDF extends FPDF{
         $this->Cell($width, 4);
         $this->SetTextColor(128, 128, 128);
         $this->MultiCell(100, 4, utf8_decode($FECHA), 0, 'J');
-        $this->SetY($y+100);
+        $this->SetY($y+95);
         if($Usuario[1]['Eventos Asignados']>0){
             //Pie chart
-            $this->Cell(0, 5, 'EVENTOS GENERAL', 0, 1);
+            $this->MultiCell(0, 3, 'ASIGNACION DE EVENTOS (FECHA DE EVENTOS APARTIR DEL 01 DE ENERO DEL 2024)');
             $this->Ln(10);
             $valX = $this->GetX();
             $valY = $this->GetY();
@@ -108,15 +108,15 @@ class PDF extends FPDF{
             $this->Cell(15, 5, $Usuario[1]['Eventos con Seguimiento Terminado'], 0, 0, 'J');
             $this->Ln();
             $this->Ln(8);
-            $this->SetXY(155, $valY+25);
-            $col1=array(100,100,255);
-            $col3=array(255,255,100);
-            $this->PieChart(50, 1, $Usuario[1], '%l (%p)', array($col1,$col3));
+            $this->SetXY(140, $valY+25);
+            $col1 = array(15,33,64);
+            $col3 = array(246,26,132);
+            $this->PieChart(70, 1, $Usuario[1], '%l (%p)', array($col1,$col3));
             $this->SetXY($valX, $valY + 25);
             $this->SetFont('Avenir','',11);
         }
         //Bar diagram
-        $this->Ln(5);
+        $this->Ln(10);
         if (isset($Usuario['FechaInicio']) && isset($Usuario['FechaFin'])) { 
             $FECHAINICIO = $this->formatoFecha($Usuario['FechaInicio']);
             $FECHAFIN = $this->formatoFecha($Usuario['FechaFin']);
@@ -247,8 +247,8 @@ class PDF extends FPDF{
 
         $XPage = $this->GetX();
         $YPage = $this->GetY();
-        $margin = 2;
-        $hLegend = 5;
+        $margin = 3;
+        $hLegend = 3;
         $radius = min($w - $margin * 4 - $hLegend - $this->wLegend, $h - $margin * 2);
         $radius = floor($radius / 2);
         $XDiag = $XPage + $margin + $radius;
@@ -277,14 +277,14 @@ class PDF extends FPDF{
         }
 
         //Legends
-        $this->SetFont('Courier', '', 10);
+        $this->SetFont('Courier', '', 7);
         $x1 = $XPage + 2 * $radius + 4 * $margin;
         $x2 = $x1 + $hLegend + $margin;
         $y1 = $YDiag - $radius + (2 * $radius - $this->NbVal*($hLegend + $margin)) / 2;
         for($i=0; $i<$this->NbVal; $i++) {
             $this->SetFillColor($colors[$i][0],$colors[$i][1],$colors[$i][2]);
-            $this->Rect($x1, $y1, $hLegend, $hLegend, 'DF');
-            $this->SetXY($x2,$y1);
+            $this->Rect($x1+26, $y1, $hLegend, $hLegend, 'DF');
+            $this->SetXY($x2+23,$y1);
             $this->SetTextColor(255, 0, 0);
             $this->Cell(0,$hLegend,$this->legends[$i]);
             $y1+=$hLegend + $margin;
@@ -395,7 +395,7 @@ class PDF extends FPDF{
     function Footer(){
         $this->SetY(-8);
         $this->SetFont('Avenir','',7);
-        $this->Cell(0,10,utf8_decode('SISTEMA DE INVESTIGACION DE USUARIO '),0,0,'C');
+        $this->Cell(0,10,utf8_decode('SISTEMA AURA USUARIO '),0,0,'C');
         $this->Cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
     }
     public function formatoFecha($fecha = null){//genera un formato de fecha para la vista de informacion de usuario
