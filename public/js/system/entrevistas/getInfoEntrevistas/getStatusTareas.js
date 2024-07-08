@@ -1,20 +1,36 @@
 
-
-const asignacion_content = document.getElementById('asignacion-content');
+const button_asignacion       = document.getElementById('button-asignacion'),
+asignacion_content        = document.getElementById('asignacion-content');
 var cont = 0;
 
-const GetStatusTareas = async (Folio_infra) =>{
+button_asignacion.addEventListener('click', () => {
+    if(asignacion_content.style.right === '' || asignacion_content.style.right === '-420px'){
+        asignacion_content.style.right = '0px';
+        asignacion_content.style.width = '380px';
+        button_asignacion.innerHTML = `<img src="${base_url_js}public/media/icons/x.svg" alt="">`;
+        button_asignacion.title = "CERRAR";
+
+    }else{
+        if(asignacion_content.style.right === '0px'){
+            asignacion_content.style.right = '-420px';
+            asignacion_content.style.width = '50px';
+            button_asignacion.innerText = cont;
+            button_asignacion.title = "REPORTE ZEN";
+        }
+    }
+});
+
+const GetStatusTareas = async (Id_Persona_Entrevista) =>{
     let myFormData = new FormData;
     
-    myFormData.append('Folio_infra', Folio_infra);
+    myFormData.append('Id_Persona_Entrevista', Id_Persona_Entrevista);
 
-    fetch(base_url_js + 'GestorCasos/getTareas', {
+    fetch(base_url_js + 'Entrevistas/getTareas', {
         method: 'POST',
         body: myFormData
     })
     .then(res => res.json())
     .then(data => {
-       
         if(Object.keys(data).length>0){
             cad = "";
             cont = 0;
@@ -22,20 +38,19 @@ const GetStatusTareas = async (Folio_infra) =>{
                 if(Object.keys(element.Principales).length>0){
                     let actualizaciones = element.Principales
                     actualizaciones.forEach(dato => {
-                        //console.log(dato);
+                        
                         insertaInfo(dato,element.Tipo);
                         cont++;
                     });
                 }
             });
-           
+            button_asignacion.innerText = cont;
         }
-        createElement('div', {id: "ATRAS", className: 'form-group'}, [],asignacion_content);
-        document.getElementById("ATRAS").innerHTML=`<div class="row-md-12 mt-5 mb-5">
-                <div class="d-flex justify-content-center col-sm-12">
-                    <a class="btn btn-sm btn-ssc" href="${base_url_js}GestorCasos"><i class="material-icons v-a-middle">arrow_back_ios</i>Volver al inicio</a>
-                </div>
-            </div>`
+        if(cont==0){
+            button_asignacion.innerText = 0;
+            createElement('div', {id: "mensajeZen", className: 'form-group'}, [],asignacion_content);
+             document.getElementById("mensajeZen").innerHTML=`<a class="subtitulo-azul-grueso">EL FOLIO AUN NO CUENTA CON TAREAS REALIZADAS POR ZEN</a>`;
+        }
     });
 }
 
@@ -96,17 +111,9 @@ const insertaInfo = async(data,tipo)=>{
                 
                 let BUSQUEDA =document.getElementById("BUSQUEDA"+data.id_tarea_busqueda+tipo)
                 let ruta = await obtenerIpImages(tipo,data.img);
-                createElement('div', {id:"imageContent"+tipo+data.id_tarea_busqueda , className: 'center-all'}, [],BUSQUEDA);
+                createElement('div', {id:"imageContent"+tipo+data.id_tarea_busqueda , className: ''}, [],BUSQUEDA);
                 document.getElementById("imageContent"+tipo+data.id_tarea_busqueda ).innerHTML=`
-                        <div style="text-align:center;">
-                          <img name="nor" src="${ruta}" id="imagesBUSQUEDA_row_${data.id_tarea_busqueda }" width="350px" height="450px" data-toggle="modal" data-target="#ModalCenterBUSQUEDA${data.id_tarea_busqueda }"> 
-                          <div class="modal fade" id="ModalCenterBUSQUEDA${data.id_tarea_busqueda }" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" >
-                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                    <img name="nor" src="${ruta}" style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block" data-toggle="modal" data-target="#exampleModalCenter">
-                                </div>
-                            </div>
-                         </div>
-                          <hr>`;
+                          <img name="nor" src="${ruta}" id="imagesBUSQUEDA_row_${data.id_tarea_busqueda }" width="350px"> <hr>`;
             }else{
                 document.getElementById("BUSQUEDA"+data.id_tarea_busqueda+tipo).innerHTML=document.getElementById("BUSQUEDA"+data.id_tarea_busqueda+tipo).innerHTML+`<hr>`;
             }
@@ -147,21 +154,14 @@ const insertaInfo = async(data,tipo)=>{
                     <span class="span_rem">DESCRIPCION: </span>
                     <span class="span_rem_ans" >${data.descripcion.toUpperCase()}</span>
                 </div>
-            </div>`;
+            </div>
+        `;
         if(data.img!= null){
             let OTRA =document.getElementById("OTRA"+data.id_tarea_otra  +tipo)
             let ruta = await obtenerIpImages(tipo,data.img);
             createElement('div', {id:"imageContent"+tipo+data.id_tarea_otra , className: ''}, [],OTRA);
             document.getElementById("imageContent"+tipo+data.id_tarea_otra ).innerHTML=`
-                <div style="text-align:center;">
-                      <img name="nor" src="${ruta}" id="imagesOTRA_row_${data.id_tarea_otra }" width="350px" height="450px" data-toggle="modal" data-target="#ModalCenterOTRA${data.id_tarea_otra }"> 
-                          <div class="modal fade" id="ModalCenterOTRA${data.id_tarea_otra }" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" >
-                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                    <img name="nor" src="${ruta}" style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block" data-toggle="modal" data-target="#exampleModalCenter">
-                                </div>
-                            </div>
-                 </div>
-                          <hr>`;
+                      <img name="nor" src="${ruta}" id="imagesOTRA_row_${data.id_tarea_otra }" width="350px"> <hr>`;
         }else{
             document.getElementById("OTRA"+data.id_tarea_otra+tipo).innerHTML=document.getElementById("OTRA"+data.id_tarea_otra+tipo).innerHTML+`<hr>`;
         } 
@@ -183,15 +183,7 @@ const insertaInfo = async(data,tipo)=>{
                 let ruta = await obtenerIpImages(tipo,data.img);
                 createElement('div', {id:"imageContent"+tipo+data.id_tarea_vigilancia, className: ''}, [],vigilancia);
                 document.getElementById("imageContent"+tipo+data.id_tarea_vigilancia).innerHTML=`
-                    <div style="text-align:center;">
-                          <img name="nor" src="${ruta}" id="imagesVIGILANCIA_row_${data.id_tarea_vigilancia}" width="350px" height="450px" data-toggle="modal" data-target="#ModalCenterVIGILANCIA${data.id_tarea_vigilancia }"> 
-                          <div class="modal fade" id="ModalCenterVIGILANCIA${data.id_tarea_vigilancia }" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" >
-                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                    <img name="nor" src="${ruta}" style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block" data-toggle="modal" data-target="#exampleModalCenter">
-                                </div>
-                            </div>
-                    </div>
-                          <hr>`;
+                          <img name="nor" src="${ruta}" id="imagesVIGILANCIA_row_${data.id_tarea_vigilancia}" width="350px"> <hr>`;
             }else{
                 document.getElementById("VIGILANCIA"+data.id_tarea_vigilancia +tipo).innerHTML=document.getElementById("VIGILANCIA"+data.id_tarea_vigilancia +tipo).innerHTML+`<hr>`;
             }       

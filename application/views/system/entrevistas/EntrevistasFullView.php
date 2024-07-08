@@ -13,6 +13,12 @@
         <?php } ?>
     </div>
     <input class='mi_hide' id='visual' value= <?php echo (isset($_SESSION['userdataSIC']->Visualizacion)&&$_SESSION['userdataSIC']->Visualizacion==1)?'1':'0';?>></input>
+    <div class="tareas_asignadas_status">
+        <a id="button-asignacion" class="btn btn-primary btn-asignadas" data-toggle="tooltip" title="REPORTE ZEN"></a>
+        <div class="asignacion-content" id="asignacion-content">
+            <h3 class="titulo-azul-grueso">REPORTE ZEN</h3>
+        </div>
+    </div>
     <div class="container-fluid" >
         <ul class="nav nav-tabs d-flex justify-content-center" id="tab_gestor" role="tablist">
             <li class="nav-item repetido" id="li-personas" role="presentation">

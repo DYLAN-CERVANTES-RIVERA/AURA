@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await CatalogoTipo()
     Persona_Entrevista = await getEntrevistaSearch();
     let data = await getDatosPersonaEntrevistas(Persona_Entrevista);
-    
+    await GetStatusTareas(Persona_Entrevista)
     await RecargaGrupoDelictivoSeguimiento();
     await RecargaSelectIndicativo()
     llenarDatosPrincipales(data);

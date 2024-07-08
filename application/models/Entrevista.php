@@ -2,9 +2,11 @@
 class Entrevista{
     public $db; //Variable para instanciar el objeto PDO
     public $db2;
+    public $dbTareas;
     public function __construct(){
         $this->db = new Base(); //Se instancia el objeto con los métodos de PDO
         $this->db2 = new Base2(); //Se instancia el objeto con los métodos de solo consulta
+        $this->dbTareas = new BaseTareas();//Se instancia el objeto con los métodos de solo consulta
     }
 
 
@@ -1031,5 +1033,36 @@ class Entrevista{
         return $this->db->registers();
 
     }
+    public function getTareasPrincipal($Id_Persona_Entrevista){
+        $sql = "SELECT 	id_tarea,tipo_tarea
+        FROM tareas
+        WHERE tareas.folio_entrevista = " . $Id_Persona_Entrevista;
+
+        $this->dbTareas->query($sql);
+        return $this->dbTareas->registers();
+    }
+    public function getStatusTareaTipo($id_tarea, $tipo_tarea){
+        $sql='';
+        switch($tipo_tarea){
+            case 'BARRIDO':
+                $sql = "SELECT * FROM tareas_barrido WHERE tareas_barrido.id_tarea = " . $id_tarea;
+            break;
+            case 'BUSQUEDA':
+                $sql = "SELECT * FROM tareas_busqueda WHERE tareas_busqueda.id_tarea = " . $id_tarea;
+            break;
+            case 'ENTREVISTA':
+                $sql = "SELECT * FROM tareas_entrevista WHERE tareas_entrevista.id_tarea = " . $id_tarea;
+            break;
+            case 'OTRA':
+                $sql = "SELECT * FROM tareas_otra WHERE tareas_otra.id_tarea = " . $id_tarea;
+            break;
+            case 'VIGILANCIA':
+                $sql = "SELECT * FROM tareas_vigilancia WHERE tareas_vigilancia.id_tarea = " . $id_tarea;
+            break;
+        }
+        $this->dbTareas->query($sql);
+        return $this->dbTareas->registers();
+    }
+
 }
 ?>

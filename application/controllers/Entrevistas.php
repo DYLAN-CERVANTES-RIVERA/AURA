@@ -621,6 +621,7 @@ class Entrevistas extends Controller
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/editUbicaciones.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/ubicacion_mapbox.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/editSocial.js"></script>'.
+                            '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getStatusTareas.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getUbicacionesEntrevista.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getEntrevistaDetenido.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getPersonasEntrevista.js"></script>'.
@@ -1070,13 +1071,15 @@ class Entrevistas extends Controller
                 $data = [
                     'titulo'     => 'AURA | Ver Informacion de Persona Entrevistada',
                     'extra_css'  => '<link rel="stylesheet" href="' . base_url . 'public/css/system/entrevistas/fullview.css">',
-                    'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly.js"></script>'
+                    'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly.js"></script>'.
+                                    '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getStatusTareas-ro.js"></script>'
                                 ];
         }else{
             $data = [
                 'titulo'     => 'AURA | Ver Informacion de Persona Entrevistada',
                 'extra_css'  => '<link rel="stylesheet" href="' . base_url . 'public/css/system/entrevistas/fullview.css">',
-                'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly2.js"></script>'
+                'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly2.js"></script>'.
+                                '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getStatusTareas-ro.js"></script>'
                             ];
         }
         $this->view('templates/header', $data);
@@ -1157,6 +1160,30 @@ class Entrevistas extends Controller
         } else {
             return $ip = '0.0.0.0';
         }
+    }
+    public function getTareas(){
+
+        if (isset($_POST['Id_Persona_Entrevista'])) {
+            $Id_Persona_Entrevista = $_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getTareasPrincipal($Id_Persona_Entrevista);
+            $dataTareas = [];
+            if($data != []){
+                $Tareas = $data;
+                $i=0;
+                foreach($Tareas as $Tarea){
+                    $dataTareas[$i]= [
+                        'Tipo' =>$Tarea->tipo_tarea,
+                        'Principales'   =>$this->Entrevista->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                    ];
+                    $i++;
+                }
+            }
+            echo json_encode($dataTareas);
+        } else {
+            header("Location: " . base_url . "Entrevista");
+            exit();
+        }
+
     }
     /*----------------FUNCIONES PARA DESASOCIAR DATOS DE TABLAS------------------------ */
     public function DesasociaEntrevista(){//FUNCION PARA ELIMINAR UNA PERSONA DE LA TABLA CON ID EN BASE DE DATOS
@@ -1341,13 +1368,27 @@ class Entrevistas extends Controller
         if ($_SESSION['userdataSIC']->Modo_Admin == '1' || $_SESSION['userdataSIC']->Entrevistas[2] == '1'){
             if (isset($_GET['Id_Persona_Entrevista']) ){
                 $Id_Persona_Entrevista= $_GET['Id_Persona_Entrevista'];
+                $data = $this->Entrevista->getTareasPrincipal($Id_Persona_Entrevista);
+                $dataTareas = [];
+                if($data != []){
+                    $Tareas = $data;
+                    $i=0;
+                    foreach($Tareas as $Tarea){
+                        $dataTareas[$i]= [
+                            'Tipo' =>$Tarea->tipo_tarea,
+                            'Principales'   =>$this->Entrevista->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                        ];
+                        $i++;
+                    }
+                }
 
                 $info_Persona=[
                     'Principales'=> $this->Entrevista->getPrincipales($Id_Persona_Entrevista),   
                     'Entrevistas'=> $this->Entrevista->getEntrevistas($Id_Persona_Entrevista),
                     'Forensias'=> $this->Entrevista->getForensias($Id_Persona_Entrevista),
                     'Ubicaciones'=> $this->Entrevista->getUbicaciones($Id_Persona_Entrevista),
-                    'Redes_Sociales'=> $this->Entrevista->getRedesSociales($Id_Persona_Entrevista)
+                    'Redes_Sociales'=> $this->Entrevista->getRedesSociales($Id_Persona_Entrevista),
+                    'tareas' => $dataTareas
                 ];
             }else{
                 header("Location: " . base_url . "Entrevistas");

@@ -29,7 +29,8 @@ var Persona_Entrevista;
 document.addEventListener('DOMContentLoaded', async () => {
     Persona_Entrevista = await getEntrevistaSearch();
     let data = await getDatosPersonaEntrevistas(Persona_Entrevista);
-    llenarDatosPrincipales(data);
+    await llenarDatosPrincipales(data);
+    await GetStatusTareas(Persona_Entrevista)
 
 });
 /*-----------------------------------FUNCIONES DE PARA LLENAR LOS DATOS DE LA VISTA------------------ */
