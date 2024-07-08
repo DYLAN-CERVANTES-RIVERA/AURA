@@ -3,9 +3,9 @@ const showHabilitado = () =>{//Funcion de habilitado para la edicion del evento
     if(radioHabilitado[0].checked){
         document.getElementById('form_activacion').classList.remove('mi_hide')
         if(document.getElementById('fechahora_activacion_principales').value==""||document.getElementById('fechahora_activacion_principales').value==null||document.getElementById('fechahora_activacion_principales').value=="NULL"){
-            unir=getFechaActual();
+        
             fechahora_activacion=document.getElementById('fechahora_activacion_principales') 
-            fechahora_activacion.value = unir;
+            fechahora_activacion.value = getFechaActual();
             fechahora_activacion.disabled = true;
             QuienHabilito=document.getElementById('quienhabilito')
             
@@ -23,36 +23,30 @@ document.addEventListener('DOMContentLoaded', () =>{
 
 })
 
-const getFechaActual = () => { //Funcion para Obtener la fecha en el formato sql admitido
-    const str = new Date().toLocaleString('es-MX', );
-    auxhoy=str
-    separadas = auxhoy.split(',')
-    aux=separadas[1] 
-    aux=aux.substring(1, 6)
-    unir=getFecha();
-    unir=unir+' '+aux;
-    return unir;
-} 
+const getFechaActual = () => {
+    const now = new Date();
 
-const getFecha= () => { //Funcion para Obtener la fecha actual en el formato para el html
-    var options = {//Formato DD/MM/YYYY
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    };
-    const str = new Date().toLocaleString('es-MX', options );
-    invertir=str.split('/')
-    invertir= invertir.reverse();
-    unir=invertir.join('-')
-    return unir;
+    // Obtener la fecha en formato yyyy-mm-dd
+    const fecha = now.toISOString().split('T')[0];
+    // Obtener la hora en formato de 24 horas
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+    const hora = new Intl.DateTimeFormat('es-MX', options).format(now);
+
+    // Unir fecha y hora
+    const fechaHora = `${fecha} ${hora}`;
+    return fechaHora;
+}
+
+const getFecha = () => { //Funcion para Obtener la fecha actual en el formato para el html
+    let now = new Date();
+    let fecha = now.toISOString().split('T')[0];
+    return fecha;
 } 
-const getHora= () => { //Funcion para Obtener la hora actual en el formato para el html
-    const str = new Date().toLocaleString('es-MX', );
-    auxhoy=str
-    separadas = auxhoy.split(',')
-    aux=separadas[1] 
-    aux=aux.substring(1, 6)
-    return aux;
+const getHora = () => { //Funcion para Obtener la hora actual en el formato para el html
+    let now = new Date();
+    let options = { hour: '2-digit', minute: '2-digit', hour12: false };
+    let hora = new Intl.DateTimeFormat('es-MX', options).format(now);
+    return hora;
 } 
 
 const uploadFilePDF = (obj) => {

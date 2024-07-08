@@ -235,11 +235,10 @@ const onFormHechosSubmit = () => {//SE LANZA LA FUNCION CON EL BOTON DE + DE LA 
         TablaErrorhecho.innerText = ''
         if (selectedRowHechos === null){
             InsertHecho();//INSERTA NUEVA FILA EN LA TABLA DE HECHOS
-            resetFormHechos();//LIMPIA LA VISTA 
         }else{
             updateRowHecho();//ACTUALIZA LA FILA SELECCIONADA EN LA TABLA DE HECHOS
-            resetFormHechos();//LIMPIA LA VISTA
         }
+        resetFormHechos();//LIMPIA LA VISTA 
     }else{
         document.getElementById('descripcion_error').innerText = 'Debe de especificar el hecho';
     }
@@ -281,7 +280,8 @@ const updateRowHecho = async() => {//FUNCION PARA ACTUALIZAR LOS DATOS DE LA TAB
 
 const resetFormHechos = () => {//FUNCION QUE LIMPIA LOS CAMPOS ASOCIADOS A LA TABLA DE HECHOS
     document.getElementById('descripcion_hecho').value="";
-
+    document.getElementById('fecha_recepcion_hechos').value = getFecha();
+    document.getElementById('hora_recepcion_hechos').value = getHora();
 }
 
 
@@ -940,26 +940,29 @@ const deleteRow = (obj, tableId) => {
         }
     }
 }
-const getFechaActual = () => { //Funcion para Obtener la fecha en el formato sql admitido
-    const str = new Date().toLocaleString('es-MX', );
-    auxhoy=str
-    separadas = auxhoy.split(',')
-    aux=separadas[1] 
-    aux=aux.substring(1, 6)
-    unir=getFecha();
-    unir=unir+' '+aux;
-    return unir;
-} 
 
-const getFecha= () => { //Funcion para Obtener la fecha actual en el formato para el html
-    var options = {//Formato DD/MM/YYYY
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    };
-    const str = new Date().toLocaleString('es-MX', options );
-    invertir=str.split('/')
-    invertir= invertir.reverse();
-    unir=invertir.join('-')
-    return unir;
+const getFechaActual = () => {
+    const now = new Date();
+
+    // Obtener la fecha en formato yyyy-mm-dd
+    const fecha = now.toISOString().split('T')[0];
+    // Obtener la hora en formato de 24 horas
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+    const hora = new Intl.DateTimeFormat('es-MX', options).format(now);
+
+    // Unir fecha y hora
+    const fechaHora = `${fecha} ${hora}`;
+    return fechaHora;
 }
+
+const getFecha = () => { //Funcion para Obtener la fecha actual en el formato para el html
+    let now = new Date();
+    let fecha = now.toISOString().split('T')[0];
+    return fecha;
+} 
+const getHora = () => { //Funcion para Obtener la hora actual en el formato para el html
+    let now = new Date();
+    let options = { hour: '2-digit', minute: '2-digit', hour12: false };
+    let hora = new Intl.DateTimeFormat('es-MX', options).format(now);
+    return hora;
+} 

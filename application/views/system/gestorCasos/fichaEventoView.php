@@ -198,9 +198,9 @@
             foreach($hechos as $hecho){
                 $auxhecho = str_replace("\n", " ", $hecho->Descripcion);
                 $this->Cell(5, 4);
-                $this->MultiCell(190, 4, utf8_decode($k.'.- '.$auxhecho.' FECHA Y HORA: '.$hecho->Fecha_Hora_Hecho), 0, 'J');
+                $this->MultiCell(180, 4, utf8_decode($k.'.- '.$auxhecho.' FECHA Y HORA: '.$hecho->Fecha_Hora_Hecho), 0, 'J');
                 $this->Ln(1);
-                $this->Cell(190, 1, utf8_decode('_______________________________________________________________________________________________'));
+                $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                 $this->Ln(5);
                 $k++;
             }
@@ -250,7 +250,7 @@
                     $this->MultiCell(190, 4, utf8_decode($auxentrevista), 0, 'J');
                     $this->Ln(1);
                     $this->SetTextColor(51, 51, 51);
-                    $this->Cell(190, 1, utf8_decode('_______________________________________________________________________________________________'));
+                    $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                     $this->Ln(4);
                 }
             }
@@ -396,7 +396,7 @@
                         $this->Ln(2);
                     }
                     
-                    $this->Cell(190, 1, utf8_decode('_______________________________________________________________________________________________'));
+                    $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                     $this->Ln(4);
                     $i++;
                 }
@@ -530,7 +530,7 @@
                         $this->Ln(2);
         
                     }
-                    $this->Cell(190, 4, utf8_decode('_______________________________________________________________________________________________'));
+                    $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                     $this->Ln(7);
                     $i++;
                 }
@@ -675,7 +675,7 @@
                             }    
                         }
                         $this->Ln(50);
-                        $this->Cell(190, 4, utf8_decode('_______________________________________________________________________________________________'));
+                        $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                         $this->Ln(7);
                     }
                 }
@@ -800,10 +800,325 @@
                             }    
                         }
                         $this->Ln(50);
-                        $this->Cell(190, 4, utf8_decode('_______________________________________________________________________________________________'));
+                        $this->Cell(195, 1, utf8_decode('__________________________________________________________________________________________________'));
                         $this->Ln(7);
                     }
                 }
+            }
+            if($data['tareas']!=null && $data['tareas']!=[]){
+                $aux = $this->revisaYEvento($this->GetY());
+                $this->SetY($aux);
+                
+                foreach ($data['tareas'] as $element) {
+                    if (!empty($element['Principales'])) {
+                        $actualizaciones = $element['Principales'];
+                        foreach ($actualizaciones as $dato) {
+                            //print_r($dato);
+                            $this->SetTextColor(51, 51, 51);
+                            $this->SetFillColor(156,156,156); 
+                            $this->Cell(190, 4, utf8_decode('REPORTE ZEN ('.$element['Tipo'].')'),0,0,'C',true);
+                            $this->Ln(7);
+                            switch($element['Tipo']){
+                                case 'BARRIDO':
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(33, 4, utf8_decode('COORDENADA Y:'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(80, 4, utf8_decode($dato->coordenada_y));
+                                    
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(33, 4, utf8_decode('COORDENADA X:'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(60, 4, utf8_decode($dato->coordenada_x));
+                                        $this->Ln(7);
+
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(51, 4, utf8_decode('DESCRIPCION BARRIDO :'));
+                                        $this->Ln(5);
+                                        
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->MultiCell(180, 4, utf8_decode(strtoupper($dato->descripcion)));
+                                        $this->Ln(3);
+
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(45, 4, utf8_decode('NUMERO DE CAMARAS:'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(60, 4, utf8_decode($dato->camaras));
+                                        $this->Ln(7);
+                                break;
+                                case 'BUSQUEDA':
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(51, 51, 51);
+                                    $this->Cell(51, 4, utf8_decode('DESCRIPCION BUSQUEDA :'));
+                                    $this->Ln(5);
+                                    
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(128, 128, 128);
+                                    $this->MultiCell(180, 4, utf8_decode(strtoupper($dato->descripcion)));
+                                    $this->Ln(3);
+
+                                    if($dato->img){
+                                        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                                        
+                                        if (strpos($url, '172.18.0.25') == true) {
+                                            $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        } else{
+                                            $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        }
+
+                                       if( $publicUrl !=''){
+                                            $image_data = file_get_contents($publicUrl);
+                                            if ($image_data === false) {
+                                                $this->Cell(5, 4);
+                                                $this->SetTextColor(51, 51, 51);
+                                                $this->Cell(45, 4, utf8_decode('NO HAY FOTO:'.$publicUrl));
+                                                $this->Ln(7);
+                                                
+                                            }else{
+
+
+                                                $aux = $this->revisaYZen($this->GetY());
+                                                $this->SetY($aux);
+                                                $temp_image = 'temp_image.png';
+                                                file_put_contents($temp_image, $image_data);
+                                                $type = exif_imagetype($temp_image);
+                                                $width = 100;
+                                                $height = 50;
+                                                $y=$this->GetY();
+                                                
+                                                switch($type){
+                                                    case 1:
+                                                        $extension = 'gif';
+                                                    break;
+                                                    case 2:
+                                                        $extension = 'jpeg';
+                                                        $image = imagecreatefromjpeg($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".jpeg";//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                                        imagejpeg($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                    break;
+                                                    case 3:
+                                                        $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                                        $image = imagecreatefrompng($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".png";
+                                                        imagepng($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                        
+                                                    break;
+                                                } 
+                                                $this->Ln(53); 
+                                            }
+                                       }   
+                                    }
+                                    
+                                break;
+                                case 'ENTREVISTA':
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(20, 4, utf8_decode('NOMBRE :'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(90, 4, utf8_decode(strtoupper($dato->nombre_entrevistado)));
+
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(24, 4, utf8_decode('TELEFONO :'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(60, 4, utf8_decode($dato->telefono_entrevistado));
+                                        $this->Ln(7);
+
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(51, 4, utf8_decode('RELACION EN EL EVENTO :'));
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->Cell(90, 4, utf8_decode(strtoupper($dato->tipo_entrevistado)));
+                                        $this->Ln(7);
+
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(51, 51, 51);
+                                        $this->Cell(51, 4, utf8_decode('ENTREVISTA :'));
+                                        $this->Ln(5);
+                                        
+                                        $this->Cell(5, 4);
+                                        $this->SetTextColor(128, 128, 128);
+                                        $this->MultiCell(185, 4, utf8_decode(strtoupper($dato->entrevista)));
+                                        $this->Ln(3);
+
+                                break;
+                                case 'OTRA':
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(51, 51, 51);
+                                    $this->Cell(51, 4, utf8_decode('DESCRIPCION OTRA TAREA :'));
+                                    $this->Ln(5);
+                                    
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(128, 128, 128);
+                                    $this->MultiCell(180, 4, utf8_decode(strtoupper($dato->descripcion)));
+                                    $this->Ln(3);
+
+                                    if($dato->img){
+                                        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                                        
+                                        if (strpos($url, '172.18.0.25') == true) {
+                                            $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        } else{
+                                            $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        }
+
+                                       if( $publicUrl !=''){
+                                            $image_data = file_get_contents($publicUrl);
+                                            if ($image_data === false) {
+                                                $this->Cell(5, 4);
+                                                $this->SetTextColor(51, 51, 51);
+                                                $this->Cell(45, 4, utf8_decode('NO HAY FOTO:'.$publicUrl));
+                                                $this->Ln(7);
+                                                
+                                            }else{
+
+
+                                                $aux = $this->revisaYZen($this->GetY());
+                                                $this->SetY($aux);
+                                                $temp_image = 'temp_image.png';
+                                                file_put_contents($temp_image, $image_data);
+                                                $type = exif_imagetype($temp_image);
+                                                $width = 100;
+                                                $height = 50;
+                                                $y=$this->GetY();
+                                                
+                                                switch($type){
+                                                    case 1:
+                                                        $extension = 'gif';
+                                                    break;
+                                                    case 2:
+                                                        $extension = 'jpeg';
+                                                        $image = imagecreatefromjpeg($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".jpeg";//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                                        imagejpeg($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                    break;
+                                                    case 3:
+                                                        $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                                        $image = imagecreatefrompng($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".png";
+                                                        imagepng($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                        
+                                                    break;
+                                                } 
+                                                $this->Ln(53); 
+                                            }
+                                       }   
+                                    }
+                                break;
+                                case 'VIGILANCIA':
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(51, 51, 51);
+                                    $this->Cell(51, 4, utf8_decode('DESCRIPCION VIGILANCIA :'));
+                                    $this->Ln(5);
+                                    
+                                    $this->Cell(5, 4);
+                                    $this->SetTextColor(128, 128, 128);
+                                    $this->MultiCell(180, 4, utf8_decode(strtoupper($dato->descripcion)));
+                                    $this->Ln(3);
+
+                                    if($dato->img){
+                                        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                                        
+                                        if (strpos($url, '172.18.0.25') == true) {
+                                            $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        } else{
+                                            $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
+                                        }
+
+                                       if( $publicUrl !=''){
+                                            $image_data = file_get_contents($publicUrl);
+                                            if ($image_data === false) {
+                                                $this->Cell(5, 4);
+                                                $this->SetTextColor(51, 51, 51);
+                                                $this->Cell(45, 4, utf8_decode('NO HAY FOTO:'.$publicUrl));
+                                                $this->Ln(7);
+                                                
+                                            }else{
+
+
+                                                $aux = $this->revisaYZen($this->GetY());
+                                                $this->SetY($aux);
+                                                $temp_image = 'temp_image.png';
+                                                file_put_contents($temp_image, $image_data);
+                                                $type = exif_imagetype($temp_image);
+                                                $width = 100;
+                                                $height = 50;
+                                                $y=$this->GetY();
+                                                
+                                                switch($type){
+                                                    case 1:
+                                                        $extension = 'gif';
+                                                    break;
+                                                    case 2:
+                                                        $extension = 'jpeg';
+                                                        $image = imagecreatefromjpeg($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".jpeg";//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                                        imagejpeg($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                    break;
+                                                    case 3:
+                                                        $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                                        $image = imagecreatefrompng($temp_image);
+                                                        imageinterlace($image, false);
+                                                        $nombre="temporal".rand().".png";
+                                                        imagepng($image,$nombre);
+                                                        $imagennueva=base_url."public/".$nombre;
+                                                        $this->Image($imagennueva,60,$y, $width, $height, $extension);
+                                                        imagedestroy($image);
+                                                        unlink($nombre);
+                                                        unlink($temp_image);
+                                                        
+                                                    break;
+                                                } 
+                                                $this->Ln(53); 
+                                            }
+                                       }   
+                                    }
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        function revisaYZen($y){
+            if($y>230){///si se encuentra en el rango
+                $this->AddPage();
+                return 32;
+            }else{
+                return $y;
             }
         }
         function revisaYInvolucrado($y){

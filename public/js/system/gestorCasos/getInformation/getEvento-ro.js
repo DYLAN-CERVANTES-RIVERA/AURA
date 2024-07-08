@@ -1,6 +1,7 @@
 /*-----------------------------------------------ESTE ARCHIVO DE JAVASCRIPT ES PARA OBTENER LOS DATOS DEL EVENTO PARA LA VISTA DE SOLO LECTURA------------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', async () => {//Funcion de carga para llenado de elementos del evento
     evento = getEventotoSearch();
+    await GetStatusTareas(evento)
     data = await getEventoP(evento)
     llenarEvento(data);
     delitos = await getDelitosP(evento);

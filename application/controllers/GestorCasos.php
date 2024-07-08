@@ -489,7 +489,7 @@ class GestorCasos extends Controller
             $data = [
                 'titulo'     => 'AURA | Ver Evento',
                 'extra_css'  => '<link rel="stylesheet" href="' . base_url . 'public/css/system/gestorCasos/fullview.css">',
-                'extra_js'   => 
+                'extra_js'   => '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getZen-ro.js"></script>'.
                                 '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getEvento-ro.js"></script>'.
                                 '<script src="'.base_url.'public/js/system/gestorCasos/getInformation/getSeguimiento-ro.js"></script>',
             ];
@@ -1941,6 +1941,19 @@ class GestorCasos extends Controller
         if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Seguimientos[2] == 1){
             if (isset($_GET['Folio_infra']) ){
                 $Folio_infra= $_GET['Folio_infra'];
+                $data = $this->GestorCaso->getTareasPrincipal($Folio_infra);
+                $dataTareas = [];
+                if($data != []){
+                    $Tareas = $data;
+                    $i=0;
+                    foreach($Tareas as $Tarea){
+                        $dataTareas[$i]= [
+                            'Tipo' =>$Tarea->tipo_tarea,
+                            'Principales'   =>$this->GestorCaso->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                        ];
+                        $i++;
+                    }
+                }
                 $data = [
                     'principales'   => $this->GestorCaso->getPrincipales($Folio_infra),
                     'evento'   => $this->GestorCaso->getPrincipalesAll($Folio_infra),
@@ -1951,7 +1964,8 @@ class GestorCasos extends Controller
                     'vehiculos'   => $this->GestorCaso->getVehiculosC($Folio_infra),
                     'personas'   => $this->GestorCaso->getResponsablesC($Folio_infra),
                     'fotos'   => $this->GestorCaso->getFotos($Folio_infra),
-                    'usuarios'=>$this->GestorCaso->getUsuarios()
+                    'usuarios'=>$this->GestorCaso->getUsuarios(),
+                    'tareas' => $dataTareas
                 ];
 
             }else{
