@@ -88,7 +88,11 @@
                 header("Location: ".base_url."Login");
             }
 
-            
+            $user = $_SESSION['userdataSIC']->Id_Usuario;
+            $ip = $this->obtenerIp();
+            $descripcion = 'CERRO DE SESION: '.$_SESSION['userdataSIC']->User_Name;
+            $this->GestorCaso->historial($user,$ip,39,$descripcion);
+
             unset($_SESSION['userdataSIC']);
             header("Location: ".base_url."Login");
         }
