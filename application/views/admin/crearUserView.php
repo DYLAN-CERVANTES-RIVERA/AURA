@@ -74,7 +74,7 @@
 			<div class="row">
 				<div class="form-group col-12 col-md-4 offset-md-2">
 					<label for="User_Name">Nombre de Usuario</label>
-				    <input type="text" class="form-control" name="User_Name" id="User_Name" placeholder="Ejemplo: JuanDan123" required value="<?php echo (isset($_POST['crearUser']))?$_POST['User_Name']:"";?>">
+				    <input type="text" class="form-control" name="User_Name" id="User_Name" placeholder="Ejemplo: ROKY" required value="<?php echo (isset($_POST['crearUser']))?$_POST['User_Name']:"";?>">
 				    <small class="form-text text-muted"><?= (isset($data['errorForm']['User_Name']))?$data['errorForm']['User_Name']:"";?></small>
 				</div>
 				<div class="form-group col-12 col-md-4">

@@ -93,8 +93,16 @@ const insertaInfo = async(data,tipo)=>{
                         <span class="span_rem_ans" >${data.camaras}</span>
                     </div>
             </div>
-            <hr>
         `;
+        if(data.img!= null){
+            let vigilancia =document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo)
+            let ruta = await obtenerIpImages(tipo,data.img);
+            createElement('div', {id:"imageContent"+tipo+data.id_tarea_barrido, className: ''}, [],vigilancia);
+            document.getElementById("imageContent"+tipo+data.id_tarea_barrido).innerHTML=`
+                      <img name="nor" src="${ruta}" id="imagesBARRIDO_row_${data.id_tarea_barrido}" width="350px"> <hr>`;
+        }else{
+            document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo).innerHTML=document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo).innerHTML+`<hr>`;
+        }
         break;
 
         case 'BUSQUEDA':

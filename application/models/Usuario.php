@@ -390,8 +390,7 @@ class Usuario
                             $Entrevistas.= (isset($post['Entrevista_Delete']))?'1':'0';
 
 
-                            if (($Seguimientos != $dataBefore['Seguimientos']) || 
-                                ($Eventos != $dataBefore['Evento_D']) || ($Entrevistas != $dataBefore['Entrevistas'])|| ($Redes != $dataBefore['Redes_V'])){
+                            if (($Seguimientos != $dataBefore['Seguimientos']) ||($Eventos != $dataBefore['Evento_D']) || ($Entrevistas != $dataBefore['Entrevistas'])|| ($Redes != $dataBefore['Red'])){
 
                                 $cambiosPermisos = true;
 

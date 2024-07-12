@@ -71,8 +71,25 @@ const insertaInfo = async(data,tipo)=>{
                         <span class="span_rem_ans" >${data.camaras}</span>
                     </div>
             </div>
-            <hr>
         `;
+        if(data.img!= null){
+            let vigilancia =document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo)
+            let ruta = await obtenerIpImages(tipo,data.img);
+            createElement('div', {id:"imageContent"+tipo+data.id_tarea_barrido, className: ''}, [],vigilancia);
+            document.getElementById("imageContent"+tipo+data.id_tarea_barrido).innerHTML=`
+                       <div style="text-align:center;">
+                          <img name="nor" src="${ruta}" id="imagesBARRIDO_row_${data.id_tarea_barrido}" width="350px" height="450px" data-toggle="modal" data-target="#ModalCenterBARRIDO${data.id_tarea_barrido}"> 
+                          <div class="modal fade" id="ModalCenterBARRIDO${data.id_tarea_barrido}" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" >
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <img name="nor" src="${ruta}" style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block" data-toggle="modal" data-target="#exampleModalCenter">
+                                </div>
+                            </div>
+                         </div>
+                      <hr>`;
+                      
+        }else{
+            document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo).innerHTML=document.getElementById("BARRIDO"+data.id_tarea_barrido+tipo).innerHTML+`<hr>`;
+        }
         break;
 
         case 'BUSQUEDA':
