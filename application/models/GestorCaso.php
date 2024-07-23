@@ -22,6 +22,7 @@ class GestorCaso{
                         Folio_911,
                         FechaHora_Recepcion,
                         FechaHora_Captura,
+                        Cdi,
                         Zona,
                         Vector,
                         Colonia,
@@ -50,6 +51,7 @@ class GestorCaso{
                         '".$post['911_principales']."',
                         '".$post['fecha_evento_principales'].' '.$post['hora_evento_principales']."',
                         '".$post['fechahora_captura_principales']."',
+                        '".$post['cdi']."',
                         '".$post['zona']."',
                         '".$post['vector']."',
                         '".$this->remplazoCadena($post['Colonia'])."',
@@ -648,7 +650,8 @@ class GestorCaso{
                     Semana = " . $post['Semana'] . ",
                     Ubo_Detencion = " . $post['Ubo_Detencion'] . ",
                     Path_Pdf = '" . $post['nombre_pdf'] . "',
-                    ClaveSeguimiento ='". trim($post['ClaveSeguimiento']) . "'
+                    ClaveSeguimiento ='". trim($post['ClaveSeguimiento']) . "',
+                    Cdi ='". trim($post['cdi']) . "'
                     WHERE Folio_infra = " . trim($post['Folio_infra']) . "
                     AND (
                         Folio_911 != '" . trim($post['911_principales']) . "'
@@ -678,6 +681,7 @@ class GestorCaso{
                         OR Ubo_Detencion != " . $post['Ubo_Detencion'] . "
                         OR Path_Pdf != '" . $post['nombre_pdf'] . "'
                         OR ClaveSeguimiento != '". trim($post['ClaveSeguimiento']) . "'
+                        OR Cdi != '". trim($post['cdi']) . "'
                     )";
                 $this->db->query($sql);
                 $this->db->execute();

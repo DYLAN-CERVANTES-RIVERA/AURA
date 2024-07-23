@@ -60,8 +60,12 @@
             <span class="span_rem_ans" id="violencia_principales" name="violencia_principales"></span>
         </div>
 
+        <div class="col-lg-6 col-sm-12  mt-2">
+            <span class="span_rem">CDI:</span>
+            <span class="span_rem_ans" id="cdi" name="cdi"></span>
+        </div>
 
-        <div class="row col-lg-12 col-sm-12 justify-content-center mt-3">
+        <div class="row col-lg-6 col-sm-12 justify-content-center mt-2">
             <span class="span_rem">Fecha y hora de recepcion del evento: </span>
             <span class="span_rem_ans valor-campo" name="fecha_recepcion_principales" id="fecha_recepcion_principales"></span>
         </div>

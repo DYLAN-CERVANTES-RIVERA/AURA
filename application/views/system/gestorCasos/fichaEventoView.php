@@ -34,10 +34,17 @@
             $this->Cell(25, 4, utf8_decode('FOLIO 911:'));
             $this->SetTextColor(128, 128, 128);
             $this->Cell(25, 4, utf8_decode($data['principales']->Folio_911));
+        
+            $this->ln(7);
+            $this->Cell(5, 4);
             $this->SetTextColor(51, 51, 51);
+            $this->Cell(10, 4, utf8_decode('CDI:'));
+            $this->SetTextColor(128, 128, 128);
+            $this->Cell(25, 4, utf8_decode($data['evento']->Cdi)); 
 
             $this->ln(7);
             $this->Cell(5, 4);
+            $this->SetTextColor(51, 51, 51);
             $this->Cell(20, 4, utf8_decode('DELITOS:'));
             $this->SetTextColor(128, 128, 128);
             $this->MultiCell(160, 4, utf8_decode($data['principales']->delitos_concat.' , '.$data['principales']->CSviolencia.' , '.$data['principales']->Tipo_Violencia), 0, 'J');

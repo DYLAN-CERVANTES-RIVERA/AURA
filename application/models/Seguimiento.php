@@ -149,6 +149,7 @@ class Seguimiento{
                         Elemento_Captura,
                         FechaHora_Creacion,
                         Nombre_grupo_delictivo,
+                        Tipo_Grupo,
                         Modus_operandi,
                         Peligrosidad,
                         Alto_Impacto,
@@ -158,6 +159,7 @@ class Seguimiento{
                         '".$post['captura_principales']."',
                         '".$post['fechahora_captura_principales']."',
                         '".$nombre_grupo."',
+                        '".$post['Tipo_Grupo']."',
                         '".$modus_operandi."',
                         '".$post['peligrosidad']."',
                         ".$alto_impacto.",
@@ -220,6 +222,7 @@ class Seguimiento{
             if($post['BanderaFoto']==0){
                 $sql = "UPDATE seguimiento_gabinete SET
                         Nombre_grupo_delictivo = '".$nombre_grupo."',
+                        Tipo_Grupo = '".$post['Tipo_Grupo']."',
                         Modus_operandi = '".$modus_operandi."',
                         Peligrosidad = '".$post['peligrosidad']."',
                         Observaciones = '".$observaciones."',
@@ -232,6 +235,7 @@ class Seguimiento{
             }else{
                 $sql = "UPDATE seguimiento_gabinete SET
                         Nombre_grupo_delictivo = '".$nombre_grupo."',
+                        Tipo_Grupo = '".$post['Tipo_Grupo']."',
                         Modus_operandi = '".$modus_operandi."',
                         Peligrosidad = '".$post['peligrosidad']."',
                         Observaciones = '".$observaciones."',

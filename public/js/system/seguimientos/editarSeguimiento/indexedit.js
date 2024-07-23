@@ -294,6 +294,12 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         let observaciones= document.getElementById('observaciones').value.toUpperCase();
         observaciones=observaciones.replace(emojis , '');
         myFormData.append('observaciones',observaciones)
+        
+        if(document.getElementById('Question1').checked){
+            myFormData.append('Tipo_Grupo','PERSONA')
+        }else{
+            myFormData.append('Tipo_Grupo','GRUPO')
+        }
         button2 = document.getElementById('btn_principal')
         button2.innerHTML = `Guardando
                             <div class="spinner-grow spinner-grow-sm" role="status">

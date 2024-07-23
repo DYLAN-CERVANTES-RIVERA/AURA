@@ -29,7 +29,7 @@
                 <input type="text" class="form-control form-control-sm text-uppercase" id="nombre_grupo" name="nombre_grupo" placeholder="Ingrese nombre del grupo delictivo" onkeypress="return validaConAcentos(event);">
                 <span class="span_error" id="nombre_grupo_error"></span>
             </div>
-            <div class="form-group col-lg-2">
+            <div class="form-group col-lg-3">
                 <label for="peligrosidad" class="subtitulo-rosa">Peligrosidad:</label>
                 <select class="custom-select custom-select-sm" id="peligrosidad" name="peligrosidad">
                     <option value="SD" selected>SELECCIONA UNA OPCION</option>
@@ -39,6 +39,14 @@
                 </select>
                 <span class="span_error" id="peligrosidad_error"></span>
             </div>
+            <div class="col-lg-3">
+                <label class="subtitulo-rosa">Tipo de Red:</label>
+                <br>
+                <input type="radio" id="Question1" name="Question" value="1">
+                <label>Persona</label>
+                <input type="radio" id="Question2" name="Question" value="0"checked>
+                <label>Grupo</label>
+            </div> 
             <div class="form-group col-lg-4 col-sm-6">
                 <label for="nombre_grupo" class="subtitulo-rosa">Foto del Grupo Delictivo:</label>
                 <div class="d-flex justify-content-around" id="uploadFileFotoGD">

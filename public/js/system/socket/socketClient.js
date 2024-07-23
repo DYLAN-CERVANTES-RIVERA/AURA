@@ -1,37 +1,11 @@
 // Conexión al servidor
 console.log('cliente de sockets')
 ///console.log(ECMAScript.version)
-const socket = io('http://172.18.10.227:3333');
+const socket= io.connect('http://172.18.10.184:8181',{'forceNew ': true});
 var myformSocket = new FormData()
-socket.on("connect", async() => {
-    console.log({msg: 'conectado con el socket server'}) 
-});
 
-
-socket.on('GetInfo_Folio',function(data){
-    ///console.log(data)
-    
-    if(Number(data)){
-        myformSocket.append('Folio_infra',data) 
-        fetch(base_url_js+'GestorCasos/GetInfo_Evento', {
-            method: 'POST',
-            body: myformSocket
-        })
-        .then(function(response){
-            if (response.ok) {
-                console.log(response);
-                socket.emit('Infopeticion',response);//emitimos al sever los datos que requiere
-            }
-            else{
-                throw "Error en fetch"
-            }
-        })
-        .catch(function(error){
-            console.log("catch: "+error)
-        })
-    }else{
-        ///console.log('Ingrese de manera correcta el folio');
-        socket.emit('InfopeticionMal','Ingrese de manera correcta el folio');//emitimos a el socket un error en la entrada
-    }
-
-});
+socket.on('nueva_insercion', (data) => {
+    // Aquí puedes procesar la notificación y mostrarla en tu panel
+    console.log('Nueva inserción detectada:', data);
+    // Por ejemplo, puedes actualizar una lista de notificaciones en la interfaz de usuario
+  });

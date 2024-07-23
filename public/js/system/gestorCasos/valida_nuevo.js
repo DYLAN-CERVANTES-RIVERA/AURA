@@ -1,7 +1,6 @@
 /*-----------------------------------------------ESTE ARCHIVO DE JAVASCRIPT ES PARA LA FUNCIONALIDADES DE NUEVO EVENTO-------------------------------------------------------------------------*/
 var data = document.getElementById('datos_principales')
 var Folio911Error = document.getElementById('911_principalesError')
-var alertError = document.getElementById('alert_error')
 var RecepcionError = document.getElementById('recepcion_error')
 var ZonaError = document.getElementById('zona_error')
 var VectorError = document.getElementById('vector_error')
@@ -77,7 +76,6 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         band[i++] = VectorError.innerText = FV.validate(myFormData.get('vector'), 'required ')
         band[i++] = ColoniaError.innerText = FV.validate(myFormData.get('Colonia'), 'required ')
         band[i++] = CalleError.innerText = FV.validate(myFormData.get('Calle'), 'required ')
-        band[i++] = CPError.innerText = FV.validate(myFormData.get('CP'), 'required | numeric')
         band[i++] = cordYError.innerText = FV.validate(myFormData.get('cordY'), 'required | numeric')
         band[i++] = cordXError.innerText = FV.validate(myFormData.get('cordX'), 'required | numeric')
     }
@@ -217,7 +215,6 @@ document.getElementById('btn_principal').addEventListener('click', async functio
                     button2.classList.add('disabled-link');//se desactiva el boton para que el usuario no pueda guardar la misma informacion
 
                     Folio911Error.innerText = ''
-                    alertError.innerText = ''
                     RecepcionError.innerText = ''
                     ZonaError.innerText = ''
                     VectorError.innerText = ''

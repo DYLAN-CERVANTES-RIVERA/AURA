@@ -254,7 +254,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         myFormData.append('observaciones',observaciones)
         myFormData.append('captura_principales',document.getElementById('captura_principales').value.toUpperCase())
         myFormData.append('fechahora_captura_principales',document.getElementById('fechahora_captura_principales').value)
-
+        if(document.getElementById('Question1').checked){
+            myFormData.append('Tipo_Grupo','PERSONA')
+        }else{
+            myFormData.append('Tipo_Grupo','GRUPO')
+        }
         button2 = document.getElementById('btn_principal')
         button2.innerHTML = `Guardando
                             <div class="spinner-grow spinner-grow-sm" role="status">
@@ -330,9 +334,9 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         });
     }
 
-    for (var pair of myFormData.entries()) {
+    /*for (var pair of myFormData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
-    }
+    }*/
 })
 
 function alerta() {//FUNCION PARA AVISAR QUE TODO SALIO BIEN 

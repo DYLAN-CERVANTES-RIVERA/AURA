@@ -767,9 +767,16 @@ div.avatar {
     }
 }
 @media (max-width: 1000px) {
+
     #navbarnavegacion {
         position: relative;
-    }
+      }
+      #navbarhead {
+        position: relative;
+        top: 0;
+        left: 0;
+        z-index: 100;
+      }
     .titulo_header{
         font-size: 15px;
         color: #000;

@@ -328,7 +328,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
   
     fechaLimpia= await FormatoFecha(data.FechaHora_Recepcion);
     fecha_recepcion.textContent = fechaLimpia;  
-
+    document.getElementById('cdi').textContent = (data.Cdi!=null && data.Cdi!='')?data.Cdi:"SD"; 
     if(data.Status_Evento!="FUERA DE JURISDICCION"){
         zona.textContent = data.Zona
         vector.textContent = data.Vector

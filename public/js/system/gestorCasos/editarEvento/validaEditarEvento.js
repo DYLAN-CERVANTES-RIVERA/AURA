@@ -1,7 +1,6 @@
 /*-----------------------------------------------ESTE ARCHIVO DE JAVASCRIPT ES PARA LA FUNCIONALIDADES DE LA EDICION DE EVENTOS TAB PRINCIPAL -------------------------------------------------------------------------*/
 var data = document.getElementById('datos_principales')
 var Folio911Error = document.getElementById('911_principalesError')
-var alertError = document.getElementById('alert_error')
 var RecepcionError = document.getElementById('recepcion_error')
 var ZonaError = document.getElementById('zona_error')
 var VectorError = document.getElementById('vector_error')
@@ -239,7 +238,6 @@ document.getElementById('btn_principal').addEventListener('click', async functio
 
             } else {//si todo salio bien
                 Folio911Error.innerText = ''
-                alertError.innerText = ''
                 RecepcionError.innerText = ''
                 ZonaError.innerText = ''
                 VectorError.innerText = ''

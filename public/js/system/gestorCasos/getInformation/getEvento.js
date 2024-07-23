@@ -886,6 +886,12 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
         FechaHora_Activacion.disabled = true;
         QuienHabilito=document.getElementById('quienhabilito')
         QuienHabilito.value=data.Quien_Habilito;
+        document.getElementById('fotos').disabled = false;
+        document.getElementById('li-fotos').classList.remove('mi_hide')
+        document.getElementById('fotos0').classList.remove('mi_hide')
+        document.getElementById('entrevistas').disabled = false;
+        document.getElementById('li-entrevistas').classList.remove('mi_hide')
+        document.getElementById('entrevistas0').classList.remove('mi_hide')
        
     }else{
         deshabilitado.checked=true;
@@ -910,7 +916,11 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     Turno.value = (data.Turno != ''&& data.Turno != null)?data.Turno:'SD';
     Responsable_Turno.value = data.Responsable_Turno
     Semana.value = data.Semana
+    cdi = document.getElementById('cdi');
+    if(data.Cdi!=null){
+        cdi.value = data.Cdi
 
+    }
     if(data.Path_Pdf!="SD" && data.Path_Pdf!=null){
         let rutaPDf = `${base_url_js}public/files/GestorCasos/${data.Folio_infra}/${data.Path_Pdf}`+'?nocache='+getRandomInt(50);
         document.getElementById('viewPDF').classList.remove('mi_hide');

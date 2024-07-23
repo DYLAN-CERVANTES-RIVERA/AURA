@@ -36,7 +36,7 @@
 
             <h5 class="titulo-azul" >Datos del Seguimiento</h5>
             <div class="row mt-3">
-                <div class="form-group col-lg-8 col-sm-6">
+                <div class="form-group col-lg-6 col-sm-6">
                     <label for="nombre_grupo" class="subtitulo-rosa">Nombre del Grupo Delictivo:</label>
                     <input type="text" class="form-control form-control-sm text-uppercase" id="nombre_grupo" name="nombre_grupo" placeholder="Ingrese nombre del grupo delictivo" onkeypress="return validaConAcentos(event);" >
                     <span class="span_error" id="nombre_grupo_error"></span>
@@ -51,6 +51,14 @@
                     </select>
                     <span class="span_error" id="peligrosidad_error"></span>
                 </div>
+                <div class="col-lg-3">
+                    <label class="subtitulo-rosa">Tipo de Red:</label>
+                    <br>
+                    <input type="radio" id="Question1" name="Question" value="1">
+                    <label>Persona</label>
+                    <input type="radio" id="Question2" name="Question" value="0"checked>
+                    <label>Grupo</label>
+                </div>  
                 <div class="form-group col-lg-9">
                     <label for="principal_actividad" class="subtitulo-rosa">Principal Actividad Delictiva:</label>
                     <input type="text" class="form-control form-control-sm text-uppercase" id="principal_actividad" name="principal_actividad" placeholder="Ingrese el principal delito">

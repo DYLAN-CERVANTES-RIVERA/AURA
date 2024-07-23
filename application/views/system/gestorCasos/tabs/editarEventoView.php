@@ -21,15 +21,31 @@
         
             <h5 class="titulo-azul" >Datos del Evento</h5>
             <div class="row mt-3">
-                <div class="form-group col-lg-5 col-sm-6">
+                <div class="col-lg-5">
                     <label for="fuente_principales" class="subtitulo-rosa">Origen del evento</label>
                     <select class="custom-select custom-select-sm parrafo-azul" id="fuente_principales" name="fuente_principales">
                         <option value="NA">SELECCIONE EL ORIGEN DEL EVENTO</option>
                         <?php foreach ($data['datos_prim']['fuentes'] as $item) : ?>
-                            <option value="<?php echo $item->fuente; ?>"><?php echo $item->fuente; ?></option>
+                                <option value="<?php echo $item->fuente; ?>"><?php echo $item->fuente; ?></option>
                         <?php endforeach ?>
                     </select>
                     <span class="span_error" id="fuente_principales_error"></span>
+                </div>
+                <div class="col-lg-4">
+                    <label class="subtitulo-rosa">Folio 911</label>
+                    <input style="color: #002f6c;" type="text" name="911_principales" id="911_principales"  maxlength="50" class="form-control" placeholder="Ingrese el Folio 911" onkeypress="return valideKey(event);">
+                    <input type="text"  id="911_principales_oculto"  class="form-control mi_hide" >
+                    <span class="span_error" id="911_principalesError"></span>
+                </div>
+                <div class="col-lg-3">
+                    <label class="subtitulo-rosa">Fecha/Hora de Recepcion</label>
+                    <br>
+                    <div class="row justify-content-center">
+                        <label class="subtitulo-azul">Ingrese Fecha</label>
+                        <input type="date" name="fecha_evento_principales" id="fecha_evento_principales" class="form-control custom-input_dt fecha parrafo-azul fondo-azul" value="<?php echo date('Y-m-d') ?>">
+                    </div>
+                </div>
+                <div class="col-lg-3">
                     <label for="Estatus_Evento" class="label-form subtitulo-rosa">Estatus del Evento</label>
                     <select class="custom-select custom-select-sm" id="Estatus_Evento" name="Estatus_Evento">
                         <option value="POR CONFIRMAR">POR CONFIRMAR</option>
@@ -39,33 +55,17 @@
                     </select>
                     <span class="span_error" id="Estatus_Evento_principales_error"></span>
                 </div>
-                <div class="form-group col-lg-3 col-sm-6 ">
-                    <span class="subtitulo-rosa">Folio 911</span>
-                    <input type="text" name="911_principales" id="911_principales"  class="form-control" maxlength="20"  placeholder="Ingrese el Folio 911" onkeypress="return valideKey(event);">
-                    <input type="text"  id="911_principales_oculto"  class="form-control mi_hide" >
-                    <span class="span_error" id="911_principalesError"></span>
+                <div class="col-lg-6">
+                    <label class="label-form subtitulo-rosa">CDI</label>
+                    <input type="text" id="cdi" name="cdi" class="form-control form-control-sm" maxlength="50" placeholder="Ingrese el CDI del evento">
                 </div>
-                
-                <div class="form-group col-lg-4 col-sm-6 ">
-                    <div class="col-lg-12 col-sm-6 d-flex justify-content-end">
-                        <span class="subtitulo-rosa">Fecha/Hora de Recepcion</span>
+                <div class="col-lg-3">
+                    <br>
+                    <div class="row justify-content-center">
+                        <label class="subtitulo-azul">Ingrese Hora</label>
+                        <input type="time" name="hora_evento_principales" id="hora_evento_principales" class="form-control custom-input_dt hora parrafo-azul fondo-azul col-sm-6" value="<?php echo date('H:i') ?>">
                     </div>
-                    
-                    <div class="col-lg-12 col-sm-12 d-flex justify-content-end " >
-                        <span class="subtitulo-azul col-lg-5 col-sm-4">Ingrese Fecha: </span>
-                        <input type="date" name="fecha_evento_principales" id="fecha_evento_principales" class="form-control custom-input_dt fecha parrafo-azul fondo-azul" value="<?php echo date('Y-m-d') ?>">
-                    </div><br>
-                    <div class="col-lg-12 col-sm-12 d-flex justify-content-end ">
-                        <span class="subtitulo-azul col-lg-5 col-sm-5">Ingrese Hora:</span>
-                        <input type="time" name="hora_evento_principales" id="hora_evento_principales" class="form-control custom-input_dt hora parrafo-azul fondo-azul col-sm-4" value="<?php echo date('H:i') ?>">
-                    </div>
-                    
-                    <div class="row-lg-12">
-                        <span class="span_error" id="alert_error"> </span>
-                    </div>
-
                 </div>
-
             </div><br>
             <!--UBICACION -->
 

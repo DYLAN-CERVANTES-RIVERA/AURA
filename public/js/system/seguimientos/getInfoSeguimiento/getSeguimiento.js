@@ -1,5 +1,6 @@
 /*-------------ESTE ARCHIVO DE JAVASCRIPT ES PARA OBTENER LOS DATOS DEL SEGUIMIENTO ------------*/
 const myFormData =  new FormData();
+var banderaPdf;
 var Seguimiento;
 document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLENADO DE ELEMENTOS DEL SEGUIMIENTO
     await getInfoEventos()
@@ -223,9 +224,14 @@ const llenarSeguimiento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA D
         radioAltoImpacto[0].checked = false;
         radioAltoImpacto[1].checked = true;
     }
+    if(data.Tipo_Grupo == "PERSONA"){
+        document.getElementById('Question1').checked = true;
+    }else{
+        document.getElementById('Question2').checked = true;
+    }
 
 }
-var banderaPdf;
+
 /*-----------------------------------FUNCIONES DE PARA LLENAR LOS DATOS DE LA TABLA DE SEGUIMIENTO------------------ */
 const insertRowEvento = ({Folio_infra,Folio_911,delitos_concat,Ubicacion}) => {//Funcion para llenar tabla eventos relacionados de seguimiento
     const table = document.getElementById('EventoTable').getElementsByTagName('tbody')[0];
