@@ -149,7 +149,7 @@
             $this->SetFont('Avenir','',11);
             $this->SetTextColor(51, 51, 51);
             $this->Cell(135, 4);
-            $this->Cell(33,  4, utf8_decode("FOLIO INFRA:"), 0, 0, 'R');
+            $this->Cell(33,  4, utf8_decode("FOLIO AURA:"), 0, 0, 'R');
             $this->SetTextColor(128, 128, 128);
             $this->Cell(20,  4,$GLOBALS['PDFFOLIO'] , '', 1, 'C');
             $this->Ln(1);

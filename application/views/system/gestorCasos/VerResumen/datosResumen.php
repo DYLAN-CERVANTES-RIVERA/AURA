@@ -17,7 +17,7 @@
    <!--vista para el resumen evento -->
     <div class="row mt-5">
         <div class="col-lg-3 col-sm-12 ">
-            <span class="span_rem">Folio Infra: </span>
+            <span class="span_rem">Folio AURA: </span>
             <span class="span_error" id="Folio_infra_principalesError"></span>
             <span class="span_rem_ans" name="Folio_infra_principales" id="Folio_infra_principales"></span>
         </div>   

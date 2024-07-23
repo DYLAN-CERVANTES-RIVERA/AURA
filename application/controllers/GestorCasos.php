@@ -669,7 +669,7 @@ class GestorCasos extends Controller
         switch ($filtro) {
             case '1': //General de todos los casos
                 $infoTable['header'] .= '
-                        <th class="column1">Folio Infra</th>
+                        <th class="column1">Folio AURA</th>
                         <th class="column2">Elemento Asignado para Seguimiento</th>
                         <th class="column3">Folio 911</th>
                         <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
@@ -761,7 +761,7 @@ class GestorCasos extends Controller
                 break;
                 case '2': //Eventos Habilitados
                     $infoTable['header'] .= '
-                            <th class="column1">Folio Infra</th>
+                            <th class="column1">Folio AURA</th>
                             <th class="column2">Elemento Asignado para Seguimiento</th>
                             <th class="column3">Folio 911</th>
                             <th class="column4">Fecha de Captura  (AAAA-MM-DD) </th>
@@ -844,7 +844,7 @@ class GestorCasos extends Controller
                     break;
                 case '3': //Eventos Deshabilitados
                     $infoTable['header'] .= '
-                            <th class="column1">Folio Infra</th>
+                            <th class="column1">Folio AURA</th>
                             <th class="column2">Folio 911</th>
                             <th class="column3">Fecha de Captura  (AAAA-MM-DD) </th>
                             <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
@@ -906,7 +906,7 @@ class GestorCasos extends Controller
                     break;
                 case '4': //Asinacion de Eventos
                         $infoTable['header'] .= '
-                                <th class="column1">Folio Infra</th>
+                                <th class="column1">Folio AURA</th>
                                 <th class="column2">Elemento Asignado para Seguimiento</th>
                                 <th class="column3">Folio 911</th>
                                 <th class="column4">Fecha de Captura  (AAAA-MM-DD) </th>
@@ -986,7 +986,7 @@ class GestorCasos extends Controller
                 break;
                 case '5': //General de todos los casos
                     $infoTable['header'] .= '
-                            <th class="column1">Folio Infra</th>
+                            <th class="column1">Folio AURA</th>
                             <th class="column2">Elemento Asignado para Seguimiento</th>
                             <th class="column3">Folio 911</th>
                             <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
@@ -1102,7 +1102,7 @@ class GestorCasos extends Controller
 				case '1':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_Eventos";
-					$csv_data="Folio infra,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+					$csv_data="Folio AURA,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
 					foreach ($cat_rows as $row) {
                         $partes2 = explode(" ", $row->FechaHora_Recepcion);
                         $partes = explode(" ", $row->FechaHora_Captura);
@@ -1205,7 +1205,7 @@ class GestorCasos extends Controller
 					break;
                     case '2':
                         $filename = "Eventos_Habilitados";
-                        $csv_data="Folio infra,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
+                        $csv_data="Folio AURA,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
                         foreach ($cat_rows as $row) {
                             $partes2 = explode(" ", $row->FechaHora_Recepcion);
                             $partes = explode(" ", $row->FechaHora_Captura);
@@ -1267,7 +1267,7 @@ class GestorCasos extends Controller
                         break;
                     case '3':
                         $filename = "Eventos_Deshabilitados";
-                        $csv_data="Folio infra,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
+                        $csv_data="Folio AURA,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
                         foreach ($cat_rows as $row) {
                             $partes2 = explode(" ", $row->FechaHora_Recepcion);
                             $partes = explode(" ", $row->FechaHora_Captura);
@@ -1329,7 +1329,7 @@ class GestorCasos extends Controller
                         break;
                         case '4':
                             $filename = "Asignacion de Eventos";
-                            $csv_data="Folio infra,Folio 911,Fecha y Hora de Caputra,Fecha y Hora de Recepcion,Zona,Vector,Fuente,Colonia,Calle,Con y Sin violencia,Tipo de violencia,Estado,Elemento Asignado para Seguimiento\n";
+                            $csv_data="Folio AURA,Folio 911,Fecha y Hora de Caputra,Fecha y Hora de Recepcion,Zona,Vector,Fuente,Colonia,Calle,Con y Sin violencia,Tipo de violencia,Estado,Elemento Asignado para Seguimiento\n";
                             foreach ($cat_rows as $row) {
                                 $csv_data.= mb_strtoupper($row->Folio_infra).",\"".
                                             mb_strtoupper($row->Folio_911)."\",\"".
@@ -1349,7 +1349,7 @@ class GestorCasos extends Controller
                         case '5':
                             //Genera nombre de archivo junto con los datos y los encabezasdos 
                             $filename = "Vista_General_Eventos_por_Folio";
-                            $csv_data="Folio infra,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+                            $csv_data="Folio AURA,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
                             foreach ($cat_rows as $row) {
                                 $partes2 = explode(" ", $row->FechaHora_Recepcion);
                                 $partes = explode(" ", $row->FechaHora_Captura);

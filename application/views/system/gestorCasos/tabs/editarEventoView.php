@@ -9,7 +9,7 @@
                     <input type="text" name="captura_principales" id="captura_principales"  class="form-control custom-input_dt">
                 </div> 
                 <div class="form-group col-lg-4 col-sm-6">
-                    <span class="subtitulo-rosa">Folio Infra Asignado por el sistema</span>
+                    <span class="subtitulo-rosa">Folio AURA</span>
                     <input type="text" name="folio_infra_principales" id="folio_infra_principales" class="form-control custom-input_dt">
                 </div>
                 <div class="form-group col-lg-3 col-sm-6">
