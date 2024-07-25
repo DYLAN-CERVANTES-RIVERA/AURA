@@ -2130,5 +2130,16 @@ class GestorCasos extends Controller
     
         }
     }
+    public function  getReporteZenGlobal(){
+        if (isset($_POST['tabla'])) {
+            $tabla = $_POST['tabla'];
+            $id = $_POST['id'];
+            $data = $this->GestorCaso->getReporteZen($tabla,$id);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "GestorCasos");
+            exit();
+        }
+    }
 }
 ?>

@@ -438,5 +438,6 @@ window.onload = function() {
         $('#myInput').trigger('focus')
     });
 
+    monitorizarTablas();
     //getDataGraficas();
 };

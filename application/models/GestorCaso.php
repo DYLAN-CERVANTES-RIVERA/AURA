@@ -1492,6 +1492,16 @@ class GestorCaso{
         $this->db2->query($sql);
         return $this->db2->registers();
     }
+    public function getReporteZen($tabla,$id){
+        $sql = "SELECT p.*,r.folio_sic AS Folio_AURA, r.tipo_tarea AS Tipo
+                FROM ". $tabla." p
+                JOIN tareas r ON p.id_tarea  = r.id_tarea 
+                WHERE r.folio_sic != 0 GROUP BY Folio_AURA ORDER BY ".$id." DESC
+                LIMIT 3";
+
+        $this->db2->query($sql);
+        return $this->db2->registers();
+    }
 
     public function getAllInfoAlertaByCadena($from_where_sentence = ""){ 
     	$sqlAux = "SELECT * "

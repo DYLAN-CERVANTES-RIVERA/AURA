@@ -1,4 +1,4 @@
-            </div>
+</div>
         </div>
         <div class="overlay"></div>
         <div class="overlay"></div>
@@ -28,7 +28,11 @@
         <?php if (isset($data['extra_js']))  echo $data['extra_js'] ?>
 
         <footer class="d-flex justify-content-center align-items-center footer">
+            <br>
             <span class="footer-copyright text-center py-3 gray-font ">AURA</span>
+            <div class="asignacion-content-global" id="asignacion-content-global">Cargando... </div>
         </footer>
+   
+        <script src="<?php echo base_url ?>public/js/system/notificaciones/notificaciones.js"></script>
     </body>
 </html>
