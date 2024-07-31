@@ -173,6 +173,7 @@ const InsertPersona= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE PE
                                         <div class="form-group">
                                             <input type="file" name="FotoPersona_row${newRow.rowIndex}" accept="image/*" id="fileFotoPersona_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFileP(event)" data-toggle="tooltip" data-placement="bottom">
                                             <label for="fileFotoPersona_row${newRow.rowIndex}"></label>
+                                             <h3 class="uploadFotoPersonaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                         </div>
                                     </div>
                                     <div id="imageContentP_row${newRow.rowIndex}"></div>`;

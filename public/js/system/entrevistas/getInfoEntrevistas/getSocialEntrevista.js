@@ -62,6 +62,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                             <div class="form-group">
                                                 <input type="file" name="FotoRedsocial_row${newRow.rowIndex}" accept="image/*" id="fileFotoRedsocial_row${newRow.rowIndex}" class="inputfile uploadFileFotoRedsocial" onchange="uploadFileRedsocial(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoRedsocial_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoRedsocialCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentRedsocial_row${newRow.rowIndex}">
@@ -83,6 +84,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                                         <div class="form-group">
                                                             <input type="file" name="FotoRedsocial_row${newRow.rowIndex}" accept="image/*" id="fileFotoRedsocial_row${newRow.rowIndex}" class="inputfile uploadFileFotoRedsocial" onchange="uploadFileRedsocial(event)" data-toggle="tooltip" data-placement="bottom">
                                                             <label for="fileFotoRedsocial_row${newRow.rowIndex}"></label>
+                                                            <h3 class="uploadFotoRedsocialCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                         </div>
                                                     </div>
                                                     <div id="imageContentRedsocial_row${newRow.rowIndex}">
@@ -103,6 +105,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                         <div class="form-group">
                             <input type="file" name="FotoRedsocial_row${newRow.rowIndex}" accept="image/*" id="fileFotoRedsocial_row${newRow.rowIndex}" class="inputfile uploadFileFotoRedsocial" onchange="uploadFileRedsocial(event)" data-toggle="tooltip" data-placement="bottom">
                             <label for="fileFotoRedsocial_row${newRow.rowIndex}"></label>
+                            <h3 class="uploadFotoRedsocialCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                         </div>
                     </div>
                     <div id="imageContentRedsocial_row${newRow.rowIndex}"></div>`;
@@ -115,6 +118,7 @@ const InsertgetRedSocial = async({Id_Registro,Id_Persona_Entrevista,Id_Dato,Usua
                                             <div class="form-group">
                                                 <input type="file" name="FotoRedsocial_row${newRow.rowIndex}" accept="image/*" id="fileFotoRedsocial_row${newRow.rowIndex}" class="inputfile uploadFileFotoRedsocial" onchange="uploadFileRedsocial(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoRedsocial_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoRedsocialCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentRedsocial_row${newRow.rowIndex}"></div>`;

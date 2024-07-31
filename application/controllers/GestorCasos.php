@@ -180,6 +180,7 @@ class GestorCasos extends Controller
             if ($success_2['status']) {
                 $user = $_SESSION['userdataSIC']->Id_Usuario;
                 $data_p['status'] =  true;
+                $data_p['Folio_infra'] =  $success_2['Folio_infra'];
                 $ip = $this->obtenerIp();
                 $quitar = array("'", "\"");
                 $auxsql =str_replace($quitar, "-", $success_2['sqlEjecutados']);

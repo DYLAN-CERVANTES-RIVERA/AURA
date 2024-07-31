@@ -788,6 +788,7 @@
                             <input type="text" name="fechahora_activacion_principales" id="fechahora_activacion_principales" class="form-control custom-input_dt">
                             <br>
                             <input type="text" name="quienhabilito" id="quienhabilito" class="form-control custom-input_dt"  readOnly>
+                            <input type="text" name="statusAntes" id="statusAntes" class="form-control custom-input_dt mi_hide">
                         </div>
                     </div>
                 

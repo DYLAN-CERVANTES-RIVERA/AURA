@@ -72,10 +72,10 @@
       <div id = "linea2"></div>
       <div id = "linea"></div>
       <?php
-        $miHideGlobal =  ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1)  ? '':'mi_hide';
+        $miHideGlobal =  ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[2] == 1)  ? '':'mi_hide';
       ?>
       <div class="<?= "row mt-1 justify-content-end".$miHideGlobal; ?>">
-          <a id="button-global" class="btn btn-primary btn-asignadas-global" data-toggle="tooltip" title="ABRIR REPORTE">Reporte Completados en Campo</a>    
+          <a id="button-global" class="btn btn-primary btn-asignadas-global" data-toggle="tooltip">Reporte Completados en Campo</a>    
       </div>
     </div>
 

@@ -909,6 +909,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     if(data.ClaveSeguimiento!='' && data.ClaveSeguimiento!=null){
         ClaveSeguimiento.value=data.ClaveSeguimiento
     }
+    document.getElementById('statusAntes').value =data.Status_Seguimiento.toUpperCase();
 
     Unidad_Primer_R.value = data.Unidad_Primer_R
     Informacion_Primer_R.value = data.Informacion_Primer_R

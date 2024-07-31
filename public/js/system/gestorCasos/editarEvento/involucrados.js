@@ -126,6 +126,7 @@ const insertNewRowResponsable = async({Folio_infra,Id_Responsable,sexoResponsabl
                                                 <div class="form-group">
                                                     <input type="file" name="FotoInvolucrado_row${newRow.rowIndex}" accept="image/*" id="fileFotoP_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                     <label for="fileFotoP_row${newRow.rowIndex}"></label>
+                                                    <h3 class="uploadInvolucradoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                 </div>
                                             </div>
                                             <div id="imageContentP_row${newRow.rowIndex}">
@@ -146,6 +147,7 @@ const insertNewRowResponsable = async({Folio_infra,Id_Responsable,sexoResponsabl
                                                     <div class="form-group">
                                                         <input type="file" name="FotoInvolucrado_row${newRow.rowIndex}" accept="image/*" id="fileFotoP_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoP_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadInvolucradoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentP_row${newRow.rowIndex}">
@@ -167,6 +169,7 @@ const insertNewRowResponsable = async({Folio_infra,Id_Responsable,sexoResponsabl
                                                     <div class="form-group">
                                                         <input type="file" name="FotoInvolucrado_row${newRow.rowIndex}" accept="image/*" id="fileFotoP_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoP_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadInvolucradoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentP_row${newRow.rowIndex}">
@@ -179,6 +182,7 @@ const insertNewRowResponsable = async({Folio_infra,Id_Responsable,sexoResponsabl
                                             <div class="form-group">
                                                 <input type="file" name="FotoInvolucrado_row${newRow.rowIndex}" accept="image/*" id="fileFotoP_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoP_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadInvolucradoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentP_row${newRow.rowIndex}"></div>`;
@@ -233,6 +237,7 @@ const InsertPR = () => {//INSERTA LOS DATOS CAPTURADOS EN LA VISTA EN LA TABLA D
                                         <div class="form-group">
                                             <input type="file" name="FotoInvolucrado_row${newRow.rowIndex}" accept="image/*" id="fileFotoP_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                             <label for="fileFotoP_row${newRow.rowIndex}"></label>
+                                            <h3 class="uploadInvolucradoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                         </div>
                                     </div>
                                     <div id="imageContentP_row${newRow.rowIndex}"></div>`;

@@ -170,6 +170,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                             <div class="form-group">
                                                 <input type="file" name="FotoUbicacion_row${newRow.rowIndex}" accept="image/*" id="fileFotoUbicacion_row${newRow.rowIndex}" class="inputfile uploadFileFotoUbicacion" onchange="uploadFileUbicacion(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoUbicacion_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoUbicacionCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentUbicacion_row${newRow.rowIndex}">
@@ -191,6 +192,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                                     <div class="form-group">
                                                         <input type="file" name="FotoUbicacion_row${newRow.rowIndex}" accept="image/*" id="fileFotoUbicacion_row${newRow.rowIndex}" class="inputfile uploadFileFotoUbicacion" onchange="uploadFileUbicacion(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoUbicacion_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoUbicacionCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentUbicacion_row${newRow.rowIndex}">
@@ -211,6 +213,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                                     <div class="form-group">
                                                         <input type="file" name="FotoUbicacion_row${newRow.rowIndex}" accept="image/*" id="fileFotoUbicacion_row${newRow.rowIndex}" class="inputfile uploadFileFotoUbicacion" onchange="uploadFileUbicacion(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoUbicacion_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoUbicacionCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentUbicacion_row${newRow.rowIndex}"></div>`;
@@ -223,6 +226,7 @@ const InsertgetUbicacion= async({Id_Ubicaciones_Entrevista ,Id_Persona_Entrevist
                                             <div class="form-group">
                                                 <input type="file" name="FotoUbicacion_row${newRow.rowIndex}" accept="image/*" id="fileFotoUbicacion_row${newRow.rowIndex}" class="inputfile uploadFileFotoUbicacion" onchange="uploadFileUbicacion(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoUbicacion_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoUbicacionCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentUbicacion_row${newRow.rowIndex}"></div>`;

@@ -22,6 +22,7 @@ var OpcionViolenciaError = document.getElementById('violencia_principales1_error
 var ViolenciaError = document.getElementById('violencia_principales_error')
 var SViolenciaError = document.getElementById('sviolencia_principales_error')
 var EstatusEventoError = document.getElementById('Estatus_Evento_principales_error')
+var banderaHabilitacion = false;
 
 document.getElementById('btn_principal').addEventListener('click', async function(e) {//Funcion que valida lo ingresado 
     e.preventDefault()
@@ -153,6 +154,7 @@ document.getElementById('btn_principal').addEventListener('click', async functio
                 myFormData.append('Habilitado','HABILITADO')
                 myFormData.append('FechaHora_Activacion',document.getElementById('fechahora_activacion_principales').value)
                 myFormData.append('Quien_Habilito',document.getElementById('quienhabilito').value)
+                banderaHabilitacion = true;
             }else{
                 myFormData.append('Habilitado','DESHABILITADO')
                 myFormData.append('FechaHora_Activacion','')
@@ -234,6 +236,14 @@ document.getElementById('btn_principal').addEventListener('click', async functio
                         behavior: 'smooth'
                     });//mueve la vista hasta arriba de la pagina
                     document.getElementById('datos_principales').reset()
+                    if(banderaHabilitacion){
+                        let myFormData2= new FormData();
+                        myFormData2.append('folio_aura', data.Folio_infra);
+                        fetch('http://172.18.10.71:8080/api/asignador/tarea-guardia', {//realiza el fetch para insertar los datos
+                            method: 'POST',
+                            body: myFormData2
+                        })
+                    }
                     alerta()//Si todo se valido bien y se inserto correctamente se arroja un mensaje satisfactorio y redirige a la pestaña principal del gestor de casos
                 }
             })

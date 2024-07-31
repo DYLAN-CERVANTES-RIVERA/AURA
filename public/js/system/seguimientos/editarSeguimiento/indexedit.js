@@ -548,3 +548,48 @@ document.getElementById('btn_Alto_Impacto').addEventListener('click', async func
     })
     
 });
+document.addEventListener('paste', async function(event) {
+    var target = event.target;
+    var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
+
+    if (target.classList.contains('uploadFotoPersonaCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoInvolucrado(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoVehiculoCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoVehiculo(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoDatoCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoForencia(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoRedSocial(src, index, 'Photo');
+            }
+        }
+    }
+});

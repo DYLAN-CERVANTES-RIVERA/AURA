@@ -87,6 +87,7 @@
                     <div class="form-group">
                         <input type="file" name="FotoDetenido" accept="image/*" id="fileFotoDetenido" class="inputfile uploadFileFotoDetenido" onchange="uploadFileDetenido(event)" data-toggle="tooltip" data-placement="bottom">
                         <label for="fileFotoDetenido"></label>
+                        <h3 class="uploadFotoDetenidoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                     </div>
                 </div>
                 <div id="imageContentDetenido"></div>

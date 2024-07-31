@@ -288,6 +288,7 @@ const InsertVehiculo= async()=>{//INSERTA LOS DATOS A LA TABLA DE VEHICULOS
                                         <div class="form-group">
                                             <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoVehiculo_row${newRow.rowIndex}" class="inputfile uploadFileFotoV" onchange="uploadFileV(event)" data-toggle="tooltip" data-placement="bottom">
                                             <label for="fileFotoVehiculo_row${newRow.rowIndex}"></label>
+                                            <h3 class="uploadFotoVehiculoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                         </div>
                                     </div>
                                     <div id="imageContentV_row${newRow.rowIndex}"></div>`;

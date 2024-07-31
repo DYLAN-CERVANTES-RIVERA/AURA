@@ -107,6 +107,7 @@ const insertNewRowTablaEntrevista= async({id_entrevista,id_persona_entrevista,in
                                             <div class="form-group">
                                                 <input type="file" name="FotoEntrevista_row${newRow.rowIndex}" accept="image/*" id="fileFotoEntrevista_row${newRow.rowIndex}" class="inputfile uploadFileFotoEntrevista" onchange="uploadFileEntrevista(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoEntrevista_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoEntrevistaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentEntrevista_row${newRow.rowIndex}">
@@ -128,6 +129,7 @@ const insertNewRowTablaEntrevista= async({id_entrevista,id_persona_entrevista,in
                                                     <div class="form-group">
                                                         <input type="file" name="FotoEntrevista_row${newRow.rowIndex}" accept="image/*" id="fileFotoEntrevista_row${newRow.rowIndex}" class="inputfile uploadFileFotoEntrevista" onchange="uploadFileEntrevista(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoEntrevista_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoEntrevistaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentEntrevista_row${newRow.rowIndex}">
@@ -148,6 +150,7 @@ const insertNewRowTablaEntrevista= async({id_entrevista,id_persona_entrevista,in
                                                     <div class="form-group">
                                                         <input type="file" name="FotoEntrevista_row${newRow.rowIndex}" accept="image/*" id="fileFotoEntrevista_row${newRow.rowIndex}" class="inputfile uploadFileFotoEntrevista" onchange="uploadFileEntrevista(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoEntrevista_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoEntrevistaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentEntrevista_row${newRow.rowIndex}"></div>`;
@@ -160,6 +163,7 @@ const insertNewRowTablaEntrevista= async({id_entrevista,id_persona_entrevista,in
                                             <div class="form-group">
                                                 <input type="file" name="FotoEntrevista_row${newRow.rowIndex}" accept="image/*" id="fileFotoEntrevista_row${newRow.rowIndex}" class="inputfile uploadFileFotoEntrevista" onchange="uploadFileEntrevista(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoEntrevista_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoEntrevistaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentEntrevista_row${newRow.rowIndex}"></div>`;

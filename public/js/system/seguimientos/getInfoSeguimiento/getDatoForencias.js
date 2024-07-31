@@ -70,6 +70,7 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
                                             <div class="form-group">
                                                 <input type="file" name="FotoForencia_row${newRow.rowIndex}" accept="image/*" id="fileFotoForencia_row${newRow.rowIndex}" class="inputfile uploadFileFotoForencia" onchange="uploadFileForencia(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoForencia_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoDatoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentForencia_row${newRow.rowIndex}">
@@ -91,6 +92,7 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
                                                     <div class="form-group">
                                                         <input type="file" name="FotoForencia_row${newRow.rowIndex}" accept="image/*" id="fileFotoForencia_row${newRow.rowIndex}" class="inputfile uploadFileFotoForencia" onchange="uploadFileForencia(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoForencia_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoDatoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentForencia_row${newRow.rowIndex}">
@@ -111,6 +113,7 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
                                                     <div class="form-group">
                                                         <input type="file" name="FotoForencia_row${newRow.rowIndex}" accept="image/*" id="fileFotoForencia_row${newRow.rowIndex}" class="inputfile uploadFileFotoForencia" onchange="uploadFileForencia(event)" data-toggle="tooltip" data-placement="bottom">
                                                         <label for="fileFotoForencia_row${newRow.rowIndex}"></label>
+                                                        <h3 class="uploadFotoDatoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                     </div>
                                                 </div>
                                                 <div id="imageContentForencia_row${newRow.rowIndex}"></div>`;
@@ -123,6 +126,7 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
                                             <div class="form-group">
                                                 <input type="file" name="FotoForencia_row${newRow.rowIndex}" accept="image/*" id="fileFotoForencia_row${newRow.rowIndex}" class="inputfile uploadFileFotoForencia" onchange="uploadFileForencia(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoForencia_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadFotoDatoCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentForencia_row${newRow.rowIndex}"></div>`;

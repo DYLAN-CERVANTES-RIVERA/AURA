@@ -141,6 +141,7 @@ const insertNewRowVehiculo= async({Id_Vehiculo,Folio_infra,tipoVehiculo,marcaVeh
                                                 <div class="form-group">
                                                     <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoV_row${newRow.rowIndex}" class="inputfile uploadFileFotosV" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                     <label for="fileFotoV_row${newRow.rowIndex}"></label>
+                                                    <h3 class="uploadInvolucradoVHCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                 </div>
                                             </div>
                                             <div id="imageContentV_row${newRow.rowIndex}">
@@ -161,6 +162,7 @@ const insertNewRowVehiculo= async({Id_Vehiculo,Folio_infra,tipoVehiculo,marcaVeh
                                                         <div class="form-group">
                                                             <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoV_row${newRow.rowIndex}" class="inputfile uploadFileFotosV" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                             <label for="fileFotoV_row${newRow.rowIndex}"></label>
+                                                            <h3 class="uploadInvolucradoVHCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                         </div>
                                                     </div>
                                                     <div id="imageContentV_row${newRow.rowIndex}">
@@ -182,6 +184,7 @@ const insertNewRowVehiculo= async({Id_Vehiculo,Folio_infra,tipoVehiculo,marcaVeh
                         <div class="form-group">
                             <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoV_row${newRow.rowIndex}" class="inputfile uploadFileFotosV" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                             <label for="fileFotoV_row${newRow.rowIndex}"></label>
+                            <h3 class="uploadInvolucradoVHCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                         </div>
                     </div>
                     <div id="imageContentV_row${newRow.rowIndex}">
@@ -194,6 +197,7 @@ const insertNewRowVehiculo= async({Id_Vehiculo,Folio_infra,tipoVehiculo,marcaVeh
                                             <div class="form-group">
                                                 <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoV_row${newRow.rowIndex}" class="inputfile uploadFileFotosV" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                                 <label for="fileFotoV_row${newRow.rowIndex}"></label>
+                                                <h3 class="uploadInvolucradoVHCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                             </div>
                                         </div>
                                         <div id="imageContentV_row${newRow.rowIndex}">
@@ -301,6 +305,7 @@ const InsertVehiculos = () => {//INSERTA LOS DATOS CAPTURADOS EN LA VISTA EN LA 
                                         <div class="form-group">
                                             <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoV_row${newRow.rowIndex}" class="inputfile uploadFileFotosV" onchange="uploadFile(event)" data-toggle="tooltip" data-placement="bottom">
                                             <label for="fileFotoV_row${newRow.rowIndex}"></label>
+                                            <h3 class="uploadInvolucradoVHCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                         </div>
                                     </div>
                                     <div id="imageContentV_row${newRow.rowIndex}"></div>`;

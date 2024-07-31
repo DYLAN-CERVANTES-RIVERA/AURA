@@ -628,3 +628,58 @@ const llenadatosRemision = async ( data ) => {//FUNCION QUE LLENA LOS DATOS DE L
     calle2_detencion.value=(data.Calle_2_Detencion!='SD')?data.Calle_2_Detencion:'';
     numExt_detencion.value=(data.No_Ext_Detencion!='SD')?data.No_Ext_Detencion:'';
 }
+document.addEventListener('paste', async function(event) {
+    var target = event.target;
+    var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
+
+    if (target.classList.contains('uploadFotoDetenidoCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementEntrevistaDetenido(src, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoEntrevistaCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoEntrevista(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoForenciaCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoForencia(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoUbicacionCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoUbicacion(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoRedSocial(src, index, 'Photo');
+            }
+        }
+    }
+});

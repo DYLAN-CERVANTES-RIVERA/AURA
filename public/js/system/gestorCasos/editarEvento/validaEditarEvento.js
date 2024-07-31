@@ -22,6 +22,7 @@ var ViolenciaError = document.getElementById('violencia_principales_error')
 var SViolenciaError = document.getElementById('sviolencia_principales_error')
 var Folio911oculto = document.getElementById('911_principales_oculto')
 var banderafotosVP=true;
+var banderaHabilitacion = false;
 
 document.getElementById('btn_principal').addEventListener('click', async function(e) {//Funcion que se dispara con el boton guardadr para guardar los datos principales
     e.preventDefault()
@@ -174,6 +175,9 @@ document.getElementById('btn_principal').addEventListener('click', async functio
             myFormData.append('Habilitado','HABILITADO')
             myFormData.append('FechaHora_Activacion',document.getElementById('fechahora_activacion_principales').value)
             myFormData.append('Quien_Habilito',document.getElementById('quienhabilito').value)
+            if(document.getElementById('statusAntes').value=='DESHABILITADO'){
+                banderaHabilitacion = true;
+            }
         }else{
             myFormData.append('Habilitado','DESHABILITADO')
             myFormData.append('FechaHora_Activacion','')
@@ -256,6 +260,15 @@ document.getElementById('btn_principal').addEventListener('click', async functio
                     left: 100,
                     behavior: 'smooth'
                 });
+                if(banderaHabilitacion){
+                    let myFormData2= new FormData();
+                    myFormData2.append('folio_aura', document.getElementById('folio_infra_principales').value);
+                    fetch('http://172.18.10.71:8080/api/asignador/tarea-guardia', {//realiza el fetch para insertar los datos
+                        method: 'POST',
+                        body: myFormData2
+                    })
+                    banderaHabilitacion=false;
+                }
                 alertaM()//Si todo salio bien actualiza los datos arroja un mensaje satisfactorio
             }
         })

@@ -153,22 +153,34 @@ function deleteImageFotoP(index) {
 document.addEventListener('paste', async function(event) {
     var target = event.target;
     var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
-    //console.log(target.parentNode.parentNode.parentNode.parentNode.rowIndex)
     // Verificar si el elemento en el que se pegará la imagen es un área de carga de imágenes
     if (target.classList.contains('uploadFileFotosCtrolV')) {
-       
         var items = (event.clipboardData || event.originalEvent.clipboardData).items;
         for (var i = 0; i < items.length; i++) {
-            
             if (items[i].type.indexOf('image') !== -1) {
-                
                 var blob = items[i].getAsFile();
-                //console.log(blob)
                 const src = await encodeFileAsBase64URL(blob);
                 createElementFoto(src, index, 'Photo');
-                console.log("Cambio de imagen fila "+ index)
-               
-                //console.log(base64URL)
+            }
+        }
+    }
+    if (target.classList.contains('uploadInvolucradoCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoInvolucrado(src, index, 'Photo');
+            }
+        }
+    }
+    if (target.classList.contains('uploadInvolucradoVHCtrolV')) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                var blob = items[i].getAsFile();
+                const src = await encodeFileAsBase64URL(blob);
+                createElementFotoVehiculo(src, index, 'Photo');
             }
         }
     }
