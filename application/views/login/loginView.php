@@ -64,7 +64,7 @@
     </div>
     <footer>
         <div class="footer-text text-center text-white">
-            © 2024 Copyright: ©2024 Todos los derechos reservados. SSCMP
+            AURA
         </div>
     </footer>
        
