@@ -68,7 +68,7 @@
 
                         <div class="form-group col-lg-6">
                             <label for="ColoniaF" class="label-form subtitulo-rosa">Colonia</label>
-                            <input type="text" class="form-control form-control-sm text-uppercase" id="ColoniaF" name="ColoniaF"  placeholder = "Ingrese la Colonia Camara" onkeypress="return valideMultiples(event);">
+                            <input type="text" class="form-control form-control-sm text-uppercase" id="ColoniaF" name="ColoniaF"  placeholder = "Ingrese la Colonia Camara">
                             <span class="span_error" id="Colonia_fotos_error"></span>
 
                         </div>

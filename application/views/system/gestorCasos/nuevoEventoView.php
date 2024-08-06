@@ -107,7 +107,7 @@
 
                         <div class="form-group col-lg-6">
                             <label for="Colonia" class="label-form subtitulo-rosa">Colonia</label>
-                            <input type="text" class="form-control form-control-sm text-uppercase" id="Colonia" name="Colonia" placeholder="Ingrese la Colonia del Evento" onkeypress="return valideMultiples(event);">
+                            <input type="text" class="form-control form-control-sm text-uppercase" id="Colonia" name="Colonia" placeholder="Ingrese la Colonia del Evento">
                             <span class="span_error" id="Colonia_principales_error"></span>
 
                         </div>

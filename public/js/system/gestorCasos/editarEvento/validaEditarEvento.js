@@ -441,7 +441,7 @@ function filtrarAlfaNumericos(event) {/// Para el pegado
     var nuevoValor = "";
     for (var i = 0; i < valor.length; i++) {
         var char = valor[i];       
-        if (/[a-zA-Z0-9-\sáéíóúÁÉÍÓÚÑñ]/.test(char)) {
+        if (/[a-zA-Z0-9-\sáéíóúÁÉÍÓÚÑñ.]/.test(char)) {
             nuevoValor += char;
         }
     }
