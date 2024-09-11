@@ -185,7 +185,9 @@ const InsertPersona= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE PE
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowPersona(this,PersonaTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(15).innerHTML = document.getElementById('id_seguimiento_principales').value;
     newRow.cells[0].style.display = "none";
+    newRow.cells[15].style.display = "none";
 }
 const editPersona = (obj) => {//FUNCION QUE EDITA LA TABLA DE PERSONAS TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
     document.getElementById('alertaEditPersona').style.display = 'block';
@@ -440,7 +442,8 @@ const readTablePersonas = async() => {//lee los datos de la tabla personas y gen
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64
+                                    imagebase64:myBase64,
+                                    Id_Seguimiento: table.rows[i].cells[15].innerHTML
                                 }
                             });
                         })
@@ -463,7 +466,8 @@ const readTablePersonas = async() => {//lee los datos de la tabla personas y gen
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src
+                            imagebase64:base64.src,
+                            Id_Seguimiento: table.rows[i].cells[15].innerHTML
                         }
                     });
                 }
@@ -488,7 +492,8 @@ const readTablePersonas = async() => {//lee los datos de la tabla personas y gen
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL
+                        imagebase64:base64URL,
+                        Id_Seguimiento: table.rows[i].cells[15].innerHTML
                     }
                 });
             }
@@ -511,12 +516,13 @@ const readTablePersonas = async() => {//lee los datos de la tabla personas y gen
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null"
+                    imagebase64:"null",
+                    Id_Seguimiento: table.rows[i].cells[15].innerHTML
                 }
             });
         }
     }
-    console.log(objetos)
+    //console.log(objetos)
     return objetos;
 }
 //funciones para leer las fotos en base64 en las tablas
@@ -535,7 +541,11 @@ var datosPersonas = document.getElementById('datos_personas')
 document.getElementById('btn_personas').addEventListener('click', async function(e) {
     let myFormDataPersonas = new FormData(datosPersonas)//RECUERDA SIEMPRE ENVIAR LOS DATOS DEL FRAME Y AUN MAS IMPORTANTE POR LAS IMAGENES LAS DETECTE EN EL POST
     var Personas =  await readTablePersonas();//LEEMOS EL CONTENIDO DE LA TABLA DE PERSONAS 
-    myFormDataPersonas.append('Personas_table', JSON.stringify(Personas)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
+
+    ////////////ORDENAR LA ESTRUCTURA POR ID DE SEGUIMIENTO
+    let Ordenadas = Personas.sort((a, b) => a.row.Id_Seguimiento - b.row.Id_Seguimiento);
+    //console.log(Ordenadas)
+    myFormDataPersonas.append('Personas_table', JSON.stringify(Ordenadas)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
     myFormDataPersonas.append('id_seguimiento',document.getElementById('id_seguimiento_principales').value)
     let button = document.getElementById('btn_personas')
     button.innerHTML = `

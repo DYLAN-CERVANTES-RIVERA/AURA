@@ -2,7 +2,7 @@
     
     define('app_path', dirname(dirname(__FILE__)));     //Ruta de la app
     define('BASE_PATH', realpath(dirname(__FILE__) . '/../..').'/'); //BASE_PATH del proyecto
-    define('base_url', 'http://172.18.10.184/AURA/'); //Ruta de la url
+    define('base_url', 'http://172.18.9.137/AURA/'); //Ruta de la url
     define('site_name', 'Sistema de Investigación');       //Nombre del sitio
 
     //Configuración de acceso a la base de datos
@@ -23,7 +23,7 @@
     define('MAX_FILTRO_GC', 15);
     //globals SEGUIMIENTOS
     define('MIN_FILTRO_SG', 1);
-    define('MAX_FILTRO_SG', 3);
+    define('MAX_FILTRO_SG', 6);
     //globals ENTREVISTAS
     define('MIN_FILTRO_ES', 1);
     define('MAX_FILTRO_ES', 3);

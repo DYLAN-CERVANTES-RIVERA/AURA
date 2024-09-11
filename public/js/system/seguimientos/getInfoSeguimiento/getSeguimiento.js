@@ -2,7 +2,15 @@
 const myFormData =  new FormData();
 var banderaPdf;
 var Seguimiento;
+var PersonasSelect = [];
+var VehiculosSelect = [];
 document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLENADO DE ELEMENTOS DEL SEGUIMIENTO
+    radioHabilitado = document.getElementsByName('Question');
+    radioHabilitado[0].addEventListener('change',showHabilitado);
+    radioHabilitado[1].addEventListener('change',showHabilitado); 
+    radioHabilitado[2].addEventListener('change',showHabilitado); 
+    await getInfoRedes()
+    //console.log(datosRedes)
     await getInfoEventos()
     Seguimiento = getSeguimientotoSearch();
     data = await getSeguimiento(Seguimiento);
@@ -20,7 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLE
             Folio_infra: Eventos[i].Folio_infra,
             Folio_911: Eventos[i].Folio_911,
             delitos_concat: Eventos[i].delitos_concat,
-            Ubicacion: Eventos[i].Ubicacion
+            Ubicacion: Eventos[i].Ubicacion,
+            Id_Seguimiento: Eventos[i].Id_Seguimiento
         }
         insertRowEvento(formData); //INSERTA EN LA VISTA TODOS LOS EVENTOS RELACIONADOS AL SEGUIMIENTO
     }
@@ -79,6 +88,19 @@ document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLE
        await InsertgetVehiculos(formDataVehiculo);//Inserta todos los vehiculos del seguimiento
     }
 
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(data.Id_Seguimiento);   
+        if(hijos.length>0){
+            //console.log(hijos)
+            //Panel tiene folios de eventos delictivos 
+            for (let i = 0; i < hijos.length; i++) {
+                await llenarInfoHijo(hijos[i].Id_Seguimiento);
+            }
+
+        }
+    }
+    await readPersonasVista();
+    await readVehiculosVista();
   
     MostrarTabDomicilio();//oculta o muestra la tab de domicilios 
     MostrarTabAntecedentes();
@@ -227,13 +249,174 @@ const llenarSeguimiento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA D
     if(data.Tipo_Grupo == "PERSONA"){
         document.getElementById('Question1').checked = true;
     }else{
-        document.getElementById('Question2').checked = true;
+        if(data.Tipo_Grupo == "EVENTO DELICTIVO"){
+            document.getElementById('Question3').checked = true;
+            showHabilitado();
+            document.getElementById('Id_red').value = data.Llave_Padre;
+        }else{
+            document.getElementById('Question2').checked = true;
+        }
+        
     }
+}
 
+const readPersonasVista = async() => {//lee los datos de la tabla personas y genera una estructura deacuerdo a los datos contenido es la tabla
+    let table = document.getElementById('PersonaTable');
+    PersonasSelect = [];
+    for (let i = 1; i < table.rows.length; i++) {
+        PersonasSelect.push({
+                Id_Persona : table.rows[i].cells[0].innerHTML,
+                Nombre: table.rows[i].cells[1].innerHTML,
+                Ap_Paterno: table.rows[i].cells[2].innerHTML,
+                Ap_Materno: table.rows[i].cells[3].innerHTML,
+                Id_Seguimiento: table.rows[i].cells[15].innerHTML
+           
+        });
+    }
+    ///console.log(PersonasSelect)
+}
+const readVehiculosVista = async() => {//lee los datos de la tabla personas y genera una estructura deacuerdo a los datos contenido es la tabla
+    let table = document.getElementById('VehiculoTable');
+    VehiculosSelect = [];
+    for (let i = 1; i < table.rows.length; i++) {
+        VehiculosSelect.push({
+            Id_Vehiculo : table.rows[i].cells[0].innerHTML,
+            Placas: table.rows[i].cells[1].innerHTML,
+            Marca: table.rows[i].cells[2].innerHTML,
+            Submarca: table.rows[i].cells[3].innerHTML,
+            Color: table.rows[i].cells[4].innerHTML
+           
+        });
+    }
+    ///console.log(VehiculosSelect)
+}
+const buscaHijos = async (seguimiento) => {//FUNCION QUE OBTIENE LOS EVENTOS RELACIONADOS AL SEGUIMIENTO
+    try {
+        var myFormData = new FormData();
+        myFormData.append('Id_seguimiento',seguimiento);
+        const response = await fetch(base_url_js + 'Seguimientos/getHijosRed', {
+            method: 'POST',
+            body: myFormData
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const llenarInfoHijo = async (Seguimiento,caso) =>{
+    let Eventos, Personas, Vehiculos
+    switch(caso){
+        case "PERSONAS":
+            Personas = await getPersonas(Seguimiento);
+            for await(let Persona of Personas){
+                let formDataPersona = {
+                    Id_Persona : Persona.Id_Persona,
+                    Id_Seguimiento: Seguimiento,
+                    Nombre : Persona.Nombre,
+                    Ap_Paterno : Persona.Ap_Paterno,
+                    Ap_Materno : Persona.Ap_Materno,
+                    Genero : Persona.Genero,
+                    Edad : Persona.Edad,
+                    Fecha_Nacimiento : Persona.Fecha_Nacimiento,
+                    Telefono : Persona.Telefono,
+                    Alias : Persona.Alias,
+                    Curp : Persona.Curp,
+                    Remisiones : Persona.Remisiones,
+                    Rol : Persona.Rol,
+                    Capturo : Persona.Capturo,
+                    Foto : Persona.Foto,
+                    Img_64 : Persona.Img_64
+                }
+                await InsertgetPersona(formDataPersona);//Inserta todas las personas del seguimiento
+            }     
+        
+        break;
+        case "VEHICULOS": 
+            Vehiculos = await getVehiculos(Seguimiento);
+            for await(let Vehiculo of Vehiculos){
+                let formDataVehiculo = {
+                    Id_Vehiculo : Vehiculo.Id_Vehiculo,
+                    Id_Seguimiento: Seguimiento,
+                    Placas : Vehiculo.Placas,
+                    Marca : Vehiculo.Marca,
+                    Submarca : Vehiculo.Submarca,
+                    Color : Vehiculo.Color,
+                    Modelo : Vehiculo.Modelo,
+                    Nombre_Propietario : Vehiculo.Nombre_Propietario,
+                    Nivs : Vehiculo.Nivs,
+                    InfoPlaca : Vehiculo.InfoPlaca,
+                    Capturo : Vehiculo.Capturo,
+                    Foto : Vehiculo.Foto,
+                    Img_64 : Vehiculo.Img_64
+                }
+        
+            await InsertgetVehiculos(formDataVehiculo);//Inserta todos los vehiculos del seguimiento
+            }
+        break;
+        default: 
+            Eventos = await getEventosRelacionados(Seguimiento);
+            Personas = await getPersonas(Seguimiento);
+            Vehiculos = await getVehiculos(Seguimiento);
+            for (let i = 0; i < Eventos.length; i++) {
+                let formData = {
+                    Folio_infra: Eventos[i].Folio_infra,
+                    Folio_911: Eventos[i].Folio_911,
+                    delitos_concat: Eventos[i].delitos_concat,
+                    Ubicacion: Eventos[i].Ubicacion,
+                    Id_Seguimiento: Eventos[i].Id_Seguimiento
+                }
+                insertRowEvento(formData); //INSERTA EN LA VISTA TODOS LOS EVENTOS RELACIONADOS AL SEGUIMIENTO
+            }
+        
+            for await(let Vehiculo of Vehiculos){
+                let formDataVehiculo = {
+                    Id_Vehiculo : Vehiculo.Id_Vehiculo,
+                    Id_Seguimiento: Seguimiento,
+                    Placas : Vehiculo.Placas,
+                    Marca : Vehiculo.Marca,
+                    Submarca : Vehiculo.Submarca,
+                    Color : Vehiculo.Color,
+                    Modelo : Vehiculo.Modelo,
+                    Nombre_Propietario : Vehiculo.Nombre_Propietario,
+                    Nivs : Vehiculo.Nivs,
+                    InfoPlaca : Vehiculo.InfoPlaca,
+                    Capturo : Vehiculo.Capturo,
+                    Foto : Vehiculo.Foto,
+                    Img_64 : Vehiculo.Img_64
+                }
+        
+            await InsertgetVehiculos(formDataVehiculo);//Inserta todos los vehiculos del seguimiento
+            }
+
+            for await(let Persona of Personas){
+                let formDataPersona = {
+                    Id_Persona : Persona.Id_Persona,
+                    Id_Seguimiento: Seguimiento,
+                    Nombre : Persona.Nombre,
+                    Ap_Paterno : Persona.Ap_Paterno,
+                    Ap_Materno : Persona.Ap_Materno,
+                    Genero : Persona.Genero,
+                    Edad : Persona.Edad,
+                    Fecha_Nacimiento : Persona.Fecha_Nacimiento,
+                    Telefono : Persona.Telefono,
+                    Alias : Persona.Alias,
+                    Curp : Persona.Curp,
+                    Remisiones : Persona.Remisiones,
+                    Rol : Persona.Rol,
+                    Capturo : Persona.Capturo,
+                    Foto : Persona.Foto,
+                    Img_64 : Persona.Img_64
+                }
+                await InsertgetPersona(formDataPersona);//Inserta todas las personas del seguimiento
+            }
+        break;
+    }
+    
 }
 
 /*-----------------------------------FUNCIONES DE PARA LLENAR LOS DATOS DE LA TABLA DE SEGUIMIENTO------------------ */
-const insertRowEvento = ({Folio_infra,Folio_911,delitos_concat,Ubicacion}) => {//Funcion para llenar tabla eventos relacionados de seguimiento
+const insertRowEvento = ({Folio_infra,Folio_911,delitos_concat,Ubicacion,Id_Seguimiento}) => {//Funcion para llenar tabla eventos relacionados de seguimiento
     const table = document.getElementById('EventoTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length);
     newRow.insertCell(0).innerHTML = Folio_infra;
@@ -243,6 +426,8 @@ const insertRowEvento = ({Folio_infra,Folio_911,delitos_concat,Ubicacion}) => {/
     newRow.insertCell(4).innerHTML = `<button type="button" class="btn btn-ssc" value="-" onclick="deleteRowEvento(this,EventoTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(5).innerHTML = Id_Seguimiento;
+    newRow.cells[5].style.display = "none";
 }
 
 const insertRowDelito = ({Delito}) => {//Funcion para llenar tabla de delitos asociados al seguimiento

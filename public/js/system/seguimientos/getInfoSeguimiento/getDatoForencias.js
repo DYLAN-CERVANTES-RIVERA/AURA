@@ -26,12 +26,26 @@ const RecargaDatosForencia = async()=>{//Funcion que actualiza la vista de la ta
     let i=0;
     let consultaPersonas=[];
     let Personas = await getPersonas(Seguimiento);
+
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(Seguimiento); 
+        for await(let hijo of hijos){
+            let PersonasJH = await getPersonas(hijo.Id_Seguimiento);
+            if(PersonasJH.length>0){
+                for await(let PersonaJH of PersonasJH){
+                    Personas.push(PersonaJH); 
+                }
+            }
+            
+        }     
+    }
     for await(Persona of Personas){
         consultaPersonas[i]=Persona.Id_Persona;
         i++;
     }
    
-    let ForenciasP=await getForencias(consultaPersonas);
+    let ForenciasP = await getForencias(consultaPersonas);
+    //console.log(ForenciasP)
     for ( i = 0; i < ForenciasP.length; i++) {
         if(ForenciasP[i].length>0){
             let Forencias = ForenciasP[i];
@@ -39,7 +53,7 @@ const RecargaDatosForencia = async()=>{//Funcion que actualiza la vista de la ta
                 let formDataForencia = {
                     Id_Forencia : Forencia.Id_Forencia,
                     Id_Persona : Forencia.Id_Persona,
-                    Id_Seguimiento: Seguimiento,
+                    Id_Seguimiento: Forencia.Id_Seguimiento,
                     Descripcion_Forencia : Forencia.Descripcion_Forencia,
                     Capturo : Forencia.Capturo,
                     Foto_Nombre : Forencia.Foto_Nombre,
@@ -51,7 +65,7 @@ const RecargaDatosForencia = async()=>{//Funcion que actualiza la vista de la ta
     }
 
 }
-const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcion_Forencia,Capturo,Foto_Nombre,Img_64})=>{//Funcion que inserta los datos obtenidos en la tabla de forensias
+const InsertgetForencia = async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcion_Forencia,Capturo,Foto_Nombre,Img_64})=>{//Funcion que inserta los datos obtenidos en la tabla de forensias
     let pathImagesForencias =base_url_js+'public/files/Seguimientos/'+Id_Seguimiento+'/Forencias/';
     let table = document.getElementById('ForenciasTable').getElementsByTagName('tbody')[0];
     let newRow = table.insertRow(table.length);
@@ -65,7 +79,7 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
         let ruta = pathImagesForencias+Foto_Nombre;
         let ban = await imageExists(ruta)
         if(ban==true){
-          ruta = ruta+'?nocache='+getRandomInt(50);
+          ruta = ruta+'?nocache='+ randomNum;
           newRow.insertCell(4).innerHTML =`<div class="d-flex justify-content-around" id="uploadFileFotoForencia${newRow.rowIndex}">
                                             <div class="form-group">
                                                 <input type="file" name="FotoForencia_row${newRow.rowIndex}" accept="image/*" id="fileFotoForencia_row${newRow.rowIndex}" class="inputfile uploadFileFotoForencia" onchange="uploadFileForencia(event)" data-toggle="tooltip" data-placement="bottom">
@@ -139,6 +153,8 @@ const InsertgetForencia= async({Id_Forencia,Id_Persona,Id_Seguimiento,Descripcio
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(7).innerHTML = Id_Seguimiento;
     newRow.cells[1].style.display = "none";
     newRow.cells[2].style.display = "none";
+    newRow.cells[7].style.display = "none";
 }

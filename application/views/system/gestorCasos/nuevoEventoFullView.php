@@ -15,7 +15,7 @@
     <?php
         $miHide =  ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1)  ? '':'mi_hide';
     ?>
-    <div class=" <?= "tareas_asignadas_status ".$miHide; ?>">
+    <div class=" <?= "mt-3 tareas_asignadas_status ".$miHide; ?>">
         <a id="button-asignacion" class="btn btn-primary btn-asignadas" data-toggle="tooltip" title="REPORTE ZEN"></a>
         <div class="asignacion-content" id="asignacion-content">
             <h3 class="titulo-azul-grueso">REPORTE ZEN</h3>

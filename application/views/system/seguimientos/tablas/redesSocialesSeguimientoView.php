@@ -35,6 +35,7 @@
             <div class="row mt-3">
                 <div class="form-group col-lg-1 mi_hide" >
                     <input type="text" class="form-control form-control-sm " id="Id_Registro" name="Id_Registro" value="SD" disabled>
+                    <input type="text" class="form-control form-control-sm " id="Id_Seg_Redes" name="Id_Seg_Redes" value="0" disabled>
                 </div>
                 <div class="form-group col-lg-8">
                     <label for="nombre_perfil" class="subtitulo-rosa"> Nombre de usuario (Perfil):</label>

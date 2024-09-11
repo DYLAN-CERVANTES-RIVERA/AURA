@@ -29,6 +29,26 @@ const RecargaDatosAntecedentes = async()=>{//Funcion que actualiza la vista de l
     let consultaVehiculos=[];
     let Personas = await getPersonas(Seguimiento);
     let Vehiculos = await getVehiculos(Seguimiento);
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(Seguimiento); 
+        for await(let hijo of hijos){
+            
+            let PersonasJH = await getPersonas(hijo.Id_Seguimiento);
+            let VehiculosJH = await getVehiculos(hijo.Id_Seguimiento);
+            if(PersonasJH.length>0){
+                for await(let PersonaJH of PersonasJH){
+                    Personas.push(PersonaJH); 
+                }
+            }
+            if(VehiculosJH.length>0){
+                for await(let VehiculoJH of VehiculosJH){
+                    Vehiculos.push(VehiculoJH); 
+                }
+            }
+        }
+        //console.log(Personas)   
+        //console.log(Vehiculos)       
+    }  
     for await(Persona of Personas){
         consultaPersonas[i]=Persona.Id_Persona;
         i++;

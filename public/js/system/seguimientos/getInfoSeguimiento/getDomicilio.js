@@ -69,13 +69,35 @@ const InsertgetDomicilio= async({Id_Domicilio,Id_Dato,Tipo_Entidad,Estatus,Colon
 
 }
 /*---------------------FUNCIONES DE REFRESCO--------------------------- */
-const RecargaDatosDomicilios = async()=>{//Funcion que actualiza la vista de la tabla domicilios cada vez que se guarden o eliminen datos
+const RecargaDatosDomicilios = async ()=>{//Funcion que actualiza la vista de la tabla domicilios cada vez que se guarden o eliminen datos
     await dropTablaContentDomicilios();
     let i=0,j=0;
     let consultaPersonas=[];
     let consultaVehiculos=[];
     let Personas = await getPersonas(Seguimiento);
     let Vehiculos = await getVehiculos(Seguimiento);
+    //console.log(Personas)
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(Seguimiento); 
+        for await(let hijo of hijos){
+            
+            let PersonasJH = await getPersonas(hijo.Id_Seguimiento);
+            let VehiculosJH = await getVehiculos(hijo.Id_Seguimiento);
+            if(PersonasJH.length>0){
+                for await(let PersonaJH of PersonasJH){
+                    Personas.push(PersonaJH); 
+                }
+            }
+            if(VehiculosJH.length>0){
+                for await(let VehiculoJH of VehiculosJH){
+                    Vehiculos.push(VehiculoJH); 
+                }
+            }
+        }
+        //console.log(Personas)   
+        //console.log(Vehiculos)       
+    }  
+    
     for await(Persona of Personas){
         consultaPersonas[i]=Persona.Id_Persona;
         i++;

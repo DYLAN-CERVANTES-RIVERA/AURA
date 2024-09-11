@@ -299,7 +299,9 @@ const InsertVehiculo= async()=>{//INSERTA LOS DATOS A LA TABLA DE VEHICULOS
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowVehiculo(this,VehiculoTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(12).innerHTML = document.getElementById('id_seguimiento_principales').value;
     newRow.cells[0].style.display = "none";
+    newRow.cells[12].style.display = "none";
 }
 const editVehiculo = (obj) => {//FUNCION QUE EDITA LA TABLA DE VEHICULOS TOMANDO LOS DATOS DE LA ROW SELECCIONADA Y ACOMODANDO LOS DATOS EN LA VISTA PARA SU EDICION
     document.getElementById('alertaEditVehiculo').style.display = 'block';
@@ -477,7 +479,8 @@ const readTableVehiculos = async() => {//lee los datos de la tabla vehiculos y g
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64
+                                    imagebase64:myBase64,
+                                    Id_Seguimiento: table.rows[i].cells[12].innerHTML
                                 }
                             });
                         })
@@ -497,7 +500,8 @@ const readTableVehiculos = async() => {//lee los datos de la tabla vehiculos y g
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src
+                            imagebase64:base64.src,
+                            Id_Seguimiento: table.rows[i].cells[12].innerHTML
                         }
                     });
                 }
@@ -519,7 +523,8 @@ const readTableVehiculos = async() => {//lee los datos de la tabla vehiculos y g
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL
+                        imagebase64:base64URL,
+                        Id_Seguimiento: table.rows[i].cells[12].innerHTML
                     }
                 });
 
@@ -540,12 +545,13 @@ const readTableVehiculos = async() => {//lee los datos de la tabla vehiculos y g
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null"
+                    imagebase64:"null",
+                    Id_Seguimiento: table.rows[i].cells[12].innerHTML
                 }
             });
         }
     }
-    console.log(objetos)
+    //console.log(objetos)
     return objetos;
 }
 /*--------------------------FUNCIONES PARA EL ALMACENAMIENTO DE LOS DATOS CONTENIDOS EN EL FRAME  --------------- */
@@ -554,7 +560,10 @@ var datosVehiculos = document.getElementById('datos_vehiculos')
 document.getElementById('btn_vehiculos').addEventListener('click', async function(e) {
     let myFormDataVehiculos = new FormData(datosVehiculos)//RECUERDA SIEMPRE ENVIAR LOS DATOS DEL FRAME Y AUN MAS IMPORTANTE POR LAS IMAGENES LAS DETECTE EN EL POST
     var Vehiculos =  await readTableVehiculos();//LEEMOS EL CONTENIDO DE LA TABLA DE Vehiculos 
-    myFormDataVehiculos.append('Vehiculos_table', JSON.stringify(Vehiculos)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
+    ////////////ORDENAR LA ESTRUCTURA POR ID DE SEGUIMIENTO
+    let OrdenadasV = Vehiculos.sort((a, b) => a.row.Id_Seguimiento - b.row.Id_Seguimiento);
+    //console.log(OrdenadasV)
+    myFormDataVehiculos.append('Vehiculos_table', JSON.stringify(OrdenadasV)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
     myFormDataVehiculos.append('id_seguimiento',document.getElementById('id_seguimiento_principales').value)
     let button = document.getElementById('btn_vehiculos')
     button.innerHTML = `
@@ -674,8 +683,8 @@ document.getElementById('submarca').addEventListener('input', () => {
 
 const verificaInfoVehiculoRed = async() =>{
     let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO 
-    let placa = document.getElementById('placas').value.toUpperCase();
-    let niv = document.getElementById('NIVS').value.toUpperCase();
+    let placa = (document.getElementById('placas').value.toUpperCase()!="SD" && document.getElementById('placas').value.toUpperCase()!="S/D")?document.getElementById('placas').value.toUpperCase():"-1";
+    let niv = (document.getElementById('NIVS').value.toUpperCase()!="SD" && document.getElementById('NIVS').value.toUpperCase()!="S/D")?document.getElementById('NIVS').value.toUpperCase():"-1";
     
     myFormDataConsulta.append('Placa',placa.trim());
     myFormDataConsulta.append('Niv',niv.trim());

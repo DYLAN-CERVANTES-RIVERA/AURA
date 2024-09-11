@@ -28,7 +28,7 @@ const InsertgetVehiculos= async({Id_Vehiculo,Id_Seguimiento,Placas,Marca,Submarc
         let ruta = pathImagesVehiculos+Foto;
         let ban = await imageExists(ruta)
         if(ban==true){
-          ruta = ruta+'?nocache='+getRandomInt(50);
+          ruta = ruta+'?nocache='+ randomNum;
           newRow.insertCell(9).innerHTML =`<div class="d-flex justify-content-around" id="uploadFileFotoV${newRow.rowIndex}">
                                                     <div class="form-group">
                                                         <input type="file" name="FotoVehiculo_row${newRow.rowIndex}" accept="image/*" id="fileFotoVehiculo_row${newRow.rowIndex}" class="inputfile uploadFileFotoV" onchange="uploadFileV(event)" data-toggle="tooltip" data-placement="bottom">
@@ -101,7 +101,9 @@ const InsertgetVehiculos= async({Id_Vehiculo,Id_Seguimiento,Placas,Marca,Submarc
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowVehiculo(this,VehiculoTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(12).innerHTML = Id_Seguimiento;
     newRow.cells[0].style.display = "none";
+    newRow.cells[12].style.display = "none";
 }
 /*---------------------FUNCIONES DE REFRESCO--------------------------- */
 const RecargaDatosVehiculos = async()=>{//Funcion que actualiza la vista de la tabla vehiculos cada vez que se guarden o eliminen datos
@@ -125,8 +127,20 @@ const RecargaDatosVehiculos = async()=>{//Funcion que actualiza la vista de la t
         }
        await InsertgetVehiculos(formDataVehiculo);//Inserta todos los vehiculos del seguimiento
     }
-    await MostrarTabDomicilio();
-    await MostrarTabAntecedentes();
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(data.Id_Seguimiento);   
+        if(hijos.length>0){
+            //console.log(hijos)
+            //Panel tiene folios de eventos delictivos 
+            for (let i = 0; i < hijos.length; i++) {
+                await llenarInfoHijo(hijos[i].Id_Seguimiento,"VEHICULOS");
+            }
+
+        }
+    }
+    await readVehiculosVista();
+    MostrarTabDomicilio();
+    MostrarTabAntecedentes();
 }
 const dropTablaContentVehiculos = async () => {//VACIA EL CONTENIDO DE LA TABLA 
     ban= true;

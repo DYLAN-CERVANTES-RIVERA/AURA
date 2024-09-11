@@ -35,6 +35,7 @@
             <div class="row mt-3">
                 <div class="form-group col-lg-1 mi_hide" >
                     <input type="text" class="form-control form-control-sm " id="Id_Forencia" name="Id_Forencia" value="SD" disabled>
+                    <input type="text" class="form-control form-control-sm " id="Id_Seg_Dato" name="Id_Seg_Dato" value="0" disabled>
                 </div>
                 <div class="form-group col-lg-9">
                     <label for="forencia" class="subtitulo-rosa">Descripcion:</label>

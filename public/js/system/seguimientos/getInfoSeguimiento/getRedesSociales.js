@@ -26,6 +26,18 @@ const RecargaDatosRedesSociales = async()=>{//Funcion que actualiza la vista de 
     let i=0;
     let consultaPersonas=[];
     let Personas = await getPersonas(Seguimiento);
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(Seguimiento); 
+        for await(let hijo of hijos){
+            let PersonasJH = await getPersonas(hijo.Id_Seguimiento);
+            if(PersonasJH.length>0){
+                for await(let PersonaJH of PersonasJH){
+                    Personas.push(PersonaJH); 
+                }
+            }
+            
+        }     
+    }
     for await(Persona of Personas){
         consultaPersonas[i]=Persona.Id_Persona;
         i++;
@@ -38,7 +50,7 @@ const RecargaDatosRedesSociales = async()=>{//Funcion que actualiza la vista de 
             for await(let RedSocial of RedesSocial){
                 let formDataRedSocial = {
                     Id_Registro: RedSocial.Id_Registro ,
-                    Id_Seguimiento: Seguimiento,
+                    Id_Seguimiento: RedSocial.Id_Seguimiento,
                     Id_Persona : RedSocial.Id_Persona ,
                     Usuario:     RedSocial.Usuario,
                     Enlace:      RedSocial.Enlace,
@@ -146,7 +158,9 @@ const InsertgetRedSocial = async({Id_Registro,Id_Seguimiento,Id_Persona,Usuario,
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowRedsocial(this,RedsocialTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(10).innerHTML = Id_Seguimiento;
     newRow.cells[1].style.display = "none";
     newRow.cells[2].style.display = "none";
+    newRow.cells[10].style.display = "none";
     
 }

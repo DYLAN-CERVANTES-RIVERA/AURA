@@ -8,7 +8,7 @@ const MostrarTabForencias=async()=>{//FUNCION QUE OCULTA O MUESTRA LA TAB DE FOR
         document.getElementById('Forencia0').classList.remove('mi_hide');
     }
     RecargaSelectForencia() 
-    await RecargaDatosForencia();
+    RecargaDatosForencia();
 }
 async function  RecargaSelectForencia() {//REFRESCA EL SELECTOR DEL FORENSIA CON LOS DATOS DE PERSONAS Y VEHICULOS GUARDADOS EN EL SEGUIMIENTO  
     // Obtener referencia al elemento select
@@ -16,7 +16,7 @@ async function  RecargaSelectForencia() {//REFRESCA EL SELECTOR DEL FORENSIA CON
     while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
         select.remove(0);
     }
-    let Personas = await getPersonas(Seguimiento);
+    let Personas = PersonasSelect;
     // Datos para las opciones
     var option = document.createElement("option");
     option.text = "SELECCIONE PERSONA";
@@ -84,8 +84,10 @@ const InsertForencias= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE 
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(7).innerHTML = document.getElementById('Id_Seg_Dato').value;
     newRow.cells[1].style.display = "none";
     newRow.cells[2].style.display = "none";
+    newRow.cells[7].style.display = "none";
 }
 const ResetFormForencias= async()=>{//FUNCION QUE LIMPIA LA VISTA DE FORENSIA
     document.getElementById('Id_Forencia').value='SD';
@@ -98,7 +100,7 @@ const editForencia = (obj) => {//FUNCION QUE EDITA LA TABLA DE FORENSIA TOMANDO 
     document.getElementById('Id_Forencia').value=selectedRowForencias.cells[1].innerHTML;
     document.getElementById('PersonaSelectForencias').value=selectedRowForencias.cells[2].innerHTML;
     document.getElementById('forencia_descripcion').value=selectedRowForencias.cells[3].innerHTML;
-
+    document.getElementById('Id_Seg_Dato').value=selectedRowForencias.cells[7].innerHTML;
     window.scroll({
         top: 0,
         left: 100,
@@ -110,6 +112,7 @@ const UpdateRowForencias=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE F
     selectedRowForencias.cells[1].innerHTML=document.getElementById('Id_Forencia').value;
     selectedRowForencias.cells[2].innerHTML=document.getElementById('PersonaSelectForencias').value;
     selectedRowForencias.cells[3].innerHTML=document.getElementById('forencia_descripcion').value.toUpperCase();
+    selectedRowForencias.cells[7].innerHTML=document.getElementById('Id_Seg_Dato').value
     document.getElementById('alertaEditforencias').style.display = 'none';
     selectedRowForencias= null;
 }
@@ -233,7 +236,10 @@ var datosForencias = document.getElementById('datos_forencias')
 document.getElementById('btn_forencias').addEventListener('click', async function(e) {
     let myFormDataForencias = new FormData(datosForencias)//RECUERDA SIEMPRE ENVIAR LOS DATOS DEL FRAME Y AUN MAS IMPORTANTE POR LAS IMAGENES LAS DETECTE EN EL POST
     var Forencias =  await readTableForencias();//LEEMOS EL CONTENIDO DE LA TABLA DE Forencias 
-    myFormDataForencias.append('Forenciastable', JSON.stringify(Forencias)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
+
+    let OrdenadasDatos = Forencias.sort((a, b) => a.row.Id_Seguimiento - b.row.Id_Seguimiento);
+
+    myFormDataForencias.append('Forenciastable', JSON.stringify(OrdenadasDatos)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
     myFormDataForencias.append('id_seguimiento',document.getElementById('id_seguimiento_principales').value)
     
     let button = document.getElementById('btn_forencias')
@@ -325,7 +331,8 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64
+                                    imagebase64:myBase64,
+                                    Id_Seguimiento: table.rows[i].cells[7].innerHTML
                                 }
                             });
                         })
@@ -339,7 +346,8 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src
+                            imagebase64:base64.src,
+                            Id_Seguimiento: table.rows[i].cells[7].innerHTML
                         }
                     });
                 }
@@ -355,7 +363,8 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL
+                        imagebase64:base64URL,
+                        Id_Seguimiento: table.rows[i].cells[7].innerHTML
                     }
                 });
             }
@@ -369,7 +378,8 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null"
+                    imagebase64:"null",
+                    Id_Seguimiento: table.rows[i].cells[7].innerHTML
                 }
             });
         }
@@ -377,3 +387,19 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
     console.log(objetos)
     return objetos;
 }
+
+const findPersonById = (id) => {
+    return PersonasSelect.find(person => person.Id_Persona === id);
+};
+
+const cambioID_Seguimiento = async() =>{
+    let buscar = document.getElementById('PersonaSelectForencias').value;
+    //console.log(PersonasSelect)
+    //console.log(buscar)
+    let person = await findPersonById(buscar);
+    //console.log(person.Id_Seguimiento)
+    document.getElementById('Id_Seg_Dato').value = person.Id_Seguimiento;
+    //console.log(document.getElementById('Id_Seg_Dato').value)
+ }
+
+document.getElementById('PersonaSelectForencias').addEventListener('change',cambioID_Seguimiento);

@@ -67,17 +67,17 @@ const monitorizarTablas = async () => {
 
 
 botonReporteZen.addEventListener('click', () => {
-    if(asignacionglobal.style.right === '' || asignacionglobal.style.right === '-1000px'){
-        asignacionglobal.style.right = '-800px';
+    if(asignacionglobal.style.right === '' || asignacionglobal.style.right === '-100%'){
+        asignacionglobal.style.right = '-43%';
         asignacionglobal.style.top = '-350px';
         asignacionglobal.style.width = '200px';
         asignacionglobal.style.height = '600px';
         botonReporteZen.innerText = "Cerrar Reporte Completados en Campo";
         botonReporteZen.title="CERRAR REPORTE"
-
+        monitorizarTablas();
     }else{
-        if(asignacionglobal.style.right === '-800px'){
-            asignacionglobal.style.right = '-1000px';
+        if(asignacionglobal.style.right === '-43%'){
+            asignacionglobal.style.right = '-100%';
             asignacionglobal.style.width = '50px';
             botonReporteZen.innerText = "Reporte Completados en Campo";
             botonReporteZen.title="ABRIR REPORTE"

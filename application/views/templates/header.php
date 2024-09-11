@@ -35,8 +35,7 @@
     <?php if (isset($data['extra'])) echo $data['extra'] ?>
   </head>
   <body>
-  
-  <div id="navbarhead" class="container-fluid" >
+    <div id="navbarhead">
       <nav class="navbar" id="sidenav_p">
         <div class="col-lg-4">
           <img class="box" src="<?php echo base_url; ?>public/media/images/logo2.png">
@@ -74,10 +73,10 @@
       <?php
         $miHideGlobal =  ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[2] == 1)  ? '':'mi_hide';
       ?>
-      <div class="<?= "row mt-1 justify-content-end".$miHideGlobal; ?>">
-          <a id="button-global" class="btn btn-primary btn-asignadas-global" data-toggle="tooltip">Reporte Completados en Campo</a>    
+      <div class="<?= "row mt-1 justify-content-end ".$miHideGlobal; ?>">
+          <a id="button-global" class="btn btn-primary btn-asignadas-global mb-4" data-toggle="tooltip">Reporte Completados en Campo</a>    
       </div>
     </div>
-
+    
   </body>
 </html>

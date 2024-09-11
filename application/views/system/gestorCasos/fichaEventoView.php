@@ -858,7 +858,7 @@
                                         if($dato->img){
                                             $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                                             
-                                            if (strpos($url, '172.18.0.25') == true) {
+                                            if (strpos($url, '172.18.110.25') == true) {
                                                 $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
                                             } else{
                                                 $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
@@ -933,7 +933,7 @@
                                     if($dato->img){
                                         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                                         
-                                        if (strpos($url, '172.18.0.25') == true) {
+                                        if (strpos($url, '172.18.110.25') == true) {
                                             $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
                                         } else{
                                             $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
@@ -1040,7 +1040,7 @@
                                     if($dato->img){
                                         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                                         
-                                        if (strpos($url, '172.18.0.25') == true) {
+                                        if (strpos($url, '172.18.110.25') == true) {
                                             $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
                                         } else{
                                             $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
@@ -1115,7 +1115,7 @@
                                     if($dato->img){
                                         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                                         
-                                        if (strpos($url, '172.18.0.25') == true) {
+                                        if (strpos($url, '172.18.110.25') == true) {
                                             $publicUrl = 'http://172.18.110.90:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;
                                         } else{
                                             $publicUrl = 'http://187.216.250.252:9090/api/images/'.strtolower($element['Tipo'])."/".$dato->img;

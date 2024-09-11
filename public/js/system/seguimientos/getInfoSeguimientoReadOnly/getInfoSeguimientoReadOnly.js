@@ -81,7 +81,78 @@ document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLE
         document.getElementById('li-vehiculos').classList.add('mi_hide');
         document.getElementById('vehiculos0').classList.add('mi_hide');
    }
-   
+   if(data.Tipo_Grupo=="GRUPO"){
+    let hijos = await buscaHijos(data.Id_Seguimiento);   
+    if(hijos.length>0){
+        //console.log(hijos)
+        //Panel tiene folios de eventos delictivos 
+        for (let k = 0; k < hijos.length; k++) {
+            //await llenarInfoHijo(hijos[i].Id_Seguimiento);
+
+            EventosH = await getEventosRelacionados(hijos[k].Id_Seguimiento);
+            PersonasH = await getPersonas(hijos[k].Id_Seguimiento);
+            VehiculosH = await getVehiculos(hijos[k].Id_Seguimiento);
+
+            for (let event = 0; event < EventosH.length; event++) {
+                let formData = {
+                    Folio_infra: EventosH[event].Folio_infra,
+                    Folio_911: EventosH[event].Folio_911,
+                    delitos_concat: EventosH[event].delitos_concat,
+                    Ubicacion: EventosH[event].Ubicacion
+                }
+                insertRowEvento(formData); //INSERTA EN LA VISTA TODOS LOS EVENTOS RELACIONADOS
+            }
+        
+            if(VehiculosH.length>=1){
+                for await(let Vehiculo of VehiculosH){
+                    let formDataVehiculo = {
+                        Id_Vehiculo : Vehiculo.Id_Vehiculo,
+                        Id_Seguimiento: Vehiculo.Id_Seguimiento,
+                        Placas : Vehiculo.Placas,
+                        Marca : Vehiculo.Marca,
+                        Submarca : Vehiculo.Submarca,
+                        Color : Vehiculo.Color,
+                        Modelo : Vehiculo.Modelo,
+                        Nombre_Propietario : Vehiculo.Nombre_Propietario,
+                        Nivs : Vehiculo.Nivs,
+                        InfoPlaca : Vehiculo.InfoPlaca,
+                        Capturo : Vehiculo.Capturo,
+                        Foto : Vehiculo.Foto,
+                        Img_64 : Vehiculo.Img_64
+                    }
+                    j++;
+                   await InsertVistaVehiculos(formDataVehiculo,j);//Inserta todos los vehiculos del seguimiento
+                }
+               }
+
+            if(PersonasH.length>=1){
+                for await(let Persona of PersonasH){
+                    let formDataPersona = {
+                        Id_Persona : Persona.Id_Persona,
+                        Id_Seguimiento: Persona.Id_Seguimiento,
+                        Nombre : Persona.Nombre,
+                        Ap_Paterno : Persona.Ap_Paterno,
+                        Ap_Materno : Persona.Ap_Materno,
+                        Genero : Persona.Genero,
+                        Edad : Persona.Edad,
+                        Fecha_Nacimiento : Persona.Fecha_Nacimiento,
+                        Telefono : Persona.Telefono,
+                        Alias : Persona.Alias,
+                        Curp : Persona.Curp,
+                        Remisiones : Persona.Remisiones,
+                        Capturo : Persona.Capturo,
+                        Foto : Persona.Foto,
+                        Img_64 : Persona.Img_64
+                    }
+                    i++;
+                    await InsertVistaPersona(formDataPersona,i);//Inserta todas las personas del seguimiento
+                    
+                }
+            }
+        }
+
+    }
+}
     
 });
 /*---------------------------FUNCIONES PARA LA OBTENCION DE LA INFORMACION DEL SEGUIMIENTO PRINCIPAL------------------- */
@@ -278,6 +349,21 @@ const getRedesSocialesOneRegister = async (Id_Persona) => { //Funcion que realiz
     try {
         myFormData.append('Id_Persona',Id_Persona)
         const response = await fetch(base_url_js + 'Seguimientos/getRedesSocialesOneRegister', {
+            method: 'POST',
+            body: myFormData
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const buscaHijos = async (seguimiento) => {//FUNCION QUE OBTIENE LOS EVENTOS RELACIONADOS AL SEGUIMIENTO
+    try {
+        var myFormData = new FormData();
+        myFormData.append('Id_seguimiento',seguimiento);
+        const response = await fetch(base_url_js + 'Seguimientos/getHijosRed', {
             method: 'POST',
             body: myFormData
         });

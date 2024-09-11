@@ -11,7 +11,7 @@ const getPersonas = async (Id_Seguimiento) => { //Funcion que realizar peticion 
         console.log(error);
     }
 }
-
+const randomNum = Math.random();
 const InsertgetPersona= async({	Id_Persona,Id_Seguimiento,Nombre,Ap_Paterno,Ap_Materno,Genero,Edad,Fecha_Nacimiento,Telefono,Alias,Curp,Remisiones,Rol,Capturo,Foto,Img_64})=>{//FUNCION QUE INSERTA LOS DATOS DE LAS PERSONAS ASOCIADAS AL SEGUIMIENTO
     let pathImagesPersonas =base_url_js+'public/files/Seguimientos/'+Id_Seguimiento+'/Personas/';
     let table = document.getElementById('PersonaTable').getElementsByTagName('tbody')[0];
@@ -31,26 +31,27 @@ const InsertgetPersona= async({	Id_Persona,Id_Seguimiento,Nombre,Ap_Paterno,Ap_M
         let ruta = pathImagesPersonas+Foto;
         let ban = await imageExists(ruta)
         if(ban==true){
-          ruta = ruta+'?nocache='+getRandomInt(50);
-          newRow.insertCell(11).innerHTML =`<div class="d-flex justify-content-around" id="uploadFileFotoP${newRow.rowIndex}">
-                                            <div class="form-group">
-                                                <input type="file" name="FotoPersona_row${newRow.rowIndex}" accept="image/*" id="fileFotoPersona_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFileP(event)" data-toggle="tooltip" data-placement="bottom">
-                                                <label for="fileFotoPersona_row${newRow.rowIndex}"></label>
-                                                <h3 class="uploadFotoPersonaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
-                                            </div>
-                                        </div>
-                                        <div id="imageContentP_row${newRow.rowIndex}">
-                                            <div class="d-flex justify-content-end">
-                                                <span onclick="deleteImageFotoP(${newRow.rowIndex})" class="deleteFile">X</span>
-                                            </div>
-                                            <img name="nor" src="${ruta}" id="imagesP_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterInvolucrado${newRow.rowIndex}">
-                                            <input type="hidden" class="${newRow.rowIndex} Photo"/>
-                                            <div class="modal fade " id="ModalCenterInvolucrado${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                    <img name="nor" src="${ruta}"  style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block"data-toggle="modal" data-target="#exampleModalCenter">
+            
+            ruta = ruta+'?nocache='+ randomNum;
+            newRow.insertCell(11).innerHTML =`<div class="d-flex justify-content-around" id="uploadFileFotoP${newRow.rowIndex}">
+                                                <div class="form-group">
+                                                    <input type="file" name="FotoPersona_row${newRow.rowIndex}" accept="image/*" id="fileFotoPersona_row${newRow.rowIndex}" class="inputfile uploadFileFotoP" onchange="uploadFileP(event)" data-toggle="tooltip" data-placement="bottom">
+                                                    <label for="fileFotoPersona_row${newRow.rowIndex}"></label>
+                                                    <h3 class="uploadFotoPersonaCtrolV" style=" border-style: dotted; border-color: red;">Para pegar imagen da click aqui y presiona control+v</h3>
                                                 </div>
-                                            </div>  
-                                        </div>`;
+                                            </div>
+                                            <div id="imageContentP_row${newRow.rowIndex}">
+                                                <div class="d-flex justify-content-end">
+                                                    <span onclick="deleteImageFotoP(${newRow.rowIndex})" class="deleteFile">X</span>
+                                                </div>
+                                                <img name="nor" src="${ruta}" id="imagesP_row_${newRow.rowIndex}" width="400px" data-toggle="modal" data-target="#ModalCenterInvolucrado${newRow.rowIndex}">
+                                                <input type="hidden" class="${newRow.rowIndex} Photo"/>
+                                                <div class="modal fade " id="ModalCenterInvolucrado${newRow.rowIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                        <img name="nor" src="${ruta}"  style="width:1200px; position:relative; top:0px; left:0px; border:opx; overflow:hidden; display:block"data-toggle="modal" data-target="#exampleModalCenter">
+                                                    </div>
+                                                </div>  
+                                            </div>`;
 
         }else{
             if(Img_64!='SD'){
@@ -104,7 +105,10 @@ const InsertgetPersona= async({	Id_Persona,Id_Seguimiento,Nombre,Ap_Paterno,Ap_M
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowPersona(this,PersonaTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    
+    newRow.insertCell(15).innerHTML = Id_Seguimiento;
     newRow.cells[0].style.display = "none";
+    newRow.cells[15].style.display = "none";
 }
 /*---------------------FUNCIONES DE REFRESCO--------------------------- */
 const RecargaDatosPersonas = async()=>{//Funcion que actualiza la vista de la tabla personas cada vez que se guarden o eliminen datos
@@ -113,7 +117,7 @@ const RecargaDatosPersonas = async()=>{//Funcion que actualiza la vista de la ta
     for await(let Persona of Personas){
         let formDataPersona = {
             Id_Persona : Persona.Id_Persona,
-            Id_Seguimiento: Seguimiento,
+            Id_Seguimiento: Persona.Id_Seguimiento,
             Nombre : Persona.Nombre,
             Ap_Paterno : Persona.Ap_Paterno,
             Ap_Materno : Persona.Ap_Materno,
@@ -129,11 +133,23 @@ const RecargaDatosPersonas = async()=>{//Funcion que actualiza la vista de la ta
             Foto : Persona.Foto,
             Img_64 : Persona.Img_64
         }
-        console.log(formDataPersona);
-       await InsertgetPersona(formDataPersona);//Inserta todas las personas del seguimiento
+        await InsertgetPersona(formDataPersona);//Inserta todas las personas del seguimiento
     }
-    await MostrarTabDomicilio();//ES NECESARIO REFRESCAR LOS DATOS DEL SELECT DE LA TAB POR LO QUE AL INVOCAR ESTA FUNCION REALIZA UN REFRESH DE LOS DATOS DEL SELECT
-    await MostrarTabAntecedentes();
+    if(document.getElementById('Question2').checked){
+        let hijos = await buscaHijos(data.Id_Seguimiento);   
+        if(hijos.length>0){
+            //console.log(hijos)
+            //Panel tiene folios de eventos delictivos 
+            for (let i = 0; i < hijos.length; i++) {
+                await llenarInfoHijo(hijos[i].Id_Seguimiento,"PERSONAS");
+            }
+
+        }
+    }
+    await readPersonasVista();
+    
+    MostrarTabDomicilio();//ES NECESARIO REFRESCAR LOS DATOS DEL SELECT DE LA TAB POR LO QUE AL INVOCAR ESTA FUNCION REALIZA UN REFRESH DE LOS DATOS DEL SELECT
+    MostrarTabAntecedentes();
     MostrarTabForencias();
     MostrarTabRedesSociales();
 }

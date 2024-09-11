@@ -119,7 +119,7 @@ class GestorCasos extends Controller
                 $data['filtroNombre'] = "Busqueda a Quien se Asigno Evento";
                 break;
             case '5':
-                $data['filtroNombre'] = "Busqueda Solo por Folio infra Evento";
+                $data['filtroNombre'] = "Busqueda Solo por Folio AURA Evento";
                 break;
         }
 

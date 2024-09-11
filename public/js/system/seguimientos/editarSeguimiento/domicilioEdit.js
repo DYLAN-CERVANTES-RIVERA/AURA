@@ -8,8 +8,8 @@ const MostrarTabDomicilio=async()=>{//FUNCION QUE OCULTA O MUESTRA LA TAB DE DOM
         document.getElementById('li-Domicilio').classList.remove('mi_hide');
         document.getElementById('Domicilio0').classList.remove('mi_hide');
     }
-    await RecargaSelect() 
-    await RecargaDatosDomicilios();
+    RecargaSelect() 
+    RecargaDatosDomicilios();
     document.getElementById('Estado').setAttribute('disabled', '');
     document.getElementById('Estado').value='PUEBLA';
     document.getElementById('Municipio').value='PUEBLA';
@@ -23,7 +23,8 @@ async function  RecargaSelect() {//REFRESCA EL SELECTOR DEL DOMICILIO CON LOS DA
         while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
             select.remove(0);
         }
-        let Personas = await getPersonas(Seguimiento);
+        let Personas = PersonasSelect;
+        //console.log(PersonasSelect)
         // Datos para las opciones
         var option = document.createElement("option");
         option.text = "SELECCIONE PERSONA";
@@ -43,7 +44,8 @@ async function  RecargaSelect() {//REFRESCA EL SELECTOR DEL DOMICILIO CON LOS DA
         while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
             select.remove(0);
         }
-        let Vehiculos = await getVehiculos(Seguimiento);
+        let Vehiculos = VehiculosSelect;
+        //console.log(VehiculosSelect)
         // Datos para las opciones
         var option = document.createElement("option");
         option.text = "SELECCIONE VEHICULO";

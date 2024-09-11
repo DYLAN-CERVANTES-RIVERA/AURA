@@ -9,7 +9,7 @@ const MostrarTabAntecedentes=async()=>{//FUNCION QUE OCULTA O MUESTRA LA TAB DE 
         document.getElementById('Antecedente0').classList.remove('mi_hide');
     }
     RecargaSelectAntecedente() 
-    await RecargaDatosAntecedentes();
+    RecargaDatosAntecedentes();
 }
 async function  RecargaSelectAntecedente() {//REFRESCA EL SELECTOR DEL ANTECEDENTE CON LOS DATOS DE PERSONAS Y VEHICULOS GUARDADOS EN EL SEGUIMIENTO  
     if(document.getElementsByName('tipo_dato_antecendente')[0].checked){
@@ -18,7 +18,7 @@ async function  RecargaSelectAntecedente() {//REFRESCA EL SELECTOR DEL ANTECEDEN
         while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
             select.remove(0);
         }
-        let Personas = await getPersonas(Seguimiento);
+        let Personas = PersonasSelect;
         // Datos para las opciones
         var option = document.createElement("option");
         option.text = "SELECCIONE PERSONA";
@@ -38,7 +38,7 @@ async function  RecargaSelectAntecedente() {//REFRESCA EL SELECTOR DEL ANTECEDEN
         while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
             select.remove(0);
         }
-        let Vehiculos = await getVehiculos(Seguimiento);
+        let Vehiculos = VehiculosSelect;
         // Datos para las opciones
         var option = document.createElement("option");
         option.text = "SELECCIONE VEHICULO";

@@ -8,7 +8,7 @@ const MostrarTabRedesSociales=async()=>{//FUNCION QUE OCULTA O MUESTRA LA TAB DE
         document.getElementById('RedesSociales0').classList.remove('mi_hide');
     }
     RecargaSelectRedSocial()
-    await RecargaDatosRedesSociales();
+    RecargaDatosRedesSociales();
 }
 async function  RecargaSelectRedSocial() {//REFRESCA EL SELECTOR DEL DOMICILIO CON LOS DATOS DE PERSONAS Y VEHICULOS GUARDADOS EN EL SEGUIMIENTO  
     // Obtener referencia al elemento select
@@ -16,7 +16,7 @@ async function  RecargaSelectRedSocial() {//REFRESCA EL SELECTOR DEL DOMICILIO C
     while (select.options.length > 0) {//ACTUALIZACION DE SELECT POR SI HAY MODIFICACION EN LAS TABLAS
         select.remove(0);
     }
-    let Personas = await getPersonas(Seguimiento);
+    let Personas = PersonasSelect;
     // Datos para las opciones
     var option = document.createElement("option");
     option.text = "SELECCIONE PERSONA";
@@ -99,8 +99,10 @@ const InsertRedsocial= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE 
                                     <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowRedsocial(this,RedsocialTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
+    newRow.insertCell(10).innerHTML = document.getElementById('Id_Seg_Redes').value;
     newRow.cells[1].style.display = "none";
     newRow.cells[2].style.display = "none";
+    newRow.cells[10].style.display = "none";
 }
 const ResetFormRedsocial= async()=>{//FUNCION QUE LIMPIA LA VISTA DE RED SOCIAL
     document.getElementById('Id_Registro').value='SD';
@@ -119,6 +121,7 @@ const editRedsocial = (obj) => {//FUNCION QUE EDITA LA TABLA DE RED SOCIAL TOMAN
     document.getElementById('enlace').value=selectedRowRedsocial.cells[4].innerHTML;
     document.getElementById('Redsocial_tipo_url').value=selectedRowRedsocial.cells[5].innerHTML;
     document.getElementById('Redsocial_Observacion').value=selectedRowRedsocial.cells[6].innerHTML;
+    document.getElementById('Id_Seg_Redes').value=selectedRowRedsocial.cells[10].innerHTML;
 
     window.scroll({
         top: 0,
@@ -134,6 +137,7 @@ const UpdateRowRedsocial=()=>{//FUNCION QUE ACTUALIZA LOS DATOS EN LA TABLA DE R
     selectedRowRedsocial.cells[4].innerHTML=document.getElementById('enlace').value;
     selectedRowRedsocial.cells[5].innerHTML=document.getElementById('Redsocial_tipo_url').value;
     selectedRowRedsocial.cells[6].innerHTML=document.getElementById('Redsocial_Observacion').value.toUpperCase();
+    selectedRowRedsocial.cells[10].innerHTML=document.getElementById('Id_Seg_Redes').value;
     document.getElementById('alertaEditRedsocial').style.display = 'none';
     selectedRowRedsocial= null;
 }
@@ -240,7 +244,8 @@ const readTableRedSocial = async() => {//lee los datos de la tabla personas y ge
                                     typeImage: type,
                                     nameImage: nameImage,
                                     image: myBase64,
-                                    imagebase64:myBase64
+                                    imagebase64:myBase64,
+                                    Id_Seguimiento: table.rows[i].cells[10].innerHTML
                                 }
                             });
                         })
@@ -257,7 +262,8 @@ const readTableRedSocial = async() => {//lee los datos de la tabla personas y ge
                             typeImage: type,
                             nameImage: nameImage,
                             image:  base64.src,
-                            imagebase64:base64.src
+                            imagebase64:base64.src,
+                            Id_Seguimiento: table.rows[i].cells[10].innerHTML
                         }
                     });
                 }
@@ -276,7 +282,8 @@ const readTableRedSocial = async() => {//lee los datos de la tabla personas y ge
                         typeImage: type,
                         nameImage: nameImage,
                         image: "null",
-                        imagebase64:base64URL
+                        imagebase64:base64URL,
+                        Id_Seguimiento: table.rows[i].cells[10].innerHTML
                     }
                 });
             }
@@ -293,7 +300,8 @@ const readTableRedSocial = async() => {//lee los datos de la tabla personas y ge
                     typeImage: "null",
                     nameImage: "null",
                     image: "null",
-                    imagebase64:"null"
+                    imagebase64:"null",
+                    Id_Seguimiento: table.rows[i].cells[10].innerHTML
                 }
             });
         }
@@ -413,3 +421,10 @@ const DesasociaRedSocial= async(Id_Registro)=>{//FUNCION QUE ELIMINA LOS DATOS D
         console.log(error);
     }
 }
+const cambioID_SeguimientoRedes = async() =>{
+    let buscar = document.getElementById('PersonaSelectRedsocial').value;
+    let person = await findPersonById(buscar);
+    document.getElementById('Id_Seg_Redes').value = person.Id_Seguimiento;
+ }
+
+document.getElementById('PersonaSelectRedsocial').addEventListener('change',cambioID_SeguimientoRedes);

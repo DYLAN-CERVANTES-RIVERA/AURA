@@ -15,7 +15,7 @@ class Seguimientos extends Controller
     public function __construct(){
         $this->Catalogo = $this->model('Catalogo');//para ocupar las funciones del modelo del catalogo
         $this->Seguimiento = $this->model('Seguimiento');//para ocupar las funciones del modelo del seguimiento
-        $this->numColumnsSG = [7,8,7];  //se inicializa el número de columns por cada filtro
+        $this->numColumnsSG = [7,8,7,7,6,6];  //se inicializa el número de columns por cada filtro
         $this->FV = new FormValidator();
     }
 
@@ -83,13 +83,22 @@ class Seguimientos extends Controller
         $data['dropdownColumns'] = $this->generateDropdownColumns($filtro);
         switch ($filtro) {
             case '1':
-                $data['filtroNombre'] = ($_SESSION['userdataSIC']->Red[0] == 1 && $_SESSION['userdataSIC']->Modo_Admin != 1)? "Todas las Redes (Alto Impacto)" : "Todas las Redes";
+                $data['filtroNombre'] = ($_SESSION['userdataSIC']->Red[0] == 1 && $_SESSION['userdataSIC']->Modo_Admin != 1)? "Todos los Grupos (Alto Impacto)" : "Todos los Grupos";
                 break;
             case '2':
                 $data['filtroNombre'] = ($_SESSION['userdataSIC']->Red[0] == 1 && $_SESSION['userdataSIC']->Modo_Admin != 1)? "Personas (Alto Impacto)" : "Personas";
                 break;
             case '3':
                 $data['filtroNombre'] = ($_SESSION['userdataSIC']->Red[0] == 1 && $_SESSION['userdataSIC']->Modo_Admin != 1)? "Vehiculos (Alto Impacto)" : "Vehiculos";
+                break;
+            case '4':
+                $data['filtroNombre'] = ( $_SESSION['userdataSIC']->Modo_Admin == 1)? "Alto Impacto":"";
+                break;
+            case '5':
+                $data['filtroNombre'] =  "Eventos Delictivos Sin Asociar";
+                break;
+            case '6':
+                $data['filtroNombre'] =  "Eventos Delictivos Asociados a un Grupo";
                 break;
         }
         $this->view('templates/header', $data);
@@ -138,7 +147,7 @@ class Seguimientos extends Controller
                         <th class="column1">Folio Red</th>
                         <th class="column2">Nombre de Grupo Delictivo</th>
                         <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
-                        <th class="column4">Folios Infra</th>
+                        <th class="column4">Folios AURA</th>
                         <th class="column5">Zonas</th>
                         <th class="column6">Peligrosidad</th>
                         <th class="column7">Elemento Capturante</th>
@@ -262,8 +271,159 @@ class Seguimientos extends Controller
                 }
                 $infoTable['header'] .= '<th >Exportar Ficha</th>';
             break;
+            case '4': //General de todos los casos
+                $infoTable['header'] .= '
+                        <th class="column1">Folio Red</th>
+                        <th class="column2">Nombre de Grupo Delictivo</th>
+                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column4">Folios AURA</th>
+                        <th class="column5">Zonas</th>
+                        <th class="column6">Peligrosidad</th>
+                        <th class="column7">Elemento Capturante</th>
+                    ';
+                foreach ($rows as $row) {
+                    $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
+                    $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
+                                            <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
+                                            <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
+                                            <td class="column4">' . $row->Folios_infra. '</td>
+                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column6">' . mb_strtoupper($row->Peligrosidad)  . '</td>
+                                            <td class="column7">' . $row->Elemento_Captura . '</td>
+                        ';
+                    if ($row->FechaHora_Creacion != '') {
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[1] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                            $infoTable['body'] .= '<td>
+                                                    <a class="myLinks ' . $permisos_Editar . '" data-toggle="tooltip" data-placement="right" title="Editar registro" href="' . base_url . 'Seguimientos/editarSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>';
+                        } else {
+                            $infoTable['body'] .= '<td>';
+                        }
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[2] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                           
+                            $infoTable['body'] .= '
+                                                    <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">visibility</i>
+                                                    </a>
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                        <i class="material-icons">assignment</i>
+                                                    </a>
+                                                    </td>';
+                                                /*<a target="_blank" class="myLinks' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar Ficha Tipo Atlas" href="' . base_url . 'Seguimientos/GenerarFichaAtlas/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <i class="material-icons">picture_as_pdf</i>
+                                                </a>*/
+
+                        }else{
+                            $infoTable['body'] .= '</td>';
+                        }
+                            
+                    }
+                    $infoTable['body'] .= '</tr>';
+                }
+                $infoTable['header'] .= '<th >Operaciones</th>';
+            break;
+            case '5': //General de todos los casos
+                $infoTable['header'] .= '
+                        <th class="column1">Folio Red</th>
+                        <th class="column2">Nombre de Grupo Delictivo</th>
+                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column4">Folios AURA</th>
+                        <th class="column5">Zonas</th>
+                        <th class="column6">Elemento Capturante</th>
+                    ';
+                foreach ($rows as $row) {
+                    $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
+                    $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
+                                            <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
+                                            <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
+                                            <td class="column4">' . $row->Folios_infra. '</td>
+                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column6">' . $row->Elemento_Captura . '</td>
+                        ';
+                    if ($row->FechaHora_Creacion != '') {
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[1] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                            $infoTable['body'] .= '<td>
+                                                    <a class="myLinks ' . $permisos_Editar . '" data-toggle="tooltip" data-placement="right" title="Editar registro" href="' . base_url . 'Seguimientos/editarSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>';
+                        } else {
+                            $infoTable['body'] .= '<td>';
+                        }
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[2] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                           
+                            $infoTable['body'] .= '
+                                                    <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">visibility</i>
+                                                    </a>
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                        <i class="material-icons">assignment</i>
+                                                    </a>
+                                                    </td>';
+                                                /*<a target="_blank" class="myLinks' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar Ficha Tipo Atlas" href="' . base_url . 'Seguimientos/GenerarFichaAtlas/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <i class="material-icons">picture_as_pdf</i>
+                                                </a>*/
+    
+                        }else{
+                            $infoTable['body'] .= '</td>';
+                        }
+                            
+                    }
+                    $infoTable['body'] .= '</tr>';
+                }
+                $infoTable['header'] .= '<th >Operaciones</th>';
+            break;
+            case '6': //General de todos los casos
+                $infoTable['header'] .= '
+                        <th class="column1">Folio Red</th>
+                        <th class="column2">Nombre de Grupo Delictivo</th>
+                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column4">Folios AURA</th>
+                        <th class="column5">Zonas</th>
+                        <th class="column6">Elemento Capturante</th>
+                    ';
+                foreach ($rows as $row) {
+                    $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
+                    $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
+                                            <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
+                                            <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
+                                            <td class="column4">' . $row->Folios_infra. '</td>
+                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column6">' . $row->Elemento_Captura . '</td>
+                        ';
+                    if ($row->FechaHora_Creacion != '') {
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[1] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                            $infoTable['body'] .= '<td>
+                                                    <a class="myLinks ' . $permisos_Editar . '" data-toggle="tooltip" data-placement="right" title="Editar registro" href="' . base_url . 'Seguimientos/editarSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>';
+                        } else {
+                            $infoTable['body'] .= '<td>';
+                        }
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[2] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
+                           
+                            $infoTable['body'] .= '
+                                                    <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
+                                                        <i class="material-icons">visibility</i>
+                                                    </a>
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                        <i class="material-icons">assignment</i>
+                                                    </a>
+                                                    </td>';
+                                                /*<a target="_blank" class="myLinks' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar Ficha Tipo Atlas" href="' . base_url . 'Seguimientos/GenerarFichaAtlas/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <i class="material-icons">picture_as_pdf</i>
+                                                </a>*/
+    
+                        }else{
+                            $infoTable['body'] .= '</td>';
+                        }
+                            
+                    }
+                    $infoTable['body'] .= '</tr>';
+                }
+                $infoTable['header'] .= '<th >Operaciones</th>';
+            break;
         }
-       
         return $infoTable;
     }
     public function generarLinks($numPage, $total_pages, $extra_cad = "", $filtro = 1){
@@ -323,13 +483,22 @@ class Seguimientos extends Controller
         //generación de dropdown dependiendo del filtro
         switch ($filtro) {
             case '1':
-                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios infra','Zonas','Peligrosidad','Elemento capturante'];
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
                 break;
             case '2':
                 $campos = ['Folio Red','Nombre del grupo delictivo', 'Nombre completo', 'Curp','Edad','Telefono','Alias', 'Capturo'];
                 break;
             case '3':
                 $campos = ['Folio Red','Nombre del grupo delictivo', 'Placas', 'Informacion del vehiculo', 'Nivs','Nombre del propietario','Capturo'];
+                break;
+            case '4':
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
+                break;
+            case '5':
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Elemento capturante'];
+                break;
+            case '6':
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Elemento capturante'];
                 break;
         }
        
@@ -437,9 +606,12 @@ class Seguimientos extends Controller
 			$cat_rows = $this->Seguimiento->getAllInfoSeguimientoByCadena($from_where_sentence);
 			switch ($filtroActual) {
 				case '1':
+                case '4':
+                case '5':
+                case '6':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_seguimientos";
-					$csv_data="Folio Red, Nombre del grupo delictivo,Modus_operandi,Peligrosidad,Observaciones,Zonas,Folios infra (Eventos),Vehiculos del seguimiento,Personas del seguimiento,Elemento_Captura ,Fecha de creacion\n";
+					$csv_data="Folio Red, Nombre del grupo delictivo,Modus_operandi,Peligrosidad,Observaciones,Zonas,Folios AURA (Eventos),Vehiculos del seguimiento,Personas del seguimiento,Elemento_Captura ,Fecha de creacion\n";
                     foreach ($cat_rows as $row) {
                         $partes = explode(" ", $row->FechaHora_Creacion);
 
@@ -456,6 +628,7 @@ class Seguimientos extends Controller
 									mb_strtoupper($partes[0])."\"\n";
 					}
 					break;
+
             }
 			//se genera el archivo csv o excel
 			$csv_data = utf8_decode($csv_data); //escribir información con formato utf8 por algún acento
@@ -721,7 +894,7 @@ class Seguimientos extends Controller
             $data_p['error_message'] = 'Render Index';
             echo json_encode($data_p);
         }
-        ini_set('memory_limit', '5120M');
+        
         if(isset($_POST['Personas_table'])){
             $success = $this->Seguimiento->UpdatePersonasFetch($_POST);
             if ($success['status']) {
@@ -733,22 +906,29 @@ class Seguimientos extends Controller
                 $descripcion = 'ACTUALIZACION DE PERSONAS DE SEGUIMIENTO: '.$_POST['id_seguimiento'].' '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
                 $success_3=$this->Seguimiento->historial($user, $ip, 27, $descripcion);//Guarda en el historial el movimiento
 
-                $Id_Seguimiento=$success['id_seguimiento'];
-                $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Personas/";
-                $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
+                
+
                 if(isset($_POST['Personas_table'])){
                     $personas = json_decode($_POST['Personas_table']);//Saca los datos de los personas
                 }
                 ini_set('memory_limit', '5120M');
-                foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
-                    if (is_dir($archivos_carpeta)) {
-                        rmDir_rf($archivos_carpeta);
-                    } else {
-                        unlink($archivos_carpeta);
-                    }
-                }
+                $Id_Seguimiento = 0;
                 if(isset($personas)){
                     foreach ($personas as $persona) {
+                        
+                        if($Id_Seguimiento!=$persona->row->Id_Seguimiento ){
+                            $Id_Seguimiento = $persona->row->Id_Seguimiento;
+                            $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Personas/";
+                            $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
+    
+                            foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
+                                if (is_dir($archivos_carpeta)) {
+                                    rmDir_rf($archivos_carpeta);
+                                } else {
+                                    unlink($archivos_carpeta);
+                                }
+                            }
+                        }
                         if($persona->row->nameImage != 'null'){
                             if ($persona->row->typeImage == 'File') {
                                 $type = $_FILES[$persona->row->nameImage]['type'];
@@ -846,22 +1026,27 @@ class Seguimientos extends Controller
             echo json_encode($data_p);
         }     
     }
-    public function GuardarFotosVehiculos($Id_Seguimiento){
-        $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Vehiculos/";
-        $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
+    public function GuardarFotosVehiculos($Id_Seguimiento_Padre){
         if(isset($_POST['Vehiculos_table'])){
             $Vehiculos = json_decode($_POST['Vehiculos_table']);//Saca los datos de los Vehiculos
         }
         ini_set('memory_limit', '5120M');
-        foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
-            if (is_dir($archivos_carpeta)) {
-                rmDir_rf($archivos_carpeta);
-            } else {
-                unlink($archivos_carpeta);
-            }
-        }
+        $Id_Seguimiento = 0;
         if(isset($Vehiculos)){
             foreach ($Vehiculos as $vehiculo) {
+                if($Id_Seguimiento!=$vehiculo->row->Id_Seguimiento){
+                    $Id_Seguimiento = $vehiculo->row->Id_Seguimiento;
+                    $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $vehiculo->row->Id_Seguimiento. "/Vehiculos/";
+                    $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $vehiculo->row->Id_Seguimiento. "/Respaldo/";
+                   
+                    foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
+                        if (is_dir($archivos_carpeta)) {
+                            rmDir_rf($archivos_carpeta);
+                        } else {
+                            unlink($archivos_carpeta);
+                        }
+                    }
+                }
                 if($vehiculo->row->nameImage != 'null'){
                     if ($vehiculo->row->typeImage == 'File') {
                         $type = $_FILES[$vehiculo->row->nameImage]['type'];
@@ -976,21 +1161,28 @@ class Seguimientos extends Controller
         }     
     }
     public function GuardarFotosForencias($Id_Seguimiento){
-        $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Forencias/";
-        $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
-        if(isset($_POST['Forenciastable'])){
+       if(isset($_POST['Forenciastable'])){
             $Forencias = json_decode($_POST['Forenciastable']);//Saca los datos de los Forencias
         }
         ini_set('memory_limit', '5120M');
-        foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
-            if (is_dir($archivos_carpeta)) {
-                rmDir_rf($archivos_carpeta);
-            } else {
-                unlink($archivos_carpeta);
-            }
-        }
+        $Id_Seguimiento = 0;
+      
         if(isset($Forencias)){
             foreach ($Forencias as $forencia) {
+                if($Id_Seguimiento != $forencia->row->Id_Seguimiento){
+                    $Id_Seguimiento = $forencia->row->Id_Seguimiento;
+                    $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Forencias/";
+                    $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
+                    foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
+                        if (is_dir($archivos_carpeta)) {
+                            rmDir_rf($archivos_carpeta);
+                        } else {
+                            unlink($archivos_carpeta);
+                        }
+                    }
+
+                }
+
                 if($forencia->row->nameImage != 'null'){
                     if ($forencia->row->typeImage == 'File') {
                         $type = $_FILES[$forencia->row->nameImage]['type'];
@@ -1042,21 +1234,26 @@ class Seguimientos extends Controller
         }     
     }
     public function GuardarFotosRedesSociales($Id_Seguimiento){
-        $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Redes_Sociales/";
-        $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $Id_Seguimiento . "/Respaldo/";
         if(isset($_POST['RedesSociales_table'])){
             $RedesSociales = json_decode($_POST['RedesSociales_table']);//Saca los datos de los RedesSociales
         }
         ini_set('memory_limit', '5120M');
-        foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
-            if (is_dir($archivos_carpeta)) {
-                rmDir_rf($archivos_carpeta);
-            } else {
-                unlink($archivos_carpeta);
-            }
-        }
+        $Id_Seguimiento = 0;
         if(isset($RedesSociales)){
             foreach ($RedesSociales as $redSocial) {
+                if($Id_Seguimiento!=$redSocial->row->Id_Seguimiento){
+                    $Id_Seguimiento = $redSocial->row->Id_Seguimiento;
+                    $path_carpeta = BASE_PATH . "public/files/Seguimientos/" . $redSocial->row->Id_Seguimiento. "/Redes_Sociales/";
+                    $path_carpeta2 = BASE_PATH . "public/files/Seguimientos/" . $redSocial->row->Id_Seguimiento. "/Respaldo/";
+                   
+                    foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
+                        if (is_dir($archivos_carpeta)) {
+                            rmDir_rf($archivos_carpeta);
+                        } else {
+                            unlink($archivos_carpeta);
+                        }
+                    }
+                }
                 if($redSocial->row->nameImage != 'null'){
                     if ($redSocial->row->typeImage == 'File') {
                         $type = $_FILES[$redSocial->row->nameImage]['type'];
@@ -1265,6 +1462,10 @@ class Seguimientos extends Controller
         }
     }
     
+    public function getInfoRedes(){//FUNCION QUE OBTIENE LA INFORMACION DEL EVENTO ESPECIFICO CONSULTADO
+        $data = $this->Seguimiento->getInfoRedes();
+        echo json_encode($data);
+    }
     public function getInfoEvento(){//FUNCION QUE OBTIENE LA INFORMACION DEL EVENTO ESPECIFICO CONSULTADO
         if (isset($_POST['Folio_infra'])) {
             $Folio_infra = $_POST['Folio_infra'];
@@ -1413,11 +1614,20 @@ class Seguimientos extends Controller
             exit();
         }
     }
-    
     public function getDelitosRelacionados(){//FUNCION QUE OBTIENE LOS DATOS DEL EVENTO RELACIONADOS AL SEGUIMIENTO
         if (isset($_POST['Id_seguimiento'])) {
             $Id_seguimiento = $_POST['Id_seguimiento'];
             $data = $this->Seguimiento->getDelitosRelacionados($Id_seguimiento);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Seguimientos");
+            exit();
+        }
+    }
+    public function getHijosRed(){//FUNCION QUE OBTIENE LOS DATOS DEL EVENTO RELACIONADOS AL SEGUIMIENTO
+        if (isset($_POST['Id_seguimiento'])) {
+            $Id_seguimiento = $_POST['Id_seguimiento'];
+            $data = $this->Seguimiento->getHijosRed($Id_seguimiento);
             echo json_encode($data);
         } else {
             header("Location: " . base_url . "Seguimientos");
@@ -1604,6 +1814,19 @@ class Seguimientos extends Controller
                 if($dataSeguimiento['eventos']!=[]){
                     $Eventos=$dataSeguimiento['eventos'];
                     foreach($Eventos as $Evento){
+                        $dataConsultaTareas = $this->Seguimiento->getTareasPrincipal($Evento->Folio_infra);
+                        $dataTareas = [];
+                        if($data != []){
+                            $Tareas = $dataConsultaTareas;
+                            $j=0;
+                            foreach($Tareas as $Tarea){
+                                $dataTareas[$j]= [
+                                    'Tipo' =>$Tarea->tipo_tarea,
+                                    'Principales'   =>$this->Seguimiento->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                                ];
+                                $j++;
+                            }
+                        }
                         $dataEventos[$i]= [
                             'principales'   => $Evento,
                             'evento'   => $this->Seguimiento->getPrincipalesEventoAll($Evento->Folio_infra),
@@ -1613,7 +1836,9 @@ class Seguimientos extends Controller
                             'entrevistas'   => $this->Seguimiento->getEntrevistasEvento($Evento->Folio_infra),
                             'vehiculos'   => $this->Seguimiento->getVehiculosC($Evento->Folio_infra),
                             'personas'   => $this->Seguimiento->getResponsablesC($Evento->Folio_infra),
-                            'fotos'   => $this->Seguimiento->getFotos($Evento->Folio_infra)
+                            'fotos'   => $this->Seguimiento->getFotos($Evento->Folio_infra),
+                            'usuarios'=>$this->Seguimiento->getUsuarios(),
+                            'tareas' => $dataTareas
                         ];
                         $i++;
                     }
@@ -1640,16 +1865,92 @@ class Seguimientos extends Controller
                     ];
                     $i++;  
                 }
-
+                $info_hijos = [];
+                if($dataSeguimiento['principal']->Tipo_Grupo=='GRUPO'){
+                    
+                    $hijos = $this->Seguimiento->getHijosRed($Id_seguimiento);
+                    $j=0;
+                    foreach($hijos as $hijo){
+                        $PersonasH = $this->Seguimiento->getPersonas($hijo->Id_Seguimiento);
+                        $VehiculosH = $this->Seguimiento->getVehiculos($hijo->Id_Seguimiento);
+                        $dataSeguimientoH =$this->Seguimiento->getAllPrincipales($hijo->Id_Seguimiento);
+                        $dataPersonaH=[];
+                        $i=0;
+                        foreach($PersonasH as $PersonaH){
+                            $dataPersonaH[$i]= [
+                            'datos_persona'=> $PersonaH,
+                            'domicilios'   => $this->Seguimiento->getDomiciliosOneRegister($PersonaH->Id_Persona,'PERSONA'),
+                            'antecedentes' => $this->Seguimiento->getAntecedentesOneRegister($PersonaH->Id_Persona,'PERSONA'),
+                            'forencias'    => $this->Seguimiento->getForenciasOneRegister($PersonaH->Id_Persona),
+                            'redes_sociales'=>$this->Seguimiento->getRedesSocialesOneRegister($PersonaH->Id_Persona)
+                            ];
+                            $i++;  
+                        }
+                        $conteoPersonas = $conteoPersonas + $i;
+                        $i=0;
+                        $dataVehiculoH=[];
+                        foreach($VehiculosH as $VehiculoH){
+                            $dataVehiculoH[$i]= [
+                            'datos_Vehiculo'=> $VehiculoH,
+                            'domicilios'   => $this->Seguimiento->getDomiciliosOneRegister($VehiculoH->Id_Vehiculo,'VEHICULO'),
+                            'antecedentes' => $this->Seguimiento->getAntecedentesOneRegister($VehiculoH->Id_Vehiculo,'VEHICULO')
+                            ];
+                            $i++;  
+                        }
+                        $dataEventosH=[];
+                        $i=0;
+                        if($dataSeguimientoH['eventos']!=[]){
+                            $EventosH=$dataSeguimientoH['eventos'];
+                            foreach($EventosH as $EventoH){
+                                
+                                $dataConsultaTareas = $this->Seguimiento->getTareasPrincipal($Evento->Folio_infra);
+                                $dataTareas = [];
+                                if($data != []){
+                                    $Tareas = $dataConsultaTareas;
+                                    $j=0;
+                                    foreach($Tareas as $Tarea){
+                                        $dataTareas[$j]= [
+                                            'Tipo' =>$Tarea->tipo_tarea,
+                                            'Principales'   =>$this->Seguimiento->getStatusTareaTipo($Tarea->id_tarea, $Tarea->tipo_tarea)
+                                        ];
+                                        $j++;
+                                    }
+                                }
+                                $dataEventosH[$i]= [
+                                    'principales'   => $EventoH,
+                                    'evento'   => $this->Seguimiento->getPrincipalesEventoAll($EventoH->Folio_infra),
+                                    'detencion'   => $this->Seguimiento->getInfoDetencion($EventoH->Folio_infra),
+                                    'delitos'       => $this->Seguimiento->getDelitosC($EventoH->Folio_infra),
+                                    'hechos'        => $this->Seguimiento->getHechosC($EventoH->Folio_infra),
+                                    'entrevistas'   => $this->Seguimiento->getEntrevistasEvento($EventoH->Folio_infra),
+                                    'vehiculos'   => $this->Seguimiento->getVehiculosC($EventoH->Folio_infra),
+                                    'personas'   => $this->Seguimiento->getResponsablesC($EventoH->Folio_infra),
+                                    'fotos'   => $this->Seguimiento->getFotos($EventoH->Folio_infra),
+                                    'usuarios'=>$this->Seguimiento->getUsuarios(),
+                                    'tareas' => $dataTareas
+                                ];
+                                $i++;
+                            }
+                        }
+                        $info_hijos[$j] = [
+                            'dataSeguimientoH'   => $dataSeguimientoH,
+                            'datos_vehiculos'   => $dataVehiculoH,
+                            'datos_personas' => $dataPersonaH,
+                            'datos_eventos' => $dataEventosH
+                        ];
+                        $j++;
+                    }
+                }
 
                 $info_Seguimiento=[
                     'datos_seguimiento'=> $dataSeguimiento,
-                    'ConteoPersonas'=>$conteoPersonas,
-                    'datos_vehiculos'   => $dataVehiculo,
+                    'ConteoPersonas'=> $conteoPersonas,
+                    'datos_vehiculos' => $dataVehiculo,
                     'datos_personas' => $dataPersona,
                     'datos_eventos' => $dataEventos,
                     'datos_personas_entrevistadas_no'=> $dataPersonasEntrevistadasNo,
-                    'datos_personas_entrevistadas_si'=> $dataPersonasEntrevistadasSi
+                    'datos_personas_entrevistadas_si'=> $dataPersonasEntrevistadasSi,
+                    'data_hijos' => $info_hijos
                 ];
             }else{
                 header("Location: " . base_url . "Seguimientos");

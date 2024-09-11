@@ -2,9 +2,11 @@
 class Seguimiento{
     public $db; //Variable para instanciar el objeto PDO
     public $db2;
+    public $db3;
     public function __construct(){
         $this->db = new Base(); //Se instancia el objeto con los métodos de PDO
         $this->db2 = new Base2(); //Se instancia el objeto con los métodos de solo consulta
+        $this->db3 = new BaseTareas();
     }
     //genera la consulta where dependiendo del filtro
     public function generateFromWhereSentence($cadena = "", $filtro = '1',$cadena2 = ""){
@@ -38,6 +40,7 @@ class Seguimiento{
                         $from_where_sentence.= " AND ( Alto_Impacto = 0) ";  
                     }
                 }
+                $from_where_sentence.= " AND ( Tipo_Grupo = 'GRUPO') ";  
                 $from_where_sentence .= $this->getFechaCondition();
                 $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
             break;
@@ -98,6 +101,94 @@ class Seguimiento{
                         $from_where_sentence.= " AND ( Alto_Impacto = 0) ";  
                     }
                 }
+                $from_where_sentence .= $this->getFechaCondition();
+                $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
+            break;
+            case '4':   //alto impacto
+                $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                $palabras = array_diff($palabras, $articulos);
+                $from_where_sentence .= " FROM gc_seguimiento_filtro_1 WHERE Id_Seguimiento > 0";
+                foreach($palabras as $palabra){
+                    $palabra=ltrim($palabra, " ");
+                    $palabra=rtrim($palabra, " ");
+                    $from_where_sentence.= " AND    (    Id_Seguimiento LIKE '%" . $palabra . "%' OR 
+                                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                        FechaHora_Creacion LIKE '%" . $palabra . "%' OR 
+                                                        Nombre_grupo_delictivo LIKE '%" . $palabra . "%' OR 
+                                                        Modus_operandi LIKE '%" . $palabra . "%' OR 
+                                                        Peligrosidad LIKE '%" . $palabra . "%' OR 
+                                                        Observaciones LIKE '%" . $palabra . "%' OR 
+                                                        Zonas LIKE '%" . $palabra . "%' OR
+                                                        Folios_infra LIKE '%" . $palabra . "%'OR
+                                                        vehiculos_del_seguimiento LIKE '%" . $palabra . "%'OR
+                                                        personas_del_seguimiento LIKE '%" . $palabra . "%'
+                                                    ) AND ( Alto_Impacto = 1) ";          
+                }
+                $from_where_sentence .= $this->getFechaCondition();
+                $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
+            break;
+            case '5':   //general
+                $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                $palabras = array_diff($palabras, $articulos);
+                $from_where_sentence .= " FROM gc_seguimiento_filtro_1 WHERE Id_Seguimiento > 0";
+                foreach($palabras as $palabra){
+                    $palabra=ltrim($palabra, " ");
+                    $palabra=rtrim($palabra, " ");
+                    $from_where_sentence.= " AND    (    Id_Seguimiento LIKE '%" . $palabra . "%' OR 
+                                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                        FechaHora_Creacion LIKE '%" . $palabra . "%' OR 
+                                                        Nombre_grupo_delictivo LIKE '%" . $palabra . "%' OR 
+                                                        Modus_operandi LIKE '%" . $palabra . "%' OR 
+                                                        Peligrosidad LIKE '%" . $palabra . "%' OR 
+                                                        Observaciones LIKE '%" . $palabra . "%' OR 
+                                                        Zonas LIKE '%" . $palabra . "%' OR
+                                                        Folios_infra LIKE '%" . $palabra . "%'OR
+                                                        vehiculos_del_seguimiento LIKE '%" . $palabra . "%'OR
+                                                        personas_del_seguimiento LIKE '%" . $palabra . "%'
+                                                    ) ";          
+                }
+                if($_SESSION['userdataSIC']->Modo_Admin != 1){
+                    if($_SESSION['userdataSIC']->Red[0] == 1){
+                        $from_where_sentence.= " AND ( Alto_Impacto = 1) ";   
+                    }else{
+                        $from_where_sentence.= " AND ( Alto_Impacto = 0) ";  
+                    }
+                }
+                $from_where_sentence.= " AND  Tipo_Grupo = 'EVENTO DELICTIVO' AND Llave_Padre = 0  ";  
+                $from_where_sentence .= $this->getFechaCondition();
+                $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
+            break;
+            case '6':   //general
+                $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                $palabras = array_diff($palabras, $articulos);
+                $from_where_sentence .= " FROM gc_seguimiento_filtro_1 WHERE Id_Seguimiento > 0";
+                foreach($palabras as $palabra){
+                    $palabra=ltrim($palabra, " ");
+                    $palabra=rtrim($palabra, " ");
+                    $from_where_sentence.= " AND    (    Id_Seguimiento LIKE '%" . $palabra . "%' OR 
+                                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                        FechaHora_Creacion LIKE '%" . $palabra . "%' OR 
+                                                        Nombre_grupo_delictivo LIKE '%" . $palabra . "%' OR 
+                                                        Modus_operandi LIKE '%" . $palabra . "%' OR 
+                                                        Peligrosidad LIKE '%" . $palabra . "%' OR 
+                                                        Observaciones LIKE '%" . $palabra . "%' OR 
+                                                        Zonas LIKE '%" . $palabra . "%' OR
+                                                        Folios_infra LIKE '%" . $palabra . "%'OR
+                                                        vehiculos_del_seguimiento LIKE '%" . $palabra . "%'OR
+                                                        personas_del_seguimiento LIKE '%" . $palabra . "%'
+                                                    ) ";          
+                }
+                if($_SESSION['userdataSIC']->Modo_Admin != 1){
+                    if($_SESSION['userdataSIC']->Red[0] == 1){
+                        $from_where_sentence.= " AND ( Alto_Impacto = 1) ";   
+                    }else{
+                        $from_where_sentence.= " AND ( Alto_Impacto = 0) ";  
+                    }
+                }
+                $from_where_sentence.= " AND Tipo_Grupo = 'EVENTO DELICTIVO' AND Llave_Padre != 0 ";  
                 $from_where_sentence .= $this->getFechaCondition();
                 $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
             break;
@@ -219,35 +310,71 @@ class Seguimiento{
             $nombre_grupo=$this->remplazoCadena($post['nombre_grupo']);
             $modus_operandi=$this->remplazoCadena($post['MO']);
             $observaciones=$this->remplazoCadena($post['observaciones']);
-            if($post['BanderaFoto']==0){
-                $sql = "UPDATE seguimiento_gabinete SET
-                        Nombre_grupo_delictivo = '".$nombre_grupo."',
-                        Tipo_Grupo = '".$post['Tipo_Grupo']."',
-                        Modus_operandi = '".$modus_operandi."',
-                        Peligrosidad = '".$post['peligrosidad']."',
-                        Observaciones = '".$observaciones."',
-                        Nombre_PDF = '".$post['nombre_pdf']."'
-                        WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
-                $this->db->query($sql);
-                $this->db->execute();
-                $sqlEjecutados=$sqlEjecutados.' '.$sql;//guarda los movimientos ejecutados de sql
 
+            if($_SESSION['userdataSIC']->Modo_Admin == 1 ){
+                if($post['BanderaFoto']==0){
+                    $sql = "UPDATE seguimiento_gabinete SET
+                            Nombre_grupo_delictivo = '".$nombre_grupo."',
+                            Llave_Padre = '".$post['Id_red']."',
+                            Tipo_Grupo = '".$post['Tipo_Grupo']."',
+                            Modus_operandi = '".$modus_operandi."',
+                            Peligrosidad = '".$post['peligrosidad']."',
+                            Observaciones = '".$observaciones."',
+                            Nombre_PDF = '".$post['nombre_pdf']."'
+                            WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
+                    $this->db->query($sql);
+                    $this->db->execute();
+                    $sqlEjecutados=$sqlEjecutados.' '.$sql;//guarda los movimientos ejecutados de sql
+    
+                }else{
+                    $sql = "UPDATE seguimiento_gabinete SET
+                            Nombre_grupo_delictivo = '".$nombre_grupo."',
+                            Llave_Padre = '".$post['Id_red']."',
+                            Tipo_Grupo = '".$post['Tipo_Grupo']."',
+                            Modus_operandi = '".$modus_operandi."',
+                            Peligrosidad = '".$post['peligrosidad']."',
+                            Observaciones = '".$observaciones."',
+                            Foto_grupo_delictivo = '".$post['Foto_grupo_delictivo']."',
+                            Img_64 = '".$post['Img_64']."',
+                            Nombre_PDF = '".$post['nombre_pdf']."'
+                            WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
+                    $this->db->query($sql);
+                    $this->db->execute();
+                    $sqlrecortado=explode(";base64", strtolower($sql));
+                    $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];//guarda los movimientos ejecutados de sql
+                }
             }else{
-                $sql = "UPDATE seguimiento_gabinete SET
-                        Nombre_grupo_delictivo = '".$nombre_grupo."',
-                        Tipo_Grupo = '".$post['Tipo_Grupo']."',
-                        Modus_operandi = '".$modus_operandi."',
-                        Peligrosidad = '".$post['peligrosidad']."',
-                        Observaciones = '".$observaciones."',
-                        Foto_grupo_delictivo = '".$post['Foto_grupo_delictivo']."',
-                        Img_64 = '".$post['Img_64']."',
-                        Nombre_PDF = '".$post['nombre_pdf']."'
-                        WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
-                $this->db->query($sql);
-                $this->db->execute();
-                $sqlrecortado=explode(";base64", strtolower($sql));
-                $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];//guarda los movimientos ejecutados de sql
+                if($post['BanderaFoto']==0){
+                    $sql = "UPDATE seguimiento_gabinete SET
+                            Nombre_grupo_delictivo = '".$nombre_grupo."',
+                            Tipo_Grupo = '".$post['Tipo_Grupo']."',
+                            Modus_operandi = '".$modus_operandi."',
+                            Peligrosidad = '".$post['peligrosidad']."',
+                            Observaciones = '".$observaciones."',
+                            Nombre_PDF = '".$post['nombre_pdf']."'
+                            WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
+                    $this->db->query($sql);
+                    $this->db->execute();
+                    $sqlEjecutados=$sqlEjecutados.' '.$sql;//guarda los movimientos ejecutados de sql
+    
+                }else{
+                    $sql = "UPDATE seguimiento_gabinete SET
+                            Nombre_grupo_delictivo = '".$nombre_grupo."',
+                            Tipo_Grupo = '".$post['Tipo_Grupo']."',
+                            Modus_operandi = '".$modus_operandi."',
+                            Peligrosidad = '".$post['peligrosidad']."',
+                            Observaciones = '".$observaciones."',
+                            Foto_grupo_delictivo = '".$post['Foto_grupo_delictivo']."',
+                            Img_64 = '".$post['Img_64']."',
+                            Nombre_PDF = '".$post['nombre_pdf']."'
+                            WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
+                    $this->db->query($sql);
+                    $this->db->execute();
+                    $sqlrecortado=explode(";base64", strtolower($sql));
+                    $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];//guarda los movimientos ejecutados de sql
+                }
             }
+
             $sql = "UPDATE evento SET Id_Seguimiento = null WHERE Id_Seguimiento= ".$Id_Seguimiento;//reseteamos
             $this->db->query($sql);
             $this->db->execute();
@@ -255,6 +382,12 @@ class Seguimiento{
             if (isset($post['Eventos'])) {// Si existen datos de los eventos los escribe en la tabla delitos_asociados_evento
                 $EventosArray = json_decode($post['Eventos']);
                 foreach ($EventosArray as $Evento) {
+                    if($Evento->row->Id_Seguimiento!='SD'){
+                        $Id_Seguimiento = $Evento->row->Id_Seguimiento;
+
+                    }else{
+                        $Id_Seguimiento=$post['id_seguimiento'];
+                    }
                     $sql = "UPDATE evento SET Id_Seguimiento =".$Id_Seguimiento. " WHERE Folio_infra= ".$Evento->row->Folio_infra;
                     $this->db->query($sql);
                     $this->db->execute();
@@ -1103,6 +1236,40 @@ class Seguimiento{
         $this->db2->query($sql);
         return $this->db2->registers();
     }
+    public function getTareasPrincipal($Folio_infra){
+        $sql = "SELECT 	id_tarea,tipo_tarea
+        FROM tareas
+        WHERE tareas.folio_sic = " . $Folio_infra;
+
+        $this->db3->query($sql);
+        return $this->db3->registers();
+    }
+    public function getStatusTareaTipo($id_tarea, $tipo_tarea){
+        switch($tipo_tarea){
+            case 'BARRIDO':
+                $sql = "SELECT * FROM tareas_barrido WHERE tareas_barrido.id_tarea = " . $id_tarea;
+            break;
+            case 'BUSQUEDA':
+                $sql = "SELECT * FROM tareas_busqueda WHERE tareas_busqueda.id_tarea = " . $id_tarea;
+            break;
+            case 'ENTREVISTA':
+                $sql = "SELECT * FROM tareas_entrevista WHERE tareas_entrevista.id_tarea = " . $id_tarea;
+            break;
+            case 'OTRA':
+                $sql = "SELECT * FROM tareas_otra WHERE tareas_otra.id_tarea = " . $id_tarea;
+            break;
+            case 'VIGILANCIA':
+                $sql = "SELECT * FROM tareas_vigilancia WHERE tareas_vigilancia.id_tarea = " . $id_tarea;
+            break;
+        }
+        $this->db3->query($sql);
+        return $this->db3->registers();
+    }
+    public function getInfoRedes(){
+        $sql = "SELECT Id_Seguimiento,Nombre_grupo_delictivo,Tipo_Grupo FROM seguimiento_gabinete WHERE Tipo_Grupo = 'GRUPO' ORDER BY Id_Seguimiento";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
     public function getVehiculosSarai(){
         $sql = "SELECT * FROM casos_consulta_vehiculos";
         $this->db2->query($sql);
@@ -1153,6 +1320,13 @@ class Seguimiento{
         $sql = "SELECT 	*
         FROM delitos_asociados_seguimiento
         WHERE delitos_asociados_seguimiento.Id_Seguimiento = " . $Id_Seguimiento;
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function getHijosRed($Id_Seguimiento){
+        $sql = "SELECT 	Id_Seguimiento
+        FROM seguimiento_gabinete
+        WHERE Tipo_Grupo = 'EVENTO DELICTIVO' AND Llave_Padre = " . $Id_Seguimiento;
         $this->db->query($sql);
         return $this->db->registers();
     }
@@ -1283,8 +1457,8 @@ class Seguimiento{
         $i=0;
         $IdsArray = json_decode($Ids_Datos);
         foreach($IdsArray as $Id_dato){
-            $sql = "SELECT 	*
-            FROM forencias_gabinete
+            $sql = "SELECT forencias_gabinete.*, persona_gabinete.Id_Seguimiento
+            FROM forencias_gabinete JOIN persona_gabinete ON forencias_gabinete.Id_Persona = persona_gabinete.Id_Persona
             WHERE forencias_gabinete.Id_Persona  = " . $Id_dato;
             $this->db->query($sql);
             $data[$i]= $this->db->registers();
@@ -1297,8 +1471,8 @@ class Seguimiento{
         $i=0;
         $IdsArray = json_decode($Ids_Datos);
         foreach($IdsArray as $Id_dato){
-            $sql = "SELECT 	*
-            FROM redes_sociales_gabinete
+            $sql = "SELECT 	redes_sociales_gabinete.*, persona_gabinete.Id_Seguimiento
+            FROM redes_sociales_gabinete JOIN persona_gabinete ON redes_sociales_gabinete.Id_Persona = persona_gabinete.Id_Persona
             WHERE redes_sociales_gabinete.Id_Persona  = " . $Id_dato;
             $this->db->query($sql);
             $data[$i]= $this->db->registers();
@@ -1483,6 +1657,13 @@ class Seguimiento{
     }
 
     /*-------------------------------GET INFORMACION COMPLETA DE LOS EVENTOS ASOCIADOS AL SEGUIMIENTO PARA PDF -----------------------------------*/
+    public function getUsuarios(){
+        $sql = "SELECT 	User_Name
+        FROM usuario
+        WHERE usuario.Area = 'DEPARTAMENTO DE INFORMACION' " ;
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
     public function getPrincipalesEventoAll($Folio_infra){
         $sql = "SELECT 	*
         FROM evento

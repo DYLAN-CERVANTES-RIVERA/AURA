@@ -202,7 +202,7 @@ const insertaInfo = async(data,tipo)=>{
 async function obtenerIpImages(tipo,imagen) {
 
     const url = window.location.href;
-    if (url.includes('172.18.0.25')) {
+    if (url.includes('172.18.110.25')) {
        return 'http://172.18.110.90:9090/api/images/'+tipo.toLowerCase()+"/"+imagen;
     } else{
        return 'http://187.216.250.252:9090/api/images/'+tipo.toLowerCase()+"/"+imagen;

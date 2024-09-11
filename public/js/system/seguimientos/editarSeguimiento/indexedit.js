@@ -1,7 +1,8 @@
 /*------------- FUNCION AUTOCOMPLETE PARA EL CAMPO DE EVENTOS ----------------------- */
 const inputEventos = document.getElementById('id_evento');
+const inputRed = document.getElementById('Id_red');
 var BanderaRecuperacion = false;
-var datosEventos;
+var datosEventos, datosRedes;
 inputEventos.addEventListener('input', () => { 
     const arr = datosEventos.map( r => ({ label: `FOLIO INFRA:${r.Folio_infra} FOLIO 911:${r.Folio_911} DELITOS:${r.delitos_concat}` , value: `${r.Folio_infra}`}))
         autocomplete({
@@ -14,6 +15,22 @@ inputEventos.addEventListener('input', () => {
             onSelect: function(item) {
                 id_evento.value = item.label;
                 document.getElementById('id_evento_value').value=item.value;
+            }
+        }); 
+});
+
+inputRed.addEventListener('input', () => { 
+    const arr = datosRedes.map( r => ({ label: `ID SEGUIMIENTO: ${r.Id_Seguimiento} NOMBRE GRUPO DELICTIVO: ${r.Nombre_grupo_delictivo}` , value: `${r.Id_Seguimiento}`}))
+        autocomplete({
+            input: Id_red,
+            fetch: function(text, update) {
+                text = text.toLowerCase();
+                const suggestions = arr.filter(n => n.label.toLowerCase().includes(text))
+                update(suggestions);
+            },
+            onSelect: function(item) {
+                Id_red.value = item.value;
+                
             }
         }); 
 });
@@ -91,6 +108,8 @@ const insertEventoTabla = ({ Folio_infra, Folio_911,delitos_concat,Ubicacion}, t
                                             <i class="material-icons">delete</i>
                                         </button>`;
     }
+    newRow.insertCell(5).innerHTML="SD";
+    newRow.cells[5].style.display = "none";
 }
 const ValidaEvento = async(BuscarEvento) => {//FUNCION QUE VALIDA ANTES DE INSERTAR QUE EL EVENTO SE ENCUENTRE EN EL CATALOGO DE EVENTOS SIN SEGUIMIENTO 
     var EventoValido = false;
@@ -113,7 +132,17 @@ const getInfoEventos = async()=>{
     .then(res => res.json())
     .then(data => {
         datosEventos = data;
-        
+    })
+    .catch(err => alert(`Ha ocurrido un error al obtener los Eventos.\nCódigo de error: ${ err }`))
+}
+const getInfoRedes = async()=>{
+    fetch(base_url_js + 'Seguimientos/getInfoRedes', {
+        method: 'POST',
+        body: myFormData
+    })
+    .then(res => res.json())
+    .then(data => {
+        datosRedes = data;
     })
     .catch(err => alert(`Ha ocurrido un error al obtener los Eventos.\nCódigo de error: ${ err }`))
 }
@@ -165,7 +194,8 @@ const readTableEventos = () => {//FUNCION QUE LEE LOS DATOS DE LA TABLA DE EVENT
     for (let i = 1; i < table.rows.length; i++) {
         objetos.push({
             ['row']: {
-                Folio_infra: table.rows[i].cells[0].innerHTML
+                Folio_infra: table.rows[i].cells[0].innerHTML,
+                Id_Seguimiento: table.rows[i].cells[5].innerHTML
             }
         });
     }
@@ -236,9 +266,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
     var FV = new FormValidator()
     var i = 0
     await ResetLetreros();
-    band[i++] = GrupoError.innerText = FV.validate(myFormData.get('nombre_grupo'), 'required ')
-    if(document.getElementById('peligrosidad').value=='SD'){
-        band[i++] = PeligrosidadError.innerText = FV.validate('', 'required ')
+    if(document.getElementById('Question3').checked == false){
+        band[i++] = GrupoError.innerText = FV.validate(myFormData.get('nombre_grupo'), 'required ')
+        if(document.getElementById('peligrosidad').value=='SD'){
+            band[i++] = PeligrosidadError.innerText = FV.validate('', 'required ')
+        }
     }
     let rowsTableEventos = document.getElementById('contarEventos').rows.length;//ALMACENA EL NUMERO DE RENGLONES DE LA TABLA DELITOS
     if(rowsTableEventos >= 1){
@@ -298,7 +330,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         if(document.getElementById('Question1').checked){
             myFormData.append('Tipo_Grupo','PERSONA')
         }else{
-            myFormData.append('Tipo_Grupo','GRUPO')
+            if(document.getElementById('Question3').checked){
+                myFormData.append('Tipo_Grupo','EVENTO DELICTIVO')
+            }else{
+                myFormData.append('Tipo_Grupo','GRUPO')
+            }
         }
         button2 = document.getElementById('btn_principal')
         button2.innerHTML = `Guardando
@@ -539,11 +575,21 @@ document.getElementById('btn_Alto_Impacto').addEventListener('click', async func
             console.log(data.error_sql)
             msg_principalesError.innerHTML = messageError
         } else {//si todo salio bien
-            msg_principalesError.innerHTML = `<div class="alert alert-success text-center" role="success">Se Actualizo la Red a Alto Impacto
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>`;
+
+            if(radioAltoImpacto[0].checked){
+                msg_principalesError.innerHTML = `<div class="alert alert-success text-center" role="success">Se Cambio el tipo la Red a Alto Impacto
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>`; 
+            }else{
+                msg_principalesError.innerHTML = `<div class="alert alert-success text-center" role="success">Se Cambio el tipo la Red a Solo Redes 
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>`;
+            }
+
         }
     })
     
@@ -593,3 +639,17 @@ document.addEventListener('paste', async function(event) {
         }
     }
 });
+
+const showHabilitado = () =>{
+    if(document.getElementById('Question3').checked){
+        document.getElementById('Panel_nombre').classList.add('mi_hide');
+        document.getElementById('pdf_Segui').classList.add('mi_hide'); 
+        document.getElementById('Panel_Asociacion').classList.remove('mi_hide'); 
+        document.getElementById('Id_red').value = "";
+    }else{
+        document.getElementById('Panel_nombre').classList.remove('mi_hide'); 
+        document.getElementById('Panel_Asociacion').classList.add('mi_hide');
+        document.getElementById('pdf_Segui').classList.remove('mi_hide'); 
+        document.getElementById('Id_red').value = "0";
+    }
+}

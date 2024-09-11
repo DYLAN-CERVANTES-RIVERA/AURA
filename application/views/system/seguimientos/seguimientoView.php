@@ -75,6 +75,9 @@
                 <br>
             </nav>
         </div>
+        <?php
+            $miHideAdmin =  ($_SESSION['userdataSIC']->Modo_Admin == 1)  ? '':'mi_hide';
+        ?>
         <div class="container col-lg-10 mt-1 mb-1">
             <!--Barra de operaciones de filtrado y búsqueda-->
             <div class="row">
@@ -88,9 +91,12 @@
                     <!--Dropdown filter content-->
                     <div class="dropdown-menu" aria-labelledby="id_filtros">
                         
-                        <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>Seguimientos/index/?filtro=1">Todos los Seguimientos</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>Seguimientos/index/?filtro=1">Grupos</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>Seguimientos/index/?filtro=2">Personas</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>Seguimientos/index/?filtro=3">Vehiculos</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>Seguimientos/index/?filtro=5">Eventos Delictivos Sin Asociar</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>Seguimientos/index/?filtro=6">Eventos Delictivos Asociados a un Grupo</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?> <?= $miHideAdmin; ?> " href="<?= base_url;?>Seguimientos/index/?filtro=4">Solo Alto Impacto</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" class="btn btn-filtro" data-toggle="modal" data-target="#filtro_rangos">
                             <span class="v-a-middle" >Por rango de fechas</span>
@@ -120,7 +126,7 @@
                                 $cadenaExport = (isset($data['cadena'])) ? ("&cadena=" . $data['cadena']) : "";
                                 $filtroActual = "&filtroActual=".$data['filtroActual'];
                                 //echo($filtroActual);
-                                if($data['filtroActual']!=1){$mihide='mi_hide';}else{$mihide='';}
+                                if($data['filtroActual']!=1 && $data['filtroActual']!=4){$mihide='mi_hide';}else{$mihide='';}
                             ?>
 
                             <a id="id_link_excel" href="<?= base_url ?>Seguimientos/exportarInfo/?tipo_export=<?= "EXCEL".$cadenaExport.$filtroActual; ?>" class="<?= "btn ".$mihide; ?>" data-toggle="tooltip" data-placement="bottom" title="Exportar a Excel">

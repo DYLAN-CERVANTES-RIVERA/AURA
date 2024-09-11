@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded',async() => {
     fechahora_captura.disabled= true;
     captura=document.getElementById('captura_principales');
     captura.disabled= true;
+
+    radioHabilitado = document.getElementsByName('Question');
+    radioHabilitado[0].addEventListener('change',showHabilitado);
+    radioHabilitado[1].addEventListener('change',showHabilitado); 
+    radioHabilitado[2].addEventListener('change',showHabilitado); 
 });
 
 const getFechaActual =async() => { //Funcion para Obtener la fecha en el formato sql admitido
@@ -221,9 +226,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
     var FV = new FormValidator()
     var i = 0
     await ResetLetreros();
-    band[i++] = GrupoError.innerText = FV.validate(myFormData.get('nombre_grupo'), 'required ')
-    if(document.getElementById('peligrosidad').value=='SD'){
-        band[i++] = PeligrosidadError.innerText = FV.validate('', 'required ')
+    if(document.getElementById('Question3').checked == false){
+        band[i++] = GrupoError.innerText = FV.validate(myFormData.get('nombre_grupo'), 'required ')
+        if(document.getElementById('peligrosidad').value=='SD'){
+            band[i++] = PeligrosidadError.innerText = FV.validate('', 'required ')
+        }
     }
 
     rowsTableEventos = document.getElementById('contarEventos').rows.length;//ALMACENA EL NUMERO DE RENGLONES DE LA TABLA DELITOS
@@ -257,7 +264,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         if(document.getElementById('Question1').checked){
             myFormData.append('Tipo_Grupo','PERSONA')
         }else{
-            myFormData.append('Tipo_Grupo','GRUPO')
+            if(document.getElementById('Question3').checked){
+                myFormData.append('Tipo_Grupo','EVENTO DELICTIVO')
+            }else{
+                myFormData.append('Tipo_Grupo','GRUPO')
+            }
         }
         button2 = document.getElementById('btn_principal')
         button2.innerHTML = `Guardando
@@ -434,4 +445,12 @@ const readTableDelitos = () => {//FUNCION QUE LEE LOS DATOS DE LA TABLA DE EVENT
         });
     }
     return objetos;
+}
+
+const showHabilitado = () =>{
+    if(document.getElementById('Question3').checked){
+        document.getElementById('Panel_nombre').classList.add('mi_hide');
+    }else{
+        document.getElementById('Panel_nombre').classList.remove('mi_hide'); 
+    }
 }
