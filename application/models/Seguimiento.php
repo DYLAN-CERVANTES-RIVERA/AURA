@@ -319,6 +319,7 @@ class Seguimiento{
                             Tipo_Grupo = '".$post['Tipo_Grupo']."',
                             Modus_operandi = '".$modus_operandi."',
                             Peligrosidad = '".$post['peligrosidad']."',
+                            Consultado = '".$post['Consultado']."',
                             Observaciones = '".$observaciones."',
                             Nombre_PDF = '".$post['nombre_pdf']."'
                             WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
@@ -333,6 +334,7 @@ class Seguimiento{
                             Tipo_Grupo = '".$post['Tipo_Grupo']."',
                             Modus_operandi = '".$modus_operandi."',
                             Peligrosidad = '".$post['peligrosidad']."',
+                            Consultado = '".$post['Consultado']."',
                             Observaciones = '".$observaciones."',
                             Foto_grupo_delictivo = '".$post['Foto_grupo_delictivo']."',
                             Img_64 = '".$post['Img_64']."',
@@ -350,6 +352,7 @@ class Seguimiento{
                             Tipo_Grupo = '".$post['Tipo_Grupo']."',
                             Modus_operandi = '".$modus_operandi."',
                             Peligrosidad = '".$post['peligrosidad']."',
+                            Consultado = '".$post['Consultado']."',
                             Observaciones = '".$observaciones."',
                             Nombre_PDF = '".$post['nombre_pdf']."'
                             WHERE Id_Seguimiento = ".$Id_Seguimiento;//Actualizamos el seguimiento
@@ -363,6 +366,7 @@ class Seguimiento{
                             Tipo_Grupo = '".$post['Tipo_Grupo']."',
                             Modus_operandi = '".$modus_operandi."',
                             Peligrosidad = '".$post['peligrosidad']."',
+                            Consultado = '".$post['Consultado']."',
                             Observaciones = '".$observaciones."',
                             Foto_grupo_delictivo = '".$post['Foto_grupo_delictivo']."',
                             Img_64 = '".$post['Img_64']."',

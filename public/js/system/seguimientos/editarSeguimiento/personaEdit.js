@@ -1,3 +1,4 @@
+var datosRemisiones;
 const changeRemision = () =>{//FUNCION QUE HABILITA LA BUSQUEDA DEL NUMERO REMISION
     let radioHabilitado = document.getElementsByName('Remision_Si_No');
     if(radioHabilitado[0].checked){//SI TIENE REMISION
@@ -9,14 +10,8 @@ const changeRemision = () =>{//FUNCION QUE HABILITA LA BUSQUEDA DEL NUMERO REMIS
 const inputRemisiones = document.getElementById('id_remision');
 const error_remision= document.getElementById('error_remision');
 inputRemisiones.addEventListener('input', async() => { 
-    myFormData.append('termino', inputRemisiones.value)//REALIZA UN FETCH PARA TRAER EL CATALOGO DE REMISIONES PARA QUE SEA COMPARADO CON LO QUE SE ESTA INGRESANDO ADEMAS DE SE OCUPARA PARA LA FUNCION DEL AUTOCOMPLETE
-    fetch(base_url_js + 'Seguimientos/getRemisiones', {
-            method: 'POST',
-            body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        const arr = data.map( r => ({ label: `REMISION:${r.No_Remision} NOMBRE DETENIDO:${r.Nombre_completo} DELITOS:${r.Faltas_Delitos_Detenido}` , value: `${r.No_Remision}`}))
+   
+        const arr = datosRemisiones.map( r => ({ label: `REMISION:${r.No_Remision} NOMBRE DETENIDO:${r.Nombre_completo} DELITOS:${r.Faltas_Delitos_Detenido}` , value: `${r.No_Remision}`}))
         autocomplete({
             input: id_remision,
             fetch: function(text, update) {
@@ -29,8 +24,6 @@ inputRemisiones.addEventListener('input', async() => {
                  onFormRemisionSubmit()
             }
         }); 
-    })
-    .catch(err => alert(`Ha ocurrido un error al obtener las Remisiones.\nCódigo de error: ${ err }`))
 });
 const onFormRemisionSubmit = async() => {//FUINCION QUE EVALUA SI LA ENTRADA DE NUMERO DE REMISION EXISTE EN EL CATALOGO
     InfoRemision= await getInfoRemision(inputRemisiones.value)
@@ -42,6 +35,18 @@ const onFormRemisionSubmit = async() => {//FUINCION QUE EVALUA SI LA ENTRADA DE 
         error_remision.innerHTML="NO EXISTE ESE NUMERO DE REMISION INGRESE OTRO"
 
     }
+}
+const getRemisiones=async()=>{
+    fetch(base_url_js + 'Seguimientos/getRemisiones', {
+            method: 'POST',
+            body: myFormData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        datosRemisiones=data;
+    })
+    .catch(err => alert(`Ha ocurrido un error al obtener las Remisiones.\nCódigo de error: ${ err }`))
 }
 const getInfoRemision = async (No_Remision) => {//FUNCION PARA OBTENER LA INFORMACION DE LA REMISION SELECCIONADA
     try {
@@ -615,7 +620,7 @@ const alertaPersona = async()=>{/// todo bien en la edicion
 }
 const verificaInfo = async() =>{
     let myFormDataConsulta = new FormData();//LEEMOS EL CONTENIDO DE LA TABLA DE PERSONAS 
-    let nombre = document.getElementById('nombre').value.toUpperCase();
+    let nombre = (document.getElementById('nombre').value.toUpperCase()!='DESCONOCIDO')?document.getElementById('nombre').value.toUpperCase():"-1";
     let ap_paterno = document.getElementById('ap_paterno').value.toUpperCase();
     let ap_materno = document.getElementById('ap_materno').value.toUpperCase();
     

@@ -52,7 +52,13 @@
             </div> 
         </div>
         <div class="row mt-3">
- 
+            <div class="row d-flex justify-content-center col-lg-12">
+                <div class="form-group form-check col-2" id="Pregunta_Consu"> 
+                    <input type="checkbox" class="form-check-input checkPermisos" value="0" id="consulta" name="consulta" >
+                    <label class="form-check-label" for="consulta">Consulta Realizada</label>
+                    <br>
+                </div>
+            </div>
             <div class="row col-lg-12" id="Panel_nombre">
                 <div class="form-group col-lg-6 col-sm-6">
                     <label for="nombre_grupo" class="subtitulo-rosa">Nombre del Grupo Delictivo:</label>

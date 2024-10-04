@@ -201,3 +201,22 @@
 #id_dropdownColumns {
     min-width: 14rem;
 }
+
+.fondo {
+    margin: auto;
+    background-color: red;
+    display: inline;
+  }
+.fondo2 {
+    margin: auto;
+    background-color: green;
+    display: inline;
+}
+  
+  .circulo {
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }

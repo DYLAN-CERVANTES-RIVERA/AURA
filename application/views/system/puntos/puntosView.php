@@ -1,7 +1,7 @@
-<!--vista del modulo de entrevistas -->
+<!--vista del modulo de gestor de casos -->
 <div class= "content">
     <div class="cabecera_modulo" ><br></div>
-    <h1 class="cabecera_modulo text-center"><strong>ENTREVISTAS DE DETENIDOS</strong></h1> 
+    <h1 class="cabecera_modulo text-center"><strong>PUNTOS IDENTIFICADOS ALTO IMPACTO</strong></h1> 
     <div class="row">
         <div class="container col-lg-1  justify-content-center text-center" id="navbarnavegacion">
             <br><br><br>
@@ -21,7 +21,7 @@
                     }
                     ?>
                     <?php
-                    if ($_SESSION['userdataSIC']->Modo_Admin == 1  ||  $_SESSION['userdataSIC']->Red[2] == 1) {
+                    if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Red[2] == 1) {
                     ?>
                         <li>
                             <a class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
@@ -75,7 +75,7 @@
         <div class="container col-lg-10 mt-1 mb-1">
             <!--Barra de operaciones de filtrado y búsqueda-->
             <div class="row">
-                <div class="col-6 col-lg-auto mr-lg-auto my-2 my-lg-auto  d-flex justify-content-center">
+                <div class="col-6 col-lg-2 mr-lg-auto my-2 my-lg-auto  d-flex justify-content-center">
                     
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-filtro" data-toggle="dropdown" id="id_filtros">
@@ -85,16 +85,15 @@
                     <!--Dropdown filter content-->
                     <div class="dropdown-menu" aria-labelledby="id_filtros">
                         
-                        <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>Entrevistas/index/?filtro=1">Todos las Entrevistas</a>
-                        <a class="dropdown-item <?= ($data['filtroActual']==2)?'active':'';?>" href="<?= base_url;?>Entrevistas/index/?filtro=2">Todas las Ubicaciones</a>
-                        <a class="dropdown-item <?= ($data['filtroActual']==3)?'active':'';?>" href="<?= base_url;?>Entrevistas/index/?filtro=3">Personas Alertas</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>Puntos/index/?filtro=1">Todos los Puntos</a>
+ 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" class="btn btn-filtro" data-toggle="modal" data-target="#filtro_rangos">
                             <span class="v-a-middle" >Por rango de fechas</span>
                         </a>
                     </div>
                 </div>
-                <div class="col-6 col-lg-auto mr-lg-auto my-2 my-lg-auto  d-flex justify-content-center">
+                <div class="col-6 col-lg-2 mr-lg-auto my-2 my-lg-auto  d-flex justify-content-center">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-filtro" data-toggle="dropdown" id="columnas_filtro">
                         <i class="material-icons md-30 v-a-middle" >table_chart</i>
@@ -106,33 +105,37 @@
                     </div>
                 </div>
 
-                <div class="col-6 col-lg-auto mr-lg-auto my-auto  d-flex justify-content-center" id="id_total_rows">
-                    
+                <div class="col-6 col-lg-2 mr-lg-auto my-auto  d-flex justify-content-center" id="id_total_rows">
                     Total registros: <?= (isset($data['total_rows']))?$data['total_rows']:"---";?>
                 </div>
-                <div class="col-6 col-lg-auto mr-lg-auto my-2 my-lg-auto d-flex justify-content-center">
-                    <div class="row col-4">
+                <div class="col-6 col-lg-1 mr-lg-auto my-2 my-lg-auto justify-content-center">
+                    <div class="row col-12">
                         <div id="buttonsExport" class="col-12">
                             <?php 
                                 $cadenaExport = (isset($data['cadena'])) ? ("&cadena=" . $data['cadena']) : "";
                                 $filtroActual = "&filtroActual=".$data['filtroActual'];
                             ?>
 
-                            <a id="id_link_excel" href="<?= base_url ?>Entrevistas/exportarInfo/?tipo_export=<?= "EXCEL".$cadenaExport.$filtroActual; ?>" class="btn <?= ($_SESSION['userdataSIC']->Entrevistas[0]=='1')?"":"mi_hide";?>" data-toggle="tooltip" data-placement="bottom" title="Exportar a Excel">
+                            <a id="id_link_excel" href="<?= base_url ?>Puntos/exportarInfo/?tipo_export=<?= "EXCEL".$cadenaExport.$filtroActual; ?>" class="btn  <?= ($_SESSION['userdataSIC']->Puntos[0])?'':'mi_hide';?>" data-toggle="tooltip" data-placement="bottom" title="Exportar a Excel">
                                 <i class="material-icons ssc md-36">description</i>
                                 <!--img src="<?= base_url ?>public/media/icons/excelIcon.png" width="40px"--!-->
                             </a>
-                            <a id="id_link_pdf" href="<?= base_url ?>GestorCasos/exportarInfo/?tipo_export=<?= "PDF".$cadenaExport.$filtroActual; ?>" target="_blank" class="btn mi_hide" data-toggle="tooltip" data-placement="bottom" title="Exportar a PDF">
+                            <a id="id_link_pdf" href="<?= base_url ?>Puntos/exportarInfo/?tipo_export=<?= "PDF".$cadenaExport.$filtroActual; ?>" target="_blank" class="btn mi_hide" data-toggle="tooltip" data-placement="bottom" title="Exportar a PDF">
                                 <i class="material-icons ssc md-36">picture_as_pdf</i>
                                 <!--img src="<?= base_url ?>public/media/icons/pdfIcon.png" width="40px"--!-->
                             </a>
                         </div>
+
                     </div>
-                    <div class="row col-4" aling="right">
-                        <a class="btn btn-opacity <?= ($_SESSION['userdataSIC']->Entrevistas[3])?'':'mi_hide';?>" href="<?= base_url;?>Entrevistas/nuevaEntrevista" ><img src="<?php echo base_url; ?>public/media/icons/iconnuevo.png" width="15%">Nueva Entrevista</a>     
-                    </div>
+
+                </div>
+                <div class="col-6 col-lg-2 mr-lg-auto my-2 my-lg-auto">
+                
+                    <a class="btn btn-opacity <?= ($_SESSION['userdataSIC']->Puntos[3])?'':'mi_hide';?>" href="<?= base_url;?>Puntos/nuevopunto" ><img src="<?php echo base_url; ?>public/media/icons/iconnuevo.png" width="15%">Nueva Ubicacion (punto)</a>
+
                 </div>
             </div>
+        
             <div class="row col-lg-auto mt-3">
                 <?php $cadena = (isset($data['cadena'])) ? $data['cadena'] : ""; ?>
                 <div class="input-group">
@@ -149,9 +152,9 @@
                     <div class="chip-azul">
                         <span class="v-a-middle" >
                             <?php
-                                if (isset($_SESSION['userdataSIC']->rango_inicio_es)) {
-                                    $r_inicio = $_SESSION['userdataSIC']->rango_inicio_es;
-                                    $r_fin = $_SESSION['userdataSIC']->rango_fin_es;
+                                if (isset($_SESSION['userdataSIC']->rango_inicio_pun)) {
+                                    $r_inicio = $_SESSION['userdataSIC']->rango_inicio_pun;
+                                    $r_fin = $_SESSION['userdataSIC']->rango_fin_pun;
                                     echo (isset($data['filtroNombre']))?$data['filtroNombre']." | Rangos de (".$r_inicio.") a (".$r_fin.")":"Vista general";
                                     
                                 }
@@ -165,17 +168,18 @@
                     
                 </div>
                 <?php
-                    if (isset($_SESSION['userdataSIC']->rango_inicio_es)) {
+                    if (isset($_SESSION['userdataSIC']->rango_inicio_pun)) {
                         ?>
-                            <a class="btn btn-opacity" href="<?= base_url;?>Entrevistas/removeRangosFechasSesion/?filtroActual=<?= $data['filtroActual'];?>">mostrar todo</a>
+                            <a class="btn btn-opacity" href="<?= base_url;?>Puntos/removeRangosFechasSesion/?filtroActual=<?= $data['filtroActual'];?>">mostrar todo</a>
                         <?php
                     }
                 ?>
             </div>  
+            
             <!--Tabla con la información-->
             <div class="row col-lg-auto mt-2">
-                <div class="col-auto table-responsive ">
-                    <table class="table table-striped  py-2 ">
+                <div class="col-auto table-responsive">
+                    <table class="table table-striped">
                         <thead class="thead-myTable text-center">
                             <tr id="id_thead" >
                                 <?php
@@ -195,7 +199,7 @@
             </div>
 
             <!--Despliegue de Links de Pagination-->
-            <div class="container mt-3 mb-5 ">
+            <div class="container mt-3 mb-5">
                 <div class="row d-flex justify-content-center">
                     <div class="col-auto">
                         <nav aria-label="Page navigation example ">
@@ -224,7 +228,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form id="form_rangos" class="row filter-content mb-3" method="post" action="<?= base_url;?>Entrevistas/index/?filtro=<?= $data['filtroActual']?>">
+                    <form id="form_rangos" class="row filter-content mb-3" method="post" action="<?= base_url;?>Puntos/index/?filtro=<?= $data['filtroActual']?>">
                         <div class="col-3">
                             <h6>Rango de folios</h6>
                         </div>
@@ -254,6 +258,5 @@
         </div>
     </div>
 </div>
-
 <!--Input de filtro para Fetch busqueda por cadena-->
 <input value="<?= $data['filtroActual']?>" id="filtroActual" type="hidden" >

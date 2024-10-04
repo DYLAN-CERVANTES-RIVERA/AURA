@@ -104,6 +104,7 @@ var all_seguimientos = document.getElementById('all_seguimientos')
 var all_eventos = document.getElementById('all_eventos')
 var all_entrevistas = document.getElementById('all_entrevistas')
 var all_redes = document.getElementById('all_redes')
+var all_puntos = document.getElementById('all_puntos')
 
 
 
@@ -111,6 +112,7 @@ all_seguimientos.addEventListener('change',change_all);
 all_eventos.addEventListener('change',change_all);
 all_entrevistas.addEventListener('change',change_all);
 all_redes.addEventListener('change',change_all);
+all_puntos.addEventListener('change',change_all);
 function change_all(e){
     switch(e.target.id){
         
@@ -176,6 +178,22 @@ function change_all(e){
                 document.getElementById('Red_Update').checked = false
                 document.getElementById('Red_Delete').checked = false
                 all_redes.value = '1'
+            }
+        break
+        case 'all_puntos':
+            if (all_puntos.value === '1') {
+                document.getElementById('Punto_Create').checked = true
+                document.getElementById('Punto_Read').checked = true
+                document.getElementById('Punto_Update').checked = true
+                document.getElementById('Punto_Delete').checked = true
+                all_puntos.value = '0'
+            }
+            else{
+                document.getElementById('Punto_Create').checked = false
+                document.getElementById('Punto_Read').checked = false
+                document.getElementById('Punto_Update').checked = false
+                document.getElementById('Punto_Delete').checked = false
+                all_puntos.value = '1'
             }
         break
     }

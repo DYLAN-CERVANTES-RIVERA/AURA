@@ -21,6 +21,7 @@ class Usuario
                             EXPORT_SET(permisos.Evento_D,'1','0','',4) AS Evento_D,
                             EXPORT_SET(permisos.Entrevistas,'1','0','',4) AS Entrevistas,
                             EXPORT_SET(permisos.Redes_V,'1','0','',4) AS Red,
+                            EXPORT_SET(permisos.Puntos,'1','0','',4) AS Puntos,
                             permisos.Visualizacion,
                             permisos.Modo_Admin,
                             AES_DECRYPT(usuario.Password,'".CRYPTO_KEY."') as Pass_Decrypt
@@ -48,6 +49,7 @@ class Usuario
                             EXPORT_SET(permisos.Evento_D,'1','0','',4) AS Evento_D,
                             EXPORT_SET(permisos.Entrevistas,'1','0','',4) AS Entrevistas,
                             EXPORT_SET(permisos.Redes_V,'1','0','',4) AS Red,
+                            EXPORT_SET(permisos.Puntos,'1','0','',4) AS Puntos,
                             permisos.Visualizacion,
                             permisos.Modo_Admin
                     FROM usuario
@@ -117,7 +119,7 @@ class Usuario
                         }
                     }else{   //permisos conforme a los check dados en la matriz de permisos
                         //nuevos permisos
-                        $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";
+                        $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";$Puntos="";
 
                         $Seguimientos.= (isset($post['S_Create']))?'1':'0'; 
                         $Seguimientos.= (isset($post['S_Read']))?'1':'0'; 
@@ -139,13 +141,19 @@ class Usuario
                         $Entrevistas.= (isset($post['Entrevista_Update']))?'1':'0'; 
                         $Entrevistas.= (isset($post['Entrevista_Delete']))?'1':'0';
 
+                        $Puntos.= (isset($post['Punto_Create']))?'1':'0'; 
+                        $Puntos.= (isset($post['Punto_Read']))?'1':'0'; 
+                        $Puntos.= (isset($post['Punto_Update']))?'1':'0'; 
+                        $Puntos.= (isset($post['Punto_Delete']))?'1':'0';
+
                         $this->db->query("  SELECT  Id_Permisos 
                                             FROM    permisos 
                                             WHERE  
                                                     Seguimientos = b'".$Seguimientos."' AND 
                                                     Evento_D = b'".$Eventos."' AND
                                                     Entrevistas = b'".$Entrevistas."' AND  
-                                                    Redes_V = b'".$Redes."' AND  
+                                                    Redes_V = b'".$Redes."' AND 
+                                                    Puntos = b'".$Puntos."' AND   
                                                     Modo_Admin = 0");
                         $Permisos = $this->db->register();
                         if ($Permisos) {
@@ -155,12 +163,13 @@ class Usuario
                         else{//permiso dios no existe, entonces se crea un permisos nuevo con modo Dios activado
                             //se crea un nuevo permiso de modo Dios
                             $this->db->query("INSERT INTO   permisos 
-                                                            (Seguimientos,Evento_D,Entrevistas,Redes_V) 
+                                                            (Seguimientos,Evento_D,Entrevistas,Redes_V,Puntos) 
                                                             VALUES (    
                                                                         b'".$Seguimientos."',
                                                                         b'".$Eventos."',
                                                                         b'".$Entrevistas."',
-                                                                        b'".$Redes."'
+                                                                        b'".$Redes."',
+                                                                        b'".$Puntos."'
                                                                     )");
                             $this->db->execute();
                             $this->db->query("SELECT LAST_INSERT_ID() as Id_Permisos"); //se recupera el id de permisos creado recientemente
@@ -223,6 +232,7 @@ class Usuario
                                 EXPORT_SET(permisos.Evento_D,'1','0','',4) AS Evento_D,
                                 EXPORT_SET(permisos.Entrevistas,'1','0','',4) AS Entrevistas,
                                 EXPORT_SET(permisos.Redes_V,'1','0','',4) AS Red,
+                                EXPORT_SET(permisos.Puntos,'1','0','',4) AS Puntos,
                                 permisos.Modo_Admin,  
                                 AES_DECRYPT(Password,'".CRYPTO_KEY."') as Pass_Decrypt FROM usuario 
                                 LEFT JOIN permisos ON permisos.Id_Permisos = usuario.Id_Permisos 
@@ -309,7 +319,7 @@ class Usuario
                         elseif (($Modo_Admin_Now != $dataBefore['Modo_Admin']) && ($Modo_Admin_Now == 0)) { //se cambian los otros permisos
                             $cambiosPermisos = true;
                             //nuevos permisos
-                            $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";
+                            $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";$Puntos="";
 
                             $Seguimientos.= (isset($post['S_Create']))?'1':'0'; 
                             $Seguimientos.= (isset($post['S_Read']))?'1':'0'; 
@@ -331,12 +341,18 @@ class Usuario
                             $Entrevistas.= (isset($post['Entrevista_Update']))?'1':'0'; 
                             $Entrevistas.= (isset($post['Entrevista_Delete']))?'1':'0';
 
+                            $Puntos.= (isset($post['Punto_Create']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Read']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Update']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Delete']))?'1':'0';
+
                             $this->db->query("  SELECT  Id_Permisos 
                                                 FROM    permisos 
                                                 WHERE   Seguimientos = b'".$Seguimientos."' AND 
                                                         Evento_D = b'".$Eventos."' AND 
                                                         Entrevistas = b'".$Entrevistas."' AND
-                                                        Redes_V = b'".$Redes."' AND  
+                                                        Redes_V = b'".$Redes."' AND
+                                                        Puntos = b'".$Puntos."' AND     
                                                         Modo_Admin = 0");
                             $Permisos = $this->db->register();
                             if ($Permisos) {
@@ -348,13 +364,14 @@ class Usuario
                             else{//permiso dios no existe, entonces se crea un permisos nuevo con modo Dios activado
                                 //se crea un nuevo permiso de modo Dios
                                 $this->db->query("INSERT INTO   permisos 
-                                                                (Seguimientos,Evento_D,Entrevistas,Redes_V) 
-                                                                VALUES (    
-                                                                            b'".$Seguimientos."',
-                                                                            b'".$Eventos."',
-                                                                            b'".$Entrevistas."',
-                                                                            b'".$Redes."'
-                                                                        )");
+                                                            (Seguimientos,Evento_D,Entrevistas,Redes_V,Puntos) 
+                                                            VALUES (    
+                                                                        b'".$Seguimientos."',
+                                                                        b'".$Eventos."',
+                                                                        b'".$Entrevistas."',
+                                                                        b'".$Redes."',
+                                                                        b'".$Puntos."'
+                                                                    )");
                                 $this->db->execute();
                                 $this->db->query("SELECT LAST_INSERT_ID() as Id_Permisos"); //se recupera el id de permisos creado recientemente
                                 $id_new_permisos = $this->db->register()->Id_Permisos;
@@ -367,7 +384,7 @@ class Usuario
                         }
                         elseif(($Modo_Admin_Now == $dataBefore['Modo_Admin']) && ($Modo_Admin_Now == 0)){ //No cambio el modo Dios pero puede que si los deás permisos
                             //nuevos permisos
-                            $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";
+                            $Seguimientos="";$Eventos="";$Entrevistas="";$Redes="";$Puntos="";
 
                             $Seguimientos.= (isset($post['S_Create']))?'1':'0'; 
                             $Seguimientos.= (isset($post['S_Read']))?'1':'0'; 
@@ -389,8 +406,13 @@ class Usuario
                             $Entrevistas.= (isset($post['Entrevista_Update']))?'1':'0'; 
                             $Entrevistas.= (isset($post['Entrevista_Delete']))?'1':'0';
 
+                            $Puntos.= (isset($post['Punto_Create']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Read']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Update']))?'1':'0'; 
+                            $Puntos.= (isset($post['Punto_Delete']))?'1':'0';
 
-                            if (($Seguimientos != $dataBefore['Seguimientos']) ||($Eventos != $dataBefore['Evento_D']) || ($Entrevistas != $dataBefore['Entrevistas'])|| ($Redes != $dataBefore['Red'])){
+
+                            if (($Seguimientos != $dataBefore['Seguimientos']) ||($Eventos != $dataBefore['Evento_D']) || ($Entrevistas != $dataBefore['Entrevistas'])|| ($Redes != $dataBefore['Red'])|| ($Puntos != $dataBefore['Puntos'])){
 
                                 $cambiosPermisos = true;
 
@@ -399,7 +421,8 @@ class Usuario
                                                     WHERE   Seguimientos = b'".$Seguimientos."' AND 
                                                             Evento_D = b'".$Eventos."' AND 
                                                             Entrevistas = b'".$Entrevistas."' AND 
-                                                            Redes_V = b'".$Redes."' AND  
+                                                            Redes_V = b'".$Redes."' AND 
+                                                            Puntos = b'".$Puntos."' AND    
                                                             Modo_Admin = 0");
 
                                 $Permisos = $this->db->register();
@@ -411,12 +434,13 @@ class Usuario
                                 }
                                 else{//permiso dios no existe, entonces se crea un permisos nuevo con modo Dios DESACTIVADO
                                     $this->db->query("INSERT INTO   permisos 
-                                                                    (Seguimientos,Evento_D,Entrevistas,Redes_V) 
+                                                                    (Seguimientos,Evento_D,Entrevistas,Redes_V,Puntos) 
                                                                     VALUES (    
                                                                                 b'".$Seguimientos."',
                                                                                 b'".$Eventos."',
                                                                                 b'".$Entrevistas."',
-                                                                                b'".$Redes."'
+                                                                                b'".$Redes."',
+                                                                                b'".$Puntos."'
                                                                             )");
                                     $this->db->execute();
                                     $this->db->query("SELECT LAST_INSERT_ID() as Id_Permisos"); //se recupera el id de permisos creado recientemente

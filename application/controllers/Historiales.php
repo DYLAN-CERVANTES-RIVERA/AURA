@@ -38,6 +38,13 @@
 	34.-ELIMINACION DE ELEMENTO DE ALGUNA TABLA 
 	35.-CONSULTA BUSQUEDA EN MODULO ENTREVISTAS
 	36.-EXPORTACION DE INFORMACION MODULO ENTREVISTAS
+	37.-CONSULTA BUSQUEDA EN MODULO ESTADISTICAS
+	38.-CAMBIO DE TIPO DE RED ALTO IMPACTO 
+	39.-INSERCION DE UN NUEVO PUNTO
+	40.-VER INFORMACION DE UN PUNTO
+	41.-ACTUALIZACION DE INFORMACION PUNTO
+	42.-CONSULTA BUSQUEDA EN MODULO PUNTOS
+	43.-EXPORTACION DE INFORMACION MODULO PUNTOS
     */
 	class Historiales extends Controller
 	{
@@ -283,6 +290,21 @@
 					break;
 					case '38':
 						$movimiento = $row->Movimiento.'. MODIFICACION DE TIPO DE RED DE ALTO IMPACTO ';
+					break;
+					case '39':
+						$movimiento = $row->Movimiento.'. INSERCION DE UN NUEVO PUNTO ';
+					break;
+					case '40':
+						$movimiento = $row->Movimiento.'. VER INFORMACION DE UN PUNTO ';
+					break;
+					case '41':
+						$movimiento = $row->Movimiento.'. ACTUALIZACION DE INFORMACION PUNTO ';
+					break;
+					case '42':
+						$movimiento = $row->Movimiento.'. CONSULTA BUSQUEDA EN MODULO PUNTOS ';
+					break;
+					case '43':
+						$movimiento = $row->Movimiento.'. EXPORTACION DE INFORMACION MODULO PUNTOS';
 					break;
 					default:
 						$movimiento = $row->Movimiento;
@@ -597,6 +619,21 @@
 						break;
 						case '38':
 							$movimiento = $row->Movimiento.'. MODIFICACION DE TIPO DE RED DE ALTO IMPACTO ';
+						break;
+						case '39':
+							$movimiento = $row->Movimiento.'. INSERCION DE UN NUEVO PUNTO ';
+						break;
+						case '40':
+							$movimiento = $row->Movimiento.'. VER INFORMACION DE UN PUNTO ';
+						break;
+						case '41':
+							$movimiento = $row->Movimiento.'. ACTUALIZACION DE INFORMACION PUNTO ';
+						break;
+						case '42':
+							$movimiento = $row->Movimiento.'. CONSULTA BUSQUEDA EN MODULO PUNTOS ';
+						break;
+						case '43':
+							$movimiento = $row->Movimiento.'. EXPORTACION DE INFORMACION MODULO PUNTOS';
 						break;
 						default:
 							$movimiento = $row->Movimiento;

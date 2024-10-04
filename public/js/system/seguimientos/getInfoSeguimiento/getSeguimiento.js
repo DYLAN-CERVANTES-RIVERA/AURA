@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {//FUNCION PARA EL LLE
     radioHabilitado[1].addEventListener('change',showHabilitado); 
     radioHabilitado[2].addEventListener('change',showHabilitado); 
     await getInfoRedes()
-    //console.log(datosRedes)
+    await getRemisiones();
     await getInfoEventos()
     Seguimiento = getSeguimientotoSearch();
     data = await getSeguimiento(Seguimiento);
@@ -248,13 +248,16 @@ const llenarSeguimiento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA D
     }
     if(data.Tipo_Grupo == "PERSONA"){
         document.getElementById('Question1').checked = true;
+        showHabilitado();
     }else{
         if(data.Tipo_Grupo == "EVENTO DELICTIVO"){
             document.getElementById('Question3').checked = true;
             showHabilitado();
             document.getElementById('Id_red').value = data.Llave_Padre;
+            document.getElementById('consulta').checked = (data.Consultado==1)?true:false;
         }else{
             document.getElementById('Question2').checked = true;
+            showHabilitado();
         }
         
     }

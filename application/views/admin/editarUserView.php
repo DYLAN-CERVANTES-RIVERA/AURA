@@ -147,6 +147,14 @@
 											<input class="checkPermisos" type="checkbox" value="1" id="all_entrevistas">
 										</div>
 									</th>
+									<th >
+										<div class="row d-flex justify-content-center">
+											Puntos
+										</div>
+										<div class="row d-flex justify-content-center">
+											<input class="checkPermisos" type="checkbox" value="1" id="all_puntos">
+										</div>
+									</th>
 								</tr>
 						</thead>
 						<tbody>
@@ -175,6 +183,12 @@
 											<label class="form-check-label" for="Entrevista_Create">Crear</label>
 										</div>
 									</td>
+									<td>
+										<div class="form-group form-check col-12">
+											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Create" name="Punto_Create" <?= ($infoUser->Puntos[3]=='1')?"checked":"";?> >
+											<label class="form-check-label" for="Punto_Create">Crear</label>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -199,6 +213,12 @@
 										<div class="form-group form-check col-12">
 											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Entrevista_Read" name="Entrevista_Read" <?= ($infoUser->Entrevistas[2]=='1')?"checked":"";?> >
 											<label class="form-check-label" for="Entrevista_Read">Consultar</label>
+										</div>
+									</td>
+									<td>
+										<div class="form-group form-check col-12">
+											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Read" name="Punto_Read" <?= ($infoUser->Puntos[2]=='1')?"checked":"";?> >
+											<label class="form-check-label" for="Punto_Read">Consultar</label>
 										</div>
 									</td>
 								</tr>
@@ -227,6 +247,12 @@
 											<label class="form-check-label" for="Entrevista_Update">Modificar</label>
 										</div>
 									</td>
+									<td>
+										<div class="form-group form-check col-12">
+											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Update" name="Punto_Update" <?= ($infoUser->Puntos[1]=='1')?"checked":"";?> >
+											<label class="form-check-label" for="Punto_Update">Modificar</label>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -251,6 +277,12 @@
 										<div class="form-group form-check col-12 ">
 											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Entrevista_Delete" name="Entrevista_Delete" <?= ($infoUser->Entrevistas[0]=='1')?"checked":"";?>>
 											<label class="form-check-label" for="Entrevista_Delete">Exportar Entrevistas</label>
+										</div>
+									</td>
+									<td>
+										<div class="form-group form-check col-12 ">
+											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Delete" name="Punto_Delete" <?= ($infoUser->Puntos[0]=='1')?"checked":"";?>>
+											<label class="form-check-label" for="Punto_Delete">Exportar Informacion de Puntos</label>
 										</div>
 									</td>
 								</tr>

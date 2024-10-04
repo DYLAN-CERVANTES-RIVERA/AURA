@@ -38,6 +38,15 @@
                     <?php
                     }
                     ?>
+                    <?php
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Red[0] == 1) {
+                    ?>
+                        <li>
+                            <a class="btn btn-opacity" title="PUNTOS ALTO IMPACTO" data-toggle="tooltip" href="<?= base_url;?>Puntos"><div><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/ubicacion.png" width="55%" ></div></a>
+                        </li>
+                    <?php
+                    }
+                    ?>
 
                     <?php
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1) {
@@ -81,6 +90,8 @@
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=3">Vista de Eventos Deshabilitados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=4">Busqueda a Quien se Asigno Evento</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=5">Busqueda Solo por Folio AURA Evento</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=6">Eventos Consultados</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=7">Eventos No Consultados</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" class="btn btn-filtro" data-toggle="modal" data-target="#filtro_rangos">
                             <span class="v-a-middle" >Por rango de fechas</span>

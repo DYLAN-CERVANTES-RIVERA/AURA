@@ -135,6 +135,14 @@
 							    		<input class="checkPermisos" type="checkbox" value="1" id="all_entrevistas">
 							    	</div>
 							    </th>
+								<th >
+							    	<div class="row d-flex justify-content-center">
+							    		Puntos
+							    	</div>
+							    	<div class="row d-flex justify-content-center">
+							    		<input class="checkPermisos" type="checkbox" value="1" id="all_puntos">
+							    	</div>
+							    </th>
 						    </tr>
 					  </thead>
 					  <tbody>
@@ -158,10 +166,16 @@
 									    <label class="form-check-label" for="Red_Create">Crear</label>
 									</div>
 						  		</td>
-								  <td>
+								<td>
 						  			<div class="form-group form-check col-12">
 									    <input type="checkbox" class="form-check-input checkPermisos" value="1" id="Entrevista_Create" name="Entrevista_Create" <?= (isset($_POST['crearUser']) && isset($_POST['Entrevista_Create']) )?"checked":"";?> >
 									    <label class="form-check-label" for="Entrevista_Create">Crear</label>
+									</div>
+						  		</td>
+								<td>
+						  			<div class="form-group form-check col-12">
+									    <input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Create" name="Punto_Create" <?= (isset($_POST['crearUser']) && isset($_POST['Punto_Create']) )?"checked":"";?> >
+									    <label class="form-check-label" for="Punto_Create">Crear</label>
 									</div>
 						  		</td>
 						  	</tr>
@@ -191,6 +205,12 @@
 										<label class="form-check-label" for="Entrevista_Read">Consultar</label>
 									</div>
 						  		</td>
+								<td>
+									<div class="form-group form-check col-12">
+										<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Read" name="Punto_Read" <?= (isset($_POST['crearUser']) && isset($_POST['Punto_Read']) )?"checked":"";?> >
+										<label class="form-check-label" for="Punto_Read">Consultar</label>
+									</div>
+						  		</td>
 						  	</tr>
 						  	<tr>
 							
@@ -218,6 +238,12 @@
 									    <label class="form-check-label" for="Entrevista_Update">Modificar</label>
 									</div>
 						  		</td>
+								<td>
+						  			<div class="form-group form-check col-12">
+									    <input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Update" name="Punto_Update" <?= (isset($_POST['crearUser']) && isset($_POST['Punto_Update']) )?"checked":"";?> >
+									    <label class="form-check-label" for="Punto_Update">Modificar</label>
+									</div>
+						  		</td>
 						  	</tr>
 							<tr>
 
@@ -243,6 +269,12 @@
 									<div class="form-group form-check col-12 ">
 										<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Entrevista_Delete" name="Entrevista_Delete" <?= (isset($_POST['crearUser']) && isset($_POST['Entrevista_Delete']) )?"checked":"";?>>
 										<label class="form-check-label" for="Entrevista_Delete">Exportar Entrevistas</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-group form-check col-12 ">
+										<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Delete" name="Punto_Delete" <?= (isset($_POST['crearUser']) && isset($_POST['Punto_Delete']) )?"checked":"";?>>
+										<label class="form-check-label" for="Punto_Delete">Exportar Informacion de Puntos</label>
 									</div>
 								</td>
 						  	</tr>

@@ -97,6 +97,7 @@
                         <option value="INTEGRANTE">INTEGRANTE</option>
                         <option value="LIDER">LIDER</option>
                         <option value="COLIDER">COLIDER</option>
+                        <option value="CONSULTA">CONSULTA DE INFORMACION</option>
                     </select>
                     <span class="span_error" id="rol_error"></span>
                 </div>

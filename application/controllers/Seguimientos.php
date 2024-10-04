@@ -343,12 +343,12 @@ class Seguimientos extends Controller
                         ';
                     if ($row->FechaHora_Creacion != '') {
                         if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[1] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
-                            $infoTable['body'] .= '<td>
+                            $infoTable['body'] .= '<td class="d-flex">
                                                     <a class="myLinks ' . $permisos_Editar . '" data-toggle="tooltip" data-placement="right" title="Editar registro" href="' . base_url . 'Seguimientos/editarSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
                                                         <i class="material-icons">edit</i>
                                                     </a>';
                         } else {
-                            $infoTable['body'] .= '<td>';
+                            $infoTable['body'] .= '<td> class="d-flex"';
                         }
                         if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[2] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
                            
@@ -359,10 +359,21 @@ class Seguimientos extends Controller
                                                     <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                         <i class="material-icons">assignment</i>
                                                     </a>
-                                                    </td>';
+                                                    ';
                                                 /*<a target="_blank" class="myLinks' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar Ficha Tipo Atlas" href="' . base_url . 'Seguimientos/GenerarFichaAtlas/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                     <i class="material-icons">picture_as_pdf</i>
                                                 </a>*/
+                            if($row->Consultado==1){
+                                $infoTable['body'] .= '<div class="fondo2">
+                                                        <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento Consultado"></div>
+                                                        </div>
+                                                    </td>';
+                            }else{
+                                $infoTable['body'] .= '<div class="fondo">
+                                                            <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento No Consultado"></div>
+                                                        </div>
+                                                    </td>';
+                            }
     
                         }else{
                             $infoTable['body'] .= '</td>';

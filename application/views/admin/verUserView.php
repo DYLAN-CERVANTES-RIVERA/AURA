@@ -1,6 +1,6 @@
 <div class= "content">
     <div class="cabecera_modulo" ><br></div>	
-	<div id="id_container1" class="container">
+	<div id="id_container1" class="container-fluid">
 
 		<?php $infoUser = $data['infoUser'];//informacion del usuario?>
 			<!--vista para la visualizacion del usuario -->
@@ -51,7 +51,7 @@
 												<span>Email:</span>
 											</td>
 											<td>
-												<strong><?= mb_strtoupper($infoUser->Email)?></strong>
+												<strong><?= $infoUser->Email?></strong>
 											</td>
 										</tr>
 										<tr>
@@ -117,8 +117,7 @@
 											<th>CREAR</th>
 											<th>VER</th>
 											<th>MODIFICAR</th>
-											<th>ASIGNAR SEGUIMIENTO DE EVENTOS</th>
-											<th>ALTO IMPACTO</th>
+											<th>MOVIMENTO ESPECIAL DE MODULO</th>
 						
 										</tr>
 									</thead>
@@ -128,8 +127,8 @@
 											<td><i class="material-icons <?= ($infoUser->Seguimientos[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Seguimientos[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Seguimientos[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Seguimientos[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Seguimientos[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Seguimientos[1])?"check":"close";?></i></td>
-											<td><i class="material-icons <?= ($infoUser->Seguimientos[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Seguimientos[0])?"check":"close";?></i></td>
-											<td><i class="material-icons close_icon">close</i></td>
+											<td><i class="material-icons <?= ($infoUser->Seguimientos[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Seguimientos[0])?"check":"close";?></i><label><?= ($infoUser->Seguimientos[0])?"Asignacion de Seguimientos Eventos":"";?></label></td>
+											
 										</tr>
 										<tr>
 											<td>EVENTOS DELICTIVOS</td>
@@ -137,23 +136,27 @@
 											<td><i class="material-icons <?= ($infoUser->Evento_D[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Evento_D[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Evento_D[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Evento_D[1])?"check":"close";?></i></td>
 											<td><i class="material-icons close_icon">close</i></td>
-											<td><i class="material-icons close_icon">close</i></td>
 										</tr>
 										<tr>
 											<td>REDES DE VINCULOS</td>
 											<td><i class="material-icons <?= ($infoUser->Red[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Red[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Red[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[1])?"check":"close";?></i></td>
-											<td><i class="material-icons close_icon">close</i></td>
-											<td><i class="material-icons <?= ($infoUser->Red[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[0])?"check":"close";?></i></td>
+											<td><i class="material-icons <?= ($infoUser->Red[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[0])?"check":"close";?></i><label><?= ($infoUser->Red[0])?"Usuario Alto Impacto":"";?></label></td>
 										</tr>
 										<tr>
 											<td>ENTREVISTAS</td>
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[1])?"check":"close";?></i></td>
-											<td><i class="material-icons close_icon">close</i></td>
-											<td><i class="material-icons close_icon">close</i></td>
+											<td><i class="material-icons <?= ($infoUser->Entrevistas[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[0])?"check":"close";?></i><label><?= ($infoUser->Entrevistas[0])?"Exportacion de Informacion Entrevistas":"";?></label></td>
+										</tr>
+										<tr>
+											<td>PUNTOS</td>
+											<td><i class="material-icons <?= ($infoUser->Puntos[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[3])?"check":"close";?></i></td>
+											<td><i class="material-icons <?= ($infoUser->Puntos[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[2])?"check":"close";?></i></td>
+											<td><i class="material-icons <?= ($infoUser->Puntos[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[1])?"check":"close";?></i></td>
+											<td><i class="material-icons <?= ($infoUser->Puntos[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[0])?"check":"close";?></i><label><?= ($infoUser->Puntos[0])?"Exportacion de Informacion Puntos":"";?></label></td>
 										</tr>
 									</tbody>
 								</table>
@@ -183,11 +186,5 @@
 					</div>
 				</div>
 			</div>
-		<div class="row">
-			<div class="col-12 text-justify">
-				H. Ayuntamiento de Puebla 2021-2024 | Blvd. San Felipe No. 2821 Col. Rancho Colorado | Tel. (222) 303-85-00 Ext 77102
-				Secretaría de Seguridad Ciudadana del Municipio de Puebla. <br><br><br>
-			</div>
-		</div>
 	</div>
 </div>

@@ -77,6 +77,8 @@
                 $_SESSION['userdataSIC']->rango_fin_es = $hoy;
                 $_SESSION['userdataSIC']->rango_inicio_esta = $hoy;
                 $_SESSION['userdataSIC']->rango_fin_esta = $hoy;
+                $_SESSION['userdataSIC']->rango_inicio_pun = $hoy;
+                $_SESSION['userdataSIC']->rango_fin_pun = $hoy;
                 $_SESSION['userdataSIC']->Fecha_inicio_reporte = "";
                 $_SESSION['userdataSIC']->Fecha_fin_reporte = "";
             }
@@ -88,10 +90,10 @@
                 header("Location: ".base_url."Login");
             }
 
-            $user = $_SESSION['userdataSIC']->Id_Usuario;
+            /*$user = $_SESSION['userdataSIC']->Id_Usuario;
             $ip = $this->obtenerIp();
             $descripcion = 'CERRO DE SESION: '.$_SESSION['userdataSIC']->User_Name;
-            $this->GestorCaso->historial($user,$ip,39,$descripcion);
+            $this->GestorCaso->historial($user,$ip,39,$descripcion);*/
 
             unset($_SESSION['userdataSIC']);
             header("Location: ".base_url."Login");

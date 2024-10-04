@@ -889,9 +889,12 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
         document.getElementById('fotos').disabled = false;
         document.getElementById('li-fotos').classList.remove('mi_hide')
         document.getElementById('fotos0').classList.remove('mi_hide')
-        document.getElementById('entrevistas').disabled = false;
-        document.getElementById('li-entrevistas').classList.remove('mi_hide')
-        document.getElementById('entrevistas0').classList.remove('mi_hide')
+        if(await getpermiso()){
+            document.getElementById('entrevistas').disabled = false;
+            document.getElementById('li-entrevistas').classList.remove('mi_hide')
+            document.getElementById('entrevistas0').classList.remove('mi_hide')
+        }
+
        
     }else{
         deshabilitado.checked=true;
@@ -933,6 +936,19 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
         banderaPdf = "SD"
     }
     
+    
+}
+const getpermiso= async () => {
+    try{
+        const response = await fetch(base_url_js + 'GestorCasos/getPermiso', {
+            method: 'POST',
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
     
 }
 var banderaPdf;

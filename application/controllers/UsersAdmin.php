@@ -657,7 +657,8 @@ class UsersAdmin extends Controller{
 									<th class="column5">Eventos Delictivos</th>
                                     <th class="column6">Redes de Vinculo</th>
                                     <th class="column7">Entrevistas</th>
-									<th class="column8">Modo Administrador</th>
+                                    <th class="column8">Puntos</th>
+									<th class="column9">Modo Administrador</th>
 									<th >Editar</th>
 									<th >Ver</th>
 									<th >Estatus</th>
@@ -675,6 +676,7 @@ class UsersAdmin extends Controller{
 						$eventos = $this->generarInfoPermisosForTable($user->Evento_D);
                         $entrevistas = $this->generarInfoPermisosForTable($user->Entrevistas);
                         $redes = $this->generarInfoPermisosForTable($user->Redes_V);
+                        $puntos = $this->generarInfoPermisosForTable($user->Puntos);
 
 						$infoTable['body'].= '	
 									
@@ -690,14 +692,17 @@ class UsersAdmin extends Controller{
                                         <td class="column7">
                                             <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$entrevistas.'"><i class="material-icons v-a-middle">accessibility</i></button>
                                         </td>
+                                        <td class="column8">
+                                            <button type="button" class="btn btn-opacity" data-html="true" data-title="permisos" data-toggle="popover" data-placement="top" data-trigger="focus"  data-content="'.$puntos.'"><i class="material-icons v-a-middle">accessibility</i></button>
+                                        </td>
 									';
 								        
 			  			
 				        if($user->Modo_Admin)
-				        	$infoTable['body'].= '<td class="modoDios column8">ACTIVADO</td>';
+				        	$infoTable['body'].= '<td class="modoDios column9">ACTIVADO</td>';
 				        
 				        else
-				        	$infoTable['body'].= '<td class="column8">DESACTIVADO</td>';
+				        	$infoTable['body'].= '<td class="column9">DESACTIVADO</td>';
 				        
 
 				        $infoTable['body'].= '	<td>
@@ -824,7 +829,7 @@ class UsersAdmin extends Controller{
                     $filename = "usuarios";
 					//se realiza exportacion de usuarios a EXCEL
 					$users = $this->Usuario->getAllInfoUsersByCadena($from_where_sentence);
-					$csv_data="#,User Name,Nombre completo,Correo,Area,Eventos,Seguimientos Eventos,Redes de Vinculo,Entrevistas,Modo Admin,Estatus\n";
+					$csv_data="#,User Name,Nombre completo,Correo,Area,Eventos,Seguimientos Eventos,Redes de Vinculo,Entrevistas,Puntos,Modo Admin,Estatus\n";
 					foreach ($users as $user) {
 						//cadenas permisos para exportación
 					
@@ -832,6 +837,7 @@ class UsersAdmin extends Controller{
 						$aux_evento = $this->permisosToCadenaExport($user->Evento_D);
                         $aux_redes_V = $this->permisosToCadenaExport($user->Redes_V);
                         $aux_entrevistas = $this->permisosToCadenaExport($user->Entrevistas);
+                        $aux_puntos = $this->permisosToCadenaExport($user->Puntos);
 
 						$aux_modo_admin = ($user->Modo_Admin)?"Activado":"Desactivado";
                         $aux_status = ($user->Estatus)?"Activo":"Inactivo";
@@ -844,6 +850,7 @@ class UsersAdmin extends Controller{
                                     $aux_seguimientos.",".
                                     $aux_redes_V.",".
                                     $aux_entrevistas.",".
+                                    $aux_puntos.",".
                                     $aux_modo_admin.",".
 									$aux_status."\n";
 

@@ -37,7 +37,7 @@ class GestorCasos extends Controller
     public function __construct(){
         $this->Catalogo = $this->model('Catalogo');
         $this->GestorCaso = $this->model('GestorCaso');
-        $this->numColumnsGC = [10, 9, 8, 9, 10];  //se inicializa el número de columns por cada filtro
+        $this->numColumnsGC = [10, 9, 8, 9, 10, 10, 10];  //se inicializa el número de columns por cada filtro
         $this->FV = new FormValidator();
     }
 
@@ -120,6 +120,12 @@ class GestorCasos extends Controller
                 break;
             case '5':
                 $data['filtroNombre'] = "Busqueda Solo por Folio AURA Evento";
+                break;
+            case '6':
+                $data['filtroNombre'] = "Eventos Consultados";
+            break;
+            case '7':
+                $data['filtroNombre'] = "Eventos No Consultados";
                 break;
         }
 
@@ -743,11 +749,26 @@ class GestorCasos extends Controller
                                                             <i class="material-icons">book</i>
                                                         </a>
                                                     ';
-                            if($row->Id_Seguimiento!=NULL){
-                                $infoTable['body'] .= '<a target="_blank" class="myLinks' . $permisos_VerRed . '" data-toggle="tooltip" data-placement="right" title="Generar PDF Completo del Seguimiento" href="' . base_url . 'GestorCasos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                            if($row->Id_Seguimiento!=NULL && $row->Id_Seguimiento!=0){
+                                /*$infoTable['body'] .= '<a target="_blank" class="myLinks' . $permisos_VerRed . '" data-toggle="tooltip" data-placement="right" title="Generar PDF Completo del Seguimiento" href="' . base_url . 'GestorCasos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                             <i class="material-icons">assignment</i>
-                                                        </a>
-                                                    </td>';
+                                                        </a>';*/
+                                if($row->Tipo_Grupo=='EVENTO DELICTIVO'){
+                                    if($row->Consultado==1){
+                                        $infoTable['body'] .= '<div class="fondo2">
+                                                                <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento Consultado"></div>
+                                                                </div>
+                                                            </td>';
+                                    }else{
+                                        $infoTable['body'] .= '<div class="fondo">
+                                                                    <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento No Consultado"></div>
+                                                                </div>
+                                                            </td>';
+                                    }
+
+                                }else{
+                                    $infoTable['body'] .= '</td>';
+                                }
 
                             }else{
                                 $infoTable['body'] .= '</td>';
@@ -833,8 +854,28 @@ class GestorCasos extends Controller
                                                             </a>
                                                             <a target="_blank" class="myLinks' . $permisos_VerResumen . '" data-toggle="tooltip" data-placement="right" title="Ver Resumen de Evento" href="' . base_url . 'GestorCasos/verResumenEvento/?Folio_infra=' . $row->Folio_infra . '">
                                                                 <i class="material-icons">book</i>
-                                                            </a>
-                                                        </td>';
+                                                            </a>';
+                                    if($row->Id_Seguimiento!=NULL && $row->Id_Seguimiento!=0){
+                                        /*$infoTable['body'] .= '<a target="_blank" class="myLinks' . $permisos_VerRed . '" data-toggle="tooltip" data-placement="right" title="Generar PDF Completo del Seguimiento" href="' . base_url . 'GestorCasos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                                    <i class="material-icons">assignment</i>
+                                                                </a>';*/
+                                        if($row->Tipo_Grupo=='EVENTO DELICTIVO'){
+                                            if($row->Consultado==1){
+                                                $infoTable['body'] .= '<div class="fondo2">
+                                                                            <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento Consultado"></div>
+                                                                        </div>
+                                                                    </td>';
+                                            }else{
+                                                $infoTable['body'] .= '<div class="fondo">
+                                                                            <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento No Consultado"></div>
+                                                                        </div>
+                                                                    </td>';
+                                            }
+                                        }
+        
+                                    }else{
+                                        $infoTable['body'] .= '</td>';
+                                    }
                             }else{
                                 $infoTable['body'] .= '</td>';
                             }
@@ -986,6 +1027,8 @@ class GestorCasos extends Controller
                         }
                 break;
                 case '5': //General de todos los casos
+                case '6':
+                case '7':
                     $infoTable['header'] .= '
                             <th class="column1">Folio AURA</th>
                             <th class="column2">Elemento Asignado para Seguimiento</th>
@@ -1058,11 +1101,24 @@ class GestorCasos extends Controller
                                                                 <i class="material-icons">book</i>
                                                             </a>
                                                         ';
-                                if($row->Id_Seguimiento!=NULL){
-                                    $infoTable['body'] .= '<a target="_blank" class="myLinks' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF Completo del Seguimiento" href="' . base_url . 'GestorCasos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                if($row->Id_Seguimiento!=NULL && $row->Id_Seguimiento!=0){
+                                    /*$infoTable['body'] .= '<a target="_blank" class="myLinks' . $permisos_VerRed . '" data-toggle="tooltip" data-placement="right" title="Generar PDF Completo del Seguimiento" href="' . base_url . 'GestorCasos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                                 <i class="material-icons">assignment</i>
-                                                            </a>
-                                                        </td>';
+                                                            </a>';*/
+                                    if($row->Tipo_Grupo=='EVENTO DELICTIVO'){
+                                        if($row->Consultado==1){
+                                            $infoTable['body'] .= '<div class="fondo2">
+                                                                        <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento Consultado">
+                                                                        </div>
+                                                                    </div>
+                                                                </td>';
+                                        }else{
+                                            $infoTable['body'] .= '<div class="fondo">
+                                                                        <div class="circulo" data-toggle="tooltip" data-placement="top" title="Evento No Consultado"></div>
+                                                                    </div>
+                                                                </td>';
+                                        }
+                                    }
     
                                 }else{
                                     $infoTable['body'] .= '</td>';
@@ -1348,6 +1404,8 @@ class GestorCasos extends Controller
                             }
                         break;
                         case '5':
+                        case '6':
+                        case '7':
                             //Genera nombre de archivo junto con los datos y los encabezasdos 
                             $filename = "Vista_General_Eventos_por_Folio";
                             $csv_data="Folio AURA,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
@@ -1476,6 +1534,8 @@ class GestorCasos extends Controller
                 $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepcion', 'Descripcion', 'Colonia', 'Calle','Zona'];
                 break;
             case '5':
+            case '6':
+            case '7':
                 $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepcion', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
                 break;
 
@@ -1543,6 +1603,11 @@ class GestorCasos extends Controller
         $data =  $this->Catalogo->getAllVector();
         echo json_encode($data);
     }
+    public function getPermiso(){
+        $data = ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Seguimientos[1] == 1)?true:false;
+        echo json_encode($data);
+    }
+
 
     public function getDelitos(){
         $data = $this->Catalogo->getAllFaltaDelito();
@@ -1729,13 +1794,7 @@ class GestorCasos extends Controller
         }
 
     }
-    public function GetInfo_Evento(){
-        if (isset($_POST['Folio_infra'])) {
-            $Folio_infra = $_POST['Folio_infra'];
-            $data = $this->GestorCaso->GetInfo_Evento($Folio_infra);
-            echo json_encode($data);
-        } 
-    }
+
     public function getTareas(){
 
         if (isset($_POST['Folio_infra'])) {

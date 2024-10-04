@@ -336,6 +336,11 @@ document.getElementById('btn_principal').addEventListener('click', async functio
                 myFormData.append('Tipo_Grupo','GRUPO')
             }
         }
+        if(document.getElementById("consulta").checked){
+            myFormData.append('Consultado','1')
+        }else{
+            myFormData.append('Consultado','0')
+        }
         button2 = document.getElementById('btn_principal')
         button2.innerHTML = `Guardando
                             <div class="spinner-grow spinner-grow-sm" role="status">
@@ -646,9 +651,11 @@ const showHabilitado = () =>{
         document.getElementById('pdf_Segui').classList.add('mi_hide'); 
         document.getElementById('Panel_Asociacion').classList.remove('mi_hide'); 
         document.getElementById('Id_red').value = "";
+        document.getElementById('Pregunta_Consu').classList.remove('mi_hide'); 
     }else{
         document.getElementById('Panel_nombre').classList.remove('mi_hide'); 
         document.getElementById('Panel_Asociacion').classList.add('mi_hide');
+        document.getElementById('Pregunta_Consu').classList.add('mi_hide');
         document.getElementById('pdf_Segui').classList.remove('mi_hide'); 
         document.getElementById('Id_red').value = "0";
     }

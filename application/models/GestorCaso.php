@@ -547,6 +547,70 @@ class GestorCaso{
                             }
 
                     break;
+                    case '6':   //CONSULTADOS
+                        $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                            $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                            $palabras = array_diff($palabras, $articulos);
+                            $from_where_sentence .= "
+                                        FROM gc_evento_filtro_1
+            
+                                                    WHERE  Folio_infra > 0 
+                                                        ";
+                            foreach($palabras as $palabra){
+                                $palabra=ltrim($palabra, " ");
+                                $palabra=rtrim($palabra, " ");
+                                $from_where_sentence .= "
+                                                AND  (      Folio_infra LIKE '%" . $palabra . "%' OR 
+                                                            Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                            Folio_911 LIKE '%" . $palabra . "%' OR 
+                                                            FechaHora_Captura LIKE '%" . $palabra . "%' OR 
+                                                            FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
+                                                            Zona LIKE '%" . $palabra . "%' OR 
+                                                            Vector LIKE '%" . $palabra . "%' OR
+                                                            Colonia LIKE '%" . $palabra . "%' OR 
+                                                            Calle LIKE '%" . $palabra . "%' OR 
+                                                            Fuente LIKE '%" . $palabra . "%' OR 
+                                                            Status LIKE '%" . $palabra . "%' OR 
+                                                            Calle2 LIKE '%" . $palabra . "%' OR 
+                                                            ClaveSeguimiento LIKE '%" . $palabra . "%') 
+                                                    ";
+                                                
+                            }
+                            $from_where_sentence.= "AND  Tipo_Grupo ='EVENTO DELICTIVO' AND Consultado = 1 ";
+
+                    break;
+                    case '7':   //CONSULTADOS
+                        $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                            $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                            $palabras = array_diff($palabras, $articulos);
+                            $from_where_sentence .= "
+                                        FROM gc_evento_filtro_1
+            
+                                                    WHERE  Folio_infra > 0 
+                                                        ";
+                            foreach($palabras as $palabra){
+                                $palabra=ltrim($palabra, " ");
+                                $palabra=rtrim($palabra, " ");
+                                $from_where_sentence .= "
+                                                AND  (      Folio_infra LIKE '%" . $palabra . "%' OR 
+                                                            Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                            Folio_911 LIKE '%" . $palabra . "%' OR 
+                                                            FechaHora_Captura LIKE '%" . $palabra . "%' OR 
+                                                            FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
+                                                            Zona LIKE '%" . $palabra . "%' OR 
+                                                            Vector LIKE '%" . $palabra . "%' OR
+                                                            Colonia LIKE '%" . $palabra . "%' OR 
+                                                            Calle LIKE '%" . $palabra . "%' OR 
+                                                            Fuente LIKE '%" . $palabra . "%' OR 
+                                                            Status LIKE '%" . $palabra . "%' OR 
+                                                            Calle2 LIKE '%" . $palabra . "%' OR 
+                                                            ClaveSeguimiento LIKE '%" . $palabra . "%') 
+                                                    ";
+                                                
+                            }
+                            $from_where_sentence.= "AND  Tipo_Grupo ='EVENTO DELICTIVO' AND Consultado = 0 ";
+
+                    break;
 
         }
 
@@ -649,8 +713,6 @@ class GestorCaso{
                     Responsable_Turno = '" . $this->remplazoCadena($post['Responsable_Turno']) . "',
                     Semana = " . $post['Semana'] . ",
                     Ubo_Detencion = " . $post['Ubo_Detencion'] . ",
-                    Path_Pdf = '" . $post['nombre_pdf'] . "',
-                    ClaveSeguimiento ='". trim($post['ClaveSeguimiento']) . "',
                     Cdi ='". trim($post['cdi']) . "'
                     WHERE Folio_infra = " . trim($post['Folio_infra']) . "
                     AND (
@@ -679,8 +741,6 @@ class GestorCaso{
                         OR Responsable_Turno != '" . $this->remplazoCadena($post['Responsable_Turno']) . "'
                         OR Semana != " . $post['Semana'] . "
                         OR Ubo_Detencion != " . $post['Ubo_Detencion'] . "
-                        OR Path_Pdf != '" . $post['nombre_pdf'] . "'
-                        OR ClaveSeguimiento != '". trim($post['ClaveSeguimiento']) . "'
                         OR Cdi != '". trim($post['cdi']) . "'
                     )";
                 $this->db->query($sql);
@@ -689,6 +749,19 @@ class GestorCaso{
                     $sqlEjecutados.=" SE ACTUALIZO LA EVENTO EN DATOS PRINCIPALES ".$sql;
                 }
 
+                if($_SESSION['userdataSIC']->Seguimientos[0]==1){
+                        $sql = "    UPDATE evento
+                                  SET
+                                    ClaveSeguimiento ='".$post['ClaveSeguimiento'] . "'
+                                    WHERE Folio_infra = " . trim($post['Folio_infra']) . "
+                                    AND ( ClaveSeguimiento != '". $post['ClaveSeguimiento'] . "'
+                                    )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO LA ASIGNACION DEL SEGUIMIENTO EVENTO ".$sql;
+                        }
+                }
             }else{
                 $response['folio'] = "No hay folio infra";
             }
@@ -1306,7 +1379,7 @@ class GestorCaso{
     //obtener los registros de la pagina actual
     public function getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence = ""){
         $sql = "
-                SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Activacion,FechaHora_Captura,Id_Seguimiento "
+                SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Activacion,FechaHora_Captura,Id_Seguimiento,Tipo_Grupo,Consultado "
             . $from_where_sentence . "  
                 LIMIT $offset,$no_of_records_per_page
                 ";
@@ -1357,8 +1430,8 @@ class GestorCaso{
     }
     public function getPrincipales($Folio_infra){
         $sql = "SELECT 	*
-        FROM gc_evento_filtro_1
-        WHERE gc_evento_filtro_1.Folio_infra = " . $Folio_infra;
+        FROM evento
+        WHERE evento.Folio_infra = " . $Folio_infra;
 
         $this->db->query($sql);
         return $this->db->register();
@@ -1448,12 +1521,6 @@ class GestorCaso{
         $this->db->query($sql);
         return $this->db->registers();
 
-    }
-
-    public function GetInfo_Evento($Folio_infra){
-        $sql = "SELECT Folio_infra, Folio_911, hechos_concat, delitos_concat  FROM gc_evento_filtro_1 WHERE Folio_infra = " . $Folio_infra;
-        $this->db->query($sql);
-        return $this->db->registers();
     }
 
     public function getTodo911(){
