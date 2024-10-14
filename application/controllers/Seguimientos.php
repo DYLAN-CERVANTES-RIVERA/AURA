@@ -33,7 +33,11 @@ class Seguimientos extends Controller
         if (isset($_GET['filtro']) && is_numeric($_GET['filtro']) && $_GET['filtro'] >= MIN_FILTRO_SG && $_GET['filtro'] <= MAX_FILTRO_SG) { //numero de filtro
             $filtro = $_GET['filtro'];
         } else {
-            $filtro = 1;
+            if($_SESSION['userdataSIC']->Red[0] == 0){
+                $filtro = 5;
+            }else{
+                $filtro = 1;
+            }
         }
         //PROCESAMIENTO DE LAS COLUMNAS 
         $this->setColumnsSession($filtro);

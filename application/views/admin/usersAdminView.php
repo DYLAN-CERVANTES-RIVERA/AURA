@@ -42,7 +42,7 @@
 					if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Red[0] == 1) {
 				?>
 					<li>
-						<a class="btn btn-opacity" title="PUNTOS ALTO IMPACTO" data-toggle="tooltip" href="<?= base_url;?>Puntos"><div><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/ubicacion.png" width="55%" ></div></a>
+						<a class="btn btn-opacity" title="PUNTOS ALTO IMPACTO" data-toggle="tooltip" href="<?= base_url;?>Puntos"><div><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/puntos.png" width="55%" ></div></a>
 					</li>
 				<?php
 				}
