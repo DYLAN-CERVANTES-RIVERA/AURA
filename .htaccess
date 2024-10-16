@@ -5,3 +5,8 @@
     RewriteRule (.*) public/$1 [L]
     php_value session.gc_maxlifetime 7200
 </IfModule>
+
+<FilesMatch "\.(js|css)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+</FilesMatch>
