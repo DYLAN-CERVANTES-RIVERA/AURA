@@ -375,6 +375,9 @@ const toDataURL =async url => fetch(url)
     }))
 //funcion para generar foto en base64 de la tabla
 async function encodeFileAsBase64URL(file) {
+    if (file.size > 8 * 1024 * 1024) { // 8 MB en bytes
+        throw new Error('El archivo excede el tamaño máximo de 8 MB.');
+    }
     return new Promise((resolve1) => {
         let reader2 = new FileReader();
         reader2.addEventListener('loadend', () => {

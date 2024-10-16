@@ -582,6 +582,9 @@ const validateImage = (image) => {//Valida la nueva imagen cargada con una exten
     return true;
 }
 async function encodeFileAsBase64URL(file) {//FUNCION PARA CODIFICAR EN BASE 64 LA IMAGEN CARGADA 
+    if (file.size > 8 * 1024 * 1024) { // 8 MB en bytes
+        throw new Error('El archivo excede el tamaño máximo de 8 MB.');
+    }
     return new Promise((resolve1) => {
         let reader2 = new FileReader();
         reader2.addEventListener('loadend', () => {
@@ -614,39 +617,51 @@ const imageExists= async(imgUrl)=> {//FUNCION QUE VALIDA SI EXISTE LA IMAGEN EN 
 } 
 document.addEventListener('paste', async function(event) {
     var target = event.target;
-
-    if (target.classList.contains('uploadFotoMapsCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementMaps(src, 'Photo');
+    try{
+        if (target.classList.contains('uploadFotoMapsCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementMaps(src, 'Photo');
+                }
             }
         }
-    }
 
-    if (target.classList.contains('uploadFotoUbiCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementUbi(src, 'Photo');
+        if (target.classList.contains('uploadFotoUbiCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementUbi(src, 'Photo');
+                }
             }
         }
-    }
 
-    if (target.classList.contains('uploadFotoDatoCtrolV')) {
-        var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementDatoUbicacion(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoDatoCtrolV')) {
+            var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementDatoUbicacion(src, index, 'Photo');
+                }
             }
         }
+    } catch (error) {
+        Swal.fire({
+            title: "ERROR AL PEGAR IMAGEN VERIFICA EL TAMAÑO MAXIMO 8MB",
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+            },
+            buttonsStyling: false
+        });
+        console.error(error.message);
     }
 });
 

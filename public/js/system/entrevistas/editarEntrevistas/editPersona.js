@@ -42,6 +42,9 @@ function deleteImageFotoDetenido() {//FUNCION PARA ELIMINAR LA IMAGEN DEL GRUPO 
     div.innerHTML = '';
 }
 async function encodeFileAsBase64URL(file) {//FUNCION PARA CODIFICAR EN BASE 64 LA IMAGEN CARGADA 
+    if (file.size > 8 * 1024 * 1024) { // 8 MB en bytes
+        throw new Error('El archivo excede el tamaño máximo de 8 MB.');
+    }
     return new Promise((resolve1) => {
         let reader2 = new FileReader();
         reader2.addEventListener('loadend', () => {
@@ -479,6 +482,9 @@ const toDataURL =async url => fetch(url)
     }))
 //funcion para generar foto en base64 de la tabla
 async function encodeFileAsBase64URL(file) {
+    if (file.size > 8 * 1024 * 1024) { // 8 MB en bytes
+        throw new Error('El archivo excede el tamaño máximo de 8 MB.');
+    }
     console.log(file)
     return new Promise((resolve1) => {
         let reader2 = new FileReader();
@@ -631,55 +637,67 @@ const llenadatosRemision = async ( data ) => {//FUNCION QUE LLENA LOS DATOS DE L
 document.addEventListener('paste', async function(event) {
     var target = event.target;
     var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
-
-    if (target.classList.contains('uploadFotoDetenidoCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementEntrevistaDetenido(src, 'Photo');
+    try {
+        if (target.classList.contains('uploadFotoDetenidoCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementEntrevistaDetenido(src, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoEntrevistaCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoEntrevista(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoEntrevistaCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoEntrevista(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoForenciaCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoForencia(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoForenciaCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoForencia(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoUbicacionCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoUbicacion(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoUbicacionCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoUbicacion(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoRedSocial(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoRedSocial(src, index, 'Photo');
+                }
             }
         }
+    } catch (error) {
+        Swal.fire({
+            title: "ERROR AL PEGAR IMAGEN VERIFICA EL TAMAÑO MAXIMO 8MB",
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+            },
+            buttonsStyling: false
+        });
+        console.error(error.message);
     }
 });

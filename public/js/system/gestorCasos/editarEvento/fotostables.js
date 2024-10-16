@@ -154,34 +154,47 @@ document.addEventListener('paste', async function(event) {
     var target = event.target;
     var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
     // Verificar si el elemento en el que se pegará la imagen es un área de carga de imágenes
-    if (target.classList.contains('uploadFileFotosCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFoto(src, index, 'Photo');
+    try {
+        if (target.classList.contains('uploadFileFotosCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFoto(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadInvolucradoCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoInvolucrado(src, index, 'Photo');
+        if (target.classList.contains('uploadInvolucradoCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoInvolucrado(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadInvolucradoVHCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoVehiculo(src, index, 'Photo');
+        if (target.classList.contains('uploadInvolucradoVHCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoVehiculo(src, index, 'Photo');
+                }
             }
         }
+    } catch (error) {
+        Swal.fire({
+            title: "ERROR AL PEGAR IMAGEN VERIFICA EL TAMAÑO MAXIMO 8MB",
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+            },
+            buttonsStyling: false
+        });
+        console.error(error.message);
     }
 });

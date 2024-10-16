@@ -467,6 +467,9 @@ function deleteImageFotoGD() {//FUNCION PARA ELIMINAR LA IMAGEN DEL GRUPO DELICT
     div.innerHTML = '';
 }
 async function encodeFileAsBase64URL(file) {//FUNCION PARA CODIFICAR EN BASE 64 LA IMAGEN CARGADA 
+    if (file.size > 8 * 1024 * 1024) { // 8 MB en bytes
+        throw new Error('El archivo excede el tamaño máximo de 8 MB.');
+    }
     return new Promise((resolve1) => {
         let reader2 = new FileReader();
         reader2.addEventListener('loadend', () => {
@@ -602,46 +605,58 @@ document.getElementById('btn_Alto_Impacto').addEventListener('click', async func
 document.addEventListener('paste', async function(event) {
     var target = event.target;
     var index = target.parentNode.parentNode.parentNode.parentNode.rowIndex
-
-    if (target.classList.contains('uploadFotoPersonaCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoInvolucrado(src, index, 'Photo');
+    try{
+        if (target.classList.contains('uploadFotoPersonaCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoInvolucrado(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoVehiculoCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoVehiculo(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoVehiculoCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoVehiculo(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoDatoCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoForencia(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoDatoCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoForencia(src, index, 'Photo');
+                }
             }
         }
-    }
-    if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                var blob = items[i].getAsFile();
-                const src = await encodeFileAsBase64URL(blob);
-                createElementFotoRedSocial(src, index, 'Photo');
+        if (target.classList.contains('uploadFotoRedsocialCtrolV')) {
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    var blob = items[i].getAsFile();
+                    const src = await encodeFileAsBase64URL(blob);
+                    createElementFotoRedSocial(src, index, 'Photo');
+                }
             }
         }
+    } catch (error) {
+        Swal.fire({
+            title: "ERROR AL PEGAR IMAGEN VERIFICA EL TAMAÑO MAXIMO 8MB",
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+            },
+            buttonsStyling: false
+        });
+        console.error(error.message);
     }
 });
 

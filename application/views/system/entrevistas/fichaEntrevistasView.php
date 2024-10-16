@@ -116,10 +116,10 @@ class PDF extends FPDF{
         $this->Cell(20, 7, utf8_decode('NOMBRE:'));
         $this->SetFont('helvetica','',11);
         $this->SetFillColor(236,236,236);
-        $zona = ($data['Principales']->Zona != 'SD')?'('.$data['Principales']->Zona.') ' : '';
-        $this->Cell(95,7, utf8_decode($zona.$data['Principales']->Nombre.' '.$data['Principales']->Ap_Paterno.' '.$data['Principales']->Ap_Materno),0,0,'J',true);
+        $zona = ($data['Principales']->Zona != 'SD')?'('.$data['Principales']->Zona.') '."\n" : '';
+        $this->multiCell(95,7, utf8_decode($zona.$data['Principales']->Nombre.' '.$data['Principales']->Ap_Paterno.' '.$data['Principales']->Ap_Materno),0,0,'J',true);
 
-        $this->Ln(9);
+        $this->Ln(3);
         $this->SetFont('helvetica','B',11);
         $this->Cell($width, 7);
         $this->Cell(20, 7, utf8_decode('CALLE 1:'));
