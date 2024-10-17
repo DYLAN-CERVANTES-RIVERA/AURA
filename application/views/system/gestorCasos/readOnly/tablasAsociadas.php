@@ -1,20 +1,20 @@
 <div class="container-fluid">
     <!--vista del evento solo para lectura tab datos asociados  -->
-    <h5 class="titulo-azul mt-3">Vehiculos Involucrados reportados</h5>
+    <h5 class="titulo-azul mt-3">Vehículos Involucrados reportados</h5>
     <div class="table-responsive">
         <table class="table table-bordered" id="VehiculoTable">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Tipo de vehiculo</th>
+                    <th scope="col">Tipo de vehículo</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Submarca</th>
                     <th scope="col">Modelo</th>
                     <th scope="col">Placas</th>
                     <th scope="col">Color</th>
-                    <th scope="col">Descripción del Vehiculo</th>
+                    <th scope="col">Descripción del Vehículo</th>
                     <th scope="col">Foto</th>
-                    <th scope="col">Tipo de Vehiculo Involucrado</th>
-                    <th scope="col">Estado de Vehiculo</th>
+                    <th scope="col">Tipo de Vehículo Involucrado</th>
+                    <th scope="col">Estado de Vehículo</th>
                     <th scope="col">Capturo</th>
                 </tr>
             </thead>

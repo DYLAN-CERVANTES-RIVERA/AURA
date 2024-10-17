@@ -31,12 +31,12 @@
             </li>
             <li class="nav-item repetido" id="li-fotos" role="presentation">
                 <a class="nav-link d-flex align-items-center" id="fotos" data-toggle="tab" href="#fotos0" role="tab" aria-controls="Fotos" aria-selected="">
-                    Imagenes de Video - Fotos
+                    Imágenes de Video - Fotos
                 </a>
             </li>
             <li class="<?= "nav-item repetido ".$miHide; ?>" id="li-entrevistas" role="presentation">
                 <a class="nav-link d-flex align-items-center" id="entrevistas" data-toggle="tab" href="#entrevistas0" role="tab" aria-controls="Entrevistas" aria-selected="">
-                    Entrevistas - Culminacion de seguimiento del Evento
+                    Entrevistas - Culminación de seguimiento del Evento
                 </a>
             </li>
         </ul>

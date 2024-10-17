@@ -1069,14 +1069,14 @@ class Entrevistas extends Controller
         }
         if($_SESSION['userdataSIC']->Visualizacion == 1){
                 $data = [
-                    'titulo'     => 'AURA | Ver Informacion de Persona Entrevistada',
+                    'titulo'     => 'AURA | Ver Información de Persona Entrevistada',
                     'extra_css'  => '<link rel="stylesheet" href="' . base_url . 'public/css/system/entrevistas/fullview.css">',
                     'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly.js"></script>'.
                                     '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getStatusTareas-ro.js"></script>'
                                 ];
         }else{
             $data = [
-                'titulo'     => 'AURA | Ver Informacion de Persona Entrevistada',
+                'titulo'     => 'AURA | Ver Información de Persona Entrevistada',
                 'extra_css'  => '<link rel="stylesheet" href="' . base_url . 'public/css/system/entrevistas/fullview.css">',
                 'extra_js'   => '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getPersonaReadOnly2.js"></script>'.
                                 '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistasReadOnly/getStatusTareas-ro.js"></script>'

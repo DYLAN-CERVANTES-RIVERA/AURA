@@ -25,7 +25,7 @@
 							case '10': echo "CATÁLOGO DE CALLES"; break;
 							case '11': echo "CATÁLOGO DE CODIGOS POSTALES"; break;
 							case '12': echo "CATÁLOGO DE NOMBRE CLAVE"; break;
-							case '13': echo "CATÁLOGO DE PROCENDENCIA DE INFORMACION"; break;
+							case '13': echo "CATÁLOGO DE PROCENDENCIA DE INFORMACIÓN"; break;
 							case '14': echo "CATÁLOGO DE AREAS"; break;
 							case '15': echo "CATÁLOGO DE TIPOS DE VIOLENCIA (Sin violencia)"; break;
 							case '16': echo "CATÁLOGO DE INDICATIVO ENTREVISTADOR"; break;

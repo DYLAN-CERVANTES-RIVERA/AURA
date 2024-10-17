@@ -611,7 +611,7 @@ class Catalogos extends Controller
 							<th >Id</th>
 							<th >Calle</th>
 							<th >Calle 2</th>
-							<th >Informacion Adicional</th>
+							<th >Información Adicional</th>
 							<th >CoordX</th>
 							<th >CoordY</th>
 						';
@@ -820,7 +820,7 @@ class Catalogos extends Controller
 				break;
 				case '18':
 					$filename = "catalogo_ubicaciones_camaras";
-					$csv_data="Id_Dato,Calle,Calle2,Informacion Adicional,CoordX, CoordY\n";
+					$csv_data="Id_Dato,Calle,Calle2,Información Adicional,CoordX, CoordY\n";
 					foreach ($cat_rows as $row) {
 						$csv_data.= mb_strtoupper($row->Id_Dato).",\"".
 									mb_strtoupper($row->Calle)."\",\"".
@@ -1403,8 +1403,8 @@ class Catalogos extends Controller
 								<input type="text" class="form-control" id="Calle2" placeholder="Ingrese la Calle 2">
 							</div>
 							<div class="col-12 col-md-6 form-group">
-								<label for="Info_Adicional">Informacion Adicional:</label>
-								<input type="text" class="form-control" id="Info_Adicional" placeholder="Ingrese Informacion Adiccional">
+								<label for="Info_Adicional">Información Adicional:</label>
+								<input type="text" class="form-control" id="Info_Adicional" placeholder="Ingrese Información Adiccional">
 							</div>
 							<div class="col-6 col-md-6 form-group">
 								<label for="CoordX">Coordenada X:</label>
@@ -1592,7 +1592,7 @@ class Catalogos extends Controller
 				$nombreCatalogo="Catálogo de nombres clave";
 			break;
 			case '13':
-				$nombreCatalogo="Catálogo de procendencia informacion";
+				$nombreCatalogo="Catálogo de procendencia información";
 			break;
 			case '14':
 				$nombreCatalogo="Catálogo de areas";

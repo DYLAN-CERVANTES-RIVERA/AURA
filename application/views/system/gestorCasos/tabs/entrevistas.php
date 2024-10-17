@@ -13,7 +13,7 @@
                 <div class="form-group col-lg-4">
                     <label for="procedencia" class="label-form subtitulo-rosa">Tipo de procedencia</label><br>
                     <select class="custom-select custom-select-sm" id="procedencia" name="procedencia">
-                        <option value="NA" selected>SELECCIONE PROCEDENCIA DE INFORMACION</option>
+                        <option value="NA" selected>SELECCIONE PROCEDENCIA DE INFORMACIÓN</option>
                         <option value="ENTREVISTA PRESENCIAL">ENTREVISTA PRESENCIAL</option>
                         <option value="LLAMADA TELEFONICA">LLAMADA TELEFONICA</option>
                         <option value="WHATSAPP">WHATSAPP</option>
@@ -80,7 +80,7 @@
                         <table class="table table-bordered" id="entrevistasTable">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Procedencia de Informacion</th>
+                                    <th scope="col">Procedencia de Información</th>
                                     <th scope="col">Entrevista</th>
                                     <th scope="col">Nombre del Entrevistado</th>
                                     <th scope="col">Clave del Entrevistador</th>

@@ -79,7 +79,7 @@ class PDF extends FPDF{
         $this->Ln(3);
         $this->Cell($width, 4);
         $this->SetTextColor(51, 51, 51);
-        $this->Cell(53, 4, utf8_decode('FUENTE DE INFORMACION:'));
+        $this->Cell(53, 4, utf8_decode('FUENTE DE INFORMACIÓN:'));
         $this->SetTextColor(128, 128, 128);
         $this->Cell(60, 4, utf8_decode($data['principales']->Fuente_Info));
 
@@ -170,7 +170,7 @@ class PDF extends FPDF{
         }
 
         $this->SetTextColor(51, 51, 51);
-        $this->Cell(100, 4, utf8_decode('FECHA OBTENCION DE INFORMACION DEL PUNTO:'));
+        $this->Cell(100, 4, utf8_decode('FECHA OBTENCION DE INFORMACIÓN DEL PUNTO:'));
         $fechalimpia=$this->formatearFecha($data['principales']->Fecha_Punto.' 00:00:00');
         $this->SetTextColor(128, 128, 128);
         $this->Cell(20, 4, utf8_decode($fechalimpia));

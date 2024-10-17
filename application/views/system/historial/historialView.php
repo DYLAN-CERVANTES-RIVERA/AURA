@@ -9,7 +9,7 @@
 				<br><br>
 				<ul class="list-unstyled justify-content-center">
 					<li >
-						<a class="btn btn-opacity" data-toggle="tooltip" title="ESTADISTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
+						<a class="btn btn-opacity" data-toggle="tooltip" title="ESTADÍSTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
 					</li>
 					<?php
 					if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Evento_D[2]==1|| $_SESSION['userdataSIC']->Seguimientos[2] == 1) {
@@ -24,7 +24,7 @@
 					if ($_SESSION['userdataSIC']->Modo_Admin == 1  ||  $_SESSION['userdataSIC']->Red[2] == 1) {
 					?>
 						<li>
-							<a class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
+							<a class="btn btn-opacity" title="REDES DE VÍNCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
 						</li>
 					<?php
 					}
@@ -91,7 +91,7 @@
 						<a class="dropdown-item <?= ($data['filtroActual']==6)?'active':'';?>" href="<?= base_url;?>Historiales/?filtro=6">ACTUALIZACION DE FOTOS</a>
 						<a class="dropdown-item <?= ($data['filtroActual']==7)?'active':'';?>" href="<?= base_url;?>Historiales/?filtro=7">ACTUALIZACION DE EVENTO</a>
 						<a class="dropdown-item <?= ($data['filtroActual']==8)?'active':'';?>" href="<?= base_url;?>Historiales/?filtro=8">CONSULTA EN EL MODULO DE GESTOR DE CASOS</a>
-						<a class="dropdown-item <?= ($data['filtroActual']==9)?'active':'';?>" href="<?= base_url;?>Historiales/?filtro=9">EXPORTACION DE INFORMACION EN EL MODULO DE GESTOR DE CASOS</a>
+						<a class="dropdown-item <?= ($data['filtroActual']==9)?'active':'';?>" href="<?= base_url;?>Historiales/?filtro=9">EXPORTACION DE INFORMACIÓN EN EL MODULO DE GESTOR DE CASOS</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item <?= ($data['filtroActual']==12)?'active':'';?>" href="#" class="btn btn-filtro" data-toggle="modal" data-target="#filtro_rangos">
 							<span class="v-a-middle" >Por rango de fechas</span>

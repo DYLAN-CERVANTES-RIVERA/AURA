@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 ">           
-                    <span class="span_rem ">Fecha/Hora de Creacion de Entrevista:</h5>
+                    <span class="span_rem ">Fecha/Hora de Creación de Entrevista:</h5>
                     <input style="font-size: 15px;color: #0F2145; text-align:center;" type="text" name="fechahora_captura_principales" id="fechahora_captura_principales" name="fechahora_captura_principales" class="form-control custom-input_dt" disabled="true">
                     <span class="span_error" id="fechaP_error"></span>
                 </div>
@@ -57,7 +57,7 @@
                     <span class="span_error" id="curp_error"></span>
                 </div>
                 <div class="form-group col-lg-4 col-sm-6">
-                    <span for="num_tel" class="span_rem">Numero Telefonico:</span>
+                    <span for="num_tel" class="span_rem">Número Telefónico:</span>
                     <input type="text" class="form-control form-control-sm text-uppercase" maxlength="11"id="num_tel" name="num_tel" style="font-size: 15px;color: #0F2145; text-align:center;" disabled="true">
                     <span class="span_error" id="num_tel_error"></span>
                 </div>

@@ -1,9 +1,9 @@
 <div class="container">
    <!--vista del evento solo para lectura tab datos principales -->
-   <h5 class="titulo-azul mt-3">Informacion del Turno</h5>
+   <h5 class="titulo-azul mt-3">Información del Turno</h5>
     <div class="row mt-1">
         <div class="col-lg-6 col-sm-12">
-            <span class="span_rem">Elemento que Capturo la Informacion: </span>
+            <span class="span_rem">Elemento que Capturo la Información: </span>
             <span class="span_rem_ans" name="elemento_captura" id="elemento_captura"></span>
         </div>
         <div class="col-lg-6 col-sm-12">
@@ -163,7 +163,7 @@
             </div>
         </div>
     </div>
-    <h5 class="titulo-azul mt-3"> Informacion del Primer Respondiente: </h5>
+    <h5 class="titulo-azul mt-3"> Información del Primer Respondiente: </h5>
     <div class="row mt-2">
         <div class="col-lg-4 col-sm-12 ">
             <span class="span_rem">Unidad del Primer Respondiente:</span>
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="col-lg-7 col-sm-12">
-                    <span class="span_rem">La detencion fue por la informacion proporcionada por IO: </span>
+                    <span class="span_rem">La detencion fue por la información proporcionada por IO: </span>
                     <span class="span_rem_ans" name="Detencion_Por_Info_Io" id="Detencion_Por_Info_Io"></span>
                 </div>
 
@@ -277,7 +277,7 @@
             </div>
        
             <div class="form-group col-lg-8 mt-2 text-center">
-                <span class="span_rem">Fecha y Hora de activacion de Seguimiento:</span>
+                <span class="span_rem">Fecha y Hora de activación de Seguimiento:</span>
                 <span class="valor-campo" name="fechahora_activacion_principales" id="fechahora_activacion_principales"></span>
                 <span class="span_error" id="fechaP_error"></span>
             </div>

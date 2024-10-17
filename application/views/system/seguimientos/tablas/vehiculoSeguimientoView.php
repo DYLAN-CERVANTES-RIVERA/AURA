@@ -4,9 +4,9 @@
         <div class="container">
             <!--PARA MOSTRAR SI SE CARGARON LOS DATOS O UBO UN ERROR-->
             <div class="col-12 my-4" id="msg_principales_vehiculos"></div>
-            <h5 class="titulo-azul">Vehiculos Identificados Asociados</h5>
+            <h5 class="titulo-azul">Vehículos Identificados Asociados</h5>
             <div class="alert fondo-azul" role="event" style="display:none" id="alertaEditVehiculo">
-                Se está realizando la edición a un vehiculo.
+                Se está realizando la edición a un vehículo.
             </div>
             <div class="row mt-2 mi_hide">
                 <div class="col-lg-6 col-sm-6">
@@ -15,7 +15,7 @@
                     <span class="span_error" id="id_seguimiento_vehiculo_error"></span> 
                 </div>
                 <div class="col-lg-6 col-sm-6 ">
-                    <h5  class="subtitulo-rosa">Elemento que Captura dato Vehiculo: </h5>
+                    <h5  class="subtitulo-rosa">Elemento que Captura dato Vehículo: </h5>
                     <input  style="font-size: 15px;color: #0F2145;"type="text" name="captura_dato_vehiculo" id="captura_dato_vehiculo" value="<?php echo $_SESSION['userdataSIC']->User_Name?>" class="form-control custom-input_dt text-uppercase" disabled="true">
                     <span class="span_error" id="captura_dato_vehiculo_error"></span>
                 </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="row mt-3" id="id_vehiculo_panel">
                 <div class="col-4">   
-                    <h5  class="subtitulo-rosa">Ingrese la placa y seleccione id del vehiculo :</h5>            
+                    <h5  class="subtitulo-rosa">Ingrese la placa y seleccione id del vehículo :</h5>            
                 </div>
                 <div class="col-8">
                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Buscar Placa en Sarai"  id="id_vehiculo_sarai" name="id_vehiculo_sarai"  onkeypress="return validePlaca(event);" >
@@ -53,7 +53,7 @@
             </div>
             <div class="row mt-3 mi_hide" id="id_vehiculo_panel2">
                 <div class="col-4">   
-                    <h5  class="subtitulo-rosa">Ingrese la placa y seleccione id del vehiculo :</h5>            
+                    <h5  class="subtitulo-rosa">Ingrese la placa y seleccione id del vehículo :</h5>            
                 </div>
                 <div class="col-8">
                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Buscar Placa en AURA"  id="id_vehiculo_sic" name="id_vehiculo_sic"  onkeypress="return validePlaca(event);" >
@@ -97,18 +97,18 @@
                     <span class="span_error" id="NombrePropietario_error"></span>
                 </div>
                 <div class="form-group col-lg-12">
-                    <label for="NIVS" class="label-form subtitulo-rosa">NIVS del Vehiculo:</label>
+                    <label for="NIVS" class="label-form subtitulo-rosa">NIVS del Vehículo:</label>
                     <textarea name="NIVS" id="NIVS" cols="45" rows="3" class="form-control form-control-sm text-uppercase"placeholder="Ingrese NIVS que tenga el Vehiculo separadas por ','" onkeypress="return valideMultiplesDatos(event);"></textarea>
                     <span class="span_error" id="NIVS_error"> </span>
                 </div>               
                 <div class="form-group col-lg-9">
-                    <label for="remisiones_FoliosVeh" class="label-form subtitulo-rosa">Informacion de las Placas :</label>
-                    <textarea name="remisiones_FoliosVeh" id="remisiones_FoliosVeh" cols="45" rows="3" class="form-control form-control-sm text-uppercase"placeholder="Ingrese Informacion de las Placas"onkeypress="return valideMultiplesDatos(event);"></textarea>
+                    <label for="remisiones_FoliosVeh" class="label-form subtitulo-rosa">Información de las Placas :</label>
+                    <textarea name="remisiones_FoliosVeh" id="remisiones_FoliosVeh" cols="45" rows="3" class="form-control form-control-sm text-uppercase"placeholder="Ingrese Información de las Placas"onkeypress="return valideMultiplesDatos(event);"></textarea>
                     <span class="span_error" id="remisiones_FoliosVeh_error"> </span>
                 </div>
                 <div class="form-group col-lg-3" align="right">
                     <br>
-                    <button type="button" class="btn btn-add button-movil-plus" onclick="onFormVehiculoSubmit()">Agrega Vehiculo</button>
+                    <button type="button" class="btn btn-add button-movil-plus" onclick="onFormVehiculoSubmit()">Agrega Vehículo</button>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                         <table class="table table-bordered" id="VehiculoTable" style="text-align:center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" style="display:none;">Id_Vehiculo</th>
+                                    <th scope="col" style="display:none;">Id_Vehículo</th>
                                     <th scope="col">Placas</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Submarca</th>
@@ -129,7 +129,7 @@
                                     <th scope="col">Modelo</th>
                                     <th scope="col">Nombre del Propietario</th>
                                     <th scope="col">Nivs</th>
-                                    <th scope="col">Informacion adicional</th>
+                                    <th scope="col">Información adicional</th>
                                     <th scope="col">Foto</th>
                                     <th scope="col">Capturo</th>
                                     <th scope="col">Editar/Eliminar</th>

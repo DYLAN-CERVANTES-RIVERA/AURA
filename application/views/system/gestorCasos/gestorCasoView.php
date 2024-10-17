@@ -9,7 +9,7 @@
                 <br><br>
                 <ul class="list-unstyled justify-content-center">
                     <li >
-                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADISTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
+                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADÍSTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
                     </li>
                     <?php
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Evento_D[2]==1|| $_SESSION['userdataSIC']->Seguimientos[2] == 1) {
@@ -24,7 +24,7 @@
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Red[2] == 1) {
                     ?>
                         <li>
-                            <a class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
+                            <a class="btn btn-opacity" title="REDES DE VÍNCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
                         </li>
                     <?php
                     }
@@ -88,8 +88,8 @@
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>GestorCasos/index/?filtro=1">Todos los Eventos</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=2">Vista de Eventos Habilitados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=3">Vista de Eventos Deshabilitados</a>
-                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=4">Busqueda a Quien se Asigno Evento</a>
-                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=5">Busqueda Solo por Folio AURA Evento</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=4">Búsqueda a Quien se Asigno Evento</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=5">Búsqueda Solo por Folio AURA Evento</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=6">Eventos Consultados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=7">Eventos No Consultados</a>
                         <div class="dropdown-divider"></div>

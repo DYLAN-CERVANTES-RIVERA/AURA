@@ -16,7 +16,7 @@
                 <span class="span_error" id="captura_principales_error"></span>
             </div>
             <div class="col-lg-4 col-sm-6 ">             
-                <h5 class="subtitulo-rosa">Fecha/Hora de Creacion del Red:</h5>
+                <h5 class="subtitulo-rosa">Fecha/Hora de Creación del Red:</h5>
                 <input type="text" name="fechahora_captura_principales" id="fechahora_captura_principales" class="form-control custom-input_dt">
                 <span class="span_error" id="fechaP_error"></span>
             </div>
@@ -155,7 +155,7 @@
         <div id="pdf_Segui">
             <div class="row mt-2" >
                 <div class="form-group col-lg-12">
-                    <label for="id_RED" class="subtitulo-rosa">Red de Vinculos:</label>
+                    <label for="id_RED" class="subtitulo-rosa">Red de Vínculos:</label>
                     
                     <div class="input-group col-sm-12 mt-4 mb-5">
                         <div class="custom-file">
@@ -176,7 +176,7 @@
 
         <?php $clase = ( $_SESSION['userdataSIC']->Modo_Admin == 1 ) ? '' : 'mi_hide';?>  
         <div class="row mt-2 <?=$clase?>">
-            <label class="subtitulo-rosa">Tipo Red de Vinculo:</label>
+            <label class="subtitulo-rosa">Tipo Red de Vínculo:</label>
             <div class="col-3">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="Alto_Imp_Si_No" id="id_alto_1" value="1">

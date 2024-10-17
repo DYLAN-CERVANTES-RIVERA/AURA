@@ -337,7 +337,7 @@ const mostrarGrafica5 = async(results) => {
                     legend: { display: false },
                     title: {
                         display: true,
-                        text: 'EVENTOS POR HORA DEL DIA'
+                        text: 'EVENTOS POR HORA DEL DÍA'
                     } 
                 },
                 scales: {

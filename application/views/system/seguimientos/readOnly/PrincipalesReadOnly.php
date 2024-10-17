@@ -16,7 +16,7 @@
                 <span class="span_error" id="captura_principales_error"></span>
             </div>
             <div class="col-lg-4 col-sm-6 ">             
-                <h5 class="subtitulo-rosa">Fecha/Hora de Creacion del Seguimiento:</h5>
+                <h5 class="subtitulo-rosa">Fecha/Hora de Creación del Seguimiento:</h5>
                 <input type="text" name="fechahora_captura_principales" id="fechahora_captura_principales" class="form-control custom-input_dt">
                 <span class="span_error" id="fechaP_error"></span>
             </div>

@@ -5,7 +5,7 @@
         <table class="table table-bordered" id="entrevistasTable">
             <thead class="thead-dark">
                 <tr>
-                <th scope="col">Procedencia de Informacion</th>
+                <th scope="col">Procedencia de Información</th>
                         <th scope="col">Entrevista</th>
                         <th scope="col">Nombre del Entrevistado</th>
                         <th scope="col">Clave del Entrevistador</th>

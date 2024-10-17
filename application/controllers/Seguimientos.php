@@ -150,7 +150,7 @@ class Seguimientos extends Controller
                 $infoTable['header'] .= '
                         <th class="column1">Folio Red</th>
                         <th class="column2">Nombre de Grupo Delictivo</th>
-                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column3">Fecha de Creación (AAAA-MM-DD)</th>
                         <th class="column4">Folios AURA</th>
                         <th class="column5">Zonas</th>
                         <th class="column6">Peligrosidad</th>
@@ -181,7 +181,7 @@ class Seguimientos extends Controller
                                                     <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
                                                         <i class="material-icons">visibility</i>
                                                     </a>
-                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vínculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                         <i class="material-icons">assignment</i>
                                                     </a>
                                                     </td>';
@@ -279,7 +279,7 @@ class Seguimientos extends Controller
                 $infoTable['header'] .= '
                         <th class="column1">Folio Red</th>
                         <th class="column2">Nombre de Grupo Delictivo</th>
-                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column3">Fecha de Creación (AAAA-MM-DD)</th>
                         <th class="column4">Folios AURA</th>
                         <th class="column5">Zonas</th>
                         <th class="column6">Peligrosidad</th>
@@ -310,7 +310,7 @@ class Seguimientos extends Controller
                                                     <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
                                                         <i class="material-icons">visibility</i>
                                                     </a>
-                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vínculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                         <i class="material-icons">assignment</i>
                                                     </a>
                                                     </td>';
@@ -331,7 +331,7 @@ class Seguimientos extends Controller
                 $infoTable['header'] .= '
                         <th class="column1">Folio Red</th>
                         <th class="column2">Nombre de Grupo Delictivo</th>
-                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column3">Fecha de Creación (AAAA-MM-DD)</th>
                         <th class="column4">Folios AURA</th>
                         <th class="column5">Zonas</th>
                         <th class="column6">Elemento Capturante</th>
@@ -360,7 +360,7 @@ class Seguimientos extends Controller
                                                     <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
                                                         <i class="material-icons">visibility</i>
                                                     </a>
-                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vínculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                         <i class="material-icons">assignment</i>
                                                     </a>
                                                     ';
@@ -392,7 +392,7 @@ class Seguimientos extends Controller
                 $infoTable['header'] .= '
                         <th class="column1">Folio Red</th>
                         <th class="column2">Nombre de Grupo Delictivo</th>
-                        <th class="column3">Fecha de Creacion (AAAA-MM-DD)</th>
+                        <th class="column3">Fecha de Creación (AAAA-MM-DD)</th>
                         <th class="column4">Folios AURA</th>
                         <th class="column5">Zonas</th>
                         <th class="column6">Elemento Capturante</th>
@@ -421,7 +421,7 @@ class Seguimientos extends Controller
                                                     <a class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Ver registro" href="' . base_url . 'Seguimientos/verSeguimiento/?Id_seguimiento=' . $row->Id_Seguimiento . '">
                                                         <i class="material-icons">visibility</i>
                                                     </a>
-                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vinculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
+                                                    <a target="_blank" class="myLinks ' . $permisos_Ver . '" data-toggle="tooltip" data-placement="right" title="Generar PDF de la Red de Vínculo Completa" href="' . base_url . 'Seguimientos/GeneraPDF/?Id_seguimiento=' .$row->Id_Seguimiento. '">
                                                         <i class="material-icons">assignment</i>
                                                     </a>
                                                     </td>';
@@ -498,7 +498,7 @@ class Seguimientos extends Controller
         //generación de dropdown dependiendo del filtro
         switch ($filtro) {
             case '1':
-                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creación', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
                 break;
             case '2':
                 $campos = ['Folio Red','Nombre del grupo delictivo', 'Nombre completo', 'Curp','Edad','Telefono','Alias', 'Capturo'];
@@ -507,13 +507,13 @@ class Seguimientos extends Controller
                 $campos = ['Folio Red','Nombre del grupo delictivo', 'Placas', 'Informacion del vehiculo', 'Nivs','Nombre del propietario','Capturo'];
                 break;
             case '4':
-                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creación', 'Folios AURA','Zonas','Peligrosidad','Elemento capturante'];
                 break;
             case '5':
-                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Elemento capturante'];
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creación', 'Folios AURA','Zonas','Elemento capturante'];
                 break;
             case '6':
-                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creacion', 'Folios AURA','Zonas','Elemento capturante'];
+                $campos = ['Folio Red', 'Nombre de grupo delictivo', 'Fecha de creación', 'Folios AURA','Zonas','Elemento capturante'];
                 break;
         }
        
@@ -626,7 +626,7 @@ class Seguimientos extends Controller
                 case '6':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_seguimientos";
-					$csv_data="Folio Red, Nombre del grupo delictivo,Modus_operandi,Peligrosidad,Observaciones,Zonas,Folios AURA (Eventos),Vehiculos del seguimiento,Personas del seguimiento,Elemento_Captura ,Fecha de creacion\n";
+					$csv_data="Folio Red, Nombre del grupo delictivo,Modus_operandi,Peligrosidad,Observaciones,Zonas,Folios AURA (Eventos),Vehiculos del seguimiento,Personas del seguimiento,Elemento_Captura ,Fecha de creación\n";
                     foreach ($cat_rows as $row) {
                         $partes = explode(" ", $row->FechaHora_Creacion);
 

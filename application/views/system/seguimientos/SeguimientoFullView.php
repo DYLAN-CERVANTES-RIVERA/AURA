@@ -4,11 +4,11 @@
         <!--vista para las tabs para edicion de los eventos  -->
         <?php if(!isset($data['titulo_1'])){ ?>
             <div class="paragraph-title d-flex justify-content-between mt-2 mb-1">
-                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VINCULOS</a> <span>/ EDITAR</span></h5>
+                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VÍNCULOS</a> <span>/ EDITAR</span></h5>
             </div>
         <?php }else{ ?>
             <div class="paragraph-title d-flex justify-content-between mt-2 mb-1">
-                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VINCULOS</a> <span>/ <?=$data['titulo_1']?></span></h5>
+                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VÍNCULOS</a> <span>/ <?=$data['titulo_1']?></span></h5>
             </div>
         <?php } ?>
     </div>
@@ -31,7 +31,7 @@
 
             <li class="nav-item repetido" id="li-vehiculos" role="presentation">
                 <a class="nav-link d-flex align-items-center" id="vehiculos" data-toggle="tab" href="#vehiculos0" role="tab" aria-controls="vehiculos" aria-selected="">
-                    Vehiculos
+                    Vehículos
                 </a>
             </li> 
             <li class="nav-item repetido mi_hide" id="li-Domicilio" role="presentation">

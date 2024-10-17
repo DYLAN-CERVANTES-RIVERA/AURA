@@ -33,7 +33,7 @@
             </li>
             <li class="nav-item repetido" id="li-imagenes" role="presentation">
                 <a class="nav-link d-flex align-items-center" id="imagenes" data-toggle="tab" href="#imagenes0" role="tab" aria-controls="imagenes" aria-selected="">
-                    Imagenes del Evento
+                    Imágenes del Evento
                 </a>
             </li>
            

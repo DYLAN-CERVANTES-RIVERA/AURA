@@ -133,7 +133,7 @@
 									</th>
 									<th >
 										<div class="row d-flex justify-content-center">
-											Redes de vinculos
+											Redes de vínculos
 										</div>
 										<div class="row d-flex justify-content-center">
 											<input class="checkPermisos" type="checkbox" value="1" id="all_redes">
@@ -282,7 +282,7 @@
 									<td>
 										<div class="form-group form-check col-12 ">
 											<input type="checkbox" class="form-check-input checkPermisos" value="1" id="Punto_Delete" name="Punto_Delete" <?= ($infoUser->Puntos[0]=='1')?"checked":"";?>>
-											<label class="form-check-label" for="Punto_Delete">Exportar Informacion de Puntos</label>
+											<label class="form-check-label" for="Punto_Delete">Exportar Información de Puntos</label>
 										</div>
 									</td>
 								</tr>

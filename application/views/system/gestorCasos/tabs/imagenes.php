@@ -3,52 +3,52 @@
     <form id='datos_fotos' onsubmit="event.preventDefault()">
         <div class="container">
             <div class="col-lg-12 my-4" id="msg_fotos"></div>
-            <h5 class="titulo-azul">Datos de Imagenes</h5>
+            <h5 class="titulo-azul">Datos de Imágenes</h5>
             <div class="alert fondo-azul" role="event" style="display:none" id="alertEditFoto">
                 Se está realizando la edición de una foto.
             </div>
             
             <div class="row mt-3">
                 <div class="form-group col-lg-12">
-                    <label for="id_puerta" class="label-form subtitulo-rosa">CATALOGO DE CAMARAS</label>
+                    <label for="id_puerta" class="label-form subtitulo-rosa">CATALOGO DE CÁMARAS</label>
                     <input type="text" class="form-control form-control-sm " placeholder="Buscar"  id="id_puerta" name="id_puerta">
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="id_ubicacion" class="label-form subtitulo-rosa">SELECCIONE UN ID DE UBICACION</label>
+                    <label for="id_ubicacion" class="label-form subtitulo-rosa">SELECCIONE UN ID DE UBICACIÓN</label>
                     <select class="custom-select custom-select-sm" id="id_ubicacion" name="id_ubicacion">
-                        <option value="NA">SELCCIONE UN ID UBICACION</option>    
-                        <option value="1">UBICACION 1</option>
-                        <option value="2">UBICACION 2</option>
-                        <option value="3">UBICACION 3</option>
-                        <option value="4">UBICACION 4</option>
-                        <option value="5">UBICACION 5</option>
-                        <option value="6">UBICACION 6</option>
-                        <option value="7">UBICACION 7</option>
-                        <option value="8">UBICACION 8</option>
-                        <option value="9">UBICACION 9</option>
-                        <option value="10">UBICACION 10</option>
+                        <option value="NA">SELCCIONE UN ID UBICACIÓN</option>    
+                        <option value="1">UBICACIÓN 1</option>
+                        <option value="2">UBICACIÓN 2</option>
+                        <option value="3">UBICACIÓN 3</option>
+                        <option value="4">UBICACIÓN 4</option>
+                        <option value="5">UBICACIÓN 5</option>
+                        <option value="6">UBICACIÓN 6</option>
+                        <option value="7">UBICACIÓN 7</option>
+                        <option value="8">UBICACIÓN 8</option>
+                        <option value="9">UBICACIÓN 9</option>
+                        <option value="10">UBICACIÓN 10</option>
                     </select>
                     <span class="span_error" id="id_ubicacion_error"></span>
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="id_camara" class="label-form subtitulo-rosa">SELECCIONE UN ID DE CAMARA</label>
+                    <label for="id_camara" class="label-form subtitulo-rosa">SELECCIONE UN ID DE CÁMARA</label>
                     <select class="custom-select custom-select-sm" id="id_camara" name="id_camara">
-                        <option value="NA">SELCCIONE UN ID CAMARA</option>    
-                        <option value="1">CAMARA 1</option>
-                        <option value="2">CAMARA 2</option>
-                        <option value="3">CAMARA 3</option>
-                        <option value="4">CAMARA 4</option>
-                        <option value="5">CAMARA 5</option>
-                        <option value="6">CAMARA 6</option>
-                        <option value="7">CAMARA 7</option>
-                        <option value="8">CAMARA 8</option>
-                        <option value="9">CAMARA 9</option>
-                        <option value="10">CAMARA 10</option>
+                        <option value="NA">SELCCIONE UN ID CÁMARA</option>    
+                        <option value="1">CÁMARA 1</option>
+                        <option value="2">CÁMARA 2</option>
+                        <option value="3">CÁMARA 3</option>
+                        <option value="4">CÁMARA 4</option>
+                        <option value="5">CÁMARA 5</option>
+                        <option value="6">CÁMARA 6</option>
+                        <option value="7">CÁMARA 7</option>
+                        <option value="8">CÁMARA 8</option>
+                        <option value="9">CÁMARA 9</option>
+                        <option value="10">CÁMARA 10</option>
                     </select>
                     <span class="span_error" id="id_camara_error"></span>
                 </div>
             </div>
-            <h5 class="titulo-azul">Ubicacion de la Imagen</h5>
+            <h5 class="titulo-azul">Ubicación de la Imagen</h5>
             <div class="row mt-3">
                 <div class="col-lg-6">
                     <div class="form-row mt-3">
@@ -149,8 +149,8 @@
                         <table class="table table-bordered" id="fotosTable" style="text-align:center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Ubicacion Id</th>
-                                    <th scope="col">Camara Id</th>
+                                    <th scope="col">Ubicación Id</th>
+                                    <th scope="col">Cámara Id</th>
                                     <th scope="col">Imagen</th>
                                     <th scope="col">Descripción de Imagen</th>
                                     <th scope="col">Colonia</th>
@@ -185,7 +185,7 @@
 
             <div class="d-flex justify-content-end col-sm-6 col-lg-12" id="id_p">
                 <a class="btn btn-sm btn-ssc mr-3" href="<?= base_url; ?>GestorCasos"><i class="material-icons v-a-middle">arrow_back_ios</i>Volver al inicio</a>
-                <a class="btn btn-sm btn-ssc" id="btn_principalFotos" value='1'>Guardar Imagenes y Fotos</a>
+                <a class="btn btn-sm btn-ssc" id="btn_principalFotos" value='1'>Guardar Imágenes y Fotos</a>
             </div>
         </div>
         <div class="row mi_hide" id="form_contenedor2">

@@ -5,11 +5,11 @@
                     <?php
                     if ( $_SESSION['userdataSIC']->Red[0] == 1 && $_SESSION['userdataSIC']->Modo_Admin != 1 ) {
                     ?>
-                        REDES DE VINCULO (ALTO IMPACTO)
+                        REDES DE VÍNCULO (ALTO IMPACTO)
                     <?php
                     }else{
                     ?>
-                        REDES DE VINCULO
+                        REDES DE VÍNCULO
                     <?php
                     }
                     ?>
@@ -21,7 +21,7 @@
                 <br><br>
                 <ul class="list-unstyled justify-content-center">
                     <li >
-                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADISTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
+                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADÍSTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
                     </li>
                     <?php
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Evento_D[2]==1|| $_SESSION['userdataSIC']->Seguimientos[2] == 1) {
@@ -36,7 +36,7 @@
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  ||  $_SESSION['userdataSIC']->Red[2] == 1) {
                     ?>
                         <li>
-                            <a class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
+                            <a class="btn btn-opacity" title="REDES DE VÍNCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
                         </li>
                     <?php
                     }
@@ -149,7 +149,7 @@
                         </div>
                     </div>        
                     <div class="row col-4" aling="right">
-                            <a class="btn btn-opacity <?= ($_SESSION['userdataSIC']->Red[3])?'':'mi_hide';?>" href="<?= base_url;?>Seguimientos/nuevoSeguimiento" ><img src="<?php echo base_url; ?>public/media/icons/iconnuevo.png" width="15%">Nueva Red de Vinculo</a>
+                            <a class="btn btn-opacity <?= ($_SESSION['userdataSIC']->Red[3])?'':'mi_hide';?>" href="<?= base_url;?>Seguimientos/nuevoSeguimiento" ><img src="<?php echo base_url; ?>public/media/icons/iconnuevo.png" width="15%">Nueva Red de Vínculo</a>
                     </div>
                 </div>
             </div>

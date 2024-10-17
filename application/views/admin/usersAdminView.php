@@ -9,7 +9,7 @@
 			<br><br>
 			<ul class="list-unstyled justify-content-center">
 				<li >
-					<button class="btn btn-opacity" data-toggle="tooltip" title="ESTADISTICAS"><a href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a></button>
+					<button class="btn btn-opacity" data-toggle="tooltip" title="ESTADÍSTICAS"><a href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a></button>
 				</li>
 				<?php
 				if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Evento_D[2]==1|| $_SESSION['userdataSIC']->Seguimientos[2] == 1) {
@@ -24,7 +24,7 @@
 				if ($_SESSION['userdataSIC']->Modo_Admin == 1  ||  $_SESSION['userdataSIC']->Red[2] == 1) {
 				?>
 					<li>
-						<button class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip"><a href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a></button>
+						<button class="btn btn-opacity" title="REDES DE VÍNCULO" data-toggle="tooltip"><a href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a></button>
 					</li>
 				<?php
 				}
@@ -136,7 +136,7 @@
 						</a>
 						<div class="form-group form-check col-12">
 							<input type="checkbox" class="form-check-input checkPermisos" value="1" id="visual" name="visual"<?= ($_SESSION['userdataSIC']->Visualizacion=='1')?"checked":"";?> >
-							<label class="form-check-label" for="visual">Modo incognito desactivado</label>
+							<label class="form-check-label" for="visual">Modo incógnito desactivado</label>
 						</div>
 						<div class="col-12">
 							<span class	="span_error" id="fecha_reporte_actual">

@@ -588,7 +588,7 @@ class PDF extends FPDF{
                     $this->Ln(7);
                     $this->SetFont('helvetica','',9);
                     $this->SetFillColor(236,236,236);
-                    $this->MultiCell(190,7, utf8_decode($Red->Observacion_Enlace.$this->GetY()),0,1,'C',true);
+                    $this->MultiCell(190,7, utf8_decode($Red->Observacion_Enlace),0,1,'C',true);
                     $this->Ln(7);
     
                     $y=$this->GetY();
@@ -913,7 +913,7 @@ class PDF extends FPDF{
                 $this->Ln(7);
                 $this->SetFont('helvetica','',9);
                 $this->SetFillColor(236,236,236);
-                $this->MultiCell(190,7, utf8_decode($Red->Observacion_Enlace.$this->GetY()),0,1,'C',true);
+                $this->MultiCell(190,7, utf8_decode($Red->Observacion_Enlace),0,1,'C',true);
                 $this->Ln(7);
 
                 $y=$this->GetY();

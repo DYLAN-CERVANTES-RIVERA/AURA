@@ -1,6 +1,6 @@
 <div class= "content">
     <div class="cabecera_modulo " ><br></div>
-    <h1 class=" cabecera_modulo text-center"><strong>ESTADISTICAS</strong></h1> 
+    <h1 class=" cabecera_modulo text-center"><strong>ESTADÍSTICAS</strong></h1> 
     <div class="row">
         <div class="container col-lg-1  justify-content-center text-center " id="navbarnavegacion">
             <br><br><br>
@@ -8,7 +8,7 @@
                 <br><br>
                 <ul class="list-unstyled justify-content-center">
                     <li >
-                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADISTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
+                        <a class="btn btn-opacity" data-toggle="tooltip" title="ESTADÍSTICAS" href="<?= base_url;?>Estadisticas" ><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/estadistica.png" width="50%"></a>
                     </li>
                     <?php
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Evento_D[2]==1|| $_SESSION['userdataSIC']->Seguimientos[2] == 1) {
@@ -23,7 +23,7 @@
                     if ($_SESSION['userdataSIC']->Modo_Admin == 1  ||  $_SESSION['userdataSIC']->Red[2] == 1) {
                     ?>
                         <li>
-                            <a class="btn btn-opacity" title="REDES DE VINCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
+                            <a class="btn btn-opacity" title="REDES DE VÍNCULO" data-toggle="tooltip" href="<?= base_url;?>Seguimientos"><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/red.png" width="50%"></a>
                         </li>
                     <?php
                     }
@@ -94,7 +94,7 @@
                     <h6>Total registros: <strong id="id_total_grafica"></strong></h6>
                 </div>
                 <div class="col-2">
-                    <button type="button" class="btn btn-opacity" onclick="return checarCadena(event)" ><img src="<?php echo base_url; ?>public/media/icons/eye.png" width="15%" >Generar graficas</button>
+                    <button type="button" class="btn btn-opacity" onclick="return checarCadena(event)" ><img src="<?php echo base_url; ?>public/media/icons/eye.png" width="15%" >Generar gráficas</button>
                 </div>
                 <div class="col-2">
                     <?php
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-2 mt-2 text-center">
                         <input type="checkbox" class="form-check-input" value="1" id="exacta" name="exacta" >
-                        <label class="form-check-label" for="exacta">Busqueda Exacta Solo campos de graficas</label>			
+                        <label class="form-check-label" for="exacta">Busqueda Exacta Solo campos de gráficas</label>			
                 </div>
             </div>
             <div class="row col-lg-auto mt-3">

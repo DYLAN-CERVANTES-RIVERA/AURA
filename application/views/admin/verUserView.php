@@ -138,7 +138,7 @@
 											<td><i class="material-icons close_icon">close</i></td>
 										</tr>
 										<tr>
-											<td>REDES DE VINCULOS</td>
+											<td>REDES DE VÍNCULOS</td>
 											<td><i class="material-icons <?= ($infoUser->Red[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Red[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Red[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Red[1])?"check":"close";?></i></td>
@@ -149,14 +149,14 @@
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Entrevistas[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[1])?"check":"close";?></i></td>
-											<td><i class="material-icons <?= ($infoUser->Entrevistas[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[0])?"check":"close";?></i><label><?= ($infoUser->Entrevistas[0])?"Exportacion de Informacion Entrevistas":"";?></label></td>
+											<td><i class="material-icons <?= ($infoUser->Entrevistas[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Entrevistas[0])?"check":"close";?></i><label><?= ($infoUser->Entrevistas[0])?"Exportacion de Información Entrevistas":"";?></label></td>
 										</tr>
 										<tr>
 											<td>PUNTOS</td>
 											<td><i class="material-icons <?= ($infoUser->Puntos[3])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[3])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Puntos[2])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[2])?"check":"close";?></i></td>
 											<td><i class="material-icons <?= ($infoUser->Puntos[1])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[1])?"check":"close";?></i></td>
-											<td><i class="material-icons <?= ($infoUser->Puntos[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[0])?"check":"close";?></i><label><?= ($infoUser->Puntos[0])?"Exportacion de Informacion Puntos":"";?></label></td>
+											<td><i class="material-icons <?= ($infoUser->Puntos[0])?"check_icon":"close_icon";?>"><?= ($infoUser->Puntos[0])?"check":"close";?></i><label><?= ($infoUser->Puntos[0])?"Exportacion de Información Puntos":"";?></label></td>
 										</tr>
 									</tbody>
 								</table>

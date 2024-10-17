@@ -655,7 +655,7 @@ class UsersAdmin extends Controller{
 									<th class="column3">Nombre</th>
 									<th class="column4">Seguimientos de Eventos</th>
 									<th class="column5">Eventos Delictivos</th>
-                                    <th class="column6">Redes de Vinculo</th>
+                                    <th class="column6">Redes de Vínculo</th>
                                     <th class="column7">Entrevistas</th>
                                     <th class="column8">Puntos</th>
 									<th class="column9">Modo Administrador</th>
@@ -829,7 +829,7 @@ class UsersAdmin extends Controller{
                     $filename = "usuarios";
 					//se realiza exportacion de usuarios a EXCEL
 					$users = $this->Usuario->getAllInfoUsersByCadena($from_where_sentence);
-					$csv_data="#,User Name,Nombre completo,Correo,Area,Eventos,Seguimientos Eventos,Redes de Vinculo,Entrevistas,Puntos,Modo Admin,Estatus\n";
+					$csv_data="#,User Name,Nombre completo,Correo,Area,Eventos,Seguimientos Eventos,Redes de Vínculo,Entrevistas,Puntos,Modo Admin,Estatus\n";
 					foreach ($users as $user) {
 						//cadenas permisos para exportación
 					
@@ -910,7 +910,7 @@ class UsersAdmin extends Controller{
 			                            'Nombre completo',
                                         'Eventos',
 			                            'Seguimientos de Eventos',
-			                            'Redes de Vinculo',
+			                            'Redes de Vínculo',
                                         'Entrevistas',
 			                            'Admin'
 		                            ];  
@@ -978,13 +978,13 @@ class UsersAdmin extends Controller{
         //generación de dropdown dependiendo del filtro
         switch ($filtro) {
             case '1':
-                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vinculo','Entrevistas','Modo administrador'];
+                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vínculo','Entrevistas','Modo administrador'];
             break;
             case '2':
-                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vinculo','Entrevistas','Modo administrador'];
+                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vínculo','Entrevistas','Modo administrador'];
             break;
             case '3':
-                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vinculo','Entrevistas','Modo administrador'];
+                $campos = ['Id usuario','Username','Nombre','Seguimientos de Eventos','Eventos Delictivos','Redes de Vínculo','Entrevistas','Modo administrador'];
             break;
         }
         //gestión de cada columna

@@ -61,7 +61,7 @@
             <span class="span_rem_ans" name="fechahora_captura_principales" id="fechahora_captura_principales"></span>  
         </div>
         <div class="form-group col-lg-6 mt-4 text-center  ">
-            <h5 class="text-center" >Fecha y Hora de Recepcion : </h5>
+            <h5 class="text-center" >Fecha y Hora de Recepción : </h5>
             <span class="span_rem_ans" name="fechahora_recepcion_principales" id="fechahora_recepcion_principales"></span>
         </div>
     </div>
@@ -87,7 +87,7 @@
                 <table class="table table-responsive" id="ResumenTable">
                     <thead>
                         <tr class="align-middle text-center">
-                            <th>VEHICULOS</th>
+                            <th>VEHÍCULOS</th>
                             <th>INVOLUCRADOS</th>
                             <th>ENTREVISTAS</th>
                             <th>FOTOS Y VIDEOS</th>

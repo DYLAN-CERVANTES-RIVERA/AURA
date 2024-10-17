@@ -161,13 +161,13 @@ const ValidatableForencias = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
     switch(opcion){
         case 'NÚMERO TELEFÓNICO': 
             if(document.getElementById('dato_relevante').value.length < 10){
-                document.getElementById('dato_relevante_error').innerHTML='Ingrese el numero telefonico con la cantidad de digitos adecuada';
+                document.getElementById('dato_relevante_error').innerHTML='Ingrese el número telefónico con la cantidad de digitos adecuada';
                 respuesta = false;
             }
         break;
         case 'NÚMERO DE TARJETA':
             if(document.getElementById('dato_relevante').value.length < 16){
-                document.getElementById('dato_relevante_error').innerHTML='Ingrese el numero de tarjeta con la cantidad de digitos adecuada';
+                document.getElementById('dato_relevante_error').innerHTML='Ingrese el número de tarjeta con la cantidad de digitos adecuada';
                 respuesta = false;
             }
         break;

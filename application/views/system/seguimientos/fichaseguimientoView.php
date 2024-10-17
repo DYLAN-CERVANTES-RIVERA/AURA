@@ -764,7 +764,7 @@
 
             $this->SetTextColor(255, 255, 255);                   
             $this->SetFillColor(41,41,95); 
-            $this->Cell(190, 5, utf8_decode('EVENTOS RELACIONADOS A LA RED DE VINCULO'), 0, 1, 'C',true);            
+            $this->Cell(190, 5, utf8_decode('EVENTOS RELACIONADOS A LA RED DE VÍNCULO'), 0, 1, 'C',true);            
             $this->ln(3);
             $this->SetTextColor(51, 51, 51);
             $this->SetFillColor(156,156,156); 
@@ -1001,7 +1001,7 @@
                     $this->Cell(75, 4, utf8_decode($entrevista->entrevistador));
                     $this->SetTextColor(51, 51, 51);
                     
-                    $this->Cell(38, 4, utf8_decode('NUM. TELEFONICO:'));
+                    $this->Cell(38, 4, utf8_decode('NUM. TELEFÓNICO:'));
                     $this->SetTextColor(128, 128, 128);
                     $this->Cell(70, 4, utf8_decode($entrevista->telefono_entrevistado));
                     $this->Ln(6);

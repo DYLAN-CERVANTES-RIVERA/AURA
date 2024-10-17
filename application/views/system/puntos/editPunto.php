@@ -125,15 +125,15 @@
                     <span class="span_error" id="vector_error"></span>
                 </div>  
             </div>
-            <h5 class="titulo-azul">Fuente de Informacion</h5>
+            <h5 class="titulo-azul">Fuente de Información</h5>
             <div class = 'row'>
                 <div class="col-lg-4">
-                    <label for="Fuente_info" class="label-form subtitulo-rosa">Fuente de Informacion</label>
+                    <label for="Fuente_info" class="label-form subtitulo-rosa">Fuente de Información</label>
                     <select class="custom-select custom-select-sm" id="Fuente_info" name="Fuente_info">
-                        <option value="NA">SELECCIONE UNA FUENTE DE INFORMACION</option>
+                        <option value="NA">SELECCIONE UNA FUENTE DE INFORMACIÓN</option>
                         <option value="DETENIDO">DETENIDO</option>
                         <option value="FACEBOOK">FACEBOOK</option>
-                        <option value="NUMERO TELEFONICO">NUMERO TELEFONICO</option>
+                        <option value="NUMERO TELEFONICO">NÚMERO TELEFÓNICO</option>
                         <option value="ANONIMO">ANONIMO</option>
                     </select>
                     <span class="span_error" id="Fuente_info_error"></span>
@@ -198,7 +198,7 @@
                     </div>
                 </div>
             </div>
-            <h5 class="titulo-azul mt-3">Informacion de la Ubicacion</h5>
+            <h5 class="titulo-azul mt-3">Información de la Ubicacion</h5>
             <div class="row mt-3">
                 <div class="form-group col-lg-3">
                     <label for="fecha" class="label-form subtitulo-rosa">Ingrese fecha de obtencion de Información</label>
@@ -206,20 +206,20 @@
                 </div>
                 <div class="form-group col-lg-9">
                     <label for="Info_Adicional" class="label-form subtitulo-rosa">Información Adicional</label>
-                    <textarea name="Info_Adicional" id="Info_Adicional" cols="45" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Informacion Adicional"></textarea>
+                    <textarea name="Info_Adicional" id="Info_Adicional" cols="45" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Información Adicional"></textarea>
                     <span class="span_error" id="Info_Adicional_error"> </span>
                 </div>
                 <div class="form-group col-lg-12">
                     <label for="Distribuidor" class="subtitulo-rosa">Nombre o Alias del Distribuidor:</label>
-                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Distribuidor" name="Distribuidor" placeholder="Ingrese Informacion del Distribuidor" onkeypress="return valida(event);">
+                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Distribuidor" name="Distribuidor" placeholder="Ingrese Información del Distribuidor" onkeypress="return valida(event);">
                 </div>   
                 <div class="form-group col-lg-6">
                     <label for="Grupo_OP" class="subtitulo-rosa">Grupo Delictivo:</label>
-                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Grupo_OP" name="Grupo_OP" placeholder="Ingrese Informacion de Grupo Delictivo" onkeypress="return valida(event);">
+                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Grupo_OP" name="Grupo_OP" placeholder="Ingrese Información de Grupo Delictivo" onkeypress="return valida(event);">
                 </div> 
                 <div class="form-group col-lg-6">
-                    <label for="Atendido_Por" class="subtitulo-rosa">Informacion Atendida por:</label>
-                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Atendido_Por" name="Atendido_Por" placeholder="Ingrese Quien Atendio la Informacion" onkeypress="return valida(event);">
+                    <label for="Atendido_Por" class="subtitulo-rosa">Información Atendida por:</label>
+                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="450" id="Atendido_Por" name="Atendido_Por" placeholder="Ingrese Quien Atendio la Información" onkeypress="return valida(event);">
                 </div> 
                 <div class="form-group col-lg-12">
                     <label for="Enlace_Google" class="subtitulo-rosa">Enlace de Ubicacion:</label>

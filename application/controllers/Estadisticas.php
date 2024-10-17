@@ -19,7 +19,7 @@ class Estadisticas extends Controller
             $_SESSION['userdataSIC']->rango_fin_esta = $_POST['rango_fin'];
         }
         $data = [
-            'titulo'    => 'AURA | Estadisticas',
+            'titulo'    => 'AURA | Estadísticas',
             'extra_css' => '<link rel="stylesheet" href="' . base_url . 'public/css/system/estadistica/index.css">',
             'extra_js'  => '<script src="' . base_url . 'public/js/system/estadistica/index.js"></script>'.
                             '<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>'.

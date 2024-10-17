@@ -4,11 +4,11 @@
         <!--vista para las tabs para edicion de los eventos  -->
         <?php if(!isset($data['titulo_1'])){ ?>
             <div class="paragraph-title d-flex justify-content-between mt-2 mb-1">
-                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VINCULOS</a> <span>/ NUEVO</span></h5>
+                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VÍNCULOS</a> <span>/ NUEVO</span></h5>
             </div>
         <?php }else{ ?>
             <div class="paragraph-title d-flex justify-content-between mt-2 mb-1">
-                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VINCULOS</a> <span>/ <?=$data['titulo_1']?></span></h5>
+                <h5> <a href="<?= base_url; ?>Seguimientos">REDES DE VÍNCULOS</a> <span>/ <?=$data['titulo_1']?></span></h5>
             </div>
         <?php } ?>
         <hr>

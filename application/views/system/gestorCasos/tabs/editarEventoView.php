@@ -38,7 +38,7 @@
                     <span class="span_error" id="911_principalesError"></span>
                 </div>
                 <div class="col-lg-3">
-                    <label class="subtitulo-rosa">Fecha/Hora de Recepcion</label>
+                    <label class="subtitulo-rosa">Fecha/Hora de Recepción</label>
                     <br>
                     <div class="row justify-content-center">
                         <label class="subtitulo-azul">Ingrese Fecha</label>
@@ -302,15 +302,15 @@
                     <input type="text" class="form-control form-control-sm text-uppercase" id="Unidad_Primer_R" name="Unidad_Primer_R" placeholder="Ingrese Unidad Primer Respondiente">
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="Informacion_Primer_R" class="subtitulo-rosa">Informacion Unidad Primer Respondiente</label>
-                    <textarea name="Informacion_Primer_R" id="Informacion_Primer_R" cols="30" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Informacion Unidad Primer Respondiente(Elementos)" onkeypress="return valideMultiples(event);"></textarea>
+                    <label for="Informacion_Primer_R" class="subtitulo-rosa">Información Unidad Primer Respondiente</label>
+                    <textarea name="Informacion_Primer_R" id="Informacion_Primer_R" cols="30" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Información Unidad Primer Respondiente(Elementos)" onkeypress="return valideMultiples(event);"></textarea>
                 </div>
                 <div class="form-group col-lg-12">
                     <label for="Acciones" class="subtitulo-rosa">Acciones IO</label>
                     <textarea   name="Acciones" id="Acciones" cols="45" rows="4" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Acciones por Parte de IO" onkeypress="return valideMultiples(event);"></textarea>
                 </div>
             </div>
-            <h5 class="titulo-azul">Informacion del Turno (Inteligencía Operativa)</h5>
+            <h5 class="titulo-azul">Información del Turno (Inteligencía Operativa)</h5>
             <div class="row mt-3">
                 <div class="form-group col-lg-4">
                     <label for="Turno" class="subtitulo-rosa">Turno (Inteligencía Operativa)</label>
@@ -336,10 +336,10 @@
                               
             <!--VEHICULOS INVOLUCRADOS-->
 
-            <h5 class="titulo-azul">Vehiculos Involucrados</h5>
+            <h5 class="titulo-azul">Vehículos Involucrados</h5>
             <div class="row mt-3">
                 <div class="form-group col-lg-4">
-                    <label for="identificacionVI" class="label-form subtitulo-rosa">¿Se tiene Identificación de los Vehiculos en el evento?</label>
+                    <label for="identificacionVI" class="label-form subtitulo-rosa">¿Se tiene Identificación de los Vehículos en el evento?</label>
                 </div>  
                 <div class="form-group col-lg-4">
                     <input type="radio" id="Identificacion_VI1" name="Identificacion_VI" value="1" onchange="return changeIdentificacionVI(event)">
@@ -353,18 +353,18 @@
         </div> 
         <div class="mi_hide" id="div_vehInvolucrados">
             <div class="container">
-                <h5 class="titulo-rosa">Ingrese Información de los Vehiculos Involucrados</h5>
+                <h5 class="titulo-rosa">Ingrese Información de los Vehículos Involucrados</h5>
                 <div class="alert fondo-azul" role="event" style="display:none" id="alertaEditVehiculos" >
-                    Se está realizando la edición a un Vehiculo.
+                    Se está realizando la edición a un Vehículo.
                 </div>
                 <div class="form-row mt-3">
                     <div class="col-lg-6 mi_hide">
                         <input type="text" name="Id_Vehiculo" id="Id_Vehiculo" value="SD">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label for="Tipo_Vehiculo" class="label-form  subtitulo-rosa">Tipo de Vehiculo</label>
+                        <label for="Tipo_Vehiculo" class="label-form  subtitulo-rosa">Tipo de Vehículo</label>
                         <select class="custom-select custom-select-sm parrafo-azul" id="Tipo_Vehiculo" name="Tipo_Vehiculo">
-                            <option value="NA">SELECCIONE UN TIPO DE VEHICULO</option>
+                            <option value="NA">SELECCIONE UN TIPO DE VEHÍCULO</option>
                             <?php foreach ($data['datos_prim']['tipo_vehiculos'] as $item) : ?>
                                 <option value="<?php echo $item->Tipo; ?>"><?php echo $item->Tipo; ?></option>
                             <?php endforeach ?>
@@ -396,7 +396,7 @@
                     </div>
                     
                     <div class="form-group col-lg-9 col-sm-6">
-                        <label for="Placa_Vehiculo" class="label-form subtitulo-rosa">Placas del Vehiculo</label>
+                        <label for="Placa_Vehiculo" class="label-form subtitulo-rosa">Placas del Vehículo</label>
                         <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Ingrese placas del vehiculo" id="Placa_Vehiculo" name="Placa_Vehiculo" onkeypress="return valideMultiples(event);">
                         <span class="span_error" id="Placa_Vehiculo_principales_error"></span>
                     </div>
@@ -409,12 +409,12 @@
                     </div>
 
                     <div class="form-group col-lg-9">
-                        <label for="Descripcion_gral" class="label-form subtitulo-rosa">Descripción del Vehiculo</label>
+                        <label for="Descripcion_gral" class="label-form subtitulo-rosa">Descripción del Vehículo</label>
                         <textarea name="Descripcion_gral" id="Descripcion_gral" cols="45" rows="3" placeholder="Ingrese descripcion del vehiculo" class="form-control form-control-sm text-uppercase" onkeypress="return valideMultiples(event);"></textarea>
                         <span class="span_error" id="Descripcion_gral_error"> </span>
                     </div>
                     <div class="col-lg-4 col-sm-6"> 
-                        <label for="Tipo_Veh_Involucrado" class="label-form subtitulo-rosa">Tipo de Vehiculo Involucrado</label>
+                        <label for="Tipo_Veh_Involucrado" class="label-form subtitulo-rosa">Tipo de Vehículo Involucrado</label>
                         <select class="custom-select custom-select-sm parrafo-azul" id="Tipo_Veh_Involucrado" name="Tipo_Veh_Involucrado">
                             <option value="SD">SELECCIONE TIPO DE VEHICULO INVOLUCRADO</option>
                             <option value="PARTE AFECTADA">PARTE AFECTADA</option>
@@ -436,7 +436,7 @@
                     </div>
                     <div class="col-lg-3 col-sm-6" align="right">
                         <br>
-                        <button type="button" class="btn btn-add" onclick="onFormVehiculoSubmit()"> Agregar Vehiculo</button>
+                        <button type="button" class="btn btn-add" onclick="onFormVehiculoSubmit()"> Agregar Vehículo</button>
                     </div>
                 </div><br>
             </div>
@@ -447,17 +447,17 @@
                             <table class="table table-bordered" id="VehiculoTable" style="text-align:center">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Id de Vehiculo</th>
-                                        <th scope="col">Tipo de vehiculo</th>
+                                        <th scope="col">Id de Vehículo</th>
+                                        <th scope="col">Tipo de vehículo</th>
                                         <th scope="col">Marca</th>
                                         <th scope="col">Submarca</th>
                                         <th scope="col">Modelo</th>
                                         <th scope="col">Placas</th>
                                         <th scope="col">Color</th>
-                                        <th scope="col">Descripción del Vehiculo</th>
+                                        <th scope="col">Descripción del Vehículo</th>
                                         <th scope="col">Foto</th>
-                                        <th scope="col">Tipo de Vehiculo Involucrado</th>
-                                        <th scope="col">Estado de Vehiculo</th>
+                                        <th scope="col">Tipo de Vehículo Involucrado</th>
+                                        <th scope="col">Estado de Vehículo</th>
                                         <th scope="col">Capturo</th>
                                         <th scope="col">Editar/Eliminar</th>
                                         <th scope="col" style="display:none;"></th>
@@ -635,11 +635,11 @@
                         <input type="text" class="form-control form-control-sm text-uppercase" id="Compañia" name="Compañia" placeholder="Ingrese Compañia a cargo de la Detencion" onkeypress="return valideMultiples(event);">
                     </div>
                     <div class="form-group col-lg-4 col-sm-6">
-                        <h5 class="subtitulo-rosa">Fecha de Detencion</h5>
+                        <h5 class="subtitulo-rosa">Fecha de Detención</h5>
                         <input type="date" name="Fecha_Detencion" id="Fecha_Detencion" class="form-control custom-input_dt fecha parrafo-azul fondo-azul" value="<?php echo date('Y-m-d') ?>">
                     </div>
                     <div class="form-group col-lg-12 col-sm-6">
-                        <h5 class="subtitulo-rosa">Elementos que Realizaron la Detencion</h5>
+                        <h5 class="subtitulo-rosa">Elementos que Realizaron la Detención</h5>
                         <textarea name="Elementos_Realizan_D" id="Elementos_Realizan_D" rows="2" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Elementos que realizaron la detencion separados por ','" ></textarea>  
                     </div>
                     <div class="form-group col-lg-12 col-sm-6">
@@ -650,7 +650,7 @@
                 <div class="row mt-3">
                     
                     <div class="form-group col-lg-4">
-                        <p class="label-form ml-2 parrafo-azul"> Ubicacion de Detencion en: </p>  
+                        <p class="label-form ml-2 parrafo-azul"> Ubicación de Detención en: </p>  
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="puebla_ubicacion" name="ubicacion_puebla" class="custom-control-input" value="PUEBLA" checked>
                             <label class="custom-control-label label-form parrafo-azul" for="puebla_ubicacion">Puebla</label>
@@ -759,7 +759,7 @@
                         <span class="span_error" id="Observacion_Ubicacion_Det_error"></span>
                     </div>
                     <div class="form-group col-lg-12 col-sm-6">
-                        <label for="Link_Ubicacion_Det" class="subtitulo-rosa">Link de Ubicacion:</label>
+                        <label for="Link_Ubicacion_Det" class="subtitulo-rosa">Link de Ubicación:</label>
                         <input type="text" class="form-control form-control-sm" maxlength="100"id="Link_Ubicacion_Det" name="Link_Ubicacion_Det" placeholder="Ingrese el link de la ubicacion">
                         <span class="span_error" id="Link_Ubicacion_Det_error"></span>
                     </div>
@@ -799,7 +799,7 @@
             </div>
             <div class="form-group col-lg-5 <?= ($_SESSION['userdataSIC']->Seguimientos[0])?'':'mi_hide';?>">
                 <div class="form-group col-lg-12">
-                    <span class="span_rem mt-2">Asignacion de elemento para seguimiento: </span>
+                    <span class="span_rem mt-2">Asignación de elemento para seguimiento: </span>
                 </div>
                 <div class="form-group col-lg-12">
                     <select class="custom-select custom-select-sm" id="clave_asignacion_seguimiento" name="clave_asignacion_seguimiento">
@@ -813,7 +813,7 @@
             </div>
             
             <div class="row mt-2 mi_hide">
-            <h5 class="titulo-azul">Informacion recopilada por IO del Evento</h5>
+            <h5 class="titulo-azul">Información recopilada por IO del Evento</h5>
                 <div class="form-group col-lg-12">
                     <div class="input-group col-sm-12 mt-4 mb-5">
                         <div class="custom-file">
@@ -843,6 +843,7 @@
             <div class="row mi_hide" id="form_contenedor">
                 <input type="text" name="actualizahabilito" id="actualizahabilito" class="form-control custom-input_dt"  value="<?php echo strtoupper($_SESSION['userdataSIC']->User_Name)?>" readOnly>
                 <input type="text" name="actualizaVP" id="actualizaVP" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->User_Name?>" readOnly>
+                <input type="text" name="Area" id="Area" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Area?>" readOnly>
                 <input type="text" name="TipoUsuario" id="TipoUsuario" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Seguimientos[1]?>" readOnly>
             </div>
         </div>                       

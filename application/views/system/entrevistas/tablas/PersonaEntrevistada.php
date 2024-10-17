@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 ">           
-                <span class="span_rem ">Fecha/Hora de Creacion de Entrevista:</h5>
+                <span class="span_rem ">Fecha/Hora de Creación de Entrevista:</h5>
                 <input style="font-size: 15px;color: #0F2145; text-align:center;" type="text" name="fechahora_captura_principales" id="fechahora_captura_principales" name="fechahora_captura_principales" class="form-control custom-input_dt" disabled="true">
                 <span class="span_error" id="fechaP_error"></span>
             </div>
@@ -25,7 +25,7 @@
         <h5 class="titulo-azul col-lg-12 mt-3">Remision</h5>
         <div class="row mt-2">
             <div class="col-6">
-                <span class="span_rem">¿Desea corregir la informacion de la persona con una remision de SARAI?</h5>
+                <span class="span_rem">¿Desea corregir la información de la persona con una remision de SARAI?</h5>
             </div>
             <div class="col-3">
                 <div class="form-check">
@@ -115,8 +115,8 @@
                 <span class="span_error" id="curp_error"></span>
             </div>
             <div class="form-group col-lg-4 col-sm-6">
-                <label for="num_tel" class="subtitulo-rosa">Numero Telefonico:</label>
-                <input type="text" class="form-control form-control-sm text-uppercase" maxlength="11"id="num_tel" name="num_tel" placeholder="Ingrese numero telefonico" onkeypress="return validePanelRemisiones(event);" >
+                <label for="num_tel" class="subtitulo-rosa">Número Telefónico:</label>
+                <input type="text" class="form-control form-control-sm text-uppercase" maxlength="11"id="num_tel" name="num_tel" placeholder="Ingrese número telefónico" onkeypress="return validePanelRemisiones(event);" >
                 <span class="span_error" id="num_tel_error"></span>
             </div>
             <div class="form-group col-lg-2 col-sm-6">

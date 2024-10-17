@@ -319,15 +319,15 @@
                     <input type="text" class="form-control form-control-sm text-uppercase" id="Unidad_Primer_R" name="Unidad_Primer_R"  maxLength = 20 placeholder="Ingrese Unidad Primer Respondiente">
                 </div>
                 <div class="form-group col-lg-8">
-                    <label for="Informacion_Primer_R" class="subtitulo-rosa">Informacion Unidad Primer Respondiente</label>
-                    <textarea name="Informacion_Primer_R" id="Informacion_Primer_R" cols="30" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Informacion Unidad Primer Respondiente(Elementos)" onkeypress="return valideMultiples(event);"></textarea>
+                    <label for="Informacion_Primer_R" class="subtitulo-rosa">Información Unidad Primer Respondiente</label>
+                    <textarea name="Informacion_Primer_R" id="Informacion_Primer_R" cols="30" rows="3" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Información Unidad Primer Respondiente(Elementos)" onkeypress="return valideMultiples(event);"></textarea>
                 </div>
                 <div class="form-group col-lg-12">
                     <label for="Acciones" class="subtitulo-rosa">Acciones IO</label>
                     <textarea name="Acciones" id="Acciones" cols="45" rows="4" class="form-control form-control-sm text-uppercase" placeholder="Ingrese Acciones por Parte de IO" onkeypress="return valideMultiples(event);"></textarea>
                 </div>
             </div>
-            <h5 class="titulo-azul">Informacion del Turno (Inteligencía Operativa)</h5>
+            <h5 class="titulo-azul">Información del Turno (Inteligencía Operativa)</h5>
             <div class="row mt-3">
                 <div class="form-group col-lg-4">
                     <label for="Turno" class="subtitulo-rosa">Turno (Inteligencía Operativa)</label>
