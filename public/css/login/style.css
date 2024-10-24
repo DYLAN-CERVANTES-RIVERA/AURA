@@ -9,8 +9,8 @@ h5 {
 
 .btn-ssc {
     color: #fff;
-    background-color: var(--button-color);
-    border-color: var(--button-color);
+    background-color: #7F2447;
+    border-color: #7F2447;
 }
 
 .btn-ssc :hover {
@@ -42,7 +42,7 @@ h5 {
 }
 .subtitulo-rosa {
     font-size: 15px;
-    color: #ff2190;
+    color: #7F2447;
     justify-content: center;
     font-weight: bold;
 }
@@ -63,8 +63,8 @@ h5 {
 }
 .btn-add {
     color: #fff;
-    background-color: #ff2190;;
-    border-color: #ff2190;;
+    background-color: #7F2447;
+    border-color: #7F2447;
 }
 .vidrio{
     /* From https://css.glass */

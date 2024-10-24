@@ -39,9 +39,9 @@
       <nav class="navbar" id="sidenav_p">
         <div class="col-lg-4">
           <img class="box" src="<?php echo base_url; ?>public/media/images/logo2.png">
-          <img class="box2" src="<?php echo base_url; ?>public/media/images/logo22.png">
+          <img class="box2" src="<?php echo base_url; ?>public/media/images/LOGOSSC.jpg">
         </div>
-        <div class="col-lg-4 content-center mt-2">
+        <div class="col-lg-4 content-center">
           <h5 class="titulo_header">SECRETARÍA DE SEGURIDAD CIUDADANA</h5>
           <h6 class="subtitulo_header">DIRECCION DE INTELIGENCÍA Y POLÍTICA CRIMINAL</h6>
         </div>

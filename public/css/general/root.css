@@ -16,15 +16,15 @@
 :root {
     --nav-color: #0F2145;
     --active_color: #0F2145;
-    --primary_opacity: #f61a84;
-    --primary_opacity2: #f61a84;
+    --primary_opacity: #7F2447;
+    --primary_opacity2: #7F2447;
     /* Colores importantes de la aplicación */
     --bg_body: #fafafa;
     --button-color: #0F2145;
-    --h-color: #f61a84;
-    --icon-color: #f61a84;
+    --h-color: #7F2447;
+    --icon-color: #7F2447;
     --table-color: #0F2145;
-    --span-rem: #f61a84;
+    --span-rem: #7F2447;
     --hover-color: #ede7f6
 }
 
@@ -46,7 +46,7 @@ h6 {
 #linea{
     border-top: solid;
     height: 9px;
-    background-color: #f61a84;
+    background-color: #7F2447;
 }
 
 #linea2{   
@@ -611,12 +611,12 @@ fieldset{
 }
 .cabecera_modulo{
     font-size: 39px;
-    color: #f61a84;
+    color: #7F2447;
     text-align:center;
 }
 #sidenav_p{
     background-color:#fafafa;
-    height: 117px;
+    height: 108px;
 }
 #navbarhead {
     position: fixed;
@@ -714,7 +714,7 @@ div.avatar {
     }
     .cabecera_modulo{
         font-size: 36px;
-        color: #f61a84;
+        color: #7F2447;
         text-align:center;
     }
     .text_bienvenido{
@@ -886,7 +886,7 @@ div.avatar {
     }
     .cabecera_modulo{
         font-size: 35px;
-        color: #f61a84;
+        color: #7F2447;
         text-align:center;
     }
     .box3 {

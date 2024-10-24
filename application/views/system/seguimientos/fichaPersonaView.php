@@ -519,7 +519,7 @@
             $banner = base_url.'public/media/images/logo2.png';
             $this->Image($banner,12,13,35);
 
-            $banner = base_url.'public/media/images/logo22.png';
+            $banner = base_url.'public/media/images/LOGOSSC.jpg';
             $this->Image($banner,65,13,35);
             
             $this->SetFont('Avenir','',11);
@@ -531,7 +531,7 @@
             $this->Cell(20,  4,$GLOBALS['PDFIDPERSONA'] , '', 1, 'C');
             $this->Ln(1);
             $this->Cell(99, 4);
-            $this->SetFillColor(51,51,51); //242
+            $this->SetFillColor(127, 36, 71); //242
             $this->SetTextColor(255, 255, 255);
             $this->MultiCell(105,7, utf8_decode('DIRECCIÓN DE INTELIGENCIA Y POLÍTICA CRIMINAL'),0,1,'L');
             $this->Ln(0);

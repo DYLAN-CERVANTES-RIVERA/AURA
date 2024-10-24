@@ -40,7 +40,7 @@ class Seguimiento{
                         $from_where_sentence.= " AND ( Alto_Impacto = 0) ";  
                     }
                 }
-                $from_where_sentence.= " AND ( Tipo_Grupo = 'GRUPO') ";  
+                $from_where_sentence.= " AND ( Tipo_Grupo = 'GRUPO' OR Tipo_Grupo = 'PERSONA' ) ";  
                 $from_where_sentence .= $this->getFechaCondition();
                 $from_where_sentence .= " ORDER BY Id_Seguimiento DESC";
             break;
