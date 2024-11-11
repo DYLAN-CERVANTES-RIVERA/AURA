@@ -737,10 +737,20 @@ const llenarUbicacion = async(data)=>{
         document.getElementById('Estado').value='PUEBLA';
         document.getElementById('Municipio').value='PUEBLA';
     }
-    document.getElementById('cordX_Det').value = data.CoordX;
-    document.getElementById('cordY_Det').value = data.CoordY;
-    await getColoniasCallesD();
 
+    if(data.CoordY!='' && data.CoordX!=''){
+        let validaX = await ValidaCoordX(data.CoordX);
+        let validaY = await ValidaCoordY(data.CoordY);
+
+        if(validaX == "" && validaY == ""){
+            document.getElementById('cordX_Det').value = data.CoordX;
+            document.getElementById('cordY_Det').value = data.CoordY;
+            await getColoniasCallesD();
+        }else{
+            document.getElementById('cordX_Det').value = data.CoordX;
+            document.getElementById('cordY_Det').value = data.CoordY;
+        }
+    }
     document.getElementById('Colonia_Det').value = data.Colonia;
     document.getElementById('Calle_Det').value = data.Calle;
     document.getElementById('Calle_Det2').value = data.Calle2;
@@ -821,10 +831,18 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
         })
         vector.value = data.Vector
         if(data.CoordY!='' && data.CoordX!=''){
-            cordy.value = await ValidaCoordPositiva(data.CoordY)
-            cordx.value = await ValidaCoordNegativa(data.CoordX) 
-            await getColoniasCalles();
-        }     
+            let validaX = await ValidaCoordX(data.CoordX);
+            let validaY = await ValidaCoordY(data.CoordY);
+    
+            if(validaX == "" && validaY == ""){
+                cordy.value = data.CoordY;
+                cordx.value = data.CoordX;
+                await getColoniasCalles();
+            }else{
+                cordy.value = data.CoordY;
+                cordx.value = data.CoordX;
+            }
+        }    
         noext.value = data.NoExt
         cp.value = data.CP
         colonia.value = data.Colonia
@@ -850,10 +868,18 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
             vector.value = data.Vector
         }
         if(data.CoordY!='' && data.CoordX!=''){
-            cordy.value = await ValidaCoordPositiva(data.CoordY)
-            cordx.value = await ValidaCoordNegativa(data.CoordX) 
-            await getColoniasCalles();
-        }
+            let validaX = await ValidaCoordX(data.CoordX);
+            let validaY = await ValidaCoordY(data.CoordY);
+    
+            if(validaX == "" && validaY == ""){
+                cordy.value = data.CoordY;
+                cordx.value = data.CoordX;
+                await getColoniasCalles();
+            }else{
+                cordy.value = data.CoordY;
+                cordx.value = data.CoordX;
+            }
+        } 
         noext.value = data.NoExt
         cp.value = data.CP
         colonia.value = data.Colonia

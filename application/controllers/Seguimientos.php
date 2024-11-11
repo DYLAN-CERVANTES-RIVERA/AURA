@@ -157,12 +157,14 @@ class Seguimientos extends Controller
                         <th class="column7">Elemento Capturante</th>
                     ';
                 foreach ($rows as $row) {
+                    $Folios = ($row->Folios_infra!=NULL && $row->Folios_infra!='') ? $this->ReconstruyeCad($row->Folios_infra):'';
+                    $Zonas = ($row->Zonas!=NULL && $row->Zonas!='') ? $this->ReconstruyeCad($row->Zonas):'';
                     $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
                     $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
                                             <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
                                             <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
-                                            <td class="column4">' . $row->Folios_infra. '</td>
-                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column4">' . $Folios. '</td>
+                                            <td class="column5">' . mb_strtoupper($Zonas). '</td>
                                             <td class="column6">' . mb_strtoupper($row->Peligrosidad)  . '</td>
                                             <td class="column7">' . $row->Elemento_Captura . '</td>
                         ';
@@ -286,12 +288,14 @@ class Seguimientos extends Controller
                         <th class="column7">Elemento Capturante</th>
                     ';
                 foreach ($rows as $row) {
+                    $Folios = ($row->Folios_infra!=NULL && $row->Folios_infra!='') ? $this->ReconstruyeCad($row->Folios_infra):'';
+                    $Zonas = ($row->Zonas!=NULL && $row->Zonas!='') ? $this->ReconstruyeCad($row->Zonas):'';
                     $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
                     $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
                                             <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
                                             <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
-                                            <td class="column4">' . $row->Folios_infra. '</td>
-                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column4">' . $Folios. '</td>
+                                            <td class="column5">' . mb_strtoupper($Zonas). '</td>
                                             <td class="column6">' . mb_strtoupper($row->Peligrosidad)  . '</td>
                                             <td class="column7">' . $row->Elemento_Captura . '</td>
                         ';
@@ -337,12 +341,14 @@ class Seguimientos extends Controller
                         <th class="column6">Elemento Capturante</th>
                     ';
                 foreach ($rows as $row) {
+                    $Folios = ($row->Folios_infra!=NULL && $row->Folios_infra!='') ? $this->ReconstruyeCad($row->Folios_infra):'';
+                    $Zonas = ($row->Zonas!=NULL && $row->Zonas!='') ? $this->ReconstruyeCad($row->Zonas):'';
                     $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
                     $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
                                             <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
                                             <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
-                                            <td class="column4">' . $row->Folios_infra. '</td>
-                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column4">' . $Folios. '</td>
+                                            <td class="column5">' . mb_strtoupper($Zonas). '</td>
                                             <td class="column6">' . $row->Elemento_Captura . '</td>
                         ';
                     if ($row->FechaHora_Creacion != '') {
@@ -398,12 +404,14 @@ class Seguimientos extends Controller
                         <th class="column6">Elemento Capturante</th>
                     ';
                 foreach ($rows as $row) {
+                    $Folios = ($row->Folios_infra!=NULL && $row->Folios_infra!='') ? $this->ReconstruyeCad($row->Folios_infra):'';
+                    $Zonas = ($row->Zonas!=NULL && $row->Zonas!='') ? $this->ReconstruyeCad($row->Zonas):'';
                     $infoTable['body'] .= '<tr id="tr' . $row->Id_Seguimiento . '">';
                     $infoTable['body'] .= ' <td class="column1">' . $row->Id_Seguimiento . '</td>
                                             <td class="column2">' . mb_strtoupper($row->Nombre_grupo_delictivo) . '</td>
                                             <td class="column3">' . mb_strtoupper($row->FechaHora_Creacion). '</td>
-                                            <td class="column4">' . $row->Folios_infra. '</td>
-                                            <td class="column5">' . mb_strtoupper($row->Zonas). '</td>
+                                            <td class="column4">' . $Folios. '</td>
+                                            <td class="column5">' . mb_strtoupper($Zonas). '</td>
                                             <td class="column6">' . $row->Elemento_Captura . '</td>
                         ';
                     if ($row->FechaHora_Creacion != '') {
@@ -440,6 +448,37 @@ class Seguimientos extends Controller
             break;
         }
         return $infoTable;
+    }
+    public function ReconstruyeCad($Folios){
+        $folios = explode(',', $Folios);
+        $result = '';
+        if(count($folios)>4){
+            foreach ($folios as $index => $folio) {
+                $result .= $folio;
+                // Reemplazar cada segunda coma por un salto de línea
+                if (($index+1)  %  5 == 0) {
+                    $result .= "<br>"; // Salto de línea
+                } else {
+                    if(trim($folio)!='' && $index<count($folios)-1){
+                        $result .= ', '; // Coma y espacio para los demás
+
+                    }
+                }
+            }
+
+        }else if(count($folios)>1){
+            foreach ($folios as $index => $folio) {
+                $result .= $folio;
+                if(trim($folio)!='' && $index<count($folios)-1){
+                    $result .= ', '; // Coma y espacio para los demás
+                }
+            }
+            
+        }else {
+            $result = $Folios;
+
+        }
+        return strval($result);
     }
     public function generarLinks($numPage, $total_pages, $extra_cad = "", $filtro = 1){
         //$extra_cad sirve para determinar la paginacion conforme a si se realizó una busqueda

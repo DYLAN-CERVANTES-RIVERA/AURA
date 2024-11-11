@@ -93,40 +93,41 @@ const readTableImagenes = async() => {//lee el contenido de la tabla fotos
     let Fotos = [];
     if (table.rows.length > 1) {
         for (let i = 1; i < table.rows.length; i++) {
-            const input = table.rows[i].cells[2].children[1].children[1];
-            if (input != undefined) {
-                const type = table.rows[i].cells[2].children[1].children[2].classList[1],
-                    base64 = document.getElementById('images_row_' + i);
-                nameImage = 'Foto_row' + i;
-                if (type != 'File') {
-                    isPNG = base64.src.split('.');
-                    let scr=base64.src.split('?')
-                    if (isPNG[1] != undefined) {
-                        await toDataURL(scr[0])
-                            .then(myBase64 => {
-                                Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage, myBase64, myBase64,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));
-                            })
+            if(table.rows[i].cells[17].innerHTML == document.getElementById('Area').value){
+                const input = table.rows[i].cells[2].children[1].children[1];
+                if (input != undefined) {
+                    const type = table.rows[i].cells[2].children[1].children[2].classList[1],
+                        base64 = document.getElementById('images_row_' + i);
+                    nameImage = 'Foto_row' + i;
+                    if (type != 'File') {
+                        isPNG = base64.src.split('.');
+                        let scr=base64.src.split('?')
+                        if (isPNG[1] != undefined) {
+                            await toDataURL(scr[0])
+                                .then(myBase64 => {
+                                    Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage, myBase64, myBase64,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML,table.rows[i].cells[17].innerHTML));
+                                })
+                        } else {
+                            Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage, base64.src, base64.src,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML,table.rows[i].cells[17].innerHTML));
+                        }
                     } else {
-                        Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage, base64.src, base64.src,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));
+                        //aqui solo en este caso va enviar  la funcion de file to base64
+                        aux=document.getElementById('file'+nameImage)
+                        if(aux.files[0]!=undefined){
+                            let base64URL = await encodeFileAsBase64URL(aux.files[0]);
+                            Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage,null,base64URL,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML,table.rows[i].cells[17].innerHTML));     
+                        }  
                     }
                 } else {
-                    //aqui solo en este caso va enviar  la funcion de file to base64
-                    aux=document.getElementById('file'+nameImage)
-                    if(aux.files[0]!=undefined){
-                        let base64URL = await encodeFileAsBase64URL(aux.files[0]);
-                        Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, type, nameImage,null,base64URL,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));     
-                     
-                    }  
+                    Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, null, null, null,null,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML,table.rows[i].cells[17].innerHTML));
                 }
-            } else {
-                Fotos.push(dataImagesTable(table.rows[i].cells[0].innerHTML,table.rows[i].cells[1].innerHTML,table.rows[i].cells[3].innerHTML,table.rows[i].cells[4].innerHTML,table.rows[i].cells[5].innerHTML,table.rows[i].cells[6].innerHTML,table.rows[i].cells[7].innerHTML,table.rows[i].cells[8].innerHTML,table.rows[i].cells[9].innerHTML,table.rows[i].cells[10].innerHTML,table.rows[i].cells[11].innerHTML,table.rows[i].cells[12].innerHTML,table.rows[i].cells[13].innerHTML, null, null, null,null,table.rows[i].cells[14].innerHTML,table.rows[i].cells[16].innerHTML));
             }
         }
     }
     return {Fotos};
 }
 
-const dataImagesTable = (id_ubicacion,id_camara,descripcionFoto,ColoniaF,CalleF,Calle2F,no_ExtF,CPF,cordYF,cordXF,fecha_captura_foto,hora_captura_foto,fecha_hora_captura_sistema,typeImage, nameImage, dataImage,base64,capturo,Ultima_Actualizacion) => {//crea para la estructura para que esta se envie al modelo para la escritura en base de datos
+const dataImagesTable = (id_ubicacion,id_camara,descripcionFoto,ColoniaF,CalleF,Calle2F,no_ExtF,CPF,cordYF,cordXF,fecha_captura_foto,hora_captura_foto,fecha_hora_captura_sistema,typeImage, nameImage, dataImage,base64,capturo,Ultima_Actualizacion,Area) => {//crea para la estructura para que esta se envie al modelo para la escritura en base de datos
     return {
         ['row']: {
             id_ubicacion:id_ubicacion,
@@ -147,7 +148,8 @@ const dataImagesTable = (id_ubicacion,id_camara,descripcionFoto,ColoniaF,CalleF,
             image: dataImage,
             imagebase64:base64,
             capturo:capturo,
-            Ultima_Actualizacion:Ultima_Actualizacion
+            Ultima_Actualizacion:Ultima_Actualizacion,
+            Area:Area
         }
     }
 }
@@ -219,9 +221,9 @@ const onFormCamaraSubmit = async() => {//FUNCION QUE LLENA LA FORM DE IMAGENES
 /* ----- ----- ----- Eventos Funcionalidades de la tabla de fotos y videos ----- ----- ----- */
 let selectedRowFotos = null;//Define una actualizacion o una insercion en la tabla
 
-const onFormFotosSubmit = ()=>{//El boton asociado dispara la funcion
+const onFormFotosSubmit = async()=>{//El boton asociado dispara la funcion
     const campos = ['id_ubicacion','descripcionFoto','ColoniaF','CalleF','Calle2F','no_ExtF','CPF','cordYF','cordXF','id_camara','fecha_captura_foto','hora_captura_foto'];
-    if(validateFormFoto()){
+    if(await validateFormFoto()){
         let formData = readFormDataFotos(campos);
         if(selectedRowFotos === null){
             insertNewRowFotos(formData);
@@ -276,7 +278,9 @@ const insertNewRowFotos = ({id_ubicacion,descripcionFoto,ColoniaF,CalleF,Calle2F
                                     </button>`; 
     document.getElementById('descripcionFoto').value = '';
     newRow.insertCell(16).innerHTML = document.getElementById('actualizaVP').value.toUpperCase();
+    newRow.insertCell(17).innerHTML = document.getElementById('Area').value;
     newRow.cells[16].style.display = "none";
+    newRow.cells[17].style.display = "none";
 }
 
 const editFotos = async(obj)=>{//Funcion para editar la informacion de la tabla fotos
@@ -286,7 +290,13 @@ const editFotos = async(obj)=>{//Funcion para editar la informacion de la tabla 
     if(selectedRowFotos.cells[9].innerHTML!='SD' && selectedRowFotos.cells[10].innerHTML!='SD'){
         document.getElementById('cordYF').value = (selectedRowFotos.cells[9].innerHTML=='0')?'':selectedRowFotos.cells[9].innerHTML;
         document.getElementById('cordXF').value = (selectedRowFotos.cells[10].innerHTML=='0')?'':selectedRowFotos.cells[10].innerHTML;
-        await getColoniasCalles2();
+        let validaX = await ValidaCoordX(document.getElementById('cordXF').value);
+        let validaY = await ValidaCoordY(document.getElementById('cordYF').value);
+    
+        if(validaX == "" && validaY == ""){
+            await getColoniasCalles2();
+        }
+        
         document.getElementById('CPF').value = "";
         document.getElementById('no_ExtF').value = "";
     }
@@ -409,7 +419,7 @@ const deleteFoto = (obj)=>{//Funcion especial para eliminar fila de la tabla fot
     }
 }
 
-const validateFormFoto = () =>{//funcion para validar los campos antes de ser agregados  la tablas
+const validateFormFoto = async() =>{//funcion para validar los campos antes de ser agregados  la tablas
     let isValid = true;
     let band = []
     let i=0;
@@ -418,7 +428,9 @@ const validateFormFoto = () =>{//funcion para validar los campos antes de ser ag
     band[i++] = document.getElementById('Calle_fotos_error').innerText =(document.getElementById('CalleF').value.trim() == "")?"Ingrese la Calle":"";
     band[i++] = document.getElementById('id_ubicacion_error').innerText =(document.getElementById('id_ubicacion').value == "NA")?"Seleccione un id de ubicacion":"";
     band[i++] = document.getElementById('id_camara_error').innerText =(document.getElementById('id_camara').value == "NA")?"Seleccione un id de camara":"";
-    
+
+    band[i++] = document.getElementById('cordY_fotos_error').innerText = await ValidaCoordY(document.getElementById('cordYF').value);
+    band[i++] = document.getElementById('cordX_fotos_error').innerText = await ValidaCoordX(document.getElementById('cordXF').value);
     band.forEach(element => {
         isValid &= (element == '') ? true : false
     })

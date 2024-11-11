@@ -639,11 +639,12 @@
 							$movimiento = $row->Movimiento;
 						break;
 					}
+					$Descripcion=$this->tratamiento($row->Descripcion);
 					$csv_data.= $row->User_Name.",\"".
 								$row->Fecha_Hora.",\",\"".
 								$row->Ip_Acceso."\",\"".
 								$movimiento."\",\"".
-								$row->Descripcion."\"\n";
+								$Descripcion."\"\n";
 				}
 				
 				$csv_data = utf8_decode($csv_data);
@@ -665,6 +666,14 @@
 				header("Location: ".base_url."Historiales");
 				exit();
 			}
+		}
+		public function tratamiento($entrada){
+			$text=$entrada;
+			$quitar = array("'", "\"","\\","/","´",",","\n");
+			$text = str_replace($quitar, '', $text);
+			$sinSaltos = preg_replace('/\r\n|\r|\n/', '', $text);
+			$espaciosReducidos = preg_replace('/\s+/', ' ', $sinSaltos);
+			return $espaciosReducidos;
 		}
 	}
 ?>

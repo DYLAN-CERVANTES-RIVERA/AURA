@@ -48,8 +48,8 @@ const ValidatableUbicacion = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
     let regexF = /^-?\d*\.\d+$/ //para foraneo 
     band[i++]=document.getElementById('Colonia_principales_error').innerHTML= FV.validate(myFormData.get('Colonia'), 'required')
     band[i++]=document.getElementById('Calle_principales_error').innerHTML= FV.validate(myFormData.get('Calle'), 'required')
-    band[i++]=document.getElementById('cordY_principales_error').innerHTML= FV.validate(myFormData.get('cordY'), 'required | numeric')
-    band[i++]=document.getElementById('cordX_principales_error').innerHTML= FV.validate(myFormData.get('cordX'), 'required | numeric')
+    band[i++]=document.getElementById('cordY_principales_error').innerHTML= await ValidaCoordY(document.getElementById('cordY').value);
+    band[i++]=document.getElementById('cordX_principales_error').innerHTML= await ValidaCoordX(document.getElementById('cordX').value);
     band.forEach(element => {//recorre todas la banderas si todas son vacias procede a guardar los datos ya que no existe ninguna restriccion 
         respuesta &= (element == '') ? true : false
     })
@@ -72,41 +72,13 @@ const ValidatableUbicacion = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
             document.getElementById('Calle_principales_error').innerHTML= 'Ingresa una Calle Valida'
             respuesta=false;
         }
-        if (!regexX.test(document.getElementById('cordX').value)) {
-            console.log('error en la coordenada X');
-            document.getElementById('cordX_principales_error').innerText = 'La coordenada X no es correcta';
-            respuesta = false;
-        }else{
-            document.getElementById('cordX_principales_error').innerText = '';
-        }
-    
-        if (!regexY.test(document.getElementById('cordY').value)) {
-            console.log('error en la coordenada Y');
-            document.getElementById('cordY_principales_error').innerText = 'La coordenada Y no es correcta';
-            respuesta = false;
-        }else{
-            document.getElementById('cordY_principales_error').innerText = '';
-        }   
+        
     }else{
         if(radio[1].checked){
             document.getElementById('Estado').value=='SD'?document.getElementById('Estado_error').innerHTML='Seleccione un Estado':document.getElementById('Estado_error').innerHTML='';
             respuesta=(document.getElementById('Estado').value=='SD')?false:respuesta; 
         }
-        if (!regexF.test(document.getElementById('cordX').value)) {
-            console.log('error en la coordenada X');
-            document.getElementById('cordX_principales_error').innerText = 'La coordenada X no es correcta';
-            respuesta = false;
-        }else{
-            document.getElementById('cordX_principales_error').innerText = '';
-        }
-    
-        if (!regexF.test(document.getElementById('cordY').value)) {
-            console.log('error en la coordenada Y');
-            document.getElementById('cordY_principales_error').innerText = 'La coordenada Y no es correcta';
-            respuesta = false;
-        }else{
-            document.getElementById('cordY_principales_error').innerText = '';
-        }
+      
     }
     return respuesta;
 }
@@ -206,8 +178,12 @@ const editUbicacion = async (obj) => {//FUNCION QUE EDITA LA TABLA DE DOMICILIOS
 
     document.getElementById('cordY').value=selectedRowUbicaciones.cells[8].innerHTML
     document.getElementById('cordX').value=selectedRowUbicaciones.cells[9].innerHTML
-    await getColoniasCalles();
+    let validaX = await ValidaCoordX(document.getElementById('cordX').value);
+    let validaY = await ValidaCoordY(document.getElementById('cordY').value);
 
+    if(validaX == "" && validaY == ""){
+        await getColoniasCalles();
+    }
     document.getElementById('Id_Ubicacion').value = selectedRowUbicaciones.cells[16].innerHTML;
     document.getElementById('UbicacionSelect').value = selectedRowUbicaciones.cells[0].innerHTML;
     document.getElementById('Colonia').value=selectedRowUbicaciones.cells[2].innerHTML
@@ -595,4 +571,61 @@ const readTableUbicaciones = async() => {//lee los datos de la tabla personas y 
     }
     console.log(objetos)
     return objetos;
+}
+const ValidaCoordY = async (valor)  =>{/// Para la coordenada Y
+    let bandera =""
+    if(valor.length>0){
+        let contador=0;
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='.'){
+                contador++;
+            }
+        }
+
+        switch(contador){
+            case 1: bandera='';break;
+            case 0: bandera='Falta el punto decimal';break;
+            default: bandera='El Numero de puntos decimales es mayor a 1';
+        }
+        if(valor[2]!='.'){bandera = bandera + ' Error en el punto decimal ';}
+    }else{
+         bandera = 'Coordenada Y requerida'
+    }
+
+    return bandera.trim();
+}
+
+const ValidaCoordX = async (valor)  =>{/// Para la coordenada Y
+    
+    let bandera =""
+    if(valor.length>0){
+        let contador=0;
+        let contadornegativo=0;
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='.'){
+                contador++;
+            }
+        }
+        switch(contador){
+            case 1: bandera='';break;
+            case 0: bandera='Falta el punto decimal';break;
+            default: bandera='El Numero de puntos decimales es mayor a 1';
+        }
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='-'){
+                contadornegativo++;
+            }
+        }
+        switch(contadornegativo){
+            case 1: bandera = bandera+'';break;
+            case 0: bandera = bandera +' Falta el simbolo de negativo';break;
+            default: bandera= bandera + ' El Numero de simbolos negativos es mayor a uno';
+        }
+        if(valor[0]!='-'){bandera = bandera + ' Ingrese el simbolo negativo al principio de la coordenada Y';}
+        if(valor[3]!='.'){bandera = bandera + ' Error en el punto decimal ';}
+       
+    }else{
+        bandera = 'Coordenada X requerida'
+    }
+    return bandera.trim();
 }

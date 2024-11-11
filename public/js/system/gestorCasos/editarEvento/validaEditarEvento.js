@@ -86,8 +86,8 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         band[i++] = VectorError.innerText = FV.validate(myFormData.get('vector'), 'required ')
         band[i++] = ColoniaError.innerText = FV.validate(myFormData.get('Colonia'), 'required ')
         band[i++] = CalleError.innerText = FV.validate(myFormData.get('Calle'), 'required ')
-        band[i++] = cordYError.innerText = FV.validate(myFormData.get('cordY'), 'required | numeric')
-        band[i++] = cordXError.innerText = FV.validate(myFormData.get('cordX'), 'required | numeric')
+        band[i++] = cordYError.innerText = await ValidaCoordY(document.getElementById('cordY').value);
+        band[i++] = cordXError.innerText =  await ValidaCoordX(document.getElementById('cordX').value);
     }
 
     
@@ -132,8 +132,8 @@ document.getElementById('btn_principal').addEventListener('click', async functio
         band[i++] = document.getElementById('Calle_Det_principales_error').innerText = FV.validate(myFormData.get('Calle_Det'), 'required ')
         band[i++] = document.getElementById('NoExt_Det_principales_error').innerText = FV.validate(myFormData.get('no_Ext_Det'), 'required | numeric')
         band[i++] = document.getElementById('CP_Det_principales_error').innerText = FV.validate(myFormData.get('CP_Det'), 'required | numeric')
-        band[i++] = document.getElementById('cordY_Det_principales_error').innerText = FV.validate(myFormData.get('cordY_Det'), 'required | numeric')
-        band[i++] = document.getElementById('cordX_Det_principales_error').innerText = FV.validate(myFormData.get('cordX_Det'), 'required | numeric')
+        band[i++] = document.getElementById('cordY_Det_principales_error').innerText = await ValidaCoordY(document.getElementById('cordY_Det').value);
+        band[i++] = document.getElementById('cordX_Det_principales_error').innerText = await ValidaCoordX(document.getElementById('cordX_Det').value);
     }
 
     //SE EVALUA SI EXISTEN DATOS EN LAS TABLAS DE PRESUNTOS VEHICULOS Y PRESUNTOS RESPONSABLES
@@ -482,5 +482,63 @@ function filtrarLetrasComa(event) {/// Para el pegado
         }
     }
     event.target.value = nuevoValor;
+}
+
+const ValidaCoordY = async (valor)  =>{/// Para la coordenada Y
+    let bandera =""
+    if(valor.length>0){
+        let contador=0;
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='.'){
+                contador++;
+            }
+        }
+
+        switch(contador){
+            case 1: bandera='';break;
+            case 0: bandera='Falta el punto decimal';break;
+            default: bandera='El Numero de puntos decimales es mayor a 1';
+        }
+        if(valor[2]!='.'){bandera = bandera + ' Error en el punto decimal ';}
+    }else{
+         bandera = 'Coordenada Y requerida'
+    }
+
+    return bandera.trim();
+}
+
+const ValidaCoordX = async (valor)  =>{/// Para la coordenada Y
+    
+    let bandera =""
+    if(valor.length>0){
+        let contador=0;
+        let contadornegativo=0;
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='.'){
+                contador++;
+            }
+        }
+        switch(contador){
+            case 1: bandera='';break;
+            case 0: bandera='Falta el punto decimal';break;
+            default: bandera='El Numero de puntos decimales es mayor a 1';
+        }
+        for (let i = 0; i < valor.length; i++) {
+            if(valor[i]=='-'){
+                contadornegativo++;
+            }
+        }
+        switch(contadornegativo){
+            case 1: bandera = bandera+'';break;
+            case 0: bandera = bandera +' Falta el simbolo de negativo';break;
+            default: bandera= bandera + ' El Numero de simbolos negativos es mayor a uno';
+        }
+        if(valor[0]!='-'){bandera = bandera + ' Ingrese el simbolo negativo al principio de la coordenada Y';}
+        if(valor[3]!='.'){bandera = bandera + ' Error en el punto decimal ';}
+       
+    }else{
+        bandera = 'Coordenada X requerida'
+    }
+    return bandera.trim();
 }
 

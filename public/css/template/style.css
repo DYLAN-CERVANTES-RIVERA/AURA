@@ -184,8 +184,8 @@ a.article:hover {
 }
 .btn-add {
     color: #fff;
-    background-color: #7F2447;
-    border-color: #7F2447;
+    background-color: #7D2447;
+    border-color: #7D2447;
 }
 
 .btn-nav {
@@ -303,7 +303,7 @@ a.article:hover {
     line-height: 30px;
     padding: 0px 13px;
     border-radius: 16px;
-    background-color: #7F2447;
+    background-color: #7D2447;
     margin: 5px 5px;
     display: inline-block;
     outline: none;
@@ -347,7 +347,7 @@ a.article:hover {
 }
 
 .titulo-rosa {
-    color:#7F2447;
+    color:#7D2447;
     font-size: 20px;
     justify-content: center;
     text-align: center;
@@ -363,7 +363,7 @@ a.article:hover {
 }
 .subtitulo-rosa {
     font-size: 15px;
-    color: #7F2447;
+    color: #7D2447;
     justify-content: center;
     font-weight: 300;
 }
