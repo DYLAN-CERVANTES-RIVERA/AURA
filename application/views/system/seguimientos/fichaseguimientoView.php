@@ -2921,7 +2921,7 @@
                         $this->SetY($aux);
                         $y=$this->GetY();
     
-                        $filenameUbicacion = base_url."public/files/Entrevistas/" . $GLOBALS['PDFId_Persona_Entrevista']  . "/Redes_Sociales/".$Red->Foto_Nombre;
+                        $filenameUbicacion = base_url."public/files/Entrevistas/" . $data['Principales']->Id_Persona_Entrevista   . "/Redes_Sociales/".$Red->Foto_Nombre;
                         $type = exif_imagetype($filenameUbicacion);
                         $extension = '';
     
