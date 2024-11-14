@@ -679,7 +679,7 @@ class GestorCasos extends Controller
                         <th class="column1">Folio AURA</th>
                         <th class="column2">Elemento Asignado para Seguimiento</th>
                         <th class="column3">Folio 911</th>
-                        <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
+                        <th class="column4">Fecha de Recepción (AAAA-MM-DD)</th>
                         <th class="column5">Estatus del Seguimiento</th>
                         <th class="column6">Motivo</th>
                         <th class="column7">Con/Sin Violencia</th>
@@ -787,11 +787,11 @@ class GestorCasos extends Controller
                             <th class="column2">Elemento Asignado para Seguimiento</th>
                             <th class="column3">Folio 911</th>
                             <th class="column4">Fecha de Captura  (AAAA-MM-DD) </th>
-                            <th class="column5">Fecha de Recepcion (AAAA-MM-DD)</th>
+                            <th class="column5">Fecha de Recepción (AAAA-MM-DD)</th>
                             <th class="column6">Estatus del Seguimiento</th>
                             <th class="column7">Colonia</th>
                             <th class="column8">Calle</th>
-                            <th class="column9">Fecha de Activacion  (AAAA-MM-DD)</th>
+                            <th class="column9">Fecha de Activación  (AAAA-MM-DD)</th>
                             
                             
                         ';
@@ -889,7 +889,7 @@ class GestorCasos extends Controller
                             <th class="column1">Folio AURA</th>
                             <th class="column2">Folio 911</th>
                             <th class="column3">Fecha de Captura  (AAAA-MM-DD) </th>
-                            <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
+                            <th class="column4">Fecha de Recepción (AAAA-MM-DD)</th>
                             <th class="column5">Estatus del Seguimiento</th>
                             <th class="column6">Colonia</th>
                             <th class="column7">Calle</th>
@@ -952,7 +952,7 @@ class GestorCasos extends Controller
                                 <th class="column2">Elemento Asignado para Seguimiento</th>
                                 <th class="column3">Folio 911</th>
                                 <th class="column4">Fecha de Captura  (AAAA-MM-DD) </th>
-                                <th class="column5">Fecha de Recepcion (AAAA-MM-DD)</th>
+                                <th class="column5">Fecha de Recepción (AAAA-MM-DD)</th>
                                 <th class="column6">Estatus del Seguimiento</th>
                                 <th class="column7">Colonia</th>
                                 <th class="column8">Calle</th>
@@ -1033,7 +1033,7 @@ class GestorCasos extends Controller
                             <th class="column1">Folio AURA</th>
                             <th class="column2">Elemento Asignado para Seguimiento</th>
                             <th class="column3">Folio 911</th>
-                            <th class="column4">Fecha de Recepcion (AAAA-MM-DD)</th>
+                            <th class="column4">Fecha de Recepción (AAAA-MM-DD)</th>
                             <th class="column5">Estatus del Seguimiento</th>
                             <th class="column6">Motivo</th>
                             <th class="column7">Con/Sin Violencia</th>
@@ -1159,7 +1159,7 @@ class GestorCasos extends Controller
 				case '1':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_Eventos";
-					$csv_data="Folio AURA,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+					$csv_data="Folio AURA,Folio 911,Celula Asignada,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
 					foreach ($cat_rows as $row) {
                         $partes2 = explode(" ", $row->FechaHora_Recepcion);
                         $partes = explode(" ", $row->FechaHora_Captura);
@@ -1229,6 +1229,7 @@ class GestorCasos extends Controller
                         $auxEntrevistas=$this->tratamiento($row->entrevistas_seguimiento_concat);
 						$csv_data.= mb_strtoupper($row->Folio_infra).",\"".
                                     mb_strtoupper($row->Folio_911)."\",\"".
+                                    mb_strtoupper($row->ClaveSeguimiento)."\",\"".
                                     mb_strtoupper($partes2[0])."\",\"".
                                     mb_strtoupper($partes2[1])."\",\"".
                                     mb_strtoupper($partes[0])."\",\"".
@@ -1262,7 +1263,7 @@ class GestorCasos extends Controller
 					break;
                     case '2':
                         $filename = "Eventos_Habilitados";
-                        $csv_data="Folio AURA,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
+                        $csv_data="Folio AURA,Folio 911,Celula Asignada,Fecha de Captura,Hora de Captura,Fecha de Recepción,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
                         foreach ($cat_rows as $row) {
                             $partes2 = explode(" ", $row->FechaHora_Recepcion);
                             $partes = explode(" ", $row->FechaHora_Captura);
@@ -1298,6 +1299,7 @@ class GestorCasos extends Controller
                             $auxHechos=$this->tratamiento($row->hechos_concat);
                             $csv_data.= mb_strtoupper($row->Folio_infra).",\"".
                                         mb_strtoupper($row->Folio_911)."\",\"".
+                                        mb_strtoupper($row->ClaveSeguimiento)."\",\"".
                                         mb_strtoupper($partes[0])."\",\"".
                                         mb_strtoupper($partes[1])."\",\"".
                                         mb_strtoupper($partes2[0])."\",\"".
@@ -1324,7 +1326,7 @@ class GestorCasos extends Controller
                         break;
                     case '3':
                         $filename = "Eventos_Deshabilitados";
-                        $csv_data="Folio AURA,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepcion,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
+                        $csv_data="Folio AURA,Folio 911,Fecha de Captura,Hora de Captura,Fecha de Recepción,Hora de Recepcion,Delitos,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento\n";
                         foreach ($cat_rows as $row) {
                             $partes2 = explode(" ", $row->FechaHora_Recepcion);
                             $partes = explode(" ", $row->FechaHora_Captura);
@@ -1408,7 +1410,7 @@ class GestorCasos extends Controller
                         case '7':
                             //Genera nombre de archivo junto con los datos y los encabezasdos 
                             $filename = "Vista_General_Eventos_por_Folio";
-                            $csv_data="Folio AURA,Folio 911,Fecha de Recepcion,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+                            $csv_data="Folio AURA,Folio 911,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
                             foreach ($cat_rows as $row) {
                                 $partes2 = explode(" ", $row->FechaHora_Recepcion);
                                 $partes = explode(" ", $row->FechaHora_Captura);
@@ -1522,21 +1524,21 @@ class GestorCasos extends Controller
         //generación de dropdown dependiendo del filtro
         switch ($filtro) {
             case '1':
-                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepcion', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
+                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepción', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
                 break;
             case '2':
-                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepcion', 'Descripcion', 'Colonia', 'Calle','Fecha Activacion'];
+                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepción', 'Descripcion', 'Colonia', 'Calle','Fecha Activacion'];
                 break;
             case '3':
-                $campos = ['Folio Infra', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepcion', 'Descripcion', 'Colonia', 'Calle','Zona'];
+                $campos = ['Folio Infra', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepción', 'Descripcion', 'Colonia', 'Calle','Zona'];
                 break;
             case '4':
-                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepcion', 'Descripcion', 'Colonia', 'Calle','Zona'];
+                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Captura', 'Fecha de Recepción', 'Descripcion', 'Colonia', 'Calle','Zona'];
                 break;
             case '5':
             case '6':
             case '7':
-                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepcion', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
+                $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepción', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
                 break;
 
         }
@@ -1823,75 +1825,75 @@ class GestorCasos extends Controller
 
 /*--------------------------------------FUNCIONES UPDATE TABS -------------------------------------- */
 
-    public function updateFotos(){//Almacena las fotos en el servidor
+public function updateFotos(){//Almacena las fotos en el servidor
 
-        if (isset($_POST['Folio_infra'])) {//Comprueba que los datos esten correctos para generar laa carpeta correspondiente
-            $Folio_infra = $_POST['Folio_infra'];
+    if (isset($_POST['Folio_infra'])) {//Comprueba que los datos esten correctos para generar laa carpeta correspondiente
+        $Folio_infra = $_POST['Folio_infra'];
 
-            $path_carpeta = BASE_PATH . "public/files/GestorCasos/" . $Folio_infra . "/Seguimiento/";
-            $path_carpeta2 = BASE_PATH . "public/files/GestorCasos/" . $Folio_infra . "/Respaldo/";
-            if(isset($_POST['fotos_table'])){
-                $fotos = json_decode($_POST['fotos_table']);
-            }
-            
-            $success = true;
-            if ($success) {
-                $success_2 = $this->GestorCaso->updateFotos($_POST);
-                if ($success_2) {//$success_2['status']
-                    foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
-                        if (is_dir($archivos_carpeta)) {
-                            rmDir_rf($archivos_carpeta);
-                        } else {
-                            unlink($archivos_carpeta);
-                        }
+        $path_carpeta = BASE_PATH . "public/files/GestorCasos/" . $Folio_infra . "/Seguimiento/";
+        $path_carpeta2 = BASE_PATH . "public/files/GestorCasos/" . $Folio_infra . "/Respaldo/";
+        if(isset($_POST['fotos_table'])){
+            $fotos = json_decode($_POST['fotos_table']);
+        }
+        
+        $success = true;
+        if ($success) {
+            $success_2 = $this->GestorCaso->updateFotos($_POST);
+            if ($success_2) {//$success_2['status']
+                foreach (glob($path_carpeta . "/*") as $archivos_carpeta) {
+                    if (is_dir($archivos_carpeta)) {
+                        rmDir_rf($archivos_carpeta);
+                    } else {
+                        unlink($archivos_carpeta);
                     }
-                    $user = $_SESSION['userdataSIC']->Id_Usuario;
-                    $ip = $this->obtenerIp();
-                    $quitar = array("'", "\"");
-                    $auxsql =str_replace($quitar, "-", $success_2['sqlEjecutados']);//Limpia la cadena del sql para la insercion de los datos en el historial
-                    $descripcion = 'ACTUALIZACION DE FOTOS: ' . $Folio_infra .' '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;//Guarda el moviento en el historial
-                    $this->GestorCaso->historial($user, $ip, 5, $descripcion);
-                    if(isset($fotos)){
-                        foreach ($fotos as $foto) {
-                            if ($foto->row->typeImage == 'File') {
-                                $type = $_FILES[$foto->row->nameImage]['type'];
-                                $extension = explode("/", $type);
+                }
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $success_2['sqlEjecutados']);//Limpia la cadena del sql para la insercion de los datos en el historial
+                $descripcion = 'ACTUALIZACION DE FOTOS: ' . $Folio_infra .' '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;//Guarda el moviento en el historial
+                $this->GestorCaso->historial($user, $ip, 5, $descripcion);
+                if(isset($fotos)){
+                    foreach ($fotos as $foto) {
+                        if ($foto->row->typeImage == 'File') {
+                            $type = $_FILES[$foto->row->nameImage]['type'];
+                            $extension = explode("/", $type);
+                            $hoy = date("Y-m-d H:i:s");
+                            $quitar = array(":", "/");
+                            $hoy =str_replace($quitar, "-", $hoy);
+                            $result = $this->uploadImageFileGC($foto->row->nameImage, $_FILES, $Folio_infra, $path_carpeta, $foto->row->nameImage . ".png");//Escritura de fotos en la carpeta
+                            $result = $this->uploadImageFileGC($foto->row->nameImage, $_FILES, $Folio_infra, $path_carpeta2,$hoy. $foto->row->nameImage .".png");//Escritura de fotos en el respaldo
+                        }   
+                        if ($foto->row->typeImage == 'Photo') {
+                            $result = $this->uploadImagePhotoGC($foto->row->image, $Folio_infra, $path_carpeta, $path_carpeta . $foto->row->nameImage . ".png");//Escritura de fotos en la carpeta
+                            
+                            if( $_POST['banderafotos']!='true'){
                                 $hoy = date("Y-m-d H:i:s");
                                 $quitar = array(":", "/");
                                 $hoy =str_replace($quitar, "-", $hoy);
-                                $result = $this->uploadImageFileGC($foto->row->nameImage, $_FILES, $Folio_infra, $path_carpeta, $foto->row->nameImage . ".png");//Escritura de fotos en la carpeta
-                                $result = $this->uploadImageFileGC($foto->row->nameImage, $_FILES, $Folio_infra, $path_carpeta2,$hoy. $foto->row->nameImage .".png");//Escritura de fotos en el respaldo
-                            }   
-                            if ($foto->row->typeImage == 'Photo') {
-                                $result = $this->uploadImagePhotoGC($foto->row->image, $Folio_infra, $path_carpeta, $path_carpeta . $foto->row->nameImage . ".png");//Escritura de fotos en la carpeta
-                                
-                                if( $_POST['banderafotos']!='true'){
-                                    $hoy = date("Y-m-d H:i:s");
-                                    $quitar = array(":", "/");
-                                    $hoy =str_replace($quitar, "-", $hoy);
-                                    $result = $this->uploadImagePhotoGC($foto->row->image, $Folio_infra, $path_carpeta2, $path_carpeta2. $hoy . $foto->row->nameImage . ".png");//Escritura de fotos en el respaldo
-                                }
+                                $result = $this->uploadImagePhotoGC($foto->row->image, $Folio_infra, $path_carpeta2, $path_carpeta2. $hoy . $foto->row->nameImage . ".png");//Escritura de fotos en el respaldo
                             }
                         }
                     }
-                    $data_p['status'] =  true;
-
-
-                } else {
-                    $data_p['status'] =  false;
-                    $data_p['error_message'] = $success_2['error_message'];
                 }
+                $data_p['status'] =  true;
+
+
             } else {
                 $data_p['status'] =  false;
+                $data_p['error_message'] = $success_2['error_message'];
             }
-
-            echo json_encode($data_p);
         } else {
-            $data_p['status'] = false;
-            $data_p['error_message'] = 'Petición mal realizada, favor de verificar campos.';
-            echo json_encode($data_p);
+            $data_p['status'] =  false;
         }
-        
+
+        echo json_encode($data_p);
+    } else {
+        $data_p['status'] = false;
+        $data_p['error_message'] = 'Petición mal realizada, favor de verificar campos.';
+        echo json_encode($data_p);
+    }
+
     }
 
     public function updateEntrevistas(){//Funcion para guardar las entrevistas 

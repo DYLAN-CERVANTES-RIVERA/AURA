@@ -1273,86 +1273,84 @@ class GestorCaso{
         $date = date("Ymdhis");
         try {
            
-                $this->db->beginTransaction();
+            $this->db->beginTransaction();
 
                 if(isset($post['fotos_table'])){
-                    $sql = "DELETE FROM fotos_seguimiento WHERE Folio_infra =" . $post['Folio_infra']." AND Area = '".$_SESSION['userdataSIC']->Area."'";
+
+                $sql = "DELETE FROM fotos_seguimiento WHERE Folio_infra =" . $post['Folio_infra'];
+                $this->db->query($sql);
+                $this->db->execute();
+                $sqlEjecutados=$sqlEjecutados.' '.$sql; 
+                $fotos = json_decode($post['fotos_table']);
+                foreach ($fotos as $foto) {
+                    //inserta la foto
+                    $name = '';
+                    if ($foto->row->typeImage == 'File') {//genera el nombre de la foto
+                        $type = $_FILES[$foto->row->nameImage]['type'];
+                        $extension = explode("/", $type);
+                        $name = $foto->row->nameImage . ".png?v=" . $date;
+                    } else {
+                        $name = $foto->row->nameImage . ".png?v=" . $date;
+                    }
+                    $descripcionF=$this->remplazoCadena($foto->row->descripcion);
+                    $sql = " INSERT
+                            INTO fotos_seguimiento(
+                                Folio_infra,
+                                Descripcion,
+                                Path_Imagen,
+                                id_ubicacion,
+                                ColoniaF,
+                                CalleF,
+                                Calle2F,
+                                no_ExtF,
+                                CPF,
+                                cordYF,
+                                cordXF,
+                                id_camara,
+                                fecha_captura_foto,
+                                hora_captura_foto,
+                                fecha_hora_captura_sistema,
+                                img_64,
+                                Capturo,
+                                Ultima_Actualizacion
+                            )
+                            VALUES(
+                                '" . trim($post['Folio_infra']) ."',
+                                '" . trim($descripcionF) . "',
+                                '" . trim($name) . "',
+                                '" . trim($foto->row->id_ubicacion) . "',
+                                '" . trim($foto->row->ColoniaF) . "',
+                                '" . trim($foto->row->CalleF) . "',
+                                '" . trim($foto->row->Calle2F) . "',
+                                '" . trim($foto->row->no_ExtF) . "',
+                                '" . trim($foto->row->CPF) . "',
+                                '" . trim($foto->row->cordYF) . "',
+                                '" . trim($foto->row->cordXF) . "',
+                                '" . trim($foto->row->id_camara) . "',
+                                '" . trim($foto->row->fecha_captura_foto) . "',
+                                '" . trim($foto->row->hora_captura_foto) . "',
+                                '" . trim($foto->row->fecha_hora_captura_sistema) . "',
+                                '" . $foto->row->imagebase64 . "',
+                                '" . trim($foto->row->capturo). "',
+                                '" . trim($foto->row->Ultima_Actualizacion). "'
+                            )
+                    ";
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados=$sqlEjecutados.' '.$sql; 
-                    $fotos = json_decode($post['fotos_table']);
-                    $numero=rand();
-                    foreach ($fotos as $foto) {
-                        //inserta la foto
-                        if($_SESSION['userdataSIC']->Area == $foto->row->Area ){
-                                $name = '';
-                            if ($foto->row->typeImage == 'File') {//genera el nombre de la foto
-                                $type = $_FILES[$foto->row->nameImage]['type'];
-                                $extension = explode("/", $type);
-                                $name = $foto->row->nameImage ."_".$numero. ".png?v=" . $date;
-                            } else {
-                                $name = $foto->row->nameImage ."_".$numero. ".png?v=" . $date;
-                            }
-                            $descripcionF=$this->remplazoCadena($foto->row->descripcion);
-                            $sql = " INSERT
-                                    INTO fotos_seguimiento(
-                                        Folio_infra,
-                                        Descripcion,
-                                        Path_Imagen,
-                                        id_ubicacion,
-                                        ColoniaF,
-                                        CalleF,
-                                        Calle2F,
-                                        no_ExtF,
-                                        CPF,
-                                        cordYF,
-                                        cordXF,
-                                        id_camara,
-                                        fecha_captura_foto,
-                                        hora_captura_foto,
-                                        fecha_hora_captura_sistema,
-                                        img_64,
-                                        Capturo,
-                                        Ultima_Actualizacion,
-                                        Area
-                                    )
-                                    VALUES(
-                                        '" . trim($post['Folio_infra']) ."',
-                                        '" . trim($descripcionF) . "',
-                                        '" . trim($name) . "',
-                                        '" . trim($foto->row->id_ubicacion) . "',
-                                        '" . trim($foto->row->ColoniaF) . "',
-                                        '" . trim($foto->row->CalleF) . "',
-                                        '" . trim($foto->row->Calle2F) . "',
-                                        '" . trim($foto->row->no_ExtF) . "',
-                                        '" . trim($foto->row->CPF) . "',
-                                        '" . trim($foto->row->cordYF) . "',
-                                        '" . trim($foto->row->cordXF) . "',
-                                        '" . trim($foto->row->id_camara) . "',
-                                        '" . trim($foto->row->fecha_captura_foto) . "',
-                                        '" . trim($foto->row->hora_captura_foto) . "',
-                                        '" . trim($foto->row->fecha_hora_captura_sistema) . "',
-                                        '" . $foto->row->imagebase64 . "',
-                                        '" . trim($foto->row->capturo). "',
-                                        '" . trim($foto->row->Ultima_Actualizacion). "',
-                                        '" . trim($foto->row->Area). "'
-                                    )
-                            ";
-                            $this->db->query($sql);
-                            $this->db->execute();
-                            $sqlrecortado=explode(";base64", strtolower($sql));
-                            $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];
-                        }    
+                    $sqlrecortado=explode(";base64", strtolower($sql));
+                    $sqlEjecutados=$sqlEjecutados.' '.$sqlrecortado[0];
                     }
                 }else {//si no hay datos vacia los datos relacionados a nivel de base datos
-                    $sql = "DELETE FROM fotos_seguimiento WHERE Folio_infra =" . $post['Folio_infra']." AND Area = '".$_SESSION['userdataSIC']->Area."'";
+                    $sql = "DELETE FROM fotos_seguimiento WHERE Folio_infra =" . $post['Folio_infra'];
                     $this->db->query($sql);
                     $this->db->execute();
-                    $sqlEjecutados = $sqlEjecutados.' '.$sql;
+                    $sqlEjecutados=$sqlEjecutados.' '.$sql;
                 }
                 $this->db->commit();
           
               
+              
+
             } catch (Exception $e) {
                 $response['status'] = false;
                 $response['error_message'] = $e;
@@ -1360,7 +1358,6 @@ class GestorCaso{
                 $this->db->rollBack();
             }
             $response['sqlEjecutados'] = $sqlEjecutados;
-            $response['numeroRand'] = $numero;
             return $response;
     }
   /*------------------FUNCIONES PARA FILTRADO Y BÚSQUEDA------------------*/
