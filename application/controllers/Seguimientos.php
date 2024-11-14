@@ -1902,9 +1902,10 @@ class Seguimientos extends Controller
                 foreach($PersonasEntrevistasNo as $Persona){
                     $dataPersonasEntrevistadasNo[$i]= [
                         'Principales'=> $this->Seguimiento->getPrincipalesEntrevista($Persona->Id_Persona_Entrevista ),
-                        'Ubicaciones'   => $this->Seguimiento->getUbicaciones($Persona->Id_Persona_Entrevista ),
                         'Entrevistas' => $this->Seguimiento->getEntrevistas($Persona->Id_Persona_Entrevista ),
-                        'Forensias'    => $this->Seguimiento->getForensias($Persona->Id_Persona_Entrevista )
+                        'Forensias'    => $this->Seguimiento->getForensias($Persona->Id_Persona_Entrevista ),
+                        'Ubicaciones'   => $this->Seguimiento->getUbicaciones($Persona->Id_Persona_Entrevista ),
+                        'Redes_Sociales'=> $this->Seguimiento->getRedesSocialesE($Persona->Id_Persona_Entrevista)
                     ];
                     $i++;  
                 }
@@ -1913,9 +1914,10 @@ class Seguimientos extends Controller
                 foreach($PersonasEntrevistasSi as $Persona){
                     $dataPersonasEntrevistadasSi[$i]= [
                         'Principales'=> $this->Seguimiento->getPrincipalesEntrevista($Persona->Id_Persona_Entrevista ),
-                        'Ubicaciones'   => $this->Seguimiento->getUbicaciones($Persona->Id_Persona_Entrevista ),
                         'Entrevistas' => $this->Seguimiento->getEntrevistas($Persona->Id_Persona_Entrevista ),
-                        'Forensias'    => $this->Seguimiento->getForensias($Persona->Id_Persona_Entrevista )
+                        'Forensias'    => $this->Seguimiento->getForensias($Persona->Id_Persona_Entrevista ),
+                        'Ubicaciones'   => $this->Seguimiento->getUbicaciones($Persona->Id_Persona_Entrevista ),
+                        'Redes_Sociales'=> $this->Seguimiento->getRedesSocialesE($Persona->Id_Persona_Entrevista)
                     ];
                     $i++;  
                 }

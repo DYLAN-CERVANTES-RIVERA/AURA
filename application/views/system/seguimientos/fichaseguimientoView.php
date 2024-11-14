@@ -2149,7 +2149,7 @@
             $this->SetFont('helvetica','',11);
             $this->SetTextColor(255, 255, 255);
             $this->SetFillColor(41,41,95); 
-            $this->Cell(190, 5, utf8_decode('PERSONA ENTREVISTADA RELACIONADA '.$i), 0, 0, 'C',true);
+            $this->Cell(190, 5, utf8_decode('PERSONA ENTREVISTADA RELACIONADA '.$i.' FOLIO ENTREVISTAS AURA: '.$data['Principales']->Id_Persona_Entrevista), 0, 0, 'C',true);
             $this->ln(10);
             $this->Cell(155, 4, '');
             $this->SetFont('helvetica','B',6);
@@ -2613,529 +2613,358 @@
                 }
             }
         }
-        function DatosCombinadosPersona($dataEntrevista,$data,$indice){
+        function DatosCombinadosPersona($data,$indice){
+            if($this->GetY()> 230 ){
+                $this->AddPage();
+            }
             $this->SetFont('helvetica','',11);
             $this->SetTextColor(255, 255, 255);
             $this->SetFillColor(41,41,95); 
-            $this->Cell(190, 5, utf8_decode('PERSONA IDENTIFICADA '.$indice. ' (CUENTA CON INFORMACION DE ENTREVISTAS)'), 0, 0, 'C',true);
+            $this->Cell(190, 5, utf8_decode('PERSONA '.$indice. ' (CUENTA CON INFORMACION DE ENTREVISTAS) FOLIO ENTREVISTAS AURA: '.$data['Principales']->Id_Persona_Entrevista), 0, 0, 'C',true);
             $this->ln(6);
-            $this->Cell(155, 4, '');
-            $this->SetTextColor(0, 0, 0);
-            $this->SetFont('helvetica','B',6);
-            $this->Cell(30, 2, utf8_decode('CAPTURO ('.$dataEntrevista['Principales']->Capturo.')'));
-            $this->SetFont('Avenir','',11);
-            $this->ln(1);
-            $width = 73;
-            $height = 115;
-            $y=$this->GetY()+21;
-            if($dataEntrevista['Principales']->Foto!=null&&$dataEntrevista['Principales']->Foto!='SD'&&$dataEntrevista['Principales']->Foto!=''){
-                $filename = base_url."public/files/Entrevistas/" . $dataEntrevista['Principales']->Id_Persona_Entrevista . "/".$dataEntrevista['Principales']->Foto;
-                $type = exif_imagetype($filename);
-                $extension = '';
-                switch($type){
-                    case 1:
-                        $extension = 'gif';
-                    break;
-                    case 2:
-                        $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
-                        $image = imagecreatefromjpeg($filename);
-                        imageinterlace($image, false);
-                        $nombre="persona".rand().".jpeg";
-                        imagejpeg($image,$nombre);
-                        $imagennueva=base_url."public/".$nombre;
-                        $this->Image($imagennueva,10, $y+5, $width, $height, $extension);
-                        imagedestroy($image);
-                        unlink($nombre);
-                    break;
-                    case 3:
-                        $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
-                        $image = imagecreatefrompng($filename);
-                        imageinterlace($image, false);
-                        $nombre="persona".rand().".png";
-                        imagepng($image,$nombre);
-                        $imagennueva=base_url."public/".$nombre;
-                        $this->Image($imagennueva,10, $y+5, $width, $height, $extension);
-                        imagedestroy($image);
-                        unlink($nombre);
-                    break;
-                } 
-            }else{
-                if($data['datos_persona']->Foto!=null&&$data['datos_persona']->Foto!='SD'&&$data['datos_persona']->Foto!=''){
-                    $filename = base_url."public/files/Seguimientos/" . $data['datos_persona']->Id_Seguimiento . "/Personas/".$data['datos_persona']->Foto;
-                    $type = exif_imagetype($filename);
-                    $extension = '';
-                    switch($type){
-                        case 1:
-                            $extension = 'gif';
-                        break;
-                        case 2:
-                            $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
-                            $image = imagecreatefromjpeg($filename);
-                            imageinterlace($image, false);
-                            $nombre="persona".rand().".jpeg";
-                            imagejpeg($image,$nombre);
-                            $imagennueva=base_url."public/".$nombre;
-                            $this->Image($imagennueva,10, $y+5, $width, $height, $extension);
-                            imagedestroy($image);
-                            unlink($nombre);
-                        break;
-                        case 3:
-                            $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
-                            $image = imagecreatefrompng($filename);
-                            imageinterlace($image, false);
-                            $nombre="persona".rand().".png";
-                            imagepng($image,$nombre);
-                            $imagennueva=base_url."public/".$nombre;
-                            $this->Image($imagennueva,10, $y+5, $width, $height, $extension);
-                            imagedestroy($image);
-                            unlink($nombre);
-                        break;
-                    } 
-                }else{
-                    $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
-                    $imagennueva=base_url."public/media/images/frentesilueta.png";
-                    $this->Image($imagennueva,10, $y+5, $width, $height, $extension);
-                }
-            }
-            $width=$width+2;
-            
-            $this->Cell(30, 7);
-            $this->SetTextColor(0, 0, 0);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(45, 7, utf8_decode('ROL DE LA PERSONA: '));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(40, 7, utf8_decode($data['datos_persona']->Rol),0,0,'C',true);
-            $this->Ln(9);
 
-            $this->Cell(30, 7);
-            $this->SetTextColor(0, 0, 0);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('FECHA:'), 0,0);
-            $this->SetFont('helvetica','',11);
-            $this->SetFillColor(236,236,236);
-            $SoloFecha=explode(' ',$dataEntrevista['Principales']->FechaHora_Creacion);
-            $arrayFecha=explode('-',$SoloFecha[0]);
-            $arrayFecha=array_reverse($arrayFecha);
-            $FechaHora_Creacion=implode("/", $arrayFecha); 
-            $this->Cell(45,7, utf8_decode($FechaHora_Creacion),0,0,'C',true);
-            $this->Cell(20, 7);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(30, 7, utf8_decode('NO.REMISIÓN:'), 0,0);
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236); 
-            $this->Cell(45,7, utf8_decode($dataEntrevista['Principales']->Remisiones),0,0,'C',true);
-    
-            $this->Ln(9);
-            $this->Cell(30, 7);
-            $this->SetTextColor(0, 0, 0);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(35, 7, utf8_decode('REMITIDO POR:'), 0,0);
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236); 
-            $this->Cell(125,7, utf8_decode($dataEntrevista['Principales']->Detenido_por),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell($width, 7);
-            $this->Cell(20, 7, utf8_decode('NOMBRE:'));
-            $this->SetFont('helvetica','',11);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(95,7, utf8_decode($dataEntrevista['Principales']->Nombre.' '.$dataEntrevista['Principales']->Ap_Paterno.' '.$dataEntrevista['Principales']->Ap_Materno),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell($width, 7);
-            $this->Cell(20, 7, utf8_decode('CALLE 1:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(95,7, utf8_decode($dataEntrevista['Principales']->Calle_Domicilio),0,0,'J',true);
-    
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('CALLE 2:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(95,7, utf8_decode($dataEntrevista['Principales']->Calle2_Domicilio),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('NO.ETX:'));
-            $this->SetFont('helvetica','',9);
-            $this->Cell(30,7, utf8_decode($dataEntrevista['Principales']->No_Exterior_Domicilio),0,0,'J',true);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(15, 7,'');
-            $this->Cell(20, 7, utf8_decode('NO.INT:'));
-            $this->SetFont('helvetica','',9);
-            $this->Cell(30,7, utf8_decode($dataEntrevista['Principales']->No_Interior_Domicilio),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(22, 7, utf8_decode('COLONIA:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(93,7, utf8_decode($dataEntrevista['Principales']->Colonia_Domicilio),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(15, 7, utf8_decode('EDAD:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(10,7, utf8_decode($dataEntrevista['Principales']->Edad),0,0,'C',true);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(15, 7, utf8_decode('CURP:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(75,7, utf8_decode($dataEntrevista['Principales']->CURP),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(50, 7, utf8_decode('FECHA DE NACIMIENTO: '));
-            $arrayFecha=explode('-',$dataEntrevista['Principales']->Fecha_Nacimiento);
-            $arrayFecha=array_reverse($arrayFecha);
-            $Fecha=implode("/", $arrayFecha);
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(65,7, utf8_decode($Fecha),0,0,'J',true);
-            
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(15, 7, utf8_decode('ALIAS:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(100,7, utf8_decode($dataEntrevista['Principales']->Alias),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(30, 7, utf8_decode('ASOCIADO A:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->MultiCell(85,7, utf8_decode($dataEntrevista['Principales']->Asociado_A),0,1,'C',true);
-            //$this->Cell(85,7, utf8_decode($dataEntrevista['Principales']->Asociado_A),0,0,'J',true);
-    
-            $this->Ln(5);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('BANDA:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(95,7, utf8_decode($dataEntrevista['Principales']->Banda),0,0,'J',true);
-            
-            $this->Ln(9);
-            $this->Cell($width, 4);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(25, 7, utf8_decode('TELEFONO: '));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(90,7, utf8_decode($dataEntrevista['Principales']->Telefono),0,0,'J',true);
-    
-            $this->Ln(29);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(25, 7, utf8_decode('LUGAR DE DETENCIÓN:'));
-    
-            $this->Ln(9);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('CALLE 1:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(75,7, utf8_decode($dataEntrevista['Principales']->Calle_Detencion),0,0,'J',true);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('CALLE 2:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(75,7, utf8_decode($dataEntrevista['Principales']->Calle2_Detencion),0,0,'J',true);
-    
-            $this->Ln(9);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('NO.EXT:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(20,7, utf8_decode($dataEntrevista['Principales']->No_Exterior_Detencion),0,0,'J',true);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(20, 7, utf8_decode('NO.EXT:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(20,7, utf8_decode($dataEntrevista['Principales']->No_Interior_Detencion),0,0,'J',true);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(25, 7, utf8_decode('COLONIA:'));
-            $this->SetFont('helvetica','',9);
-            $this->SetFillColor(236,236,236);
-            $this->Cell(85,7, utf8_decode($dataEntrevista['Principales']->Colonia_Detencion),0,0,'J',true);
-            $this->Ln(19);
-            $this->SetFont('helvetica','B',11);
-            $this->Cell(60, 7, utf8_decode('ELEMENTO QUE CAPTURO:'));
-            $this->Cell(50, 7, utf8_decode($dataEntrevista['Principales']->Capturo));
-            $aux=$this->revisaYAntecedente($this->GetY());
-            if(($data['domicilios']!=[])||($data['forencias']!=[])||($data['redes_sociales']!=[])||($data['antecedentes']!=[])){
-
-                $this->AddPage();
-                $this->SetFont('helvetica','',11);
-                $this->SetTextColor(255, 255, 255);
-                $this->SetFillColor(41,41,95); 
-                $this->Cell(190, 5, utf8_decode('DATOS DE PERSONA '.$indice.' SEGUIMIENTO '), 0, 0, 'C',true);
-                $this->Ln(7);
-                $this->SetFont('Avenir','',11);
-                if($data['antecedentes']!=[]){
-                    $i=1;
-                    $antecedentes=$data['antecedentes'];
-                    foreach ($antecedentes as $antecedente){
-                        $this->ln(4);
-                        if($i!=1 ||$this->GetY()>=265){
-                            $aux=$this->revisaYAntecedente($this->GetY());
-                            $this->SetY($aux);
-                        }
-                        if($antecedente->Fecha_Antecedente!='SD'){
-                            $fechalimpia=$this->fechaMes($antecedente->Fecha_Antecedente);
-                        }else{
-                            $fechalimpia='';
-                        }
-                        $this->SetFont('helvetica','',11);
-                        $this->SetTextColor(0, 0, 0);
-                        $this->SetFillColor(156,156,156); 
-                        $this->Cell(190, 4, utf8_decode('ANTECEDENTE '.$i.' '.$fechalimpia),0,0,'C',true);
-                        $this->ln(4);
-                        $this->Cell(155, 4, '');
-                        $this->SetFont('helvetica','B',6);
-                        $this->Cell(30, 4, utf8_decode('CAPTURO ('.$antecedente->Capturo.')'));
-                        $this->Ln(4);
-                        $this->SetFont('Avenir','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(190,7, utf8_decode($antecedente->Descripcion_Antecedente),0,1,'C',true);
-                        $i++;
-                    }
-                    $this->ln(1);
-                    //$this->Cell(190, 1, $this->GetY());
-                }
-
-                if($data['domicilios']!=[]){
-                    $i=1;
-                    $domicilios=$data['domicilios'];
-                    foreach ($domicilios as $domicilio){
-                        if($i!=1 ||$this->GetY()>=265){
-                            $aux=$this->revisaYAntecedente($this->GetY());
-                            $this->SetY($aux);
-                        }
-                        $this->SetFont('helvetica','',11);
-                        $this->SetTextColor(0, 0, 0);
-                        $this->SetFillColor(156,156,156); 
-                        $this->Cell(190, 4, utf8_decode('DOMICILIO '.$i.' ('.$domicilio->Estatus.')'),0,0,'C',true);
-                        $this->ln(4);
-                        $this->Cell(155, 4, '');
-                        $this->SetFont('helvetica','B',6);
-                        $this->Cell(30, 4, utf8_decode('CAPTURO ('.$domicilio->Capturo.')'));
-                        
-                        $this->ln(2);
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(130, 7, utf8_decode('UBICACION DEL DOMICILIO: '));
-                        $this->Ln(7);
-                        $domicilioCompleto='CALLE: '.$domicilio->Calle;
-                        $domicilioCompleto .= ($domicilio->Calle2!='SD') ? ', CALLE2: '.$domicilio->Calle2: '';
-                        $domicilioCompleto.=', COLONIA: '.$domicilio->Colonia;
-                        $domicilioCompleto .= ($domicilio->NumExt!='SD') ? ', NUM.EXT: '.$domicilio->NumExt: '';
-                        $domicilioCompleto .= ($domicilio->NumInt!='SD') ? ', NUM.INT: '.$domicilio->NumInt: '';
-                        $domicilioCompleto .= ($domicilio->CP!='SD') ? ', CP: '.$domicilio->CP: '';
-                        $domicilioCompleto .= ($domicilio->CoordY!='SD') ? ', COORDY: '.$domicilio->CoordY: '';
-                        $domicilioCompleto .= ($domicilio->CoordX!='SD') ? ', COORDX: '.$domicilio->CoordX: '';
-                        $this->SetFont('Avenir','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(190,7, utf8_decode($domicilioCompleto),0,1,'C',true);
-                        $this->ln(2);
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(130, 7, utf8_decode('OBSERVACION DEL DOMICILIO: '));
-                        $this->Ln(7);
-                        $this->SetFont('helvetica','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(190,7, utf8_decode($domicilio->Observaciones_Ubicacion),0,1,'C',true);
-                        $i++;
-                    }
-                    $this->ln(1);
-                }
-                if($data['redes_sociales']!=[]){
-                    $aux=$this->revisaY($this->GetY());
-                    $this->SetY($aux);
-                    $i=1;
-                    $redes_sociales=$data['redes_sociales'];
-                    foreach ($redes_sociales as $red_social){
-                        if($i!=1||$this->GetY()>=230){
-                            $aux=$this->revisaY($this->GetY());
-                            $this->SetY($aux);
-                        }
-                        $this->SetFont('helvetica','',11);
-                        $this->SetTextColor(0, 0, 0);
-                        $this->SetFillColor(156,156,156); 
-                        $this->Cell(190, 4, utf8_decode('DATO RED SOCIAL '.$i),0,0,'C',true);
-                        $this->ln(4);
-                        $this->Cell(155, 4, '');
-                        $this->SetFont('helvetica','B',6);
-                        $this->Cell(30, 4, utf8_decode('CAPTURO ('.$red_social->Capturo.')'));
-                        $this->SetFont('Avenir','',11);
-                        $this->ln(4);
-                        $i++;
-                        $width = 65;
-                        $height = 60;
-                        $y=$this->GetY();
-                        if($red_social->Foto_Nombre!=null&&$red_social->Foto_Nombre!='SD'&&$red_social->Foto_Nombre!=''){
-
-                            $filenameForencia = base_url."public/files/Seguimientos/" . $GLOBALS['PDFId_Seguimiento']  . "/Redes_Sociales/".$red_social->Foto_Nombre;
-                            $type = exif_imagetype($filenameForencia);
-                            $extension = '';
-
-                            switch($type){
-                                case 1:
-                                    $extension = 'gif';
-                                break;
-                                case 2:
-                                    $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
-                                    $image = imagecreatefromjpeg($filenameForencia);
-                                    imageinterlace($image, false);
-                                    $nombre="red_social".rand().".jpeg";
-                                    imagejpeg($image,$nombre);
-                                    $imagennueva=base_url."public/".$nombre;
-                                    $this->Image($imagennueva,135, $y+1, $width, $height, $extension);
-                                    imagedestroy($image);
-                                    unlink($nombre);
-                                break;
-                                case 3:
-                                    $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
-                                    $image = imagecreatefrompng($filenameForencia);
-                                    imageinterlace($image, false);
-                                    $nombre="red_social".rand().".png";
-                                    imagepng($image,$nombre);
-                                    $imagennueva=base_url."public/".$nombre;
-                                    $this->Image($imagennueva,135, $y+1, $width, $height, $extension);
-                                    imagedestroy($image);
-                                    unlink($nombre);
-                                break;
-                            } 
-                        }
-
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(125, 7, utf8_decode('NOMBRE DE USUARIO (PERFIL): '));
-                        $this->Ln(7);
-                        $this->SetFont('helvetica','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(120,7, utf8_decode($red_social->Usuario),0,1,'C',true);
-                        $this->Ln(3);
-
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(125, 7, utf8_decode('TIPO DE ENLACE: '));
-                        $this->Ln(7);
-                        $this->SetFont('helvetica','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(120,7, utf8_decode($red_social->Tipo_Enlace),0,1,'C',true);
-                        $this->Ln(3);
-
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(125, 7, utf8_decode('ENLACE: '));
-                        $this->Ln(7);
-                        $this->SetFont('helvetica','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(120,7, utf8_decode($red_social->Enlace),0,1,'C',true);
-                        $this->Ln(3);
-
-                        $this->SetFont('helvetica','B',11);
-                        $this->Cell(125, 7, utf8_decode('OBSERVACION DE ENLACE: '));
-                        $this->Ln(7);
-                        $this->SetFont('helvetica','',9);
-                        $this->SetFillColor(236,236,236);
-                        $this->MultiCell(120,7, utf8_decode($red_social->Observacion_Enlace),0,1,'C',true);
-                        if($red_social->Foto_Nombre!=null&&$red_social->Foto_Nombre!='SD'&&$red_social->Foto_Nombre!=''){//solo si existe fot realiza esta funcion
-                            $y1=$this->GetY();
-                            $operacion=$y-$y1;
-                            $diferencia=abs($operacion);
-                            if($diferencia<65){ 
-                                $y2=$y+65-$y1;
-                                $this->Ln($y2+5);
-                            }
-                        }
-                    }
-                    if($data['forencias']!=[]&&$_SESSION['userdataSIC']->Visualizacion==1){
+            $entrevistas = $data['Entrevistas'];
+            if($entrevistas!=[]){
+                
+                foreach($entrevistas as $entrevista){
+                    if($this->GetY()>=230){
                         $aux=$this->revisaY($this->GetY());
                         $this->SetY($aux);
-                        $i=1;
-                        $forencias=$data['forencias'];
-                        foreach ($forencias as $forencia){
-                            if($i!=1||$this->GetY()>=230){
-                                $aux=$this->revisaY($this->GetY());
-                                $this->SetY($aux);
-                            }
-                            $this->SetFont('helvetica','',11);
-                            $this->SetTextColor(0, 0, 0);
-                            $this->SetFillColor(156,156,156); 
-                            $this->Cell(190, 4, utf8_decode('DATO SEGUIMIENTO '.$i),0,0,'C',true);
-                            $this->ln(4);
-                            $this->Cell(155, 4, '');
-                            $this->SetFont('helvetica','B',6);
-                            $this->Cell(30, 4, utf8_decode('CAPTURO ('.$forencia->Capturo.')'));
-    
-                            $i++;
-                            $width = 60;
-                            $height = 65;
-                            $y=$this->GetY();
-                            if($forencia->Foto_Nombre!=null&&$forencia->Foto_Nombre!='SD'&&$forencia->Foto_Nombre!=''){
-    
-                                $filenameForencia = base_url."public/files/Seguimientos/" . $GLOBALS['PDFId_Seguimiento']  . "/Forencias/".$forencia->Foto_Nombre;
-                                $type = exif_imagetype($filenameForencia);
-                                $extension = '';
-    
-                                switch($type){
-                                    case 1:
-                                        $extension = 'gif';
-                                    break;
-                                    case 2:
-                                        $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
-                                        $image = imagecreatefromjpeg($filenameForencia);
-                                        imageinterlace($image, false);
-                                        $nombre="forencia".rand().".jpeg";
-                                        imagejpeg($image,$nombre);
-                                        $imagennueva=base_url."public/".$nombre;
-                                        $this->Image($imagennueva,135, $y+1, $width, $height, $extension);
-                                        imagedestroy($image);
-                                        unlink($nombre);
-                                    break;
-                                    case 3:
-                                        $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
-                                        $image = imagecreatefrompng($filenameForencia);
-                                        imageinterlace($image, false);
-                                        $nombre="forencia".rand().".png";
-                                        imagepng($image,$nombre);
-                                        $imagennueva=base_url."public/".$nombre;
-                                        $this->Image($imagennueva,135, $y+1, $width, $height, $extension);
-                                        imagedestroy($image);
-                                        unlink($nombre);
-                                    break;
-                                } 
-                            }
-    
-                            $this->ln(2);
-                            $this->SetFont('helvetica','B',11);
-                            $this->Cell(130, 7, utf8_decode('DESCRIPCION DEL DATO: '));
-                            $this->Ln(7);
-                            $this->SetFont('helvetica','',9);
-                            $this->SetFillColor(236,236,236);
-                            $this->MultiCell(115,7, utf8_decode($forencia->Descripcion_Forencia),0,1,'C',true);
-                            if($forencia->Foto_Nombre!=null&&$forencia->Foto_Nombre!='SD'&&$forencia->Foto_Nombre!=''){//solo si existe fot realiza esta funcion
-                                $y1=$this->GetY();
-                                $operacion=$y-$y1;
-                                $diferencia=abs($operacion);
-                                if($diferencia<65){ 
-                                    $y2=$y+65-$y1;
-                                    $this->Ln($y2+5);
-                                }
-                            }
-                        }
-                        $this->ln(1);
                     }
-                    $this->Ln(1);
-                }   
+                    $this->SetFont('helvetica','',11);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFillColor(156,156,156); 
+                    $this->Cell(190, 4, utf8_decode('ENTREVISTA '),0,0,'C',true);
+                    $this->Ln(4);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->Cell(165, 4, '');
+                    $this->Ln(4);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(20, 8, utf8_decode('ENTREVISTA DETENIDO:'));
+                    $this->Ln(7);
+                    $this->SetFillColor(236,236,236);
+                    $this->SetFont('helvetica','',9);
+                    $this->MultiCell(190,7, utf8_decode('-'.$entrevista->Entrevista),0,1,'C',true);
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(40, 8, utf8_decode('ALIAS REFERIDOS:'));
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->Cell(150,7, utf8_decode($entrevista->Alias_Referidos),0,0,'C',true);
+                    $this->Ln(8);
+                    
+                    $width = 75;
+                    $height = 80;
+                    $aux=$this->revisaY($this->GetY());
+                    $this->SetY($aux);
+                    
+                    $y=$this->GetY();
+                    if($entrevista->Foto!=null && $entrevista->Foto!='SD' && $entrevista->Foto!=''){
+                        $filenameentrevista = base_url."public/files/Entrevistas/" . $data['Principales']->Id_Persona_Entrevista   . "/FotosEntrevistas/".$entrevista->Foto;
+                        $type = exif_imagetype($filenameentrevista);
+                        $extension = '';
+    
+                        switch($type){
+                            case 1:
+                                $extension = 'gif';
+                            break;
+                            case 2:
+                                $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                $image = imagecreatefromjpeg($filenameentrevista);
+                                imageinterlace($image, false);
+                                $nombre="entrevista".rand().".jpeg";
+                                imagejpeg($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                            case 3:
+                                $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                $image = imagecreatefrompng($filenameentrevista);
+                                imageinterlace($image, false);
+                                $nombre="entrevista".rand().".png";
+                                imagepng($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                        } 
+                        $this->Ln(82);
+                    }
+                    
+                }
+            }
+
+            $forensias = $data['Forensias'];
+            if($forensias!=[]){
+                foreach ($forensias as $forensia){
+                    $aux=$this->revisaY($this->GetY());
+                    $this->SetY($aux);
+                    
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('Avenir','',11);
+                    $this->SetFillColor(156,156,156);
+                    $this->Cell(190, 4, utf8_decode("DATO"),0,0,'C',true);
+                    $this->ln(4);
+    
+                    $this->Cell(155, 4, '');
+                    $this->SetFont('Avenir','',11);
+                    $this->ln(2);
+                    $width = 75;
+                    $height = 65;
+                    $y=$this->GetY();
+                    if($forensia->Foto!=null && $forensia->Foto!='SD' && $forensia->Foto!=''){
+    
+                        $filenameForensia = base_url."public/files/Entrevistas/" . $data['Principales']->Id_Persona_Entrevista  . "/ForensiasRelevantes/".$forensia->Foto;
+                        $type = exif_imagetype($filenameForensia);
+                        $extension = '';
+    
+                        switch($type){
+                            case 1:
+                                $extension = 'gif';
+                            break;
+                            case 2:
+                                $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                $image = imagecreatefromjpeg($filenameForensia);
+                                imageinterlace($image, false);
+                                $nombre="forencia".rand().".jpeg";
+                                imagejpeg($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,130, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                            case 3:
+                                $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                $image = imagecreatefrompng($filenameForensia);
+                                imageinterlace($image, false);
+                                $nombre="forencia".rand().".png";
+                                imagepng($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,130, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                        } 
+                    }
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(130, 7, utf8_decode('DESCRIPCION: '));
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(115,7, utf8_decode($forensia->Descripcion_Forensia),0,1,'C',true);
+                    $this->Ln(3);
+                    if($forensia->Tipo_Dato!='SD'){
+                        $this->SetTextColor(255, 0, 0);
+                        $this->SetFont('helvetica','B',11);
+                        $this->Cell(130, 7, utf8_decode('RELEVANTE ('.$forensia->Tipo_Dato.'):'));
+                        $this->Ln(7);
+                        $this->SetTextColor(0, 0, 0);
+                        $this->SetFont('helvetica','',9);
+                        $this->SetFillColor(236,236,236);
+                        $this->MultiCell(115,7, utf8_decode($forensia->Dato_Relevante),0,1,'C',true);
+                        $this->Ln(3);
+                    }
+                    if($forensia->Foto!=null&&$forensia->Foto!='SD'&&$forensia->Foto!=''){//solo si existe fot realiza esta funcion
+                        $y1=$this->GetY();
+                        $operacion=$y-$y1;
+                        $diferencia=abs($operacion);
+                        if($diferencia<65){ 
+                            $y2=$y+65-$y1;
+                            $this->Ln($y2+5);
+                        } 
+                    }
+                   
+                }
+            }
+            $ubicaciones=$data['Ubicaciones'];
+            if($ubicaciones!=[]){
+                $domicilios = $ubicaciones;
+                foreach ($domicilios as $domicilio){
+    
+                    $aux=$this->revisaY($this->GetY());
+                    $this->SetY($aux);
+    
+                    $this->SetFont('helvetica','',11);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFillColor(156,156,156);
+                    $this->Cell(190, 4, utf8_decode("UBICACION"),0,0,'C',true);
+                    $this->ln(4);
+                    $this->Cell(155, 4, '');
+                    $this->SetFont('helvetica','B',11);
+                    $this->ln(2);
+                    $this->Cell(130, 7, utf8_decode('DIRECCIÓN DE LA UBICACIÓN:'));
+                    $this->Ln(7);
+                    $cadena = str_replace('CALLE ','',$domicilio->Calle);///POR SI SE REPITE LA ETIQUETA CON EL CONTENIDO DE LA INFORMACION
+                    $domicilioCompleto='CALLE: '.$cadena;
+    
+                    $cadena = str_replace('CALLE ','',$domicilio->Calle2);
+                    $domicilioCompleto .= ($domicilio->Calle2!='SD') ? ', CALLE 2: '.$cadena: '';
+                    $domicilioCompleto .=', COLONIA: '.$domicilio->Colonia;
+                    $domicilioCompleto .= ($domicilio->NumExt!='SD') ? ', NUM.EXT: '.$domicilio->NumExt: '';
+                    $domicilioCompleto .= ($domicilio->NumInt!='SD') ? ', NUM.INT: '.$domicilio->NumInt: '';
+                    $domicilioCompleto .= ($domicilio->CP!='SD') ? ', CP: '.$domicilio->CP: '';
+                    $domicilioCompleto .= ($domicilio->CoordY!='SD') ? ', COORDY: '.$domicilio->CoordY: '';
+                    $domicilioCompleto .= ($domicilio->CoordX!='SD') ? ', COORDX: '.$domicilio->CoordX: '';
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($domicilioCompleto),0,1,'C',true);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(130, 7, utf8_decode('OBSERVACIÓN DE LA UBICACIÓN: '));
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($domicilio->Observaciones_Ubicacion),0,1,'C',true);
+                    if($domicilio->Link_Ubicacion!='SD'&& trim($domicilio->Link_Ubicacion)!=''){
+                        $this->SetFont('helvetica','B',11);
+                        $this->Cell(130, 7, utf8_decode('LINK DE LA UBICACIÓN: '));
+                        $this->Ln(7);
+                        $this->SetFont('helvetica','',9);
+                        $this->SetFillColor(236,236,236);
+                        $this->MultiCell(190,7, utf8_decode($domicilio->Link_Ubicacion),0,1,'C',true);
+                    }
+    
+    
+                    $y=$this->GetY();
+                    if($domicilio->Foto!=null && $domicilio->Foto!='SD' && $domicilio->Foto!=''){
+    
+                        $width = 65;
+                        $height = 70;
+    
+                        $aux=$this->revisaFotoY($this->GetY());
+                        $this->SetY($aux);
+                        $y=$this->GetY();
+    
+                        $filenameUbicacion = base_url."public/files/Entrevistas/" . $data['Principales']->Id_Persona_Entrevista . "/UbicacionesRelevantes/".$domicilio->Foto;
+                        $type = exif_imagetype($filenameUbicacion);
+                        $extension = '';
+    
+                        switch($type){
+                            case 1:
+                                $extension = 'gif';
+                            break;
+                            case 2:
+                                $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                $image = imagecreatefromjpeg($filenameUbicacion);
+                                imageinterlace($image, false);
+                                $nombre="domicilio".rand().".jpeg";
+                                imagejpeg($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                            case 3:
+                                $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                $image = imagecreatefrompng($filenameUbicacion);
+                                imageinterlace($image, false);
+                                $nombre="domicilio".rand().".png";
+                                imagepng($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                        } 
+                        $this->Ln(75);
+                    }else{
+                        $this->Ln(2);
+                    }
+                }
+            }
+            $Redes_Sociales = $data['Redes_Sociales'];
+            if($Redes_Sociales!=[]){
+                
+                foreach ($Redes_Sociales as $Red){
+    
+                    $aux=$this->revisaY($this->GetY());
+                    $this->SetY($aux);
+    
+                    $this->SetFont('helvetica','',11);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFillColor(156,156,156);
+                    $this->Cell(190, 4, utf8_decode($Red->clavePDF.' ('.$Red->Tipo_Enlace.')'),0,0,'C',true);
+                    $this->ln(4);
+                    $this->Cell(155, 4, '');
+                    $this->SetFont('helvetica','B',11);
+                    $this->ln(2);
+                    $this->Cell(130, 7, utf8_decode('USUARIO: '));
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Red->Usuario),0,1,'C',true);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(130, 7, utf8_decode('ENLACE: '));
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Red->Enlace),0,1,'C',true);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(130, 7, utf8_decode('OBSERVACIÓN DE ENLACE: '));
+                    $this->Ln(7);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Red->Observacion_Enlace),0,1,'C',true);
+                    $this->Ln(7);
+    
+                    $y=$this->GetY();
+    
+                    if($Red->Foto_Nombre!=null && $Red->Foto_Nombre!='SD' && $Red->Foto_Nombre!=''){
+    
+                        $width = 65;
+                        $height = 70;
+    
+                        $aux=$this->revisaFotoY($this->GetY());
+                        $this->SetY($aux);
+                        $y=$this->GetY();
+    
+                        $filenameUbicacion = base_url."public/files/Entrevistas/" . $GLOBALS['PDFId_Persona_Entrevista']  . "/Redes_Sociales/".$Red->Foto_Nombre;
+                        $type = exif_imagetype($filenameUbicacion);
+                        $extension = '';
+    
+                        switch($type){
+                            case 1:
+                                $extension = 'gif';
+                            break;
+                            case 2:
+                                $extension = 'jpeg';//Por si tiene interlancia la imagen genera un archivo temporal jpeg
+                                $image = imagecreatefromjpeg($filenameUbicacion);
+                                imageinterlace($image, false);
+                                $nombre="Red".rand().".jpeg";
+                                imagejpeg($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                            case 3:
+                                $extension = 'png';//Por si tiene interlancia la imagen genera un archivo temporal png
+                                $image = imagecreatefrompng($filenameUbicacion);
+                                imageinterlace($image, false);
+                                $nombre="Red".rand().".png";
+                                imagepng($image,$nombre);
+                                $imagennueva=base_url."public/".$nombre;
+                                $this->Image($imagennueva,65, $y+1, $width, $height, $extension);
+                                imagedestroy($image);
+                                unlink($nombre);
+                            break;
+                        } 
+                        $this->Ln(75);
+                    }else{
+                        $this->Ln(2);
+                    }
+                }
+            }
+        }
+        function revisaFotoY($y){
+            if($y>=210){
+                $this->AddPage();
+                return 32;
+            }else{
+                return $y;
             }
         }
         function Header(){
@@ -3199,11 +3028,14 @@
                 foreach($PersonasEntrevistadas as $PersonaEntrevistada){
                    
                     if(($PersonaEntrevistada['Principales']->Nombre==$Persona['datos_persona']->Nombre)&&($PersonaEntrevistada['Principales']->Ap_Paterno==$Persona['datos_persona']->Ap_Paterno)&&($PersonaEntrevistada['Principales']->Ap_Materno==$Persona['datos_persona']->Ap_Materno)){
-                        $bandera=true;
-                        if($pdf->GetY()> 180 ){
-                            $pdf->AddPage();
+                        if($bandera==false){
+                            if($pdf->GetY()> 180 ){
+                                $pdf->AddPage();
+                            }
+                            $pdf->PagePersona($Persona,$conteoPersonas);
+                            $bandera=true;
                         }
-                        $pdf->DatosCombinadosPersona($PersonaEntrevistada,$Persona,$conteoPersonas);
+                        $pdf->DatosCombinadosPersona($PersonaEntrevistada,$conteoPersonas);
                     }
                 }
             }
@@ -3245,6 +3077,7 @@
                 $pdf->AddPage();
             }
             $pdf->PagePersonaEntrevistada($Persona,$i);
+            $pdf->DatosCombinadosPersona($Persona,$i);
             $i++;
         }
     }

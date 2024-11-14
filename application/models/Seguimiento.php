@@ -1390,6 +1390,13 @@ class Seguimiento{
         $this->db->query($sql);
         return $this->db->registers();
     }
+    public function getRedesSocialesE($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  redes_sociales_detenido
+        WHERE  redes_sociales_detenido.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
     public function getDomicilios($Ids_Datos,$Tipo_Entidad){
         $data = []; 
         $i=0;
