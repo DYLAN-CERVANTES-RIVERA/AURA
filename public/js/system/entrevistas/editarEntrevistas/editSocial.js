@@ -305,8 +305,8 @@ const deleteRowRedsocial = async(obj, tableId) => {//funcion para eliminar una f
     if (confirm('¿Desea eliminar este elemento?')) {
         let row = obj.parentElement.parentElement;
         aux=row.rowIndex;
-        if(row.cells[0].innerHTML!='SD'){
-           await DesasociaRedSocial(row.cells[0].innerHTML);
+        if(row.cells[7].innerHTML!='SD'){
+           await DesasociaRedSocial(row.cells[7].innerHTML);
         }
         document.getElementById(tableId.id).deleteRow(row.rowIndex);
         j=aux+1;
