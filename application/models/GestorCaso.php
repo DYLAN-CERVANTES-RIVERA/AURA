@@ -332,26 +332,21 @@ class GestorCaso{
         $from_where_sentence = "";
         $cadena=$this->eliminar_acentos($cadena);
         switch ($filtro) {
-            case '1':   //general
+            case '1':
                 $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
                     $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
                     $palabras = array_diff($palabras, $articulos);
                     $from_where_sentence .= "
-                                FROM gc_evento_filtro_1
+                                FROM gc_evento_filtro_4
     
                                             WHERE  Folio_infra > 0 
                                                 ";
                     foreach($palabras as $palabra){
                         $palabra=ltrim($palabra, " ");
                         $palabra=rtrim($palabra, " ");
-                        $dias = array ('lunes', 'martes', 'miercoles','jueves','viernes','sabado','domingo');
-                        if(in_array ($palabra,$dias)){
+                      
                             $from_where_sentence.= "
-                                            AND Dia_semana='". $palabra . "' ";
-                        }else{
-                            $from_where_sentence.= "
-                            AND  (       Folio_infra LIKE '%" . $palabra . "%' OR 
-                                        Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                            AND  (      Folio_infra LIKE '%" . $palabra . "%' OR 
                                         Folio_911 LIKE '%" . $palabra . "%' OR 
                                         FechaHora_Captura LIKE '%" . $palabra . "%' OR 
                                         FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
@@ -359,28 +354,12 @@ class GestorCaso{
                                         Vector LIKE '%" . $palabra . "%' OR 
                                         Colonia LIKE '%" . $palabra . "%' OR 
                                         Calle LIKE '%" . $palabra . "%' OR 
-                                        Calle2 LIKE '%" . $palabra . "%' OR 
                                         CSviolencia  LIKE '%" . $palabra . "%' OR 
-                                        Tipo_Violencia LIKE '%" . $palabra . "%' OR 
-                                        Tipoarma_concat LIKE '%" . $palabra . "%' OR 
-                                        FechaHora_Activacion LIKE '%" . $palabra . "%' OR 
-                                        Fuente LIKE '%" . $palabra . "%' OR 
                                         Status LIKE '%" . $palabra . "%' OR 
-                                        Quien_Habilito LIKE '%" . $palabra . "%' OR 
-                                        Conteo_Masculinos LIKE '%" . $palabra . "%' OR
-                                        Conteo_Femeninas LIKE '%" . $palabra . "%' OR
-                                        Conteo_Vehiculos LIKE '%" . $palabra . "%' OR
                                         ClaveSeguimiento LIKE '%" . $palabra . "%' OR
-                                        hechos_concat LIKE '%" . $palabra . "%' OR
-                                        delitos_concat LIKE '%" . $palabra . "%' OR
-                                        responsables_concat LIKE '%" . $palabra . "%' OR
-                                        vehiculos_concat LIKE '%" . $palabra . "%'OR
-                                        entrevistas_seguimiento_concat LIKE '%" . $palabra . "%' OR
-                                        fotos_seguimiento_concat LIKE '%" . $palabra . "%'OR
-                                        Hora_trunca LIKE '%" . $palabra . "%'OR
-                                        delito_giro LIKE '%" . $palabra . "%') 
+                                        delitos_concat LIKE '%" . $palabra . "%' )
                                 ";
-                        }
+                        
                                         
                     }
                 break;
@@ -532,7 +511,7 @@ class GestorCaso{
                             $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
                             $palabras = array_diff($palabras, $articulos);
                             $from_where_sentence .= "
-                                        FROM gc_evento_filtro_1
+                                        FROM gc_evento_filtro_4
             
                                                     WHERE  Folio_infra > 0 
                                                         ";
@@ -611,6 +590,107 @@ class GestorCaso{
                             $from_where_sentence.= "AND  Tipo_Grupo ='EVENTO DELICTIVO' AND Consultado = 0 ";
 
                     break;
+                    case '8':   //general
+                        $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                            $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                            $palabras = array_diff($palabras, $articulos);
+                            $from_where_sentence .= "
+                                        FROM gc_evento_filtro_1
+            
+                                                    WHERE  Folio_infra > 0 
+                                                        ";
+                            foreach($palabras as $palabra){
+                                $palabra=ltrim($palabra, " ");
+                                $palabra=rtrim($palabra, " ");
+                                $dias = array ('lunes', 'martes', 'miercoles','jueves','viernes','sabado','domingo');
+                                if(in_array ($palabra,$dias)){
+                                    $from_where_sentence.= "
+                                                    AND Dia_semana='". $palabra . "' ";
+                                }else{
+                                    $from_where_sentence.= "
+                                    AND  (       Folio_infra LIKE '%" . $palabra . "%' OR 
+                                                Elemento_Captura LIKE '%" . $palabra . "%' OR 
+                                                Folio_911 LIKE '%" . $palabra . "%' OR 
+                                                FechaHora_Captura LIKE '%" . $palabra . "%' OR 
+                                                FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
+                                                Zona LIKE '%" . $palabra . "%' OR 
+                                                Vector LIKE '%" . $palabra . "%' OR 
+                                                Colonia LIKE '%" . $palabra . "%' OR 
+                                                Calle LIKE '%" . $palabra . "%' OR 
+                                                Calle2 LIKE '%" . $palabra . "%' OR 
+                                                CSviolencia  LIKE '%" . $palabra . "%' OR 
+                                                Tipo_Violencia LIKE '%" . $palabra . "%' OR 
+                                                Tipoarma_concat LIKE '%" . $palabra . "%' OR 
+                                                FechaHora_Activacion LIKE '%" . $palabra . "%' OR 
+                                                Fuente LIKE '%" . $palabra . "%' OR 
+                                                Status LIKE '%" . $palabra . "%' OR 
+                                                Quien_Habilito LIKE '%" . $palabra . "%' OR 
+                                                Conteo_Masculinos LIKE '%" . $palabra . "%' OR
+                                                Conteo_Femeninas LIKE '%" . $palabra . "%' OR
+                                                Conteo_Vehiculos LIKE '%" . $palabra . "%' OR
+                                                ClaveSeguimiento LIKE '%" . $palabra . "%' OR
+                                                hechos_concat LIKE '%" . $palabra . "%' OR
+                                                delitos_concat LIKE '%" . $palabra . "%' OR
+                                                responsables_concat LIKE '%" . $palabra . "%' OR
+                                                vehiculos_concat LIKE '%" . $palabra . "%'OR
+                                                entrevistas_seguimiento_concat LIKE '%" . $palabra . "%' OR
+                                                fotos_seguimiento_concat LIKE '%" . $palabra . "%'OR
+                                                Hora_trunca LIKE '%" . $palabra . "%'OR
+                                                delito_giro LIKE '%" . $palabra . "%') 
+                                        ";
+                                }
+                                                
+                            }
+                        break;
+                        case '9':   //general
+                            $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                                $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                                $palabras = array_diff($palabras, $articulos);
+                                $from_where_sentence .= "
+                                            FROM gc_evento_filtro_1
+                
+                                                        WHERE  Folio_infra > 0 
+                                                            ";
+                                foreach($palabras as $palabra){
+                                    $palabra=ltrim($palabra, " ");
+                                    $palabra=rtrim($palabra, " ");
+                                  
+                                        $from_where_sentence.= "
+                                        AND  (      Folio_infra LIKE '%" . $palabra . "%' OR 
+                                                    Folio_911 LIKE '%" . $palabra . "%' OR 
+                                                    FechaHora_Captura LIKE '%" . $palabra . "%' OR 
+                                                    FechaHora_Recepcion LIKE '%" . $palabra . "%' OR 
+                                                    Zona LIKE '%" . $palabra . "%' OR 
+                                                    Vector LIKE '%" . $palabra . "%' OR 
+                                                    Colonia LIKE '%" . $palabra . "%' OR 
+                                                    Calle LIKE '%" . $palabra . "%' OR 
+                                                    CSviolencia  LIKE '%" . $palabra . "%' OR 
+                                                    Status LIKE '%" . $palabra . "%' OR 
+                                                    ClaveSeguimiento LIKE '%" . $palabra . "%' OR
+                                                    delitos_concat LIKE '%" . $palabra . "%' )
+                                            ";            
+                                }
+                            break;
+                            case '10':   //general
+                                $palabras = explode(",", strtolower($cadena));//Se obtiene la cadena con la cual se quiere buscar
+                                    $articulos = array('el', 'la', 'los', 'las', 'un', 'de', 'en', 'unos', 'una', 'unas', 'a', 'con', 'y', 'o', 'u');//arreglo con las palabras a ignorar en la busqueda, normalmete artículos
+                                    $palabras = array_diff($palabras, $articulos);
+                                    $from_where_sentence .= "
+                                                FROM gc_evento_filtro_1
+                    
+                                                            WHERE  Folio_infra > 0 
+                                                                ";
+                                    if($cadena!=''){
+                                        foreach($palabras as $palabra){
+                                            $palabra=ltrim($palabra, " ");
+                                            $palabra=rtrim($palabra, " ");
+                                            $from_where_sentence .= "
+                                                            AND  (  Folio_infra = '" . $palabra . "' ) 
+                                                                ";              
+                                        }
+                                    }
+        
+                            break;
 
         }
 
@@ -1377,12 +1457,22 @@ class GestorCaso{
     }
 
     //obtener los registros de la pagina actual
-    public function getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence = ""){
-        $sql = "
-                SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Activacion,FechaHora_Captura,Id_Seguimiento,Tipo_Grupo,Consultado "
+    public function getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence = "",$filtro = 1){
+        if($filtro == 1 || $filtro==5){
+            $sql = "
+                SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Captura,Id_Seguimiento,Tipo_Grupo,Consultado"
             . $from_where_sentence . "  
                 LIMIT $offset,$no_of_records_per_page
                 ";
+
+        }else{
+            $sql = "
+            SELECT Folio_infra,Folio_911,ClaveSeguimiento,FechaHora_Recepcion,Status,delitos_concat,CSviolencia,Colonia,Calle,Zona,Vector,FechaHora_Activacion,FechaHora_Captura,Id_Seguimiento,Tipo_Grupo,Consultado "
+        . $from_where_sentence . "  
+            LIMIT $offset,$no_of_records_per_page
+            ";
+        }
+
 
         $this->db->query($sql);
         return $this->db->registers();
@@ -1582,13 +1672,14 @@ class GestorCaso{
         $cadena=$this->eliminar_acentos($cadena);
         //sentencia from_where para hacer la busqueda por la cadena ingresada
         $from_where_sentence = $this->generateFromWhereSentence($cadena, $filtro);
+        //echo $from_where_sentence;
         $numPage = 1;
         $no_of_records_per_page = NUM_MAX_REG_PAGE; //total de registros por pagination
         $offset = ($numPage - 1) * $no_of_records_per_page; // desplazamiento conforme a la pagina
 
         $results = $this->getTotalPages($no_of_records_per_page, $from_where_sentence);  //total de páginas conforme a la busqueda
         //info de retorno para la creacion de los links conforme a la cadena ingresada
-        $data['rows_Rems'] = $this->getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence);   //se obtiene la información de la página actual
+        $data['rows_Rems'] = $this->getDataCurrentPage($offset, $no_of_records_per_page, $from_where_sentence,$filtro);   //se obtiene la información de la página actual
         $data['numPage'] = $numPage; //numero pag actual para la pagination footer
         $data['total_pages'] = $results['total_pages']; //total pages para la pagination
         $data['total_rows'] = $results['total_rows'];   //total de registro hallados

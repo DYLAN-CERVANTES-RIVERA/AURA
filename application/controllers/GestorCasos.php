@@ -37,7 +37,7 @@ class GestorCasos extends Controller
     public function __construct(){
         $this->Catalogo = $this->model('Catalogo');
         $this->GestorCaso = $this->model('GestorCaso');
-        $this->numColumnsGC = [10, 9, 8, 9, 10, 10, 10];  //se inicializa el número de columns por cada filtro
+        $this->numColumnsGC = [10, 9, 8, 9, 10, 10, 10,10];  //se inicializa el número de columns por cada filtro
         $this->FV = new FormValidator();
     }
 
@@ -116,16 +116,19 @@ class GestorCasos extends Controller
                 $data['filtroNombre'] = "Eventos Deshabilitados";
                 break;
             case '4':
-                $data['filtroNombre'] = "Busqueda a Quien se Asigno Evento";
+                $data['filtroNombre'] = "Búsqueda a Quien se Asigno Evento";
                 break;
             case '5':
-                $data['filtroNombre'] = "Busqueda Solo por Folio AURA Evento";
+                $data['filtroNombre'] = "Búsqueda Solo por Folio AURA";
                 break;
             case '6':
                 $data['filtroNombre'] = "Eventos Consultados";
             break;
             case '7':
                 $data['filtroNombre'] = "Eventos No Consultados";
+                break;
+            case '8':
+                $data['filtroNombre'] = "Búsqueda Especializada";
                 break;
         }
 
@@ -674,6 +677,7 @@ class GestorCasos extends Controller
 
 
         switch ($filtro) {
+            case '8':
             case '1': //General de todos los casos
                 $infoTable['header'] .= '
                         <th class="column1">Folio AURA</th>
@@ -1147,9 +1151,13 @@ class GestorCasos extends Controller
         $filtroActual =  $_REQUEST['filtroActual'];
 
         if (isset($_REQUEST['cadena'])){//Verifica si existe una Cadena para consulta
-            $from_where_sentence = $this->GestorCaso->generateFromWhereSentence($_REQUEST['cadena'], $filtroActual,"EXCEL");//excel con consulta
+            $filtro = ($filtroActual==1)? 9:$filtroActual;
+            $filtro = ($filtroActual==5)? 10:$filtro;
+            $from_where_sentence = $this->GestorCaso->generateFromWhereSentence($_REQUEST['cadena'], $filtro,"EXCEL");//excel con consulta
         }else{
-            $from_where_sentence = $this->GestorCaso->generateFromWhereSentence("",$filtroActual,"EXCEL");//Excel sin consulta
+            $filtro = ($filtroActual==1)? 9:$filtroActual;
+            $filtro = ($filtroActual==5)? 10:$filtro;
+            $from_where_sentence = $this->GestorCaso->generateFromWhereSentence("",$filtro,"EXCEL");//Excel sin consulta
         }
 		$tipo_export = $_REQUEST['tipo_export'];;
 		if ($tipo_export == 'EXCEL') {
@@ -1157,6 +1165,7 @@ class GestorCasos extends Controller
 			$cat_rows = $this->GestorCaso->getAllInfoAlertaByCadena($from_where_sentence);
 			switch ($filtroActual) {
 				case '1':
+                case '8':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_Eventos";
 					$csv_data="Folio AURA,Folio 911,Celula Asignada,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
@@ -1523,6 +1532,7 @@ class GestorCasos extends Controller
         $dropDownColumn = '';
         //generación de dropdown dependiendo del filtro
         switch ($filtro) {
+            case '8':
             case '1':
                 $campos = ['Folio Infra','Elemento Asignado', 'Folio 911', 'Fecha de Recepción', 'Estatus del Seguimiento','Motivo','Con/Sin Violencia', 'Colonia', 'Calle','Zona y Vector'];
                 break;

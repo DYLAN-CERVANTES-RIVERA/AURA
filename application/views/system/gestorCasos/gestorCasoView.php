@@ -86,12 +86,13 @@
                     <div class="dropdown-menu" aria-labelledby="id_filtros">
                         
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?'active':'';?>" href="<?= base_url;?>GestorCasos/index/?filtro=1">Todos los Eventos</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=5">Búsqueda Solo por Folio AURA</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=2">Vista de Eventos Habilitados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=3">Vista de Eventos Deshabilitados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=4">Búsqueda a Quien se Asigno Evento</a>
-                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=5">Búsqueda Solo por Folio AURA Evento</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=6">Eventos Consultados</a>
                         <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=7">Eventos No Consultados</a>
+                        <a class="dropdown-item <?= ($data['filtroActual']==1)?>" href="<?= base_url;?>GestorCasos/index/?filtro=8">Búsqueda Especializada</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" class="btn btn-filtro" data-toggle="modal" data-target="#filtro_rangos">
                             <span class="v-a-middle" >Por rango de fechas</span>
