@@ -46,8 +46,16 @@
             $this->Cell(5, 4);
             $this->SetTextColor(51, 51, 51);
             $this->Cell(20, 4, utf8_decode('DELITOS:'));
+            
+            $delitos=$data['delitos'];
+            $delitos_concat='';
+            foreach ($delitos as $delito){
+                $giro=($delito->Giro!='SD' && $delito->Giro!='')?' ('.$delito->Giro.') ':' ';
+                $delitos_concat.=$delito->Descripcion.$giro;
+
+            }
             $this->SetTextColor(128, 128, 128);
-            $this->MultiCell(160, 4, utf8_decode($data['principales']->delitos_concat.' , '.$data['principales']->CSviolencia.' , '.$data['principales']->Tipo_Violencia), 0, 'J');
+            $this->MultiCell(160, 4, utf8_decode($delitos_concat.' , '.$data['principales']->CSviolencia.' , '.$data['principales']->Tipo_Violencia), 0, 'J');
            
             $this->ln(3);
             $this->Cell(5, 4);
