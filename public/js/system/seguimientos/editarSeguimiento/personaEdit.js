@@ -399,6 +399,17 @@ function validaCurp(evt) {//FUNCION QUE VALIDA LA INSERCION DE SOLO NUMEROS
         }
     }
 }
+function filtrarNumerosTel(event) {
+    var valor = event.target.value;
+    var nuevoValor = "";
+    for (var i = 0; i < valor.length; i++) {
+        var char = valor[i];       
+        if (/[0-9]/.test(char) || char.charCodeAt(0) === 32)  {
+            nuevoValor += char;
+        }
+    }
+    event.target.value = nuevoValor;
+}
 const getEdad=async(FechaNacimiento)=>{//Funcion que obtiene la edad deacuerdo al campo de fecha de nacimiento
     let fechaActual = new Date();
     // Obtiene los componentes de la fecha
@@ -657,3 +668,4 @@ const verificaInfo = async() =>{
         }
     })
 }
+document.getElementById("telefono").addEventListener("input", filtrarNumerosTel);

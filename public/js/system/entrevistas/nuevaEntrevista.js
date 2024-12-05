@@ -247,6 +247,17 @@ function valideMultiplesDatos(evt) {//FUNCION QUE VALIDA LA INSERCION DE SOLO NU
         }
     }
 }
+function filtrarNumerosTel(event) {
+    var valor = event.target.value;
+    var nuevoValor = "";
+    for (var i = 0; i < valor.length; i++) {
+        var char = valor[i];       
+        if (/[0-9]/.test(char) || char.charCodeAt(0) === 32)  {
+            nuevoValor += char;
+        }
+    }
+    event.target.value = nuevoValor;
+}
 
 /*FUNCIONES DE AUTOCOMPLETE */
 const getAllColonias = async () => {//FUNCION QUE OBTIENE TODAS COLONIAS
@@ -709,3 +720,4 @@ const ConsultaPersonaEntrevista = async(coincidencia) =>{
     })
     document.getElementById('datos_principales_Detenido_Entrevistado').reset()
 }
+document.getElementById("num_tel").addEventListener("input", filtrarNumerosTel);

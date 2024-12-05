@@ -111,7 +111,7 @@
                 </div>
                 <div class="form-group col-lg-4 col-sm-6">
                     <label for="num_tel" class="subtitulo-rosa">Número Telefónico:</label>
-                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="11"id="num_tel" name="num_tel" placeholder="Ingrese número telefónico" onkeypress="return validePanelRemisiones(event);" >
+                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="50"id="num_tel" name="num_tel" placeholder="Ingrese número telefónico" >
                     <span class="span_error" id="num_tel_error"></span>
                 </div>
                 <div class="form-group col-lg-2 col-sm-6">

@@ -103,7 +103,7 @@
                 </div>
                 <div class="form-group col-lg-3 col-sm-6">
                     <label for="telefono" class="subtitulo-rosa">Telefono:</label>
-                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="10" id="telefono" name="telefono" placeholder="Ingrese Telefono" onkeypress="return valideKey(event);">
+                    <input type="text" class="form-control form-control-sm text-uppercase" maxlength="50" id="telefono" name="telefono" placeholder="Ingrese Telefono" >
                     <span class="span_error" id="telefono_error"></span>
                 </div>
                 <div class="form-group col-lg-6">

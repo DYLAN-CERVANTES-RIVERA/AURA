@@ -141,6 +141,17 @@ function valideMultiples(evt) {//FUNCION QUE VALIDA LA INSERCION DE SOLO NUMEROS
         }
     }
 }
+function filtrarNumerosTel(event) {
+    var valor = event.target.value;
+    var nuevoValor = "";
+    for (var i = 0; i < valor.length; i++) {
+        var char = valor[i];       
+        if (/[0-9]/.test(char) || char.charCodeAt(0) === 32)  {
+            nuevoValor += char;
+        }
+    }
+    event.target.value = nuevoValor;
+}
 
 
 const inputCalle = document.getElementById('calle_dom');
@@ -701,3 +712,4 @@ document.addEventListener('paste', async function(event) {
         console.error(error.message);
     }
 });
+document.getElementById("num_tel").addEventListener("input", filtrarNumerosTel);
