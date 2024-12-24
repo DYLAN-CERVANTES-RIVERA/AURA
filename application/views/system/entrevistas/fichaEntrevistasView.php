@@ -6,8 +6,7 @@ class PDF extends FPDF{
     public $EntrevistasGB = array();
     public $ForensiasGB = array();
     public $UbicacionesGB = array();
-    public $RedesGB = array();
-    
+    public $Especificos = array();
     public function agregarEntrevistas($data) {
         global $EntrevistasGB;
         $EntrevistasGB = $data;
@@ -30,6 +29,10 @@ class PDF extends FPDF{
     public function agregarRedes($data) {
         global $RedesGB;
         $RedesGB = $data;
+    }
+    public function agregarEspecificos($data) {
+        global $Especificos;
+        $Especificos = $data;
     }
     function PagePersonaEntrevistada($data){
         $this->SetFont('helvetica','',11);
@@ -387,7 +390,7 @@ class PDF extends FPDF{
                     $filenameForensia = base_url."public/files/Entrevistas/" . $GLOBALS['PDFId_Persona_Entrevista']  . "/ForensiasRelevantes/".$forensia->Foto;
                     $type = exif_imagetype($filenameForensia);
                     $extension = '';
-
+                    $espace = 115;
                     switch($type){
                         case 1:
                             $extension = 'gif';
@@ -415,6 +418,8 @@ class PDF extends FPDF{
                             unlink($nombre);
                         break;
                     } 
+                }else{
+                    $espace = 190;
                 }
                 $this->SetTextColor(0, 0, 0);
                 $this->SetFont('helvetica','B',11);
@@ -422,17 +427,17 @@ class PDF extends FPDF{
                 $this->Ln(7);
                 $this->SetFont('helvetica','',9);
                 $this->SetFillColor(236,236,236);
-                $this->MultiCell(115,7, utf8_decode($forensia->Descripcion_Forensia),0,1,'C',true);
+                $this->MultiCell($espace,7, utf8_decode($forensia->Descripcion_Forensia),0,1,'C',true);
                 $this->Ln(3);
                 if($forensia->Tipo_Dato!='SD'){
                     $this->SetTextColor(255, 0, 0);
                     $this->SetFont('helvetica','B',11);
-                    $this->Cell(130, 7, utf8_decode('RELEVANTE ('.$forensia->Tipo_Dato.'):'));
+                    $this->Cell($espace, 7, utf8_decode('RELEVANTE ('.$forensia->Tipo_Dato.'):'));
                     $this->Ln(7);
                     $this->SetTextColor(0, 0, 0);
                     $this->SetFont('helvetica','',9);
                     $this->SetFillColor(236,236,236);
-                    $this->MultiCell(115,7, utf8_decode($forensia->Dato_Relevante),0,1,'C',true);
+                    $this->MultiCell($espace,7, utf8_decode($forensia->Dato_Relevante),0,1,'C',true);
                     $this->Ln(3);
                 }
                 if($forensia->Foto!=null&&$forensia->Foto!='SD'&&$forensia->Foto!=''){//solo si existe fot realiza esta funcion
@@ -444,6 +449,7 @@ class PDF extends FPDF{
                         $this->Ln($y2+5);
                     } 
                 }
+                $this->proyecta_Especificos($forensia->Id_Forensia_Entrevista);
                 $this->buscahijos($forensia->Id_Forensia_Entrevista ,'DATO',$forensia->clavePDF);
                
             }
@@ -506,7 +512,7 @@ class PDF extends FPDF{
                         $this->Ln(7);
                         $this->SetFont('helvetica','',9);
                         $this->SetFillColor(236,236,236);
-                        $this->MultiCell(190,7, utf8_decode($domicilio->Link_Ubicacion),0,1,'C',true);
+                        $this->MultiCell(190,7, html_entity_decode($domicilio->Link_Ubicacion),0,1,'C',true);
                     }
     
     
@@ -724,7 +730,7 @@ class PDF extends FPDF{
                     $filenameForensia = base_url."public/files/Entrevistas/" . $GLOBALS['PDFId_Persona_Entrevista']  . "/ForensiasRelevantes/".$forensia->Foto;
                     $type = exif_imagetype($filenameForensia);
                     $extension = '';
-
+                    $espace = 115;
                     switch($type){
                         case 1:
                             $extension = 'gif';
@@ -752,6 +758,8 @@ class PDF extends FPDF{
                             unlink($nombre);
                         break;
                     } 
+                }else{
+                    $espace = 190;
                 }
                 $this->SetTextColor(0, 0, 0);
                 $this->SetFont('helvetica','B',11);
@@ -759,17 +767,17 @@ class PDF extends FPDF{
                 $this->Ln(7);
                 $this->SetFont('helvetica','',9);
                 $this->SetFillColor(236,236,236);
-                $this->MultiCell(115,7, utf8_decode($forensia->Descripcion_Forensia),0,1,'C',true);
+                $this->MultiCell($espace,7, utf8_decode($forensia->Descripcion_Forensia),0,1,'C',true);
                 $this->Ln(3);
                 if($forensia->Tipo_Dato!='SD'){
                     $this->SetTextColor(255, 0, 0);
                     $this->SetFont('helvetica','B',11);
-                    $this->Cell(130, 7, utf8_decode('RELEVANTE ('.$forensia->Tipo_Dato.'):'));
+                    $this->Cell($espace, 7, utf8_decode('RELEVANTE ('.$forensia->Tipo_Dato.'):'));
                     $this->Ln(7);
                     $this->SetTextColor(0, 0, 0);
                     $this->SetFont('helvetica','',9);
                     $this->SetFillColor(236,236,236);
-                    $this->MultiCell(115,7, utf8_decode($forensia->Dato_Relevante),0,1,'C',true);
+                    $this->MultiCell($espace,7, utf8_decode($forensia->Dato_Relevante),0,1,'C',true);
                     $this->Ln(3);
                 }
                 if($forensia->Foto!=null&&$forensia->Foto!='SD'&&$forensia->Foto!=''){//solo si existe fot realiza esta funcion
@@ -781,6 +789,7 @@ class PDF extends FPDF{
                         $this->Ln($y2+5);
                     } 
                 }
+                $this->proyecta_Especificos($forensia->Id_Forensia_Entrevista);
                 $this->buscahijos($forensia->Id_Forensia_Entrevista ,'DATO',$forensia->clavePDF);
                 $i++;
             }
@@ -829,7 +838,7 @@ class PDF extends FPDF{
                     $this->Ln(7);
                     $this->SetFont('helvetica','',9);
                     $this->SetFillColor(236,236,236);
-                    $this->MultiCell(190,7, utf8_decode($domicilio->Link_Ubicacion),0,1,'C',true);
+                    $this->MultiCell(190,7, html_entity_decode($domicilio->Link_Ubicacion),0,1,'C',true);
                 }
 
 
@@ -1342,6 +1351,135 @@ class PDF extends FPDF{
 
 
     }
+    function proyecta_Especificos($Id_dato){
+        global $Especificos;
+        $data = $Especificos;
+
+        if($data['Banda']!=[]){
+            foreach ($data['Banda'] as $Banda) {
+                if($Banda->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (BANDA):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Banda->Banda),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+
+        if($data['CURP']!=[]){
+            foreach ($data['CURP'] as $CURP) {
+                if($CURP->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (CURP):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($CURP->CURP.' '.$CURP->Nombre),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+
+        if($data['Nombre']!=[]){
+            foreach ($data['Nombre'] as $Nombre) {
+                if($Nombre->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (NOMBRE):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Nombre->Nombre.' '.$Nombre->Apellido_Paterno.' '.$Nombre->Apellido_Materno),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+
+        if($data['Otro']!=[]){
+            foreach ($data['Otro'] as $Otro) {
+                if($Otro->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (OTRO):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Otro->Otro),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+        if($data['PlacaNiv']!=[]){
+            foreach ($data['PlacaNiv'] as $PlacaNiv) {
+                if($PlacaNiv->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (PLACA/NIV):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode('PLACA: '.$PlacaNiv->Placa.' NIV: '.$PlacaNiv->NIV),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+        if($data['Tarjeta']!=[]){
+            foreach ($data['Tarjeta'] as $Tarjeta) {
+                if($Tarjeta->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (TARJETA):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Tarjeta->Tarjeta.' '.$Tarjeta->Nombre),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+        if($data['Telefono']!=[]){
+            foreach ($data['Telefono'] as $Telefono) {
+                if($Telefono->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (TELEFONO):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Telefono->Telefono.' '.$Telefono->Nombre.' '.$Telefono->Relacion),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+        if($data['Zona']!=[]){
+            foreach ($data['Zona'] as $Zona) {
+                if($Zona->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (ZONA):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Zona->Zona),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
+      
+    }
     function revisaYEvento($y){
         if($y<275&&$y>250){
             $this->AddPage();
@@ -1424,11 +1562,14 @@ if($data['Entrevistas']!=[]||$data['Ubicaciones']!=[]||$data['Forensias']!=[]||$
     $pdf->agregarEntrevistas($data['Entrevistas']);
     $pdf->agregarForensias($data['Forensias']);
     $pdf->agregarUbicaciones($data['Ubicaciones']);
+
+    $pdf->agregarEspecificos($data['Datos_Especificos']);
+
     $pdf->agregarRedes($data['Redes_Sociales']);
     $pdf->AddPage();
     $pdf->DatosRelevantesPersona();
     $pdf->DatosTareas($data['tareas']);
-
+    //print_r($data['Datos_Especificos']) ;
 }
 
 $pdf->Output();

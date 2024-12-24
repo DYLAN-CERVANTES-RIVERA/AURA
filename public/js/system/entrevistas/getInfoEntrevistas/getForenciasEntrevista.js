@@ -86,6 +86,7 @@ const RecargaDatosForensia = async()=>{//Funcion que actualiza la vista de la ta
     }
     await changeTipoUbicacion();
     await changeTipoRedSocial();
+    await changeDatoEspecifico();
 }
 const InsertgetForensia = async({Id_Forensia_Entrevista,Id_Persona_Entrevista,Id_Dato,Tipo_Relacion,Descripcion_Forensia,Tipo_Dato,Dato_Relevante,Capturo,Foto,Img_64})=>{//Funcion que inserta los datos obtenidos en la tabla de forensias
     let pathImagesForencias =base_url_js+'public/files/Entrevistas/'+Id_Persona_Entrevista+'/ForensiasRelevantes/';
@@ -170,12 +171,12 @@ const InsertgetForensia = async({Id_Forensia_Entrevista,Id_Persona_Entrevista,Id
     newRow.insertCell(5).innerHTML = Tipo_Dato;
     newRow.insertCell(6).innerHTML = Dato_Relevante;
     newRow.insertCell(7).innerHTML =Capturo;
-    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add" onclick="editForencia(this)"> 
+    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add mt-1" onclick="editForencia(this)"> 
                                         <i class="material-icons">edit</i>
                                     </button>
-                                    <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
+                                    <button type="button" class="btn btn-ssc mt-1" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
-    //newRow.cells[0].style.display = "none";
-    //newRow.cells[1].style.display = "none";
+    newRow.cells[5].style.display = "none";
+    newRow.cells[6].style.display = "none";
 }

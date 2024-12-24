@@ -893,6 +893,643 @@ class Entrevista{
         $response['sqlEjecutados'] = $sqlEjecutados;
         return  $response;
     }
+    public function UpdateTelefonoTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Tel']=='-1'){
+                       
+                        $sql="INSERT INTO  entrevista_dato_telefono(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Telefono ,
+                            Nombre ,
+                            Relacion,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Telefono']."',
+                            '".$post['Nombre']. "',
+                            '".$post['Relacion']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE TELEFONO ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE entrevista_dato_telefono
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Telefono = '" .$post['Telefono'] ."',
+                                    Nombre = '" .$post['Nombre']."',
+                                    Relacion = '" .$post['Relacion']."'
+                                    WHERE Id_Tel  =".$post['Id_Tel'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE TELEFONO ".$post['Id_Tel'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosTelefono($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_telefono
+        WHERE  entrevista_dato_telefono.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowTelefono($Id_Tel){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_telefono SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Tel  = ".$Id_Tel;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateCURPTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_CURP']=='-1'){
+                       
+                        $sql="INSERT INTO  entrevista_dato_curp(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            CURP ,
+                            Nombre ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['CURP']."',
+                            '".$post['Nombre']. "',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE CURP ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE entrevista_dato_curp
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    CURP = '" .$post['CURP'] ."',
+                                    Nombre = '" .$post['Nombre']."'
+                                    WHERE Id_CURP  =".$post['Id_CURP'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE CURP ".$post['Id_CURP'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosCURP($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_curp
+        WHERE  entrevista_dato_curp.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowCURP($Id_CURP){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_curp SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_CURP  = ".$Id_CURP;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateTarjetaTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Tarjeta']=='-1'){
+                       
+                        $sql="INSERT INTO  entrevista_dato_tarjeta(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Tarjeta ,
+                            Nombre ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Tarjeta']."',
+                            '".$post['Nombre']. "',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE TARJETA ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE entrevista_dato_tarjeta
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Tarjeta = '" .$post['Tarjeta'] ."',
+                                    Nombre = '" .$post['Nombre']."'
+                                    WHERE Id_Tarjeta  =".$post['Id_Tarjeta'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE TARJETA ".$post['Id_Tarjeta'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosTarjeta($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_tarjeta
+        WHERE  entrevista_dato_tarjeta.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowTarjeta($Id_Tarjeta){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_tarjeta SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Tarjeta  = ".$Id_Tarjeta;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateOtroTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Otro']=='-1'){
+                       
+                        $sql="INSERT INTO   entrevista_dato_otro(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Otro ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Otro']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE OTRO TIPO ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE  entrevista_dato_otro
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Otro = '" .$post['Otro'] ."'
+                                    WHERE Id_Otro  =".$post['Id_Otro'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE OTRO TIPO ".$post['Id_Otro'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosOtro($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_otro
+        WHERE  entrevista_dato_otro.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowOtro($Id_Otro){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_otro SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Otro  = ".$Id_Otro;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdatePlacaNivTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_PlacaNiv']=='-1'){
+                       
+                        $sql="INSERT INTO  entrevista_dato_placaniv(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Placa ,
+                            NIV ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Placa']."',
+                            '".$post['NIV']. "',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE PLACA-NIV ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE entrevista_dato_placaniv
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Placa = '" .$post['Placa'] ."',
+                                    NIV = '" .$post['NIV']."'
+                                    WHERE Id_PlacaNiv  =".$post['Id_PlacaNiv'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE PLACA-NIV ".$post['Id_PlacaNiv'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosPlacaNiv($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_placaniv
+        WHERE  entrevista_dato_placaniv.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowPlacaNiv($Id_PlacaNiv){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_placaniv SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_PlacaNiv  = ".$Id_PlacaNiv;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateZonaTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Zona']=='-1'){
+                       
+                        $sql="INSERT INTO   entrevista_dato_zona(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Zona ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Zona']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE ZONA DE OPERACION ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE  entrevista_dato_zona
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Zona = '" .$post['Zona'] ."'
+                                    WHERE Id_Zona  =".$post['Id_Zona'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE ZONA DE OPERACION ".$post['Id_Zona'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosZona($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_zona
+        WHERE  entrevista_dato_zona.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowZona($Id_Zona){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_zona SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Zona  = ".$Id_Zona;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateBandaTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Banda']=='-1'){
+                       
+                        $sql="INSERT INTO   entrevista_dato_banda(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Banda ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Banda']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE BANDA ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE  entrevista_dato_banda
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Banda = '" .$post['Banda'] ."'
+                                    WHERE Id_Banda  =".$post['Id_Banda'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE BANDA DE OPERACION ".$post['Id_Banda'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosBanda($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_banda
+        WHERE  entrevista_dato_banda.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowBanda($Id_Banda){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_banda SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Banda  = ".$Id_Banda;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
+    public function UpdateNombreTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Nombre']=='-1'){
+                       
+                        $sql="INSERT INTO   entrevista_dato_nombre(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Nombre ,
+                            Apellido_Paterno ,
+                            Apellido_Materno ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Nombre']."',
+                            '".$post['Apellido_Paterno']."',
+                            '".$post['Apellido_Materno']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE NOMBRE ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE  entrevista_dato_nombre
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Nombre = '" .$post['Nombre'] ."',
+                                    Apellido_Paterno = '" .$post['Apellido_Paterno'] ."',
+                                    Apellido_Materno = '" .$post['Apellido_Materno'] ."'
+                                    WHERE Id_Nombre  =".$post['Id_Nombre'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE NOMBRE DE OPERACION ".$post['Id_Nombre'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosNombre($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_nombre
+        WHERE  entrevista_dato_nombre.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowNombre($Id_Nombre){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_nombre SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Nombre  = ".$Id_Nombre;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
     /*-----------------------FUNCION PARA INGRESAR EL MOVIMIENTO AL HISTORIAL------------------------- */
     public function historial($user, $ip, $movimiento, $descripcion){// para ecribir los movimientos hechos en el gestor 
         $band = true;
@@ -942,6 +1579,60 @@ class Entrevista{
         WHERE  forensias_detenido.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
         $this->db->query($sql);
         return $this->db->registers();
+    }
+    public function getDatos_Especificos($Id_Persona_Entrevista){
+        $data=[];
+        
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_banda
+        WHERE  entrevista_dato_banda.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Banda"] = $this->db->registers();
+        
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_curp
+        WHERE  entrevista_dato_curp.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["CURP"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_nombre
+        WHERE  entrevista_dato_nombre.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Nombre"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_otro
+        WHERE  entrevista_dato_otro.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Otro"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_placaniv
+        WHERE  entrevista_dato_placaniv.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["PlacaNiv"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_tarjeta
+        WHERE  entrevista_dato_tarjeta.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Tarjeta"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_telefono
+        WHERE  entrevista_dato_telefono.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Telefono"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_zona
+        WHERE  entrevista_dato_zona.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Zona"] = $this->db->registers();
+
+        return $data;
+
     }
     public function getForensiasSelect($Id_Persona_Entrevista){
         $sql = "SELECT 	*

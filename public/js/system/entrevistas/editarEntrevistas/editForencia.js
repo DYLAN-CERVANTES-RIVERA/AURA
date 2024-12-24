@@ -130,9 +130,11 @@ const onFormForenciasubmit=async()=>{
         if (selectedRowForencias === null){
             InsertForencias();//INSERTA NUEVA FILA EN LA TABLA DE FORENSIAS
             ResetFormForencias();//LIMPIA LA VISTA 
+            await Guardar_Datos();
         }else{
             UpdateRowForencias();//ACTUALIZA LA FILA SELECCIONADA EN LA TABLA DE FORENSIAS
             ResetFormForencias();//LIMPIA LA VISTA
+            await Guardar_Datos();
         }
     }
 }
@@ -212,15 +214,15 @@ const InsertForencias= async()=>{//FUNCION QUE INSERTA LOS DATOS EN LA TABLA DE 
     newRow.insertCell(5).innerHTML = document.getElementById('tipo_dato').value;
     newRow.insertCell(6).innerHTML = (document.getElementById('dato_relevante').value.trim()=='')?'SD':document.getElementById('dato_relevante').value.toUpperCase();
     newRow.insertCell(7).innerHTML = document.getElementById('captura_dato_forencias').value.toUpperCase();
-    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add" onclick="editForencia(this)"> 
+    newRow.insertCell(8).innerHTML =`<button type="button" class="btn btn-add mt-1" onclick="editForencia(this)"> 
                                         <i class="material-icons">edit</i>
                                     </button>
-                                    <button type="button" class="btn btn-ssc" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
+                                    <button type="button" class="btn btn-ssc mt-1" value="-" onclick="deleteRowForencia(this,ForenciasTable)">
                                         <i class="material-icons">delete</i>
                                     </button>`;
 
-    //newRow.cells[0].style.display = "none";
-    //newRow.cells[1].style.display = "none";
+    newRow.cells[5].style.display = "none";
+    newRow.cells[6].style.display = "none";
 }
 const ResetFormForencias= async()=>{//FUNCION QUE LIMPIA LA VISTA DE FORENSIA
     document.getElementById('Id_Forencia').value='SD';
@@ -403,7 +405,7 @@ function uploadFileForencia(event, type) {//Funcion para actualizar las imagenes
         }
     }
 }
-function createElementFotoForencia(src, index, type, view) {//FUNCION PARA LA VISUALIZACION DE IMAGENES EN LA TABLA DE FORENSIAS
+async function createElementFotoForencia(src, index, type, view) {//FUNCION PARA LA VISUALIZACION DE IMAGENES EN LA TABLA DE FORENSIAS
     const div = document.getElementById('imageContentForencia_row' + index);
     if (view === undefined) {
         div.innerHTML = `<div class="d-flex justify-content-end">
@@ -422,29 +424,32 @@ function createElementFotoForencia(src, index, type, view) {//FUNCION PARA LA VI
                             <input type="hidden" class="${index} ${type}"/>
                         </div>`;
     }
+    await Guardar_Datos();
 }
-function deleteImageFotoForencia(index) {//FUNCION QUE ELIMINA LA VISUALIZACION Y EL CONTENIDO DE LAS IMAGENES
+async function deleteImageFotoForencia(index) {//FUNCION QUE ELIMINA LA VISUALIZACION Y EL CONTENIDO DE LAS IMAGENES
     const div = document.getElementById('imageContentForencia_row' + index);
     document.getElementById('fileFotoForencia_row' + index).value = '';
     div.innerHTML = '';
+    await Guardar_Datos();
 }
 /*--------------------------FUNCIONES PARA EL ALMACENAMIENTO DE LOS DATOS CONTENIDOS EN EL FRAME  --------------- */
 var msg_forenciasError = document.getElementById('msg_principales_forencias');
 var datosForencias = document.getElementById('datos_forencias_entrevistas')
-document.getElementById('btn_forencias_entrevistas').addEventListener('click', async function(e) {
+
+const Guardar_Datos = async()=> {
     let myFormDataForencias = new FormData(datosForencias)//RECUERDA SIEMPRE ENVIAR LOS DATOS DEL FRAME Y AUN MAS IMPORTANTE POR LAS IMAGENES LAS DETECTE EN EL POST
     var Forencias =  await readTableForencias();//LEEMOS EL CONTENIDO DE LA TABLA DE Forencias 
     myFormDataForencias.append('Forensiastable', JSON.stringify(Forencias)); //CODIFICAMOS LOS DATOS PARA QUE EL CONTROLADOR LOS OCUPE 
     myFormDataForencias.append('id_persona_entrevista',document.getElementById('id_persona_entrevista').value)
     
-    let button = document.getElementById('btn_forencias_entrevistas')
+    /*let button = document.getElementById('btn_forencias_entrevistas')
     button.innerHTML = `
         Guardando
         <div class="spinner-grow spinner-grow-sm" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     `;
-    button.classList.add('disabled-link');
+    button.classList.add('disabled-link');*/
     $('#ModalCenterPrincipalforencias').modal('show');
     fetch(base_url_js + 'Entrevistas/UpdateForensiasFetch', {//realiza el fetch para actualizar los datos
         method: 'POST',
@@ -454,9 +459,12 @@ document.getElementById('btn_forencias_entrevistas').addEventListener('click', a
     .then(res => res.json())
 
     .then(data => {//obtine  respuesta del modelo
-        button.innerHTML = `Guardar`;
-        button.classList.remove('disabled-link');//se vuelve activar la funcion del boton 
-        $('#ModalCenterPrincipalforencias').modal('hide');//se quita la imagen 
+        /*button.innerHTML = `Guardar`;
+        button.classList.remove('disabled-link');//se vuelve activar la funcion del boton */
+        setTimeout(function() {
+            $('#ModalCenterPrincipalforencias').modal('hide');
+        }, 500);
+        
         if (!data.status) {
             let messageError;
             if ('error_message' in data) {
@@ -485,10 +493,12 @@ document.getElementById('btn_forencias_entrevistas').addEventListener('click', a
                 behavior: 'smooth'
             });
         } else {//si todo salio bien
-            alertaForencia()//Si todo salio bien actualiza los datos arroja un mensaje satisfactorio
+            alertaForencia()//Si todo salio bien actualiza los datos arroja un mensaje satisfactorio         
         }
     })
-})
+
+}
+
 const alertaForencia = async()=>{/// todo bien en la edicion
     
     msg_forenciasError.innerHTML = `<div class="alert alert-success text-center" role="success">Datos de Actualizados correctamente.
@@ -593,6 +603,6 @@ const readTableForencias = async() => {//lee los datos de la tabla personas y ge
             });
         }
     }
-    console.log(objetos)
+    //console.log(objetos)
     return objetos;
 }

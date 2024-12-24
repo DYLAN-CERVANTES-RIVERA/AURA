@@ -621,6 +621,7 @@ class Entrevistas extends Controller
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/editUbicaciones.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/ubicacion_mapbox.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/editSocial.js"></script>'.
+                            '<script src="'.base_url.'public/js/system/entrevistas/editarEntrevistas/editDatos.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getStatusTareas.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getUbicacionesEntrevista.js"></script>'.
                             '<script src="'.base_url.'public/js/system/entrevistas/getInfoEntrevistas/getEntrevistaDetenido.js"></script>'.
@@ -1386,6 +1387,7 @@ class Entrevistas extends Controller
                     'Principales'=> $this->Entrevista->getPrincipales($Id_Persona_Entrevista),   
                     'Entrevistas'=> $this->Entrevista->getEntrevistas($Id_Persona_Entrevista),
                     'Forensias'=> $this->Entrevista->getForensias($Id_Persona_Entrevista),
+                    'Datos_Especificos'=> $this->Entrevista->getDatos_Especificos($Id_Persona_Entrevista),
                     'Ubicaciones'=> $this->Entrevista->getUbicaciones($Id_Persona_Entrevista),
                     'Redes_Sociales'=> $this->Entrevista->getRedesSociales($Id_Persona_Entrevista),
                     'tareas' => $dataTareas
@@ -1433,6 +1435,350 @@ class Entrevistas extends Controller
             $Ap_materno = $_POST['Ap_materno'];
             $fecha = $_POST['fecha'];
             $data = $this->Entrevista->ConsultaPersonaE($Nombre, $Ap_paterno, $Ap_materno,$fecha);
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateTelefonoTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateTelefonoTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosTelefono(){//FUNCION QUE OBTIENE LA INFORMACION DE LAS FORENCIAS DE LAS PERSONAS DEL SEGUIMIENTO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosTelefono($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowTelefono(){//FUNCION PARA ELIMINAR UNA PERSONA DE LA TABLA CON ID EN BASE DE DATOS
+        if (isset($_POST['Id_Tel']) ) {
+            $Id_Tel = $_POST['Id_Tel'];
+            $data = $this->Entrevista->deleteRowTelefono($Id_Tel);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE TELEFONO: '.$Id_Tel.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateCURPTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateCURPTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosCURP(){//FUNCION QUE OBTIENE LA INFORMACION DE LAS FORENCIAS DE LAS PERSONAS DEL SEGUIMIENTO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosCURP($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowCURP(){//FUNCION PARA ELIMINAR UNA PERSONA DE LA TABLA CON ID EN BASE DE DATOS
+        if (isset($_POST['Id_CURP']) ) {
+            $Id_CURP = $_POST['Id_CURP'];
+            $data = $this->Entrevista->deleteRowCURP($Id_CURP);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE CURP: '.$Id_CURP.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateTarjetaTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateTarjetaTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosTarjeta(){//FUNCION QUE OBTIENE LA INFORMACION DE LAS TARJETAS EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosTarjeta($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowTarjeta(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Tarjeta']) ) {
+            $Id_Tarjeta = $_POST['Id_Tarjeta'];
+            $data = $this->Entrevista->deleteRowTarjeta($Id_Tarjeta);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE TARJETA: '.$Id_Tarjeta.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateOtroTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateOtroTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosOtro(){//FUNCION QUE OBTIENE LA INFORMACION DE OTRO TIPO EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosOtro($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowOtro(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Otro']) ) {
+            $Id_Otro = $_POST['Id_Otro'];
+            $data = $this->Entrevista->deleteRowOtro($Id_Otro);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE OTRO TIPO: '.$Id_Otro.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdatePlacaNivTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdatePlacaNivTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosPlacaNiv(){//FUNCION QUE OBTIENE LA INFORMACION DE PLACA-NIV EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosPlacaNiv($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowPlacaNiv(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_PlacaNiv']) ) {
+            $Id_PlacaNiv = $_POST['Id_PlacaNiv'];
+            $data = $this->Entrevista->deleteRowPlacaNiv($Id_PlacaNiv);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE PLACA-NIV: '.$Id_PlacaNiv.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateZonaTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateZonaTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosZona(){//FUNCION QUE OBTIENE LA INFORMACION DE PLACA-NIV EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosZona($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowZona(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Zona']) ) {
+            $Id_Zona = $_POST['Id_Zona'];
+            $data = $this->Entrevista->deleteRowZona($Id_Zona);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE ZONA DE OPERACION: '.$Id_Zona.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateBandaTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateBandaTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosBanda(){//FUNCION QUE OBTIENE LA INFORMACION DE PLACA-NIV EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosBanda($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowBanda(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Banda']) ) {
+            $Id_Banda = $_POST['Id_Banda'];
+            $data = $this->Entrevista->deleteRowBanda($Id_Banda);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE BANDA RELACIONADA: '.$Id_Banda.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
+    public function UpdateNombreTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateNombreTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosNombre(){//FUNCION QUE OBTIENE LA INFORMACION DE PLACA-NIV EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosNombre($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowNombre(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Nombre']) ) {
+            $Id_Nombre = $_POST['Id_Nombre'];
+            $data = $this->Entrevista->deleteRowNombre($Id_Nombre);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE NOMBRE RELACIONADO: '.$Id_Nombre.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+
             echo json_encode($data);
         } else {
             header("Location: " . base_url . "Entrevistas");

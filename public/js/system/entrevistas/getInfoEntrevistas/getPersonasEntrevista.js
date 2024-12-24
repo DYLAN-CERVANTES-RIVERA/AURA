@@ -106,6 +106,7 @@ async function  RecargaSelects() {//REFRESCA EL SELECTOR DE TODAS LAS TABS
     await changeTipoDato();
     await changeTipoUbicacion();
     await changeTipoRedSocial();
+    await changeDatoEspecifico();
 }
 const changeTipoDato = async()=>{//FUNCION QUE CAMBIA EL TIPO DE DATO AL QUE SE LE ASIGNARA EL DOMICILIO
     let radioTipo = document.getElementsByName('tipo_dato_dato');
