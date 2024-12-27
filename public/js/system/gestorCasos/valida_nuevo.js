@@ -578,7 +578,7 @@ function changeIdentificacionI(){
 }
 const ValidaCoordY = async (valor)  =>{/// Para la coordenada Y
     let bandera =""
-    if(valor.length>0){
+    if(valor.length>0 && valor<21){
         let contador=0;
         for (let i = 0; i < valor.length; i++) {
             if(valor[i]=='.'){
@@ -593,7 +593,11 @@ const ValidaCoordY = async (valor)  =>{/// Para la coordenada Y
         }
         if(valor[2]!='.'){bandera = bandera + ' Error en el punto decimal ';}
     }else{
-         bandera = 'Coordenada Y requerida'
+        if(valor>21){
+            bandera = 'Coordenada Y Invalida'
+        }else{
+            bandera = 'Coordenada Y requerida'
+        }
     }
 
     return bandera.trim();
