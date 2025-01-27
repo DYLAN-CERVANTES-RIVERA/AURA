@@ -351,6 +351,42 @@ const hideTablaPanel = async() =>{//CAMBIA LA TABLA QUE ES DE ACUERDO AL SELECT
                 </div>`;
                 RecargaDatosNombre();
         break;
+
+        case '9':
+            document.getElementById('panelTabla').innerHTML=`
+                <div class="form-row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="AliasTab" class="subtitulo-rosa">Alias</label>
+                        <input type="text" class="form-control" id="AliasTab" placeholder="Ingrese Alias">
+                        <span class="span_error" id="AliasTab_error"></span>
+                    </div>
+                    <div class="form-group col-md-2 mt-3">
+                        <input type="text" class="mi_hide" id="Id_Alias" value="-1">
+                        <br>
+                        <button type="submit" class="btn btn-ssc" id="BotonAliasTab">Guardar Dato</button>
+                    </div>
+                </div>
+                <div class="form-row row mt-3"> 
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="Alias_Table" style="text-align:center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Id Alias</th>
+                                        <th scope="col">Id Dato relacionado</th>
+                                        <th scope="col">Alias</th>
+                                        <th scope="col">Capturo</th>
+                                        <th scope="col">Editar/Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Alias_Count">
+                                </tbody>
+                            </table>
+                        </div><br>
+                    </div>
+                </div>`;
+                RecargaDatosAlias();
+        break;
         default:
             document.getElementById('panelTabla').innerHTML=``
         break;
@@ -403,6 +439,7 @@ document.body.addEventListener("input", function(event) {
             case "NivTab":
             case "ZonaTab":
             case "BandaTab":
+            case "AliasTab":
                 filtrarAlfaNumericos(event);break;
         }
     }
@@ -422,6 +459,7 @@ document.body.addEventListener("click", function(event) {
             case "BotonZonaTab":GuardaZona();break;
             case "BotonBandaTab":GuardaBanda();break;
             case "BotonNombreTab":GuardaNombre();break;
+            case "BotonAliasTab":GuardaAlias();break;
         }
     }
 });
@@ -1691,6 +1729,161 @@ const deleteRowNombre = async(obj)=>{//FUNCION QUE ELIMINA LOS DATOS DE LAS TABL
                     buttonsStyling: false
                 })
                 RecargaDatosNombre();
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Funciones tabla de Alias
+const GuardaAlias = async()=> {
+    let band = [];
+    let i = 0;
+
+    band[i++] = document.getElementById('AliasTab_error').innerText = (document.getElementById('AliasTab').value.trim()!='')?'':'Campo Requerido';
+    band[i++] = document.getElementById('Dato_select_especifico_error').innerText = (document.getElementById('Dato_select_especifico').value!='-1')?'':'Campo Requerido';
+
+    let success = true
+    band.forEach(element => {//recorre todas la banderas si todas son vacias procede a guardar los datos ya que no existe ninguna restriccion 
+        success &= (element == '') ? true : false
+    });
+
+    if(success){
+        let myFormData = new FormData()
+        myFormData.append('Id_Persona_Entrevista',document.getElementById('id_persona_entrevista').value);
+        myFormData.append('Id_Dato_Entrevista',document.getElementById("Dato_select_especifico").value);
+        myFormData.append('Id_Alias',document.getElementById("Id_Alias").value);
+        myFormData.append('Alias',document.getElementById("AliasTab").value.toUpperCase());
+        myFormData.append('Capturo',document.getElementById('captura_dato_forencias').value.toUpperCase());
+        //MANDAMOS TAMBIEN EL ID PROPIO SI ES -1 ES INSERT SI NO UPDATE
+
+        /*for (var pair of myFormData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }*/
+        //MOSTRAMOS MODAL , GUARDAMOS Y QUITAMOS MODAL
+        $('#ModalCenterPrincipalforencias').modal('show');
+
+        fetch(base_url_js + 'Entrevistas/UpdateAliasTab', {//realiza el fetch para actualizar los datos
+            method: 'POST',
+            body: myFormData
+        })
+    
+        .then(res => res.json())
+    
+        .then(data => {//obtine  respuesta del modelo
+            setTimeout(function() {
+                $('#ModalCenterPrincipalforencias').modal('hide');
+            }, 500);
+
+            if (!data.status) {
+                document.getElementById('msg_datos').innerHTML =`<div class="alert alert-danger text-center" role="alert">Sucedio un error en el servidor: ${data.error_message} ${data.error_sql}</div>`;
+            } else {//si todo salio bien
+                document.getElementById('msg_datos').innerHTML =`<div class="alert alert-success text-center" role="success">Datos de Alias Actualizados Correctamente.
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>`;
+                document.getElementById("Id_Alias").value = "-1";
+                document.getElementById("Dato_select_especifico").value = "-1"; 
+                document.getElementById("AliasTab").value = "";
+                //REFRESH CUANDO TODO HALLA QUEDADO
+                RecargaDatosAlias();
+            }
+        })   
+    }
+}
+const RecargaDatosAlias = async()=>{
+    let table = document.getElementById('Alias_Table');
+    let aux = document.getElementById('Alias_Count').rows.length;
+    for(let i = 1; i < aux+1; i++){
+        table.deleteRow(1);
+    }
+    datos = await getDatosAlias();
+    for await(let dato of datos){
+        let formData = {
+            Id_Alias: dato.Id_Alias,
+            Id_Dato_Entrevista : dato.Id_Dato_Entrevista,
+            Alias: dato.Alias,
+            Capturo : dato.Capturo 
+        }
+        await InsertDatosAlias(formData);//Inserta todos las forensias de las personas del seguimiento
+    }
+}
+const getDatosAlias = async()=>{
+    let myFormData = new FormData()
+    myFormData.append('Id_Persona_Entrevista',document.getElementById('id_persona_entrevista').value);
+    try {
+        const response = await fetch(base_url_js + 'Entrevistas/getDatosAlias', {
+            method: 'POST',
+            body: myFormData
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const InsertDatosAlias = async({Id_Alias, Id_Dato_Entrevista, Alias, Capturo})=>{
+    let table = document.getElementById('Alias_Table').getElementsByTagName('tbody')[0];
+    let newRow = table.insertRow(table.length); 
+    newRow.insertCell(0).innerHTML = Id_Alias
+    newRow.insertCell(1).innerHTML = Id_Dato_Entrevista;
+    newRow.insertCell(2).innerHTML = Alias;
+    newRow.insertCell(3).innerHTML = Capturo;
+    newRow.insertCell(4).innerHTML =`<button type="button" class="btn btn-add mt-1" onclick="editAlias(this)"> 
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button type="button" class="btn btn-ssc mt-1" value="-" onclick="deleteRowAlias(this)">
+                                        <i class="material-icons">delete</i>
+                                    </button>`;
+}
+
+const editAlias = async (obj)=>{
+    document.getElementById('msg_datos').innerHTML =`<div class="alert  alert-primary text-center" role="alert">Editando Dato.
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                                                <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>`;
+    let selectedRow = obj.parentElement.parentElement;
+    document.getElementById("Id_Alias").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("Dato_select_especifico").value = selectedRow.cells[1].innerHTML;  
+    document.getElementById("AliasTab").value = selectedRow.cells[2].innerHTML;
+}
+
+const deleteRowAlias = async(obj)=>{//FUNCION QUE ELIMINA LOS DATOS DE LAS TABLAS DE FORENSIA    
+    try {
+        if (confirm('¿Desea eliminar este elemento?')) {
+            let selectedRow = obj.parentElement.parentElement;
+            let myFormData = new FormData()
+
+            myFormData.append('Id_Alias',selectedRow.cells[0].innerHTML);
+            const response = await fetch(base_url_js + 'Entrevistas/deleteRowAlias', {
+                method: 'POST',
+                body: myFormData
+            });
+            const data = await response.json();
+            if (!data.status) {
+                Swal.fire({
+                    title: "ERROR AL ELIMINAR DATO DE ALIAS",
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                    },
+                    buttonsStyling: false
+                })
+            } else {//si todo salio bien
+                Swal.fire({
+                    title: "DATO DE ALIAS ELIMINADO",
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'custom-confirm-btn'  // Clase CSS personalizada para el botón de confirmación
+                    },
+                    buttonsStyling: false
+                })
+                RecargaDatosAlias();
             }
         }
     } catch (error) {

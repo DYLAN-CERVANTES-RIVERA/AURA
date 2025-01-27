@@ -1785,5 +1785,47 @@ class Entrevistas extends Controller
             exit();
         }
     }
+    public function UpdateAliasTab(){
+        //comprobar los permisos para dejar pasar al módulo
+        if(($_SESSION['userdataSIC']->Modo_Admin != 1 &&  $_SESSION['userdataSIC']->Entrevistas[1] != 1) ){
+            $data['status'] = false;
+            $data['error_message'] = 'Render Index';
+            echo json_encode($data);
+        }
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $success = $this->Entrevista->UpdateAliasTab($_POST);
+            $data = $success ;
+            echo json_encode($data);
+        }else{
+            $data['status'] = false;
+            $data['error_message'] = 'No se enviaron los datos';
+            echo json_encode($data);
+        }     
+    }
+    public function getDatosAlias(){//FUNCION QUE OBTIENE LA INFORMACION DE PLACA-NIV EN DATOS DEL DETENIDO
+        if(isset($_POST['Id_Persona_Entrevista'])){
+            $Id_Persona_Entrevista=$_POST['Id_Persona_Entrevista'];
+            $data = $this->Entrevista->getDatosAlias($Id_Persona_Entrevista);
+            echo json_encode($data);
+        }
+    }
+    public function deleteRowAlias(){//FUNCION PARA ELIMINAR UNA TARJETA EN DATOS DEL DETENIDO
+        if (isset($_POST['Id_Alias']) ) {
+            $Id_Alias = $_POST['Id_Alias'];
+            $data = $this->Entrevista->deleteRowAlias($Id_Alias);
+            if ($data['status']) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $quitar = array("'", "\"");
+                $auxsql =str_replace($quitar, "-", $data['sqlEjecutados']);
+                $descripcion = 'ELIMINO DATO DE ALIAS RELACIONADO: '.$Id_Alias.' EL USUARIO '.$_SESSION['userdataSIC']->User_Name.' '.$auxsql;
+                $this->Entrevista->historial($user, $ip, 34, $descripcion);//Guarda en el historial el movimiento
+            } 
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "Entrevistas");
+            exit();
+        }
+    }
 }
 ?>

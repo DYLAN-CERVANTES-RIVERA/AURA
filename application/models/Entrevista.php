@@ -1530,6 +1530,83 @@ class Entrevista{
         $response['sqlEjecutados'] = $sqlEjecutados;
         return  $response;
     }
+    public function UpdateAliasTab($post){
+        $response['status'] = true;
+        $response['sqlEjecutados'] = "";
+        $sqlEjecutados="";
+        try {
+            $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            if (isset($post['Id_Persona_Entrevista'])) {
+                    if($post['Id_Alias']=='-1'){
+                       
+                        $sql="INSERT INTO   entrevista_dato_alias(
+                            Id_Persona_Entrevista ,
+                            Id_Dato_Entrevista ,
+                            Alias ,
+                            Capturo
+                        )VALUES(
+                            '".$post['Id_Persona_Entrevista']."',
+                            '".$post['Id_Dato_Entrevista'] ."',
+                            '".$post['Alias']."',
+                            '".$post['Capturo']."'
+                        )";
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        $this->db->query("SELECT LAST_INSERT_ID() as Id_Registro"); 
+                        $Id_Registro = $this->db->register()->Id_Registro;
+                        $sqlEjecutados.=" SE INSERTO DATO DE ALIAS ".$Id_Registro;
+
+                    }else{
+                            $sql=" UPDATE  entrevista_dato_alias
+                                SET 
+                                    Id_Dato_Entrevista = '" .$post['Id_Dato_Entrevista']."',
+                                    Alias = '" .$post['Alias'] ."'
+                                    WHERE Id_Alias  =".$post['Id_Alias'];
+                        $this->db->query($sql);
+                        $this->db->execute();
+                        
+                        if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+                            $sqlEjecutados.=" SE ACTUALIZO DATO DE ALIAS DE OPERACION ".$post['Id_Alias'];
+                        }
+                    }
+                }
+            
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return $response;
+    }
+    public function getDatosAlias($Id_Persona_Entrevista){
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_alias
+        WHERE  entrevista_dato_alias.Id_Persona_Entrevista = " . $Id_Persona_Entrevista ." AND Id_Dato_Entrevista IS NOT NULL";
+        $this->db->query($sql);
+        return $this->db->registers();
+    }
+    public function deleteRowAlias($Id_Alias){
+        $response['status']=true;
+        try {
+            $this->db->beginTransaction(); 
+            $sql = "UPDATE entrevista_dato_alias SET Id_Persona_Entrevista = NULL, Id_Dato_Entrevista = NULL WHERE Id_Alias  = ".$Id_Alias;
+            $this->db->query($sql);
+            $this->db->execute();
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+            $sqlEjecutados=$sql;
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
     /*-----------------------FUNCION PARA INGRESAR EL MOVIMIENTO AL HISTORIAL------------------------- */
     public function historial($user, $ip, $movimiento, $descripcion){// para ecribir los movimientos hechos en el gestor 
         $band = true;
@@ -1630,6 +1707,12 @@ class Entrevista{
         WHERE  entrevista_dato_zona.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
         $this->db->query($sql);
         $data["Zona"] = $this->db->registers();
+
+        $sql = "SELECT 	*
+        FROM  entrevista_dato_alias
+        WHERE  entrevista_dato_alias.Id_Persona_Entrevista = " . $Id_Persona_Entrevista;
+        $this->db->query($sql);
+        $data["Alias"] = $this->db->registers();
 
         return $data;
 

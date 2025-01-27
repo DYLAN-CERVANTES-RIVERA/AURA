@@ -128,6 +128,7 @@
                     <option value="6">ZONA DE OPERACION</option>
                     <option value="7">BANDA ASOCIADA</option>
                     <option value="8">NOMBRE</option>
+                    <option value="9">ALIAS</option>
                 </select>
                 <div id=panelTabla></div>
             </div>

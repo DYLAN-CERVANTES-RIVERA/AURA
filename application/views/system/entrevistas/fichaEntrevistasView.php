@@ -1478,6 +1478,22 @@ class PDF extends FPDF{
                 }
             }
         }
+
+        if($data['Alias']!=[]){
+            foreach ($data['Alias'] as $Alias) {
+                if($Alias->Id_Dato_Entrevista==$Id_dato){
+                    $this->SetTextColor(255, 0, 0);
+                    $this->SetFont('helvetica','B',11);
+                    $this->Cell(190, 7, utf8_decode('RELEVANTE (ALIAS):'));
+                    $this->Ln(7);
+                    $this->SetTextColor(0, 0, 0);
+                    $this->SetFont('helvetica','',9);
+                    $this->SetFillColor(236,236,236);
+                    $this->MultiCell(190,7, utf8_decode($Alias->Alias),0,1,'C',true);
+                    $this->Ln(3);
+                }
+            }
+        }
       
     }
     function revisaYEvento($y){
