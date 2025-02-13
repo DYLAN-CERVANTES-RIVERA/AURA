@@ -175,7 +175,7 @@
         </div>
 
         <?php $clase = ( $_SESSION['userdataSIC']->Modo_Admin == 1 ) ? '' : 'mi_hide';?>  
-        <div class="row mt-2 <?=$clase?>">
+        <div class="row mt-2 mi_hide">
             <label class="subtitulo-rosa">Tipo Red de Vínculo:</label>
             <div class="col-3">
                 <div class="form-check">

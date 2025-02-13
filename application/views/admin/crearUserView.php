@@ -260,7 +260,7 @@
 									</div>
 						  		</td>
 								<td>
-						  			<div class="form-group form-check col-12">
+						  			<div class="form-group form-check col-12 mi_hide">
 									    <input type="checkbox" class="form-check-input checkPermisos" value="1" id="Red_Delete" name="Red_Delete" <?= (isset($_POST['crearUser']) && isset($_POST['Red_Delete']) )?"checked":"";?>>
 									    <label class="form-check-label" for="Red_Delete">Usuario Alto Impacto</label>
 									</div>

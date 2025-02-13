@@ -234,7 +234,7 @@ class Seguimiento{
             $nombre_grupo=$this->remplazoCadena($post['nombre_grupo']);
             $modus_operandi=$this->remplazoCadena($post['MO']);
             $observaciones=$this->remplazoCadena($post['observaciones']);
-            $alto_impacto=($_SESSION['userdataSIC']->Red[0] == 1)? 1 : 0;
+            $alto_impacto = 0 ;//($_SESSION['userdataSIC']->Red[0] == 1)? 1 : 0;
             $sql = "INSERT
                     INTO seguimiento_gabinete(
                         Elemento_Captura,
