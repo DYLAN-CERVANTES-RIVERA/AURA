@@ -60,6 +60,9 @@ const validateImage = (image) => {//Valida la nueva imagen cargada con una exten
     if (!allowedExtensions.exec(image.value)) {
         return false;
     }
+    if(size > 8 * 1024 * 1024) { // 8 MB en bytes
+        return false;
+    }
     return true;
 }
 

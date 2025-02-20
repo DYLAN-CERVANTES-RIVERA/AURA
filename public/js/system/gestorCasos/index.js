@@ -855,6 +855,9 @@ const validateImage = (image) => {//FUNCION QUE VALIDA LA EXTENSION DEL ARCHIVO 
     if (!allowedExtensions.exec(image.value)) {
         return false;
     }
+    if(size > 8 * 1024 * 1024) { // 8 MB en bytes
+        return false;
+    }
     return true;
 }
 
