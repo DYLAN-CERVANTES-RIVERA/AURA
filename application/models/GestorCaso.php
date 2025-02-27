@@ -16,6 +16,11 @@ class GestorCaso{
         try{
 
             $this->db->beginTransaction();  //Se inicializa la transaccion para tener un punto de retorno en caso de fallo
+            //CAMBIO POR LOS DE IO QUE JUEGAN CON LA FECHA
+            $sql="SELECT DATE_FORMAT(NOW(), \"%Y-%m-%d %H:%i\") as Timebase;";
+            $this->db->query($sql); //Se recupera la informacion de la fecha ya
+            $Timebase = $this->db->register()->Timebase;
+
             $sql = "INSERT
                     INTO evento(
                         Elemento_Captura,
@@ -50,7 +55,7 @@ class GestorCaso{
                         '".$post['captura_principales']."',
                         '".$post['911_principales']."',
                         '".$post['fecha_evento_principales'].' '.$post['hora_evento_principales']."',
-                        '".$post['fechahora_captura_principales']."',
+                        '".$Timebase."',
                         '".$post['cdi']."',
                         '".$post['zona']."',
                         '".$post['vector']."',
