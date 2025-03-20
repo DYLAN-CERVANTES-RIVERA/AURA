@@ -478,9 +478,9 @@ class Seguimiento{
                             Img_64
                         )VALUES(
                             ".$Id_Seguimiento.",
-                            '".$Persona->row->Nombre."',
-                            '".$Persona->row->Ap_Paterno."',
-                            '".$Persona->row->Ap_Materno."',
+                            '".trim($Persona->row->Nombre)."',
+                            '".trim($Persona->row->Ap_Paterno)."',
+                            '".trim($Persona->row->Ap_Materno)."',
                             '".$Persona->row->Genero."',
                             '".$Persona->row->Edad."',
                             '".$Persona->row->Fecha_Nacimiento."',
@@ -514,9 +514,9 @@ class Seguimiento{
                             $imagebase64='SD';
                         }
                         $sql=" UPDATE persona_gabinete
-                                SET Nombre = '" . $Persona->row->Nombre  ."',
-                                    Ap_Paterno = '" . $Persona->row->Ap_Paterno ."',
-                                    Ap_Materno = '" . $Persona->row->Ap_Materno ."',
+                                SET Nombre = '" . trim($Persona->row->Nombre)  ."',
+                                    Ap_Paterno = '" . trim($Persona->row->Ap_Paterno) ."',
+                                    Ap_Materno = '" . trim($Persona->row->Ap_Materno) ."',
                                     Genero = '" . $Persona->row->Genero ."',
                                     Edad = '" . $Persona->row->Edad ."',
                                     Fecha_Nacimiento = '" . $Persona->row->Fecha_Nacimiento ."',
