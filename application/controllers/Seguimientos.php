@@ -358,7 +358,7 @@ class Seguimientos extends Controller
                                                         <i class="material-icons">edit</i>
                                                     </a>';
                         } else {
-                            $infoTable['body'] .= '<td> class="d-flex"';
+                            $infoTable['body'] .= '<td class="d-flex">';
                         }
                         if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[2] == 1) { //validacion de tabs validados completamente y/o permisos de validacion o modo admin
                            
