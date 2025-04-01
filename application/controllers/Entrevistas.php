@@ -339,12 +339,12 @@ class Entrevistas extends Controller
                                     mb_strtoupper($row->Capturo)."\",\"".
                                     mb_strtoupper($row->Ubicacion_detencion)."\",\"".
                                     mb_strtoupper($row->Banda)."\",\"".
-                                    $this->tratamiento( mb_strtoupper($row->Entrevistas_concat))."\",\"".
-                                    mb_strtoupper($row->Alias_Referidos)."\",\"".
-                                    $this->tratamiento2(mb_strtoupper($row->Ubicaciones_concat))."\",\"".
-                                    $this->tratamiento2(mb_strtoupper($row->Observaciones_domicilios))."\",\"".
+                                    $this->tratamiento3( mb_strtoupper($row->Entrevistas_concat))."\",\"".
+                                    $this->tratamiento3(mb_strtoupper($row->Alias_Referidos))."\",\"".
+                                    $this->tratamiento3(mb_strtoupper($row->Ubicaciones_concat))."\",\"".
+                                    $this->tratamiento3(mb_strtoupper($row->Observaciones_domicilios))."\",\"".
                                     $row->Coordenadas."\",\"".
-									$this->tratamiento(mb_strtoupper($cadVisualizacion))."\"\n";
+									$this->tratamiento3(mb_strtoupper($cadVisualizacion))."\"\n";
 					}
 				break;
                 case '2':
@@ -408,6 +408,14 @@ class Entrevistas extends Controller
         $quitar = array("'", "\"","\\","/","´");
         $text = str_replace($quitar, ' ', $text);
         return $text;
+    }
+    public function tratamiento3($entrada){
+        $text=$entrada;
+        $quitar = array("'", "\"","\\","/","´",",","\n","|||");
+        $text = str_replace($quitar, '', $text);
+        $sinSaltos = preg_replace('/\r\n|\r|\n/', '', $text);
+        $espaciosReducidos = preg_replace('/\s+/', ' ', $sinSaltos);
+        return $espaciosReducidos;
     }
     public function buscarPorCadena(){//Funcion para buscar lo que le escribes en el panel de texto buscar
 
