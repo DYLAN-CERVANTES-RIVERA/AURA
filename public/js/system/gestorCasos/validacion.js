@@ -180,3 +180,5 @@ document.getElementById("Marca").addEventListener("input", filtrarAlfaNumericos)
 document.getElementById("Submarca").addEventListener("input", filtrarAlfaNumericos);
 document.getElementById("Placa_Vehiculo").addEventListener("input", filtrarAlfaNumericos);
 document.getElementById("Color").addEventListener("input", filtrarSoloLetras);
+
+document.getElementById("tipo_delito").addEventListener("input", filtrarAlfaNumericos);

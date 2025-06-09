@@ -91,3 +91,5 @@ document.getElementById('no_Int_Det').addEventListener("input", filtrarAlfaNumer
 
 document.getElementById("cordY_Det").addEventListener("input", filtraCoordPositiva);
 document.getElementById("cordX_Det").addEventListener("input", filtraCoordNegativa);
+
+document.getElementById("tipo_delito").addEventListener("input", filtrarAlfaNumericos);
