@@ -138,10 +138,21 @@ const ValidatableDomicilio = async() => {//FUNCION QUE VALIDA LAS ENTRADAS DEL F
     }else{
         document.getElementById('Status_Domicilio_error').innerHTML=''
     }
-    band[i++]=document.getElementById('Colonia_principales_error').innerHTML= FV.validate(myFormData.get('Colonia'), 'required')
-    band[i++]=document.getElementById('Calle_principales_error').innerHTML= FV.validate(myFormData.get('Calle'), 'required')
-    band[i++]=document.getElementById('cordY_principales_error').innerHTML= await ValidaCoordY(document.getElementById('cordY').value);
-    band[i++]=document.getElementById('cordX_principales_error').innerHTML= await ValidaCoordX(document.getElementById('cordX').value);
+
+    let radio = document.getElementsByName('ubicacion_puebla_domicilio');
+
+    if(radio[0].checked){
+        band[i++] = document.getElementById('Colonia_principales_error').innerHTML = FV.validate(myFormData.get('Colonia'), 'required')
+        band[i++] = document.getElementById('Calle_principales_error').innerHTML = FV.validate(myFormData.get('Calle'), 'required')
+        band[i++] = document.getElementById('cordY_principales_error').innerHTML = await ValidaCoordY(document.getElementById('cordY').value);
+        band[i++] = document.getElementById('cordX_principales_error').innerHTML = await ValidaCoordX(document.getElementById('cordX').value);
+    }
+    
+    if(radio[1].checked){
+        document.getElementById('Estado').value=='SD'?document.getElementById('Estado_error').innerHTML='Seleccione un Estado':document.getElementById('Estado_error').innerHTML='';
+        band[i++] = document.getElementById('Estado_error').innerHTML;
+    }
+
     band.forEach(element => {//recorre todas la banderas si todas son vacias procede a guardar los datos ya que no existe ninguna restriccion 
         respuesta &= (element == '') ? true : false
     })

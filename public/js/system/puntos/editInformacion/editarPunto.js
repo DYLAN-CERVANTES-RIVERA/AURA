@@ -221,8 +221,8 @@ document.getElementById('btn_edit_punto').addEventListener('click', async functi
         band[i++] = document.getElementById('zona_error').innerText = (document.getElementById('zona').value!='NA'&& document.getElementById('zona').value!=''&& document.getElementById('zona').value!=null)?'':'Campo Requerido';
         band[i++] = document.getElementById('vector_error').innerText = (document.getElementById('vector').value!='NA')?'':'Campo Requerido';
     }else{
-        myFormData.append('cordX','');
-        myFormData.append('cordY','');
+        //myFormData.append('cordX','');
+        //myFormData.append('cordY','');
         myFormData.append('zona','NA');
         myFormData.append('vector','NA');
         document.getElementById('cordX_principales_error').innerText = '';

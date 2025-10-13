@@ -18,6 +18,7 @@
                 </div>
             </div>
             <!--FECHAS Y HORAS -->
+
         
             <h5 class="titulo-azul" >Datos del Evento</h5>
             <div class="row mt-3">
@@ -846,7 +847,19 @@
                 <input type="text" name="Area" id="Area" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Area?>" readOnly>
                 <input type="text" name="TipoUsuario" id="TipoUsuario" class="form-control custom-input_dt"  value="<?php echo $_SESSION['userdataSIC']->Seguimientos[1]?>" readOnly>
             </div>
-        </div>                       
+            
+            <h5 class="titulo-azul" >Evento Activo o Inactivo</h5>
+            <div class="form-row mt-3 justify-content-center">
+                <div class="custom-control custom-control-inline">
+                    <input type="checkbox" id="cancelar_evento" name="cancelar_evento" class="custom-control-input">
+                    <label class="custom-control-label label-form parrafo-azul" for="cancelar_evento">Evento Activo</label>
+                </div>
+                <div class="form-group col-lg-3">
+                    <button type="button" class="btn btn-primary button-movil-plus" onclick="changeStatus()">Guarda Estatus</button>
+                </div>
+            </div> 
+        </div>
+                               
     </form>
 
 </div>

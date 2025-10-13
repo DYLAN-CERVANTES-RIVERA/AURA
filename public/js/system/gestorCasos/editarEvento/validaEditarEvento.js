@@ -546,3 +546,48 @@ const ValidaCoordX = async (valor)  =>{/// Para la coordenada Y
     return bandera.trim();
 }
 
+
+async function changeStatus (){
+    let opcion = false;
+    let myFormData = new FormData();
+    if(document.getElementById('cancelar_evento').checked){
+        opcion = await confirm("¿Desea Cambiar el Estatus Activo?");
+        Status = 1;
+    }else{
+        opcion = await confirm("¿Desea Cambiar el Estatus Inactivo?");
+        Status = 0;
+    }
+    if(opcion){
+        myFormData.append('Folio_infra',document.getElementById('folio_infra_principales').value)  
+        myFormData.append('valor',Status)
+        fetch(base_url_js + 'GestorCasos/updateEventoStatus', {//realiza el fetch para actualizar los datos
+            method: 'POST',
+            body: myFormData
+        })
+        .then(res => res.json())
+        .then(data => {//obtine respuesta del controlador
+        
+            if (!data.status) {//si ubo error informa que clase de error se genero 
+                console.log(data.error_sql)
+                msg_principalesError.innerHTML = `<div class="alert alert-danger text-center" role="alert">Ubo un Error al Cambiar al Estatus del Evento
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                            <span aria-hidden="true">&times;</span>
+                                        </button></div>`
+             
+            } else {//si todo salio bien
+                msg_principalesError.innerHTML =  `<div class="alert alert-success text-center" role="success">Cambio de Estatus del Evento Exitoso.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">    
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> `
+            }
+
+             window.scroll({
+                    top: 0,
+                    left: 100,
+                    behavior: 'smooth'
+                });
+        })
+    }
+}
+

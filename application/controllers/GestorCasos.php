@@ -426,6 +426,24 @@ class GestorCasos extends Controller
             echo json_encode($data_p);
         }     
     }
+    public function updateEventoStatus(){
+        if (isset($_POST['Folio_infra']) && isset($_POST['valor'])) {
+            $Folio_infra = $_POST['Folio_infra'];
+            $valor = $_POST['valor'];
+            $data = $this->GestorCaso->updateEventoStatus($Folio_infra,$valor);
+
+            if ($data['status'] && trim($data['sqlEjecutados'])!='' ) {
+                $user = $_SESSION['userdataSIC']->Id_Usuario;
+                $ip = $this->obtenerIp();
+                $this->GestorCaso->historial($user, $ip, 6, trim($data['sqlEjecutados']));
+            } 
+
+            echo json_encode($data);
+        } else {
+            header("Location: " . base_url . "GestorCasos");
+            exit();
+        } 
+    }
     public function uploadPDFFileEvento($name, $file, $carpeta, $ruta){//ACTUALIZA LOS ARCHIVOS FISICOS PDF EN EL SERVIDOR DEL SEGUIMIENTO
         $allowed_mime_type_arr = array('pdf');
         $arrayAux = explode('.', $file[$name]['name']);
@@ -1168,7 +1186,7 @@ class GestorCasos extends Controller
                 case '8':
                     //Genera nombre de archivo junto con los datos y los encabezasdos 
 					$filename = "Vista_General_Eventos";
-					$csv_data="Folio AURA,Folio 911,Celula Asignada,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+					$csv_data="Folio AURA,Folio 911,Celula Asignada,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Entrevistas Realizadas Evento,Estatus Seguimiento,Estatus Eventos,Vehiculos,Involucrados,Entrevistas,Fotos\n";
 					foreach ($cat_rows as $row) {
                         $partes2 = explode(" ", $row->FechaHora_Recepcion);
                         $partes = explode(" ", $row->FechaHora_Captura);
@@ -1236,6 +1254,7 @@ class GestorCasos extends Controller
                         }
                         $auxHechos=$this->tratamiento($row->hechos_concat);
                         $auxEntrevistas=$this->tratamiento($row->entrevistas_seguimiento_concat);
+                        $activo =  ($row->Activo ==1)?'ACTIVO':'INACTIVO';
 						$csv_data.= mb_strtoupper($row->Folio_infra).",\"".
                                     mb_strtoupper($row->Folio_911)."\",\"".
                                     mb_strtoupper($row->ClaveSeguimiento)."\",\"".
@@ -1264,6 +1283,7 @@ class GestorCasos extends Controller
                                     mb_strtoupper($auxHechos)."\",\"".
                                     mb_strtoupper($auxEntrevistas)."\",\"".
                                     mb_strtoupper($row->Status)."\",\"".
+                                    mb_strtoupper($activo)."\",\"".
                                     mb_strtoupper($banVehiculos)."\",\"".
                                     mb_strtoupper($banResponsables)."\",\"".
                                     mb_strtoupper($banEntrevistas)."\",\"".
@@ -1419,7 +1439,7 @@ class GestorCasos extends Controller
                         case '7':
                             //Genera nombre de archivo junto con los datos y los encabezasdos 
                             $filename = "Vista_General_Eventos_por_Folio";
-                            $csv_data="Folio AURA,Folio 911,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Vehiculos,Involucrados,Entrevistas,Fotos\n";
+                            $csv_data="Folio AURA,Folio 911,Fecha de Recepción,Hora de Recepcion,Fecha de Captura,Hora de Captura,Delitos,Giro,Con/Sin Violencia,Tipo de Violencia,Conteo de Masculinos,Conteo de Femeninas,Conteo de Vehiculos,Tipos de Vehiculos,Vehiculos Involucrados,Tipo de Armas,Zona,Vector,Colonia,Calle1,Calle2,Numero,Coordenada Y,Coordenada X,Descripcion de hechos,Estatus Seguimiento,Estatus Eventos,Vehiculos,Involucrados,Entrevistas,Fotos\n";
                             foreach ($cat_rows as $row) {
                                 $partes2 = explode(" ", $row->FechaHora_Recepcion);
                                 $partes = explode(" ", $row->FechaHora_Captura);
@@ -1478,6 +1498,7 @@ class GestorCasos extends Controller
                                     }   
                                 }
                                 $auxHechos=$this->tratamiento($row->hechos_concat);
+                                $activo =  ($row->Activo ==1)?'ACTIVO':'INACTIVO';
                                 $csv_data.= mb_strtoupper($row->Folio_infra).",\"".
                                             mb_strtoupper($row->Folio_911)."\",\"".
                                             mb_strtoupper($partes2[0])."\",\"".
@@ -1504,6 +1525,7 @@ class GestorCasos extends Controller
                                             mb_strtoupper($row->CoordX)."\",\"".
                                             mb_strtoupper($auxHechos)."\",\"".
                                             mb_strtoupper($row->Status)."\",\"".
+                                            mb_strtoupper($activo)."\",\"".
                                             mb_strtoupper($banVehiculos)."\",\"".
                                             mb_strtoupper($banResponsables)."\",\"".
                                             mb_strtoupper($banEntrevistas)."\",\"".

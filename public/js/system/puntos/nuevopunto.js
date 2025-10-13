@@ -255,8 +255,8 @@ document.getElementById('btn_nuevo_punto').addEventListener('click', async funct
         band[i++] = document.getElementById('zona_error').innerText = (document.getElementById('zona').value!='NA'&& document.getElementById('zona').value!=''&& document.getElementById('zona').value!=null)?'':'Campo Requerido';
         band[i++] = document.getElementById('vector_error').innerText = (document.getElementById('vector').value!='NA')?'':'Campo Requerido';
     }else{
-        myFormData.append('cordX','')
-        myFormData.append('cordY','')
+        //myFormData.append('cordX','')
+        //myFormData.append('cordY','')
         document.getElementById('cordX_principales_error').innerText = '';
         document.getElementById('cordY_principales_error').innerText = '';
         document.getElementById('zona_error').innerText = '';

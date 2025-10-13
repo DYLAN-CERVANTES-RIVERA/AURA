@@ -1321,6 +1321,31 @@ class GestorCaso{
         $response['sqlEjecutados'] = $sqlEjecutados;
         return $response;
     }
+    public function updateEventoStatus($Folio_infra,$valor){
+        $response['status'] = true;
+        try {
+            $this->db->beginTransaction(); 
+
+			$sqlEjecutados = '';
+            $sql = "UPDATE evento SET Activo = ".$valor." WHERE Folio_infra    = ".$Folio_infra . " 
+			AND ( Activo <> " . $valor. ") ";
+            $this->db->query($sql);
+            $this->db->execute();
+
+			if ($this->db->rowCount() > 0) {// Si se realizó una actualización
+				$sqlEjecutados = ($valor==0)?'SE ACTUALIZO EL ESTATUS A INACTIVO DEL EVENTO DELICTIVO: '.$Folio_infra :'SE ACTUALIZO EL ESTATUS A ACTIVO DEL EVENTO DELICTIVO: '.$Folio_infra;
+			}
+
+            $this->db->commit(); //Si no hubo fallos en ninguna insercion asegura los cambios
+        } catch (Exception $e) {
+            $response['status'] = false;
+            $response['error_message'] = 'Hubo un error en la Base de datos.';
+            $response['error_sql'] = $sql;
+            $this->db->rollBack();
+        }
+        $response['sqlEjecutados'] = $sqlEjecutados;
+        return  $response;
+    }
           
     public function UpdateSeguimientoTerminados($post)//actualiza el campo en la tabla evento el estado del seguimiento
     {

@@ -428,7 +428,6 @@ document.body.addEventListener("input", function(event) {
                 filtrarNumerosTel(event);break;
             case "nombreCurp":
             case "nombreTarjeta":
-            case "OtroTab":
             case "NombreTab":
             case "ApPaternoTab":
             case "ApMaternoTab": 
@@ -438,6 +437,7 @@ document.body.addEventListener("input", function(event) {
             case "placaTab":
             case "NivTab":
             case "ZonaTab":
+            case "OtroTab":
             case "BandaTab":
             case "AliasTab":
                 filtrarAlfaNumericos(event);break;

@@ -946,6 +946,7 @@ const llenarEvento = async ( data ) => {//LLENA LOS DATOS EN LA PLANTILLA DE LA 
     Turno.value = (data.Turno != ''&& data.Turno != null)?data.Turno:'SD';
     Responsable_Turno.value = data.Responsable_Turno
     Semana.value = data.Semana
+    document.getElementById('cancelar_evento').checked = (data.Activo == 1) ? true : false;
     cdi = document.getElementById('cdi');
     if(data.Cdi!=null){
         cdi.value = data.Cdi
