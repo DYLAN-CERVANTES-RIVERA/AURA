@@ -255,8 +255,7 @@ document.getElementById('btn_nuevo_punto').addEventListener('click', async funct
         band[i++] = document.getElementById('zona_error').innerText = (document.getElementById('zona').value!='NA'&& document.getElementById('zona').value!=''&& document.getElementById('zona').value!=null)?'':'Campo Requerido';
         band[i++] = document.getElementById('vector_error').innerText = (document.getElementById('vector').value!='NA')?'':'Campo Requerido';
     }else{
-        //myFormData.append('cordX','')
-        //myFormData.append('cordY','')
+
         document.getElementById('cordX_principales_error').innerText = '';
         document.getElementById('cordY_principales_error').innerText = '';
         document.getElementById('zona_error').innerText = '';
@@ -264,9 +263,6 @@ document.getElementById('btn_nuevo_punto').addEventListener('click', async funct
     }
     band[i++] = document.getElementById('Fuente_info_error').innerText = (document.getElementById('Fuente_info').value!='NA')?'':'Campo Requerido';
     band[i++] = document.getElementById('Identificador_error').innerText = (document.getElementById('Identificador').value!='NA')?'':'Campo Requerido';
-
-    
-
     //se comprueban todas las validaciones
     var success = true
     band.forEach(element => {//recorre todas la banderas si todas son vacias procede a guardar los datos ya que no existe ninguna restriccion 

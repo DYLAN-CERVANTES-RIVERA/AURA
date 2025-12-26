@@ -64,20 +64,20 @@
 
                         <div class="form-group col-lg-6">
                             <label for="Calle" class="label-form subtitulo-rosa">Calle</label>
-                            <input type="text" class="form-control form-control-sm text-uppercase" id="Calle" name="Calle" placeholder="Ingrese la Calle 1 del Evento" onkeypress="return valideMultiples(event);">
+                            <input type="text" class="form-control form-control-sm text-uppercase" id="Calle" name="Calle" placeholder="Ingrese la Calle 1 del Evento" >
                             <span class="span_error" id="Calle_principales_error"></span>
 
                         </div>
 
                         <div class="form-group col-lg-6">
                             <label for="Calle2" class="label-form subtitulo-rosa">Calle 2</label>
-                            <input type="text" class="form-control form-control-sm text-uppercase" id="Calle2" name="Calle2" placeholder="Ingrese la Calle 2 del Evento" onkeypress="return valideMultiples(event);">
+                            <input type="text" class="form-control form-control-sm text-uppercase" id="Calle2" name="Calle2" placeholder="Ingrese la Calle 2 del Evento" >
                             <span class="span_error" id="Calle2_principales_error"></span>
                         </div>
 
                         <div class="form-group col-lg-3">
                             <label for="no_Ext" class="label-form subtitulo-rosa">No. Ext.</label>
-                            <input type="text" class="form-control form-control-sm" id="no_Ext" name="no_Ext" maxlength="25" placeholder="Ingrese No Ext" onkeypress="return valideMultiples(event);">
+                            <input type="text" class="form-control form-control-sm" id="no_Ext" name="no_Ext" maxlength="25" placeholder="Ingrese No Ext" >
                             <span class="span_error" id="NoExt_principales_error"></span>
                         </div>
 
