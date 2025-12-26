@@ -38,7 +38,7 @@
                     }
                     ?>
                     <?php
-                        if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Red[0] == 1) {
+                        if ($_SESSION['userdataSIC']->Modo_Admin == 1  || $_SESSION['userdataSIC']->Puntos[2] == 1) {
                     ?>
                         <li>
                             <a class="btn btn-opacity" title="PUNTOS ALTO IMPACTO" data-toggle="tooltip" href="<?= base_url;?>Puntos"><div><img class="circular--square" src="<?php echo base_url; ?>public/media/icons/puntos.png" width="50%" ></div></a>

@@ -132,7 +132,7 @@ class Puntos extends Controller{
 
                     
                     if ($row->Fecha_Punto != '') {                     
-                        if ($_SESSION['userdataSIC']->Modo_Admin == '1' || $_SESSION['userdataSIC']->Red[0] == '1'){
+                        if ($_SESSION['userdataSIC']->Modo_Admin == '1' || $_SESSION['userdataSIC']->Puntos[2] == '1'){
                            
                             $infoTable['body'] .= '<td class="d-flex">
                                                 <a class="myLinks ' . $permisos_Editar . '"  data-toggle="tooltip" data-placement="right" title="Editar registro" href="' . base_url . 'Puntos/editarPunto/?Id_Punto=' . $row->Id_Punto . '">
@@ -453,7 +453,7 @@ class Puntos extends Controller{
             exit();
         }
 
-        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Red[0] == 1){
+        if ($_SESSION['userdataSIC']->Modo_Admin == 1 || $_SESSION['userdataSIC']->Puntos[2] == 1){
             if (isset($_GET['Id_Punto']) ){
                 $Id_Punto = $_GET['Id_Punto'];
                 $data = [
@@ -682,7 +682,7 @@ class Puntos extends Controller{
     /* ----------------------------------------INSERCION DE PUNTOS ------------------------------------- */
     public function insertPuntoFetch(){
         //comprobar los permisos para dejar pasar al módulo
-        if($_SESSION['userdataSIC']->Modo_Admin != 1 && $_SESSION['userdataSIC']->Red[0] != 1 ){
+        if($_SESSION['userdataSIC']->Modo_Admin != 1 && $_SESSION['userdataSIC']->Puntos[2] != 1 ){
             $data_p['status'] = false;
             $data_p['error_message'] = 'Render Index';
             echo json_encode($data_p);

@@ -2,7 +2,7 @@
     
     define('app_path', dirname(dirname(__FILE__)));     //Ruta de la app
     define('BASE_PATH', realpath(dirname(__FILE__) . '/../..').'/'); //BASE_PATH del proyecto
-    define('base_url', 'http://172.18.6.208/AURA/'); //Ruta de la url
+    define('base_url', 'http://172.18.9.145/AURA/'); //Ruta de la url
     define('site_name', 'Sistema de Investigación');       //Nombre del sitio
 
     //Configuración de acceso a la base de datos
